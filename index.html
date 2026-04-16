@@ -1,71 +1,160 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DRAGON RITUAL</title>
-
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      background: #000;
-      color: #fff;
-      font-family: Arial;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.06), transparent 30%),
+        linear-gradient(180deg, #0a0a0a 0%, #020202 100%);
+      color: #f2f2f2;
       text-align: center;
     }
 
     .hero {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at center, #111, #000);
+      padding: 40px 20px;
+      background:
+        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.8)),
+        radial-gradient(circle at center, #181818 0%, #050505 55%, #000 100%);
     }
 
-    h1 {
-      font-size: 50px;
-      letter-spacing: 3px;
+    .hero h1 {
+      margin: 0;
+      font-size: 52px;
+      letter-spacing: 4px;
+      font-weight: 300;
     }
 
-    p {
-      opacity: 0.7;
+    .hero p {
+      margin-top: 18px;
+      max-width: 560px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .enter-button {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 14px 26px;
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 2px;
+      font-size: 13px;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .enter-button:hover {
+      background: rgba(255,255,255,0.08);
     }
 
     .section {
-      padding: 60px 20px;
-      border-top: 1px solid #222;
+      padding: 70px 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
 
-    a {
-      color: #7df9ff;
+    .section h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 26px;
+      letter-spacing: 2px;
+      font-weight: 400;
+    }
+
+    .section p {
+      max-width: 680px;
+      margin: 0 auto 18px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+    }
+
+    .links {
+      max-width: 500px;
+      margin: 28px auto 0;
+    }
+
+    .links a {
       display: block;
-      margin: 10px;
+      margin: 12px 0;
+      padding: 14px 16px;
+      color: #d8f7ff;
       text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .links a:hover {
+      background: rgba(255,255,255,0.06);
+    }
+
+    .footer {
+      padding: 30px 20px 50px;
+      color: rgba(255,255,255,0.45);
+      font-size: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
   </style>
 </head>
-
 <body>
 
-<div class="hero">
-  <h1>DRAGON RITUAL</h1>
-  <p>Enter the system.</p>
-</div>
+  <section class="hero">
+    <h1>DRAGON RITUAL</h1>
+    <p>
+      A living system of creations, experiments, transmissions, and evolving digital works.
+    </p>
+    <a class="enter-button" href="#creations">Enter</a>
+  </section>
 
-<div class="section">
-  <h2>CREATIONS</h2>
-  <a href="#">Game (coming soon)</a>
-  <a href="#">Apps (coming soon)</a>
-</div>
+  <section class="section" id="creations">
+    <h2>CREATIONS</h2>
+    <p>
+      Playable builds, experiments, interfaces, and systems will live here.
+    </p>
+    <div class="links">
+      <a href="#">First game build — coming soon</a>
+      <a href="#">Apps and tools — coming soon</a>
+    </div>
+  </section>
 
-<div class="section">
-  <h2>TRANSMISSIONS</h2>
-  <p>Daily voice logs coming soon.</p>
-</div>
+  <section class="section">
+    <h2>TRANSMISSIONS</h2>
+    <p>
+      Short voice logs, rough pitches, thoughts, and signals from inside the system.
+    </p>
+    <div class="links">
+      <a href="#">Transmission 001 — coming soon</a>
+    </div>
+  </section>
 
-<div class="section">
-  <h2>ENTER</h2>
-  <p>This is a living system of ideas, builds, and evolution.</p>
-</div>
+  <section class="section">
+    <h2>THE GATE</h2>
+    <p>
+      This is the front door to the world: a place to gather what is being built, voiced, and released.
+    </p>
+  </section>
+
+  <div class="footer">
+    DRAGON RITUAL
+  </div>
 
 </body>
 </html>
