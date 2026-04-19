@@ -530,6 +530,57 @@ button {
   letter-spacing: 6px;
 }
 
+.card-face-reveal {
+  position: absolute;
+  inset: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top, rgba(213, 165, 52, 0.08), transparent 25%),
+    linear-gradient(180deg, rgba(18,18,24,0.98), rgba(7,7,10,0.98));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  pointer-events: none;
+}
+
+.card-face-reveal.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card-face-inner {
+  width: 100%;
+  padding: 22px 18px;
+  text-align: center;
+}
+
+.card-face-eyebrow {
+  margin-bottom: 10px;
+  color: #d5a534;
+  font-size: 11px;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+}
+
+.card-face-inner h4 {
+  margin: 0 0 14px;
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.card-face-inner p {
+  margin: 0;
+  color: rgba(245, 241, 232, 0.82);
+  font-size: 15px;
+  line-height: 1.72;
+}
+
 .orb {
   position: absolute;
   top: 84px;
