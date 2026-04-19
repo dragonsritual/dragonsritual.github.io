@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dragon Radio</title>
+  <meta
+    name="description"
+    content="Dragon Radio is the audio wing of DragonsRitual — live signals, recorded broadcasts, podcast episodes, and audio transmissions."
+  />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -15,6 +19,8 @@
         <a href="index.html">Home</a>
         <a href="news.html">News</a>
         <a href="radio.html">Radio</a>
+        <a href="tv.html">TV</a>
+        <a href="ops.html">Ops</a>
         <a href="ritual.html">Ritual</a>
         <a href="links.html">Routes</a>
       </nav>
@@ -22,70 +28,90 @@
   </header>
 
   <section class="page-hero">
-    <span class="page-kicker">Dragon Radio / audio wing / signal broadcasts</span>
+    <span class="page-kicker">Dragon Radio / audio wing / live + recorded signal</span>
     <h1 class="page-title">Dragon Radio</h1>
     <p class="page-intro">
-      Dragon Radio is the audio chamber of the DragonsRitual world — music, podcast announcements,
-      commercial-style brand spots, atmosphere, and featured sound transmissions.
+      Dragon Radio is the audio channel of the DragonsRitual world — live radio later,
+      pre-recorded transmissions now, podcast episodes, edited recordings, music atmosphere,
+      and rotating signal broadcasts.
     </p>
   </section>
 
   <section class="page-grid">
     <div class="page-main">
 
-      <article class="media-card featured">
-        <div class="media-thumb"></div>
-        <div class="media-content">
+      <article class="radio-player-shell">
+        <div class="radio-player-topbar">
+          <span>Main Audio Channel</span>
+          <span class="radio-player-status">On Air / Recorded Signal</span>
+        </div>
+
+        <div class="radio-player-body">
+          <div class="radio-cover-art"></div>
+
           <h3>Current Broadcast</h3>
           <p>
-            Put your featured radio cover art, embedded player, audio banner, or current broadcast module here.
+            This main player is for your featured audio channel. You can use it for a live stream later,
+            or use it right now for uploaded MP3 recordings, podcast episodes, or edited audio transmissions.
           </p>
+
+          <div class="audio-frame">
+            <!-- OPTION 1: uploaded audio file -->
+            <audio controls>
+              <source src="your-audio-file.mp3" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
         </div>
       </article>
 
       <article class="media-card">
         <div class="media-thumb"></div>
-        <h3>Podcast Announcement</h3>
+        <h3>Featured Episode / Signal</h3>
         <p>
-          Use this for podcast commercial announcements, upcoming episode notices, or branded signal drops.
+          Use this block for the current featured episode, recording, mix, spoken transmission,
+          or podcast-style entry.
         </p>
       </article>
 
-      <article class="media-card">
-        <div class="media-thumb"></div>
-        <h3>Atmosphere / Music Slot</h3>
-        <p>
-          Use this card for playlist highlights, soundtrack picks, themed music sets, or ambient audio posts.
-        </p>
-      </article>
+      <section class="radio-archive-grid">
+        <article class="radio-archive-item">
+          <h4>Archive Broadcast 01</h4>
+          <p>Use this for an older saved episode, recorded segment, or special transmission.</p>
+          <audio controls>
+            <source src="archive-01.mp3" type="audio/mpeg" />
+          </audio>
+        </article>
 
-      <article class="media-card">
-        <div class="media-thumb"></div>
-        <h3>Commercial Signal</h3>
-        <p>
-          This can become a promo block for your own work, another brand, a collaboration, or a scheduled campaign.
-        </p>
-      </article>
+        <article class="radio-archive-item">
+          <h4>Archive Broadcast 02</h4>
+          <p>Use this for another replay, episode, or edited audio release.</p>
+          <audio controls>
+            <source src="archive-02.mp3" type="audio/mpeg" />
+          </audio>
+        </article>
+      </section>
 
     </div>
 
     <aside class="page-side">
 
       <article class="media-card">
-        <h3>Broadcast Status</h3>
+        <h3>Channel Modes</h3>
         <div class="module-list">
-          <div class="module-item">Current show or signal note</div>
-          <div class="module-item">Next broadcast time</div>
-          <div class="module-item">Featured audio item this week</div>
+          <div class="module-item">Live radio stream later</div>
+          <div class="module-item">Podcast episode uploads</div>
+          <div class="module-item">Edited recordings and archive replays</div>
         </div>
       </article>
 
       <article class="media-card">
         <h3>Go Next</h3>
         <div class="module-list">
-          <div class="module-item"><a href="news.html">Back to DailyDragon</a></div>
+          <div class="module-item"><a href="news.html">Open DailyDragon</a></div>
+          <div class="module-item"><a href="tv.html">Open Dragon TV</a></div>
+          <div class="module-item"><a href="ops.html">Open Dragon Ops</a></div>
           <div class="module-item"><a href="ritual.html">Open Ritual Chamber</a></div>
-          <div class="module-item"><a href="links.html">View Signal Routes</a></div>
         </div>
       </article>
 
@@ -107,6 +133,8 @@
         <a href="index.html">Return to Station</a>
         <a href="news.html">Open DailyDragon</a>
         <a href="radio.html">Enter Dragon Radio</a>
+        <a href="tv.html">Open Dragon TV</a>
+        <a href="ops.html">Open Dragon Ops</a>
         <a href="ritual.html">Open Ritual Chamber</a>
         <a href="links.html">View Signal Routes</a>
       </div>
@@ -119,7 +147,7 @@
     </div>
 
     <p class="footer-note">
-      DRAGONSRITUAL / Dragon Radio / music / promos / broadcast system
+      DRAGONSRITUAL / Dragon Radio / live audio / saved recordings / signal archive
     </p>
   </footer>
 
