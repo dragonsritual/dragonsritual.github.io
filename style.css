@@ -8,19 +8,27 @@ html {
 
 :root {
   --bg-0: #040404;
-  --bg-1: #0a0a0d;
-  --bg-2: #101014;
+  --bg-1: #0a0909;
+  --bg-2: #120d0d;
+
   --text-main: #f5f1e8;
   --text-soft: rgba(245, 241, 232, 0.76);
   --text-dim: rgba(245, 241, 232, 0.48);
+
   --line: rgba(255, 255, 255, 0.08);
   --line-strong: rgba(255, 255, 255, 0.14);
+
   --panel: rgba(255, 255, 255, 0.035);
   --panel-dark: rgba(0, 0, 0, 0.34);
-  --red: #d51f1f;
-  --gold: #d5a534;
-  --violet: #7f6cff;
-  --glow: rgba(127, 108, 255, 0.8);
+
+  --red: #8f2a2a;
+  --red-deep: #5f1717;
+  --red-soft: #a53c3c;
+  --gold: #b58a2f;
+  --violet: #6b5ad6;
+
+  --glow: rgba(143, 42, 42, 0.62);
+  --glow-gold: rgba(181, 138, 47, 0.5);
 }
 
 body {
