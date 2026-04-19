@@ -277,19 +277,34 @@
     </section>
 
     <section class="section ritual-section" id="ritual">
-      <div class="section-head">
-        <div class="eyebrow">Interactive system</div>
+  <div class="ritual-layout">
+    <div class="ritual-info-column">
+      <div class="section-head ritual-head">
+        <div class="eyebrow">Interactive chamber / widget system</div>
         <h2>Ritual Chamber</h2>
         <p class="section-copy">
-          This chamber will become a functioning handmade ritual reader. A visitor draws a card,
-          the chamber activates, the orbs arc overhead in sequence, and the reading reveals itself.
+          This is not a generic tarot embed. It is a framed ritual device built into the
+          DragonsRitual command center. The chamber activates, the orbs sweep in a clockwise
+          arc, the card rises, and a custom signal reading reveals itself.
         </p>
       </div>
 
-      <div class="ritual-shell">
+      <div class="info-panel ritual-text-panel">
+        <h3>Current chamber state</h3>
+        <div class="mini-list ritual-reading-list">
+          <div class="mini-item">Single-card ritual draw is active in this phase.</div>
+          <div class="mini-item">Three-orb crown arc remains part of the chamber identity.</div>
+          <div class="mini-item">The deck will evolve into a DragonsRitual-style major arcana system.</div>
+          <div class="mini-item">The chamber is being built as a world feature, not just a page element.</div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="ritual-widget-shell">
+      <div class="ritual-widget-frame">
         <div class="ritual-topbar">
-          <span>Ritual Reader</span>
-          <span class="ritual-status">Dormant / awaiting activation</span>
+          <span>Ritual Device</span>
+          <span class="ritual-status">Dormant / awaiting draw</span>
         </div>
 
         <div class="ritual-stage">
@@ -307,21 +322,22 @@
         </div>
 
         <div class="ritual-actions">
-          <button class="btn btn-primary ritual-btn" type="button">Draw a Card</button>
-          <button class="btn btn-secondary ritual-btn" type="button">Three Card Spread</button>
+          <button class="btn btn-primary ritual-btn ritual-draw-btn" type="button">Draw a Card</button>
         </div>
 
         <div class="ritual-copy">
-          <h3>Planned chamber behavior</h3>
+          <h3>Chamber Reading</h3>
           <div class="mini-list">
-            <div class="mini-item">Three luminous orbs arc from left to right above the pull zone</div>
-            <div class="mini-item">Motion follows a clockwise ritual sweep with staggered timing</div>
-            <div class="mini-item">One orb hovers near center while the others continue the crown-like arc</div>
-            <div class="mini-item">Card lifts, flips, and reveals a handmade reading</div>
+            <div class="mini-item">Awaiting ritual activation.</div>
+            <div class="mini-item">A single card will rise and reveal its message.</div>
+            <div class="mini-item">The deck will expand into a custom DragonsRitual arcana.</div>
+            <div class="mini-item">This widget is an embedded chamber within the station.</div>
           </div>
         </div>
       </div>
-    </section>
+    </aside>
+  </div>
+</section>
 
     <section class="section" id="forge">
       <div class="section-head">
