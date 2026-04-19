@@ -674,17 +674,17 @@ input {
 
 .spirit-stage {
   position: relative;
-  min-height: 420px;
-  padding: 22px 20px 10px;
+  min-height: 430px;
+  padding: 20px 20px 8px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 18%, rgba(184,147,57,0.10), transparent 24%),
-    radial-gradient(circle at 50% 50%, rgba(142,42,42,0.08), transparent 28%);
+    radial-gradient(circle at 50% 18%, rgba(184,147,57,0.10), transparent 22%),
+    radial-gradient(circle at 50% 50%, rgba(142,42,42,0.08), transparent 30%);
 }
 
 .spirit-orb {
   position: absolute;
-  top: 88px;
+  top: 110px;
   left: 50%;
   width: 18px;
   height: 18px;
@@ -695,14 +695,15 @@ input {
     0 0 18px rgba(215,180,93,0.95),
     0 0 42px rgba(215,180,93,0.55);
   opacity: 0;
-  transform: translate(0, 0) scale(0.9);
+  transform: translate(0, 0) scale(0.85);
   pointer-events: none;
+  z-index: 4;
 }
 
 .spirit-card-zone {
-  width: min(260px, 78vw);
-  height: 320px;
-  margin: 86px auto 0;
+  width: min(270px, 78vw);
+  height: 330px;
+  margin: 92px auto 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -721,7 +722,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 22px;
+  padding: 24px 20px;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -735,9 +736,18 @@ input {
   pointer-events: none;
 }
 
+.spirit-card::after {
+  content: "";
+  position: absolute;
+  inset: 26px;
+  border: 1px solid rgba(184,147,57,0.12);
+  pointer-events: none;
+}
+
 .spirit-card-inner {
   position: relative;
   z-index: 1;
+  max-width: 210px;
 }
 
 .spirit-card-eyebrow {
@@ -751,8 +761,8 @@ input {
 .spirit-card-title {
   margin: 0 0 12px;
   color: #fff;
-  font-size: 28px;
-  line-height: 1.05;
+  font-size: 30px;
+  line-height: 1.02;
   text-transform: uppercase;
   letter-spacing: 1.2px;
 }
@@ -761,19 +771,11 @@ input {
   margin: 0;
   color: var(--text-soft);
   font-size: 15px;
-  line-height: 1.7;
-}
-
-.spirit-placeholder {
-  color: rgba(242,237,227,0.62);
-  font-size: 14px;
-  line-height: 1.7;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
+  line-height: 1.72;
 }
 
 .spirit-actions {
-  padding: 8px 20px 0;
+  padding: 10px 20px 18px;
   display: flex;
   gap: 12px;
 }
@@ -784,14 +786,14 @@ input {
 
 @media (max-width: 700px) {
   .spirit-stage {
-    min-height: 360px;
+    min-height: 370px;
     padding: 18px 14px 8px;
   }
 
   .spirit-card-zone {
     width: min(220px, 78vw);
-    height: 280px;
-    margin-top: 76px;
+    height: 285px;
+    margin-top: 82px;
   }
 
   .spirit-card-title {
@@ -799,6 +801,6 @@ input {
   }
 
   .spirit-actions {
-    padding: 8px 14px 0;
+    padding: 10px 14px 16px;
   }
 }
