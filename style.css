@@ -36,10 +36,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: var(--text-main);
   background:
-    radial-gradient(circle at top, rgba(213, 31, 31, 0.08), transparent 20%),
-    radial-gradient(circle at 82% 14%, rgba(213, 165, 52, 0.06), transparent 14%),
-    radial-gradient(circle at 30% 0%, rgba(127, 108, 255, 0.08), transparent 18%),
-    linear-gradient(180deg, #030303 0%, #08080b 42%, #020202 100%);
+  radial-gradient(circle at top, rgba(143, 42, 42, 0.14), transparent 20%),
+  radial-gradient(circle at 82% 14%, rgba(181, 138, 47, 0.07), transparent 14%),
+  radial-gradient(circle at 28% 0%, rgba(111, 64, 64, 0.09), transparent 20%),
+  linear-gradient(180deg, #030303 0%, #090707 42%, #020202 100%);
 }
 
 a {
@@ -451,23 +451,72 @@ button {
   padding-top: 60px;
 }
 
-.ritual-shell {
-  border: 1px solid var(--line);
+.ritual-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 430px;
+  gap: 24px;
+  align-items: start;
+}
+
+.ritual-info-column {
+  min-width: 0;
+}
+
+.ritual-head {
+  margin-bottom: 20px;
+}
+
+.ritual-text-panel {
+  max-width: 760px;
+}
+
+.ritual-widget-shell {
+  min-width: 0;
+  position: relative;
+}
+
+.ritual-widget-frame {
+  position: sticky;
+  top: 92px;
+  border: 1px solid rgba(181, 138, 47, 0.18);
   background:
-    radial-gradient(circle at 50% 20%, rgba(127,108,255,0.08), transparent 28%),
-    linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+    linear-gradient(180deg, rgba(26, 12, 12, 0.92), rgba(8, 5, 5, 0.98)),
+    radial-gradient(circle at 50% 0%, rgba(143, 42, 42, 0.08), transparent 28%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.03),
+    0 0 0 1px rgba(0,0,0,0.35),
+    0 20px 50px rgba(0,0,0,0.34);
   overflow: hidden;
 }
 
+.ritual-widget-frame::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(181, 138, 47, 0.12);
+  pointer-events: none;
+}
+
+.ritual-widget-frame::after {
+  content: "";
+  position: absolute;
+  inset: 26px;
+  border: 1px solid rgba(255,255,255,0.03);
+  pointer-events: none;
+}
+
 .ritual-topbar {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   gap: 16px;
   padding: 14px 16px;
-  border-bottom: 1px solid var(--line);
-  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background:
+    linear-gradient(180deg, rgba(40, 14, 14, 0.88), rgba(15, 8, 8, 0.92));
   text-transform: uppercase;
-  letter-spacing: 1.4px;
+  letter-spacing: 1.5px;
   font-size: 12px;
   color: rgba(255,255,255,0.78);
 }
@@ -478,16 +527,19 @@ button {
 
 .ritual-stage {
   position: relative;
-  min-height: 420px;
-  padding: 32px 20px 14px;
+  min-height: 390px;
+  padding: 24px 18px 8px;
   overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(143, 42, 42, 0.09), transparent 25%),
+    radial-gradient(circle at 50% 35%, rgba(181, 138, 47, 0.05), transparent 20%);
 }
 
 .card-pull-zone {
   position: relative;
-  margin: 90px auto 0;
-  width: min(280px, 76vw);
-  height: 320px;
+  margin: 82px auto 0;
+  width: min(240px, 78vw);
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -503,27 +555,27 @@ button {
   position: relative;
   width: 100%;
   height: 100%;
-  border: 1px solid rgba(213, 165, 52, 0.34);
+  border: 1px solid rgba(181, 138, 47, 0.34);
   background:
-    radial-gradient(circle at center, rgba(127,108,255,0.18), rgba(0,0,0,0.12)),
-    linear-gradient(180deg, #111118 0%, #060608 100%);
+    radial-gradient(circle at center, rgba(143, 42, 42, 0.15), rgba(0,0,0,0.1)),
+    linear-gradient(180deg, #1a1010 0%, #080606 100%);
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.04) inset,
-    0 0 40px rgba(127,108,255,0.12);
+    0 0 0 1px rgba(255,255,255,0.035) inset,
+    0 0 28px rgba(143, 42, 42, 0.16);
 }
 
 .card-back::before,
 .card-back::after {
   content: "";
   position: absolute;
-  inset: 14px;
-  border: 1px solid rgba(255,255,255,0.06);
+  inset: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
   pointer-events: none;
 }
 
 .card-back::after {
-  inset: 28px;
-  border-color: rgba(213,165,52,0.18);
+  inset: 26px;
+  border-color: rgba(181,138,47,0.16);
 }
 
 .card-sigil {
@@ -533,20 +585,20 @@ button {
   align-items: center;
   justify-content: center;
   color: rgba(245, 241, 232, 0.88);
-  font-size: 42px;
+  font-size: 38px;
   font-weight: 700;
   letter-spacing: 6px;
 }
 
 .card-face-reveal {
   position: absolute;
-  inset: 18px;
+  inset: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   background:
-    radial-gradient(circle at top, rgba(213, 165, 52, 0.08), transparent 25%),
-    linear-gradient(180deg, rgba(18,18,24,0.98), rgba(7,7,10,0.98));
+    radial-gradient(circle at top, rgba(181, 138, 47, 0.08), transparent 25%),
+    linear-gradient(180deg, rgba(29,14,14,0.98), rgba(8,6,6,0.98));
   border: 1px solid rgba(255, 255, 255, 0.08);
   opacity: 0;
   transform: scale(0.96);
@@ -567,7 +619,7 @@ button {
 
 .card-face-eyebrow {
   margin-bottom: 10px;
-  color: #d5a534;
+  color: var(--gold);
   font-size: 11px;
   letter-spacing: 2.4px;
   text-transform: uppercase;
@@ -591,11 +643,11 @@ button {
 
 .orb {
   position: absolute;
-  top: 84px;
+  top: 78px;
   left: 50%;
-  width: 18px;
-  height: 18px;
-  margin-left: -9px;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
   border-radius: 999px;
   pointer-events: none;
   filter: blur(0.2px);
@@ -606,43 +658,47 @@ button {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow: 0 0 22px currentColor, 0 0 48px currentColor;
-  opacity: 0.8;
+  box-shadow: 0 0 18px currentColor, 0 0 34px currentColor;
+  opacity: 0.82;
 }
 
 .orb-1 {
-  color: #ff5f7a;
-  background: #ff5f7a;
+  color: #a93d3d;
+  background: #a93d3d;
   transform: translate(-150px, 40px);
 }
 
 .orb-2 {
-  color: #7f6cff;
-  background: #7f6cff;
+  color: #b58a2f;
+  background: #b58a2f;
   transform: translate(0, 0);
 }
 
 .orb-3 {
-  color: #d5a534;
-  background: #d5a534;
+  color: #d7d0c3;
+  background: #d7d0c3;
   transform: translate(150px, 40px);
 }
-
 .ritual-actions {
-  padding: 6px 20px 0;
+  padding: 8px 18px 0;
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
 }
 
 .ritual-btn {
-  min-width: 190px;
+  width: 100%;
+  min-width: 0;
 }
 
 .ritual-copy {
-  padding: 22px 20px 22px;
+  padding: 18px 18px 18px;
 }
 
+.ritual-copy .mini-item strong {
+  color: var(--gold);
+  font-weight: 700;
+}
 .ritual-copy h3 {
   margin: 0 0 14px;
   color: #ffffff;
@@ -695,6 +751,15 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+  .ritual-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ritual-widget-frame {
+    position: relative;
+    top: auto;
+  }
 
 /* Phone */
 @media (max-width: 700px) {
@@ -780,24 +845,30 @@ button {
     line-height: 1.7;
   }
 
+    .ritual-layout {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
   .ritual-stage {
-    min-height: 360px;
-    padding: 24px 16px 10px;
+    min-height: 338px;
+    padding: 20px 14px 8px;
   }
 
   .card-pull-zone {
-    margin-top: 82px;
-    height: 280px;
+    margin-top: 74px;
+    width: min(220px, 78vw);
+    height: 270px;
   }
 
   .ritual-actions {
-    padding: 6px 16px 0;
+    padding: 8px 14px 0;
     flex-direction: column;
     align-items: stretch;
   }
 
   .ritual-copy {
-    padding: 20px 16px 20px;
+    padding: 18px 14px 18px;
   }
 
   .site-footer {
