@@ -2,10 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const ritualSection = document.querySelector("#ritual");
   if (!ritualSection) return;
 
-  const drawBtn = ritualSection.querySelector(".ritual-btn");
-  const spreadBtn = ritualSection.querySelectorAll(".ritual-btn")[1];
-
-  const ritualStage = ritualSection.querySelector(".ritual-stage");
+  const drawBtn = ritualSection.querySelector(".ritual-draw-btn");
   const cardBack = ritualSection.querySelector(".card-back");
   const cardSigil = ritualSection.querySelector(".card-sigil");
   const statusText = ritualSection.querySelector(".ritual-status");
@@ -18,8 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (
     !drawBtn ||
-    !spreadBtn ||
-    !ritualStage ||
     !cardBack ||
     !cardSigil ||
     !statusText ||
@@ -35,49 +30,49 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "The Signal",
       meaning:
-        "A message is already trying to reach you. Stop waiting for perfect certainty and begin transmitting.",
+        "A message is already moving toward you. Stop waiting for perfect conditions and begin transmitting with force.",
       tone: "Activation"
     },
     {
       title: "The Forge",
       meaning:
-        "Your work becomes real through repetition. Build the system piece by piece and let the identity harden through motion.",
+        "What you are building requires repetition, pressure, and return. The system becomes real through continued shaping.",
       tone: "Construction"
     },
     {
       title: "The Warlord",
       meaning:
-        "Power without direction becomes noise. Choose the campaign, define the lane, and move forward with command.",
+        "Power without command scatters itself. Name the campaign. Hold the line. Move with decision.",
       tone: "Discipline"
     },
     {
       title: "The Archive",
       meaning:
-        "What you made before still has value. Old signals become proof, lore, and material for the next era.",
+        "Old work is not dead material. It is stored fire. Review what already exists and turn it into the next structure.",
       tone: "Legacy"
     },
     {
       title: "The Portal",
       meaning:
-        "A threshold is open. What matters now is not whether the world is ready, but whether you are willing to step through it.",
+        "A threshold is already open. Your task is not to ask whether it exists, but whether you are willing to cross it.",
       tone: "Transition"
     },
     {
       title: "The Flame",
       meaning:
-        "Your energy returns when the mission becomes visible again. Feed the fire with action, not overthinking.",
+        "Momentum returns when action returns. Feed the chamber with movement instead of delay.",
       tone: "Momentum"
     },
     {
       title: "The Chamber",
       meaning:
-        "Privacy, ritual, and atmosphere matter. Build environments that make people feel they have entered somewhere sacred.",
+        "Atmosphere changes meaning. Build spaces that feel entered, not merely viewed.",
       tone: "Atmosphere"
     },
     {
       title: "The Crowned Skull",
       meaning:
-        "Mortality sharpens intention. Make the thing that proves you were here.",
+        "Time sharpens the ritual. Make the artifact that proves you were here.",
       tone: "Intensity"
     }
   ];
@@ -109,9 +104,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function resetOrbs() {
     resetOrbTransitions();
-    setOrbPosition(orb1, -150, 40, 1);
+
+    setOrbPosition(orb1, -140, 36, 1);
     setOrbPosition(orb2, 0, 0, 1);
-    setOrbPosition(orb3, 150, 40, 1);
+    setOrbPosition(orb3, 140, 36, 1);
 
     orb1.style.opacity = "0.92";
     orb2.style.opacity = "0.92";
@@ -121,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
     orb2.style.filter = "blur(0.2px)";
     orb3.style.filter = "blur(0.2px)";
 
-    // Force reflow so transition reset actually sticks
     void orb1.offsetWidth;
 
     orb1.style.transition =
@@ -132,6 +127,20 @@ document.addEventListener("DOMContentLoaded", () => {
       "transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease, filter 0.8s ease";
   }
 
+  function setOrb2MidHover() {
+    setOrbPosition(orb2, 0, -40, 1.18);
+    orb2.style.opacity = "1";
+    orb2.style.filter = "blur(0px)";
+  }
+
+  function setOrb2CrownHover() {
+    setOrbPosition(orb2, 0, -64, 1.22);
+  }
+
+  function setOrb2FinalHover() {
+    setOrbPosition(orb2, 0, -46, 1.12);
+  }
+
   function animateOrbs() {
     return new Promise((resolve) => {
       resetOrbs();
@@ -139,58 +148,44 @@ document.addEventListener("DOMContentLoaded", () => {
       statusText.textContent = "Activating ritual arc";
 
       setTimeout(() => {
-        setOrbPosition(orb1, -90, -10, 1.08);
+        setOrbPosition(orb1, -86, -8, 1.06);
         orb1.style.filter = "blur(0px)";
-      }, 50);
+      }, 60);
 
       setTimeout(() => {
         setOrb2MidHover();
-      }, 280);
+      }, 300);
 
       setTimeout(() => {
-        setOrbPosition(orb3, 95, -12, 1.08);
+        setOrbPosition(orb3, 92, -10, 1.06);
         orb3.style.filter = "blur(0px)";
-      }, 520);
+      }, 540);
 
       setTimeout(() => {
-        setOrbPosition(orb1, -28, -54, 1.12);
-      }, 820);
+        setOrbPosition(orb1, -28, -50, 1.1);
+      }, 840);
 
       setTimeout(() => {
-        setOrbPosition(orb3, 34, -58, 1.12);
-      }, 1020);
+        setOrbPosition(orb3, 30, -54, 1.1);
+      }, 1040);
 
       setTimeout(() => {
         setOrb2CrownHover();
       }, 1180);
 
       setTimeout(() => {
-        setOrbPosition(orb1, -108, -6, 0.98);
-        setOrbPosition(orb3, 108, -6, 0.98);
+        setOrbPosition(orb1, -100, -4, 0.98);
+        setOrbPosition(orb3, 100, -4, 0.98);
         orb1.style.opacity = "0.82";
         orb3.style.opacity = "0.82";
-      }, 1680);
+      }, 1640);
 
       setTimeout(() => {
         setOrb2FinalHover();
         statusText.textContent = "Ritual channel open";
         resolve();
-      }, 1880);
+      }, 1860);
     });
-  }
-
-  function setOrb2MidHover() {
-    setOrbPosition(orb2, 0, -42, 1.18);
-    orb2.style.opacity = "1";
-    orb2.style.filter = "blur(0px)";
-  }
-
-  function setOrb2CrownHover() {
-    setOrbPosition(orb2, 0, -68, 1.22);
-  }
-
-  function setOrb2FinalHover() {
-    setOrbPosition(orb2, 0, -48, 1.14);
   }
 
   function revealCard(card) {
@@ -199,10 +194,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       cardBack.style.transition =
         "transform 0.95s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease, filter 0.5s ease";
-      cardBack.style.transform = "translateY(-16px) rotateY(180deg) scale(1.02)";
+      cardBack.style.transform = "translateY(-14px) rotateY(180deg) scale(1.02)";
       cardBack.style.boxShadow =
-        "0 0 0 1px rgba(255,255,255,0.05) inset, 0 0 60px rgba(127,108,255,0.24)";
-      cardBack.style.filter = "brightness(1.05)";
+        "0 0 0 1px rgba(255,255,255,0.04) inset, 0 0 50px rgba(143, 42, 42, 0.22)";
+      cardBack.style.filter = "brightness(1.04)";
 
       cardSigil.style.transition = "opacity 0.25s ease";
       cardSigil.style.opacity = "0";
@@ -235,11 +230,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function resetCardVisual() {
     clearExistingReveal();
+
     cardBack.style.transition = "none";
     cardBack.style.transform = "translateY(0) rotateY(0deg) scale(1)";
     cardBack.style.boxShadow =
-      "0 0 0 1px rgba(255,255,255,0.04) inset, 0 0 40px rgba(127,108,255,0.12)";
+      "0 0 0 1px rgba(255,255,255,0.035) inset, 0 0 28px rgba(143, 42, 42, 0.16)";
     cardBack.style.filter = "brightness(1)";
+
     cardSigil.style.transition = "none";
     cardSigil.style.opacity = "1";
   }
@@ -249,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="mini-item"><strong>Card:</strong> ${card.title}</div>
       <div class="mini-item"><strong>Tone:</strong> ${card.tone}</div>
       <div class="mini-item"><strong>Reading:</strong> ${card.meaning}</div>
-      <div class="mini-item"><strong>Signal:</strong> This ritual pull is part of the evolving DragonsRitual chamber system.</div>
+      <div class="mini-item"><strong>Chamber Note:</strong> This draw is part of the evolving DragonsRitual arcana system.</div>
     `;
   }
 
@@ -258,7 +255,6 @@ document.addEventListener("DOMContentLoaded", () => {
     isAnimating = true;
 
     drawBtn.disabled = true;
-    spreadBtn.disabled = true;
 
     resetCardVisual();
     resetOrbs();
@@ -271,25 +267,10 @@ document.addEventListener("DOMContentLoaded", () => {
     await revealCard(card);
 
     drawBtn.disabled = false;
-    spreadBtn.disabled = false;
     isAnimating = false;
   }
 
-  function doThreeCardPlaceholder() {
-    if (isAnimating) return;
-
-    statusText.textContent = "Three card spread coming next phase";
-
-    ritualCopyList.innerHTML = `
-      <div class="mini-item"><strong>Three Card Spread:</strong> This button is reserved for the next upgrade.</div>
-      <div class="mini-item">Next phase will add Past / Present / Future or Mind / Body / Signal layout.</div>
-      <div class="mini-item">The same orb ritual will activate across three reveal zones.</div>
-      <div class="mini-item">For now, use <strong>Draw a Card</strong> to test the ritual chamber.</div>
-    `;
-  }
-
   drawBtn.addEventListener("click", doSingleDraw);
-  spreadBtn.addEventListener("click", doThreeCardPlaceholder);
 
   resetOrbs();
   resetCardVisual();
