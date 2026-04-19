@@ -6,7 +6,7 @@
   <title>Spirit</title>
   <meta
     name="description"
-    content="Spirit is the major arcana pull page of DragonsRitual — a magical orb-driven tarot draw with symbolic card revelations."
+    content="Spirit is the major arcana pull page of DragonsRitual."
   />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -32,18 +32,16 @@
     <span class="page-kicker">Spirit / arcana pull / magical draw chamber</span>
     <h1 class="page-title">Spirit</h1>
     <p class="page-intro">
-      Spirit is a dedicated major arcana pull chamber. Click to activate the orbs, let the arc sweep
-      complete, and reveal a symbolic card with a short reading.
+      Spirit is a dedicated major arcana pull chamber. Click to activate the orbs and reveal a symbolic card.
     </p>
   </section>
 
   <section class="page-grid">
     <div class="page-main">
-
       <article class="spirit-shell">
         <div class="spirit-topbar">
           <span>Arcana Chamber</span>
-          <span class="spirit-status">Dormant / awaiting draw</span>
+          <span class="spirit-status" id="spiritStatus">Dormant / awaiting draw</span>
         </div>
 
         <div class="spirit-stage">
@@ -53,7 +51,7 @@
 
           <div class="spirit-card-zone">
             <div class="spirit-card">
-              <div class="spirit-card-inner spirit-card-display">
+              <div class="spirit-card-inner" id="spiritCardDisplay">
                 <div class="spirit-placeholder">Click the button to draw from the major arcana</div>
               </div>
             </div>
@@ -61,24 +59,22 @@
         </div>
 
         <div class="spirit-actions">
-          <button class="btn btn-primary spirit-draw-btn" type="button">Draw a Card</button>
+          <button class="btn btn-primary spirit-draw-btn" id="spiritDrawBtn" type="button">Draw a Card</button>
         </div>
 
-        <div class="media-card" style="margin: 16px; margin-top: 16px;">
+        <div class="media-card" style="margin: 16px;">
           <h3>How It Works</h3>
           <div class="module-list">
-            <div class="module-item">Three golden wizard-orbs rise into a fantasy arc</div>
-            <div class="module-item">They hover briefly above the card chamber</div>
-            <div class="module-item">The card appears with title and short description</div>
-            <div class="module-item">The orbs fade after a few seconds and can be summoned again</div>
+            <div class="module-item">Three golden orbs appear only when summoned</div>
+            <div class="module-item">They arc upward and hover briefly</div>
+            <div class="module-item">A major arcana card appears with a short message</div>
+            <div class="module-item">The orbs fade out and can be summoned again</div>
           </div>
         </div>
       </article>
-
     </div>
 
     <aside class="page-side">
-
       <article class="media-card">
         <h3>Card System</h3>
         <div class="module-list">
@@ -97,19 +93,8 @@
           <div class="module-item"><a href="links.html">View Signal Routes</a></div>
         </div>
       </article>
-
-      <article class="media-card">
-        <h3>Outer Signal</h3>
-        <div class="module-list">
-          <div class="module-item"><a href="https://instagram.com/" target="_blank" rel="noopener noreferrer">Instagram Signal</a></div>
-          <div class="module-item"><a href="https://github.com/" target="_blank" rel="noopener noreferrer">Forge / GitHub</a></div>
-        </div>
-      </article>
-
     </aside>
   </section>
-
-  <script src="spirit.js"></script>
 
   <footer class="site-footer">
     <div class="footer-grid">
@@ -136,6 +121,121 @@
       DRAGONSRITUAL / Spirit / major arcana / fantasy orb draw / symbolic chamber
     </p>
   </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const drawBtn = document.getElementById("spiritDrawBtn");
+      const status = document.getElementById("spiritStatus");
+      const display = document.getElementById("spiritCardDisplay");
+
+      const orb1 = document.querySelector(".spirit-orb-1");
+      const orb2 = document.querySelector(".spirit-orb-2");
+      const orb3 = document.querySelector(".spirit-orb-3");
+
+      const cards = [
+        ["The Fool", "Beginning", "A threshold opens. Step forward even if the road is not fully visible."],
+        ["The Magician", "Power", "Skill, will, and direction align. Use what is already in your hands."],
+        ["The High Priestess", "Mystery", "Not every answer arrives through force. Listen to what stays quiet."],
+        ["The Empress", "Growth", "What you nourish now can become fertile and expansive."],
+        ["The Emperor", "Structure", "Bring command to the field. Build order where chaos has spread."],
+        ["The Chariot", "Momentum", "You are meant to move. Hold the reins and advance."],
+        ["The Star", "Hope", "A bright signal survives the dark. Follow the cleaner light."],
+        ["The Sun", "Revelation", "Clarity returns. Let what is true burn openly."],
+        ["Judgement", "Awakening", "A call is sounding. Rise into the clearer version of yourself."],
+        ["The World", "Completion", "A cycle closes with meaning. What has been built now stands whole."]
+      ];
+
+      let fadingTimer = null;
+      let drawing = false;
+
+      function randomCard() {
+        return cards[Math.floor(Math.random() * cards.length)];
+      }
+
+      function resetOrbs() {
+        [orb1, orb2, orb3].forEach((orb) => {
+          orb.style.transition = "none";
+          orb.style.opacity = "0";
+        });
+
+        orb1.style.transform = "translate(-110px, 44px) scale(0.9)";
+        orb2.style.transform = "translate(0px, 44px) scale(0.9)";
+        orb3.style.transform = "translate(110px, 44px) scale(0.9)";
+
+        void orb1.offsetWidth;
+
+        [orb1, orb2, orb3].forEach((orb) => {
+          orb.style.transition = "transform 1.2s cubic-bezier(0.22,1,0.36,1), opacity 1s ease";
+        });
+      }
+
+      function animateOrbs() {
+        return new Promise((resolve) => {
+          resetOrbs();
+          status.textContent = "Arcana stirring";
+
+          setTimeout(() => {
+            orb1.style.opacity = "1";
+            orb1.style.transform = "translate(-82px, -8px) scale(1.05)";
+          }, 60);
+
+          setTimeout(() => {
+            orb2.style.opacity = "1";
+            orb2.style.transform = "translate(0px, -42px) scale(1.1)";
+          }, 320);
+
+          setTimeout(() => {
+            orb3.style.opacity = "1";
+            orb3.style.transform = "translate(82px, -8px) scale(1.05)";
+          }, 560);
+
+          setTimeout(() => {
+            orb1.style.transform = "translate(-40px, -58px) scale(1.08)";
+            orb3.style.transform = "translate(40px, -58px) scale(1.08)";
+          }, 980);
+
+          setTimeout(() => {
+            status.textContent = "Arc active";
+            resolve();
+          }, 1500);
+        });
+      }
+
+      function fadeOrbs() {
+        clearTimeout(fadingTimer);
+        fadingTimer = setTimeout(() => {
+          [orb1, orb2, orb3].forEach((orb) => {
+            orb.style.opacity = "0";
+          });
+          status.textContent = "Dormant / awaiting draw";
+        }, 4200);
+      }
+
+      drawBtn.addEventListener("click", async function () {
+        if (drawing) return;
+        drawing = true;
+        drawBtn.disabled = true;
+        drawBtn.textContent = "Drawing...";
+
+        const card = randomCard();
+        await animateOrbs();
+
+        display.innerHTML = `
+          <div class="spirit-card-eyebrow">${card[1]}</div>
+          <h3 class="spirit-card-title">${card[0]}</h3>
+          <p class="spirit-card-text">${card[2]}</p>
+        `;
+
+        fadeOrbs();
+
+        drawBtn.disabled = false;
+        drawBtn.textContent = "Draw a Card";
+        drawing = false;
+      });
+
+      resetOrbs();
+    });
+  </script>
 
 </body>
 </html>
