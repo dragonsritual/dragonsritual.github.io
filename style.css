@@ -538,3 +538,94 @@ input {
     min-height: 220px;
   }
 }
+
+.radio-player-shell {
+  border: 1px solid rgba(255,255,255,0.08);
+  background:
+    linear-gradient(180deg, rgba(20,10,10,0.95), rgba(6,4,4,0.98));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.03),
+    0 10px 24px rgba(0,0,0,0.18);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.radio-player-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,0.02);
+  color: rgba(255,255,255,0.78);
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.radio-player-status {
+  color: var(--gold);
+}
+
+.radio-player-body {
+  padding: 20px;
+}
+
+.radio-cover-art {
+  height: 220px;
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(25,10,10,0.18), rgba(10,4,4,0.58)),
+    url('https://placehold.co/1200x800/180909/d8d1c3?text=DRAGON+RADIO') center/cover no-repeat;
+}
+
+.radio-player-body h3 {
+  margin: 0 0 10px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.radio-player-body p {
+  margin: 0 0 14px;
+  color: var(--text-soft);
+  line-height: 1.72;
+  font-size: 15px;
+}
+
+.audio-frame {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.audio-frame audio {
+  width: 100%;
+  display: block;
+}
+
+.radio-archive-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.radio-archive-item {
+  border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  padding: 18px;
+}
+
+.radio-archive-item h4 {
+  margin: 0 0 10px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.radio-archive-item p {
+  margin: 0 0 12px;
+  color: var(--text-soft);
+  line-height: 1.68;
+  font-size: 14px;
+}
