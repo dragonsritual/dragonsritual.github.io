@@ -629,3 +629,163 @@ input {
   line-height: 1.68;
   font-size: 14px;
 }
+
+.spirit-shell {
+  border: 1px solid rgba(255,255,255,0.08);
+  background:
+    linear-gradient(180deg, rgba(20,10,10,0.95), rgba(6,4,4,0.98));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.03),
+    0 10px 24px rgba(0,0,0,0.18);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.spirit-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,0.02);
+  color: rgba(255,255,255,0.78);
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.spirit-status {
+  color: var(--gold);
+}
+
+.spirit-stage {
+  position: relative;
+  min-height: 420px;
+  padding: 22px 20px 10px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(184,147,57,0.10), transparent 24%),
+    radial-gradient(circle at 50% 50%, rgba(142,42,42,0.08), transparent 28%);
+}
+
+.spirit-orb {
+  position: absolute;
+  top: 88px;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border-radius: 999px;
+  background: #d7b45d;
+  box-shadow:
+    0 0 18px rgba(215,180,93,0.95),
+    0 0 42px rgba(215,180,93,0.55);
+  opacity: 0;
+  transform: translate(0, 0) scale(0.9);
+  pointer-events: none;
+}
+
+.spirit-card-zone {
+  width: min(260px, 78vw);
+  height: 320px;
+  margin: 86px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spirit-card {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(184,147,57,0.28);
+  background:
+    radial-gradient(circle at top, rgba(184,147,57,0.10), transparent 24%),
+    linear-gradient(180deg, #160d0d 0%, #070505 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.03),
+    0 0 24px rgba(184,147,57,0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.spirit-card::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+
+.spirit-card-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.spirit-card-eyebrow {
+  margin-bottom: 10px;
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 2.3px;
+  text-transform: uppercase;
+}
+
+.spirit-card-title {
+  margin: 0 0 12px;
+  color: #fff;
+  font-size: 28px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.spirit-card-text {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.spirit-placeholder {
+  color: rgba(242,237,227,0.62);
+  font-size: 14px;
+  line-height: 1.7;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.spirit-actions {
+  padding: 8px 20px 0;
+  display: flex;
+  gap: 12px;
+}
+
+.spirit-draw-btn {
+  width: 100%;
+}
+
+@media (max-width: 700px) {
+  .spirit-stage {
+    min-height: 360px;
+    padding: 18px 14px 8px;
+  }
+
+  .spirit-card-zone {
+    width: min(220px, 78vw);
+    height: 280px;
+    margin-top: 76px;
+  }
+
+  .spirit-card-title {
+    font-size: 22px;
+  }
+
+  .spirit-actions {
+    padding: 8px 14px 0;
+  }
+}
