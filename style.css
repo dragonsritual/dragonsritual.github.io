@@ -804,3 +804,180 @@ input {
     padding: 10px 14px 16px;
   }
 }
+
+/* =========================================
+   GLOBAL PAGE STRUCTURE FIX
+   Makes pages feel centered + less stretched
+========================================= */
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* main page content should hold the center area */
+.page-shell,
+.page-main,
+main {
+  flex: 1 0 auto;
+}
+
+/* if a page uses a central hero/content block */
+.page-focus,
+.tab-focus,
+.section-focus,
+.content-focus,
+.center-stage {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   COMPACT FOOTER SYSTEM
+   Replaces long stacked mobile sections
+========================================= */
+
+.compact-footer {
+  margin-top: auto;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background:
+    linear-gradient(to bottom, rgba(10,12,20,0.86), rgba(5,7,14,0.96));
+  backdrop-filter: blur(8px);
+}
+
+.compact-footer-inner {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 18px 18px 20px;
+  display: grid;
+  gap: 14px;
+}
+
+.compact-footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.compact-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.compact-footer-brand strong {
+  font-size: 0.96rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.compact-footer-brand span {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.66);
+}
+
+.compact-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.compact-footer-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.88);
+  text-decoration: none;
+  font-size: 0.83rem;
+  line-height: 1;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.compact-footer-links a:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,215,120,0.35);
+  background: rgba(255,215,120,0.08);
+}
+
+.compact-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
+.compact-footer-note,
+.compact-footer-copy {
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.54);
+}
+
+/* =========================================
+   MOBILE COMPRESSION
+========================================= */
+
+@media (max-width: 700px) {
+  .compact-footer-inner {
+    padding: 14px 14px 16px;
+    gap: 10px;
+  }
+
+  .compact-footer-top {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .compact-footer-links {
+    width: 100%;
+    gap: 7px;
+  }
+
+  .compact-footer-links a {
+    min-height: 32px;
+    padding: 7px 10px;
+    font-size: 0.78rem;
+  }
+
+  .compact-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+/* =========================================
+   KILL THE LONG MOBILE STACK SECTIONS
+   This is the part you said you hate
+========================================= */
+
+@media (max-width: 700px) {
+  .outer-signal,
+  .dragon-routes,
+  .outer-links,
+  .go-next,
+  .next-signals,
+  .route-grid,
+  .signal-grid,
+  .links-grid,
+  .footer-panels,
+  .lower-page-stack,
+  .page-after-content {
+    display: none !important;
+  }
+}
