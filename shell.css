@@ -700,7 +700,10 @@ body {
 
   .center-grid-two,
   .center-grid-three,
-  .network-grid {
+  .network-grid,
+  .editorial-inset-row,
+  .feed-editorial-shell,
+  .feed-ad-layout {
     grid-template-columns: 1fr;
   }
 
@@ -708,20 +711,16 @@ body {
     min-height: auto;
   }
 
-  .feed-ad-layout {
-  grid-template-columns: 1fr;
-}
-
-.promo-frame-art {
-  min-height: 320px;
-}
-  
   .center-scroll {
     height: auto;
     max-height: none;
   }
-}
 
+  .promo-frame-art,
+  .editorial-rail-art {
+    min-height: 320px;
+  }
+}
 @media (max-width: 700px) {
   .dashboard-shell {
     padding: 14px 12px 20px;
