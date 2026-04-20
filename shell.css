@@ -353,8 +353,7 @@ body {
 
   .center-grid-two,
   .center-grid-three,
-  .network-grid,
-  .feed-ad-layout {
+  .network-grid {
     grid-template-columns: 1fr;
   }
 
@@ -366,136 +365,6 @@ body {
     height: auto;
     max-height: none;
   }
-
-  .promo-frame-art {
-    min-height: 320px;
-  }
-}
-
-.feed-ad-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.7fr) 280px;
-  gap: 14px;
-  align-items: stretch;
-}
-
-.news-log-box,
-.promo-frame-box {
-  min-height: 100%;
-}
-
-.news-log-box {
-  display: flex;
-  flex-direction: column;
-}
-
-.news-log-entry {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.news-log-entry.compact {
-  gap: 8px;
-}
-
-.news-log-title {
-  margin: 0;
-  color: #fff;
-  font-size: 30px;
-  line-height: 1.06;
-}
-
-.news-log-subtitle {
-  margin: 0;
-  color: #fff;
-  font-size: 18px;
-  line-height: 1.2;
-}
-
-.news-log-meta {
-  margin: 0;
-  color: rgba(232,226,215,0.54);
-  font-size: 12px;
-  letter-spacing: 1.3px;
-  text-transform: uppercase;
-}
-
-.news-log-body {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.news-log-body p {
-  margin: 0;
-  color: rgba(232,226,215,0.78);
-  font-size: 18px;
-  line-height: 1.72;
-}
-
-.news-log-divider {
-  height: 1px;
-  margin: 18px 0;
-  background: rgba(255,255,255,0.07);
-}
-
-.news-log-list {
-  margin: 0;
-  padding-left: 18px;
-  color: rgba(232,226,215,0.74);
-  display: grid;
-  gap: 8px;
-  font-size: 15px;
-  line-height: 1.55;
-}
-
-.promo-frame-box {
-  display: flex;
-  flex-direction: column;
-}
-
-.promo-frame-art {
-  flex: 1 1 auto;
-  min-height: 100%;
-  display: flex;
-  align-items: flex-end;
-  border: 1px solid rgba(185,185,185,0.16);
-  background:
-    linear-gradient(180deg, rgba(20,20,22,0.18), rgba(8,8,10,0.72)),
-    radial-gradient(circle at 50% 18%, rgba(197,163,90,0.12), transparent 30%),
-    url('https://placehold.co/700x1100/1e1e22/e8e2d7?text=FEATURED+AD') center/cover no-repeat;
-  margin-bottom: 12px;
-  overflow: hidden;
-}
-
-.promo-frame-overlay {
-  width: 100%;
-  padding: 18px;
-  background: linear-gradient(to top, rgba(8,8,10,0.88), rgba(8,8,10,0.28));
-}
-
-.promo-kicker {
-  display: inline-block;
-  margin-bottom: 8px;
-  color: #c5a35a;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.promo-title {
-  margin: 0 0 10px;
-  color: #fff;
-  font-size: 26px;
-  line-height: 1.02;
-}
-
-.promo-text {
-  margin: 0;
-  color: rgba(232,226,215,0.74);
-  font-size: 14px;
-  line-height: 1.6;
 }
 
 @media (max-width: 700px) {
