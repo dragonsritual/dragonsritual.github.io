@@ -1212,3 +1212,7 @@ body.article-mode .article-pullquote {
   font-size: 20px;
   font-style: italic;
 }
+
+.article-page-shell {
+  max-width: 820px;
+}
