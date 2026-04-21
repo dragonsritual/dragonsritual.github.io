@@ -10,7 +10,7 @@ body {
   overflow: hidden;
 }
 
-.shell-page {
+.shell-page {.logo-panel-image {
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;
@@ -1224,6 +1224,8 @@ body.article-mode .article-pullquote {
 .logo-panel-image-wrap {
   aspect-ratio: 1 / 1;
   width: 100%;
+  max-width: 180px;
+  margin: 0 auto;
   border: 1px solid rgba(185,185,185,0.16);
   background: rgba(255,255,255,0.045);
   overflow: hidden;
@@ -1233,5 +1235,5 @@ body.article-mode .article-pullquote {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
