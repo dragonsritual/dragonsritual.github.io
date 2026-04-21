@@ -209,16 +209,23 @@ body {
 
 .center-panel {
   display: none;
+  min-height: 0;
+  height: 100%;
 }
 
 .center-panel.active {
-  display: block;
+  display: flex;
+  min-height: 0;
+  height: 100%;
 }
 
 .center-scroll {
+  width: 100%;
   height: 100%;
   min-height: 0;
+  flex: 1 1 auto;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 14px;
   display: flex;
   flex-direction: column;
@@ -239,6 +246,20 @@ body {
   background: linear-gradient(to bottom, rgba(170,170,170,0.62), rgba(197,163,90,0.36));
   border: 1px solid rgba(255,255,255,0.08);
 }
+
+.center-frame {
+  display: flex;
+  flex-direction: column;
+}
+
+.feed-editorial-shell,
+.feature-stack,
+.signal-list,
+.network-grid,
+.center-grid-two,
+.center-grid-three {
+  min-width: 0;
+}             
 
 .site-header {
   flex: 0 0 auto;
