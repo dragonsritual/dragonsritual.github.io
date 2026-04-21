@@ -10,7 +10,7 @@ body {
   overflow: hidden;
 }
 
-.shell-page {.logo-panel-image {
+.shell-page {
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;
@@ -1124,128 +1124,6 @@ body {
   .shell-title {
     font-size: 32px;
   }
-}
-
-/* ARTICLE PAGE FULL WIDTH FIX */
-
-.article-page-shell {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-
-.article-title {
-  font-size: 48px;
-  line-height: 1.1;
-  margin-bottom: 20px;
-}
-
-.article-dek {
-  font-size: 18px;
-  opacity: 0.8;
-  margin-bottom: 30px;
-}
-
-.article-body {
-  font-size: 18px;
-  line-height: 1.7;
-}
-
-.article-body h2 {
-  margin-top: 40px;
-  margin-bottom: 10px;
-  font-size: 26px;
-}
-
-.article-body p {
-  margin-bottom: 20px;
-}
-
-.article-pullquote {
-  margin: 40px 0;
-  padding: 20px;
-  border-left: 3px solid #3aa0ff;
-  font-size: 20px;
-  font-style: italic;
-}
-
-.article-action-panel {
-  margin-top: 60px;
-  display: grid;
-  gap: 20px;
-}
-
-.article-action-buttons {
-  display: flex;
-  gap: 12px;
-}
-
-/* FORCE ARTICLE FULLSCREEN MODE */
-
-body.article-mode .shell-page,
-body.article-mode .dashboard-shell,
-body.article-mode .shell-center,
-body.article-mode .center-frame,
-body.article-mode .center-scroll {
-  all: unset;
-}
-
-/* RESET LAYOUT */
-
-body.article-mode {
-  display: block;
-  background: #0b0b0b;
-  color: #eaeaea;
-  font-family: system-ui, sans-serif;
-}
-
-/* ARTICLE CONTAINER */
-
-body.article-mode .article-page-shell {
-  max-width: 900px;
-  margin: 80px auto;
-  padding: 0 20px;
-}
-
-/* TYPOGRAPHY */
-
-body.article-mode .article-title {
-  font-size: 48px;
-  line-height: 1.1;
-  margin-bottom: 20px;
-}
-
-body.article-mode .article-dek {
-  font-size: 18px;
-  opacity: 0.75;
-  margin-bottom: 30px;
-}
-
-body.article-mode .article-body {
-  font-size: 18px;
-  line-height: 1.7;
-}
-
-body.article-mode .article-body h2 {
-  margin-top: 40px;
-  margin-bottom: 10px;
-  font-size: 26px;
-}
-
-body.article-mode .article-body p {
-  margin-bottom: 20px;
-}
-
-body.article-mode .article-pullquote {
-  margin: 40px 0;
-  padding: 20px;
-  border-left: 3px solid #3aa0ff;
-  font-size: 20px;
-  font-style: italic;
-}
-
-.article-page-shell {
-  max-width: 820px;
 }
 
 .logo-panel-box {
