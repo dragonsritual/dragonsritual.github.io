@@ -982,4 +982,34 @@ main {
   }
 }
 
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
+.news-card {
+  display: block;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+  text-decoration: none;
+  color: #fff;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.news-card:hover {
+  border-color: rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.04);
+}
+
+.news-card h3 {
+  margin: 0 0 8px;
+  color: #fff;
+}
+
+.news-card p {
+  margin: 0;
+  color: rgba(242, 237, 227, 0.78);
+  line-height: 1.7;
+}
