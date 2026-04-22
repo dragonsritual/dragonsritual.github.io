@@ -1203,3 +1203,103 @@ body {
 .network-grid {
   min-width: 0;
 }
+
+/* =========================================================
+   FORCE CENTER-CONSOLE-ONLY SCROLL
+   Put this at the VERY BOTTOM of shell.css
+   ========================================================= */
+
+html,
+body {
+  height: 100% !important;
+}
+
+body {
+  height: 100dvh !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.shell-page {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.dashboard-shell {
+  max-width: 1380px !important;
+  margin: 0 auto !important;
+  padding: 18px !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: 220px minmax(0, 1fr) 220px !important;
+  gap: 16px !important;
+  align-items: stretch !important;
+  overflow: hidden !important;
+}
+
+.shell-rail {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.rail-stack {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.shell-center {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  overflow: hidden !important;
+}
+
+.center-frame {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.center-panel {
+  display: none !important;
+  min-height: 0 !important;
+  height: 100% !important;
+}
+
+.center-panel.active {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  height: 100% !important;
+}
+
+.center-scroll {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+}
