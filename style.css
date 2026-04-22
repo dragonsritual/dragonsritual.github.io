@@ -1217,6 +1217,48 @@ main {
   font-size: 0.76rem;
 }
 
+.issue-masthead {
+  margin-bottom: 28px;
+}
+
+.center-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  padding: 0 0 4px;
+  border-bottom: 1px solid rgba(232, 226, 215, 0.12);
+  backdrop-filter: blur(10px);
+}
+
+.center-tab {
+  padding: 7px 12px;
+  min-height: 34px;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.center-tab.active {
+  border-color: rgba(232, 226, 215, 0.32);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.issue-spread-header {
+  margin-bottom: 28px;
+}
+
+.issue-page-no {
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  background: rgba(255,255,255,0.04);
+}
+
 @media (max-width: 900px) {
   .issue-masthead-main {
     grid-template-columns: 1fr;
@@ -1231,28 +1273,16 @@ main {
     flex-wrap: wrap;
   }
 
-  .issue-masthead {
-  margin-bottom: 28px; /* increase from current */
-}
-
   .center-tabs {
-  margin-top: 10px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid rgba(232,226,215,0.12);
-}
+    gap: 3px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+  }
 
-.center-tab.active {
-  border-color: rgba(232,226,215,0.4);
-  background: rgba(255,255,255,0.06);
-}
-
-  .issue-spread-header {
-  margin-bottom: 28px;
-}
-
-  .issue-page-no {
-  font-size: 0.82rem;
-  letter-spacing: 0.22em;
-  background: rgba(255,255,255,0.04);
-}
+  .center-tab {
+    flex: 0 0 auto;
+    padding: 7px 10px;
+    font-size: 0.64rem;
+  }
 }
