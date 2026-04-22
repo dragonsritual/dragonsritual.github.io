@@ -200,40 +200,41 @@ body {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  gap: 14px;
   border: 1px solid rgba(182, 182, 182, 0.26);
-  background:
-    linear-gradient(180deg, rgba(52, 52, 54, 0.98), rgba(28, 28, 30, 0.98));
+  background: linear-gradient(180deg, rgba(52, 52, 54, 0.98), rgba(28, 28, 30, 0.98));
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.04),
     0 12px 28px rgba(0,0,0,0.24);
-  overflow: visible;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(170,170,170,0.60) rgba(255,255,255,0.08);
 }
 
 .center-panel {
-  display: none;
+  display: block;
   min-height: 0;
   height: auto;
+  scroll-margin-top: 8px;
 }
+
 .center-panel.active {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  height: auto;
+  display: block;
 }
 
 .center-scroll {
   width: 100%;
-  height: 100%;
+  height: auto;
   min-height: 0;
-  flex: 1 1 auto;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 14px;
+  flex: 0 0 auto;
+  overflow: visible;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(170,170,170,0.60) rgba(255,255,255,0.08);
 }
 
 .feed-editorial-shell,
@@ -242,15 +243,15 @@ body {
   min-width: 0;
 }            
 
-.center-scroll::-webkit-scrollbar {
+.center-frame::-webkit-scrollbar {
   width: 10px;
 }
 
-.center-scroll::-webkit-scrollbar-track {
+.center-frame::-webkit-scrollbar-track {
   background: rgba(255,255,255,0.06);
 }
 
-.center-scroll::-webkit-scrollbar-thumb {
+.center-frame::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, rgba(170,170,170,0.62), rgba(197,163,90,0.36));
   border: 1px solid rgba(255,255,255,0.08);
 }
