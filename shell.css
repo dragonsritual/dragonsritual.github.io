@@ -1303,3 +1303,80 @@ body {
   flex-direction: column !important;
   gap: 14px !important;
 }
+
+/* =========================================================
+   FINAL ISSUE TAB BAR OVERRIDE
+   Thin, attached, clean, no visible scrollbar
+   ========================================================= */
+
+.center-tabs {
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  min-width: 0 !important;
+  width: 100% !important;
+
+  margin: 0 !important;
+  padding: 4px 0 6px !important;
+
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: none !important;
+
+  border-bottom: 1px solid rgba(232, 226, 215, 0.10) !important;
+  background: transparent !important;
+}
+
+.center-tabs::-webkit-scrollbar {
+  display: none !important;
+}
+
+.center-tab {
+  flex: 0 0 auto !important;
+  appearance: none !important;
+  cursor: pointer !important;
+
+  min-height: 24px !important;
+  padding: 4px 10px !important;
+
+  border: 1px solid rgba(182, 182, 182, 0.16) !important;
+  background: rgba(255, 255, 255, 0.025) !important;
+  color: #e8e2d7 !important;
+
+  font-size: 11px !important;
+  line-height: 1 !important;
+  letter-spacing: 1.2px !important;
+  text-transform: uppercase !important;
+
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  white-space: nowrap !important;
+
+  transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease !important;
+}
+
+.center-tab:hover {
+  border-color: rgba(197, 163, 90, 0.26) !important;
+  background: rgba(197, 163, 90, 0.06) !important;
+}
+
+.center-tab.active {
+  border-color: rgba(197, 163, 90, 0.38) !important;
+  background: rgba(197, 163, 90, 0.10) !important;
+  color: #f2ede3 !important;
+}
+
+@media (max-width: 900px) {
+  .center-tabs {
+    gap: 4px !important;
+    padding: 3px 0 5px !important;
+  }
+
+  .center-tab {
+    min-height: 22px !important;
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+    letter-spacing: 1px !important;
+  }
+}
