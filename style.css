@@ -1245,4 +1245,14 @@ main {
   border-color: rgba(232,226,215,0.4);
   background: rgba(255,255,255,0.06);
 }
+
+  .issue-spread-header {
+  margin-bottom: 28px;
+}
+
+  .issue-page-no {
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  background: rgba(255,255,255,0.04);
+}
 }
