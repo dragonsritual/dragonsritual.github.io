@@ -195,7 +195,6 @@ body {
 .center-frame {
   min-width: 0;
   min-height: 0;
-  height: 100%;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -205,20 +204,19 @@ body {
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.04),
     0 12px 28px rgba(0,0,0,0.24);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .center-panel {
   display: none;
   min-height: 0;
-  height: 100%;
+  height: auto;
 }
-
 .center-panel.active {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  height: 100%;
+  height: auto;
 }
 
 .center-scroll {
@@ -1159,23 +1157,22 @@ body {
   min-width: 0;
   min-height: 0;
   flex: 1 1 auto;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .center-panel {
   display: none;
   min-height: 0;
-  height: 100%;
+  height: auto;
 }
 
 .center-panel.active {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  height: 100%;
+  height: auto;
 }
 
 .center-scroll {
