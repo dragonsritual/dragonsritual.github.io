@@ -1230,4 +1230,19 @@ main {
   .issue-spread-meta {
     flex-wrap: wrap;
   }
+
+  .issue-masthead {
+  margin-bottom: 28px; /* increase from current */
+}
+
+  .center-tabs {
+  margin-top: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(232,226,215,0.12);
+}
+
+.center-tab.active {
+  border-color: rgba(232,226,215,0.4);
+  background: rgba(255,255,255,0.06);
+}
 }
