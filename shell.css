@@ -1380,3 +1380,80 @@ body {
     letter-spacing: 1px !important;
   }
 }
+
+/* =========================================================
+   FORCE TAB BAR TO ONE THIN ROW
+   ========================================================= */
+
+.shell-center > .center-tabs {
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 4px !important;
+
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  max-height: 28px !important;
+
+  margin: 0 0 6px 0 !important;
+  padding: 0 14px 0 0 !important;
+
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+
+  border-bottom: 1px solid rgba(232, 226, 215, 0.08) !important;
+  background: transparent !important;
+
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.shell-center > .center-tabs::-webkit-scrollbar {
+  height: 0 !important;
+  width: 0 !important;
+  display: none !important;
+}
+
+.shell-center > .center-tabs .center-tab,
+.shell-center > .center-tabs > .center-tab {
+  flex: 0 0 auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  padding: 0 9px !important;
+  margin: 0 !important;
+
+  border: 1px solid rgba(182, 182, 182, 0.14) !important;
+  border-radius: 0 !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  box-shadow: none !important;
+
+  color: #e8e2d7 !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+
+  overflow: hidden !important;
+}
+
+.shell-center > .center-tabs .center-tab:hover,
+.shell-center > .center-tabs > .center-tab:hover {
+  border-color: rgba(197, 163, 90, 0.24) !important;
+  background: rgba(197, 163, 90, 0.05) !important;
+}
+
+.shell-center > .center-tabs .center-tab.active,
+.shell-center > .center-tabs > .center-tab.active {
+  border-color: rgba(197, 163, 90, 0.34) !important;
+  background: rgba(197, 163, 90, 0.08) !important;
+  color: #f2ede3 !important;
+}
