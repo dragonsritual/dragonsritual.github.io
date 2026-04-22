@@ -558,21 +558,50 @@
   </footer>
 
   <script>
-    const centerTabs = document.querySelectorAll('.center-tab');
-    const centerPanels = document.querySelectorAll('.center-panel');
+const centerTabs = document.querySelectorAll('.center-tab');
+const centerPanels = document.querySelectorAll('.center-panel');
+const centerFrame = document.querySelector('.center-frame');
 
+if (centerFrame && centerTabs.length && centerPanels.length) {
+  const setActiveTab = (panelId) => {
     centerTabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const target = tab.dataset.panel;
-
-        centerTabs.forEach((btn) => btn.classList.remove('active'));
-        centerPanels.forEach((panel) => panel.classList.remove('active'));
-
-        tab.classList.add('active');
-        document.getElementById(target).classList.add('active');
-      });
+      tab.classList.toggle('active', tab.dataset.panel === panelId);
     });
-  </script>
+  };
+
+  centerTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const targetPanel = document.getElementById(tab.dataset.panel);
+      if (!targetPanel) return;
+
+      const targetTop = targetPanel.offsetTop - 8;
+
+      centerFrame.scrollTo({
+        top: targetTop,
+        behavior: 'smooth'
+      });
+
+      setActiveTab(tab.dataset.panel);
+    });
+  });
+
+  const updateActiveTabOnScroll = () => {
+    let currentPanelId = centerPanels[0].id;
+    const frameTop = centerFrame.scrollTop;
+
+    centerPanels.forEach((panel) => {
+      if (panel.offsetTop - 60 <= frameTop) {
+        currentPanelId = panel.id;
+      }
+    });
+
+    setActiveTab(currentPanelId);
+  };
+
+  centerFrame.addEventListener('scroll', updateActiveTabOnScroll);
+  updateActiveTabOnScroll();
+}
+</script>
 
 </body>
 </html>
