@@ -15,9 +15,8 @@ body {
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
 }
-
 .dashboard-shell {
   max-width: 1380px;
   margin: 0 auto;
@@ -1157,28 +1156,32 @@ body {
   min-width: 0;
   min-height: 0;
   flex: 1 1 auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .center-panel {
   display: none;
   min-height: 0;
-  height: auto;
+  height: 100%;
 }
 
 .center-panel.active {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  height: auto;
+  height: 100%;
 }
 
 .center-scroll {
   width: 100%;
-  height: auto;
-  overflow: visible;
+  height: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 14px;
   display: flex;
   flex-direction: column;
