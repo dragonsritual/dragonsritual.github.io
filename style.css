@@ -762,9 +762,9 @@ blockquote {
 }
 
 /* =========================================================
-   FIXED DESKTOP JOURNAL LAYOUT
-   Header, sidebar, masthead, and footer remain visible.
-   Only journal entries scroll.
+   FIXED DESKTOP SITE FRAME
+   Header, sidebar, and footer remain visible.
+   The entire right-side journal panel scrolls.
    ========================================================= */
 
 @media (min-width: 851px) {
@@ -808,36 +808,11 @@ blockquote {
 
   .journal-panel {
     min-height: 0;
-    overflow: hidden;
-
-    display: grid;
-    grid-template-rows:
-      auto
-      auto
-      auto
-      minmax(0, 1fr);
-
-    padding-bottom: 0;
-  }
-
-  .journal-masthead {
-    flex-shrink: 0;
-  }
-
-  .journal-introduction {
-    flex-shrink: 0;
-  }
-
-  .heavy-rule {
-    flex-shrink: 0;
-  }
-
-  .journal-scroll {
-    min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
 
-    padding-right: 20px;
+    display: block;
+
     padding-bottom: 38px;
 
     scrollbar-width: thin;
@@ -846,23 +821,28 @@ blockquote {
       var(--paper-dark);
   }
 
-  .journal-scroll::-webkit-scrollbar {
+  .journal-scroll {
+    overflow: visible;
+
+    padding-right: 20px;
+    padding-bottom: 0;
+  }
+
+  .journal-panel::-webkit-scrollbar {
     width: 12px;
   }
 
-  .journal-scroll::-webkit-scrollbar-track {
+  .journal-panel::-webkit-scrollbar-track {
     background: var(--paper-dark);
-
     border-left: 1px solid var(--line);
   }
 
-  .journal-scroll::-webkit-scrollbar-thumb {
+  .journal-panel::-webkit-scrollbar-thumb {
     background: var(--aged-crimson);
-
     border: 2px solid var(--paper-dark);
   }
 
-  .journal-scroll::-webkit-scrollbar-thumb:hover {
+  .journal-panel::-webkit-scrollbar-thumb:hover {
     background: var(--aged-crimson-dark);
   }
 }
@@ -924,20 +904,5 @@ blockquote {
 
   .heavy-rule {
     margin-bottom: 18px;
-  }
-}
-
-/* On very short desktop screens, let the entire journal panel scroll. */
-@media (min-width: 851px) and (max-height: 680px) {
-  .journal-panel {
-    display: block;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-bottom: 30px;
-  }
-
-  .journal-scroll {
-    overflow: visible;
-    padding-right: 0;
   }
 }
