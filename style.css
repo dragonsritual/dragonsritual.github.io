@@ -1,311 +1,762 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <meta
-    name="description"
-    content="DragonsRitual — a fantasy development journal about games, worlds, art, lore, and strange experiments."
-  >
-
-  <title>DragonsRitual — Journal of Worlds</title>
-
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-  <div class="site-frame">
-
-    <header class="site-header">
-      <a class="site-title" href="index.html" aria-label="DragonsRitual home">
-        DRAGONSRITUAL
-      </a>
-
-      <div class="site-subtitle">
-        A Journal of Worlds, Games &amp; Strange Things
-      </div>
-
-      <div class="issue-mark">
-        VOL. I · 2026
-      </div>
-    </header>
-
-    <div class="site-body">
-
-      <aside class="left-rail">
-
-        <nav class="main-menu" aria-label="Main navigation">
-          <div class="rail-heading">MAIN DIRECTORY</div>
-
-          <a class="active" href="index.html">Home</a>
-          <a href="news.html">Journal</a>
-          <a href="article.html">Featured Entry</a>
-          <a href="archive.html">Archive</a>
-          <a href="about.html">About DragonsRitual</a>
-          <a href="links.html">Links &amp; Allies</a>
-        </nav>
-
-        <section class="rail-box event-box">
-          <div class="rail-heading">IMPORTANT EVENT</div>
-
-          <p class="eyebrow">Open Call · Autumn 2026</p>
-
-          <h2>Fantasy Art Contest</h2>
-
-          <p>
-            Submit an original creature, relic, landscape, or character
-            from a world of your own making.
-          </p>
-
-          <a class="rail-action" href="#">
-            Submission details →
-          </a>
-        </section>
-
-        <section class="rail-box ad-box">
-          <div class="rail-heading">NOTICE FROM THE ROAD</div>
-
-          <p class="ad-label">SPONSORED MESSAGE / HOUSE AD</p>
-
-          <h2>Your Important Ad Here</h2>
-
-          <p>
-            A permanent old-web advertisement space for a game,
-            artist, shop, book, tool, or DragonsRitual project.
-          </p>
-
-          <a class="rail-action" href="#">
-            Visit the advertiser →
-          </a>
-        </section>
-
-        <section class="rail-box interactive-box">
-          <div class="rail-heading">INTERACTIVE CHAMBER</div>
-
-          <h2>The Missing Relic</h2>
-
-          <p>
-            Enter the puzzle room, uncover the hidden word,
-            and unlock a fragment of forgotten lore.
-          </p>
-
-          <a class="chamber-button" href="ritual.html">
-            Enter the Chamber
-          </a>
-
-          <div class="small-links">
-            <a href="radio.html">Radio</a>
-            <span>·</span>
-            <a href="tv.html">TV</a>
-            <span>·</span>
-            <a href="station.html">Station</a>
-          </div>
-        </section>
-
-        <section class="rail-box dispatch-box">
-          <div class="rail-heading">LATEST DISPATCHES</div>
-
-          <ol>
-            <li>
-              <a href="#entry-one">Building a World That Remembers</a>
-            </li>
-
-            <li>
-              <a href="#entry-two">The Shape of the Wilderness</a>
-            </li>
-
-            <li>
-              <a href="#entry-three">Separating Tools from Weapons</a>
-            </li>
-          </ol>
-        </section>
-
-      </aside>
-
-      <main class="journal-panel">
-
-        <div class="journal-masthead">
-          <div>
-            <p class="kicker">THE DRAGONSRITUAL JOURNAL</p>
-            <h1>Notes From the Ritual Desk</h1>
-          </div>
-
-          <div class="page-mark">
-            PAGE 01
-          </div>
-        </div>
-
-        <p class="journal-introduction">
-          DragonsRitual is a journal about building fantasy worlds:
-          games, creatures, systems, artwork, tools, forgotten websites,
-          experiments, and the ideas discovered along the way.
-        </p>
-
-        <div class="heavy-rule"></div>
-
-        <article class="journal-entry featured-entry" id="entry-one">
-          <header class="entry-header">
-            <div class="entry-meta">
-              24 JULY 2026 · DEVELOPMENT JOURNAL · ENTRY 001
-            </div>
-
-            <h2>
-              <a href="article.html">Building a World That Remembers</a>
-            </h2>
-
-            <p class="entry-deck">
-              The first real question is not how large the world should be.
-              It is whether the places inside it can remember what happened there.
-            </p>
-          </header>
-
-          <div class="entry-body">
-            <p class="drop-cap">
-              I have been thinking about what makes an old fantasy world feel
-              believable. It is rarely the number of quests, enemies, or map tiles.
-              It is the sense that the world existed before the player arrived
-              and continues to carry the marks left behind.
-            </p>
-
-            <p>
-              A tree should not simply disappear when it is cut. A stump remains.
-              The logs fall in the direction of the strike. A clearing slowly
-              becomes a camp, then a shelter, then perhaps a settlement with its
-              own history.
-            </p>
-
-            <blockquote>
-              The goal is not merely to build a large map. The goal is to create
-              places that begin to belong to the player.
-            </blockquote>
-
-            <p>
-              That principle now guides the work: gathering, construction,
-              followers, weather, creatures, roads, abandoned buildings, and
-              every system that will eventually touch the wilderness.
-            </p>
-          </div>
-
-          <footer class="entry-footer">
-            <div>
-              Filed under:
-              <a href="#">Worldbuilding</a>,
-              <a href="#">Game Development</a>
-            </div>
-
-            <a class="continue-link" href="article.html">
-              Continue reading →
-            </a>
-          </footer>
-        </article>
-
-        <div class="entry-divider"></div>
-
-        <article class="journal-entry" id="entry-two">
-          <header class="entry-header">
-            <div class="entry-meta">
-              22 JULY 2026 · FIELD NOTES · ENTRY 002
-            </div>
-
-            <h2>
-              <a href="#">The Shape of the Wilderness</a>
-            </h2>
-
-            <p class="entry-deck">
-              Trees, stones, water, and grass are only the beginning.
-              The wilderness needs recognizable places and useful memories.
-            </p>
-          </header>
-
-          <div class="entry-body compact">
-            <p>
-              The earliest version of the world contains clustered trees,
-              stone deposits, ponds, workers, and simple gathering. The next
-              stage is to make those systems feel connected rather than placed
-              beside one another.
-            </p>
-          </div>
-
-          <footer class="entry-footer">
-            <div>
-              Filed under:
-              <a href="#">The World</a>
-            </div>
-
-            <a class="continue-link" href="#">
-              Read entry →
-            </a>
-          </footer>
-        </article>
-
-        <div class="entry-divider"></div>
-
-        <article class="journal-entry" id="entry-three">
-          <header class="entry-header">
-            <div class="entry-meta">
-              19 JULY 2026 · WORKSHOP LOG · ENTRY 003
-            </div>
-
-            <h2>
-              <a href="#">Separating Tools from Weapons</a>
-            </h2>
-
-            <p class="entry-deck">
-              A woodcutting axe and a battle axe may share a silhouette,
-              but they should not share the same purpose, rhythm, or animation.
-            </p>
-          </header>
-
-          <div class="entry-body compact">
-            <p>
-              Working animations belong to professions and resources.
-              Combat animations belong to weapons and danger. Keeping those
-              systems separate now will make both of them stronger later.
-            </p>
-          </div>
-
-          <footer class="entry-footer">
-            <div>
-              Filed under:
-              <a href="#">Workshop</a>,
-              <a href="#">Animation</a>
-            </div>
-
-            <a class="continue-link" href="#">
-              Read entry →
-            </a>
-          </footer>
-        </article>
-
-        <nav class="journal-pagination" aria-label="Journal pages">
-          <span class="disabled">← Newer entries</span>
-          <span>PAGE 1 OF 1</span>
-          <a href="archive.html">Older entries →</a>
-        </nav>
-
-      </main>
-
-    </div>
-
-    <footer class="site-footer">
-      <div>
-        © 2026 DragonsRitual
-      </div>
-
-      <div>
-        Games · Art · Lore · Worlds · Strange Pages
-      </div>
-
-      <div>
-        <a href="archive.html">Archive</a>
-        <span>·</span>
-        <a href="about.html">About</a>
-        <span>·</span>
-        <a href="links.html">Links</a>
-      </div>
-    </footer>
-
-  </div>
-</body>
-</html>
+/* =========================================================
+   DRAGONSRITUAL BLOG REBUILD — VERSION 1
+   1990s / early-2000s fantasy journal direction
+   ========================================================= */
+
+:root {
+  --aged-crimson: #8d1d1c;
+  --aged-crimson-light: #a34b48;
+  --aged-crimson-dark: #5f1515;
+
+  --outer-dark: #15100d;
+  --outer-brown: #241912;
+
+  --paper: #ead7a7;
+  --paper-light: #f3e6c5;
+  --paper-dark: #d7bd83;
+  --paper-muted: #dfca98;
+
+  --ink: #1c0e08;
+  --ink-soft: #4a3327;
+  --line: #26150d;
+
+  --gold: #c39435;
+  --gold-light: #e0bd68;
+
+  --sidebar-width: 276px;
+  --page-max: 1420px;
+}
+
+/* ---------- Reset ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--outer-dark);
+  color: var(--ink);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(141, 29, 28, 0.14),
+      transparent 44rem
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.012) 0,
+      rgba(255, 255, 255, 0.012) 1px,
+      transparent 1px,
+      transparent 5px
+    ),
+    var(--outer-dark);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 15px;
+  line-height: 1.62;
+}
+
+a {
+  color: var(--aged-crimson);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--aged-crimson-dark);
+  background: rgba(195, 148, 53, 0.14);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ---------- Outer frame ---------- */
+
+.site-frame {
+  width: min(calc(100% - 20px), var(--page-max));
+  margin: 10px auto;
+
+  border: 5px solid #050403;
+  outline: 1px solid var(--paper-dark);
+
+  background: var(--paper);
+  box-shadow:
+    0 0 0 2px var(--outer-brown),
+    0 18px 60px rgba(0, 0, 0, 0.48);
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  min-height: 112px;
+  padding: 20px 28px;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "title issue"
+    "subtitle issue";
+  align-items: center;
+  gap: 0 24px;
+
+  border-bottom: 4px double var(--line);
+
+  background:
+    linear-gradient(
+      rgba(255, 255, 255, 0.08),
+      rgba(0, 0, 0, 0.03)
+    ),
+    var(--paper);
+}
+
+.site-title {
+  grid-area: title;
+  width: fit-content;
+
+  color: var(--aged-crimson);
+  background: none;
+
+  font-size: clamp(2rem, 4vw, 4.2rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  text-shadow:
+    1px 1px 0 var(--paper-light),
+    2px 2px 0 rgba(28, 14, 8, 0.18);
+}
+
+.site-title:hover {
+  color: var(--aged-crimson-dark);
+  background: none;
+}
+
+.site-subtitle {
+  grid-area: subtitle;
+
+  margin-top: 11px;
+
+  color: var(--ink-soft);
+
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.issue-mark {
+  grid-area: issue;
+
+  align-self: start;
+  padding-top: 2px;
+
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ---------- Main two-column layout ---------- */
+
+.site-body {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.left-rail {
+  padding: 22px 16px 26px;
+
+  border-right: 3px double var(--line);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.04),
+      transparent 20%,
+      transparent 80%,
+      rgba(0, 0, 0, 0.055)
+    ),
+    var(--paper-dark);
+}
+
+.journal-panel {
+  min-width: 0;
+  padding: 30px clamp(24px, 4vw, 66px) 44px;
+
+  background:
+    linear-gradient(
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0)
+    ),
+    var(--paper-light);
+}
+
+/* ---------- Left rail ---------- */
+
+.rail-heading {
+  margin-bottom: 10px;
+  padding: 6px 9px 5px;
+
+  color: var(--paper-light);
+  background: var(--ink);
+
+  border-left: 6px solid var(--aged-crimson);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 0.69rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.main-menu {
+  margin-bottom: 22px;
+}
+
+.main-menu > a {
+  display: block;
+  padding: 6px 10px;
+
+  border-bottom: 1px dotted rgba(38, 21, 13, 0.5);
+
+  color: var(--ink);
+  background: transparent;
+
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.main-menu > a::before {
+  content: "›";
+  display: inline-block;
+  width: 14px;
+
+  color: var(--aged-crimson);
+}
+
+.main-menu > a:hover,
+.main-menu > a.active {
+  color: var(--paper-light);
+  background: var(--aged-crimson);
+}
+
+.main-menu > a:hover::before,
+.main-menu > a.active::before {
+  color: var(--gold-light);
+}
+
+.rail-box {
+  margin-top: 20px;
+  padding: 0 10px 13px;
+
+  border-bottom: 2px solid var(--line);
+}
+
+.rail-box h2 {
+  margin: 8px 0 7px;
+
+  color: var(--ink);
+
+  font-size: 1.08rem;
+  line-height: 1.15;
+}
+
+.rail-box p {
+  margin: 7px 0;
+
+  font-size: 0.79rem;
+  line-height: 1.48;
+}
+
+.rail-box .eyebrow,
+.rail-box .ad-label {
+  color: var(--aged-crimson-dark);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.rail-action {
+  display: inline-block;
+  margin-top: 7px;
+
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.event-box {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(195, 148, 53, 0.16),
+      transparent 68%
+    );
+}
+
+.ad-box {
+  padding-top: 10px;
+  padding-bottom: 17px;
+
+  border: 2px dashed var(--ink);
+  background: rgba(141, 29, 28, 0.06);
+}
+
+.ad-box .rail-heading {
+  margin-top: -22px;
+}
+
+.interactive-box {
+  padding-bottom: 18px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(141, 29, 28, 0.11),
+      transparent 80%
+    );
+}
+
+.chamber-button {
+  display: block;
+  margin: 13px 0 10px;
+  padding: 9px 11px;
+
+  border: 2px solid var(--ink);
+
+  color: var(--paper-light);
+  background: var(--aged-crimson);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 0.71rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.chamber-button:hover {
+  color: var(--ink);
+  background: var(--gold-light);
+}
+
+.small-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+
+  font-size: 0.72rem;
+}
+
+.dispatch-box ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.dispatch-box li {
+  margin: 7px 0;
+
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+/* ---------- Journal header ---------- */
+
+.journal-masthead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
+
+  padding-bottom: 15px;
+  border-bottom: 5px solid var(--line);
+}
+
+.kicker {
+  margin: 0 0 5px;
+
+  color: var(--aged-crimson);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.journal-masthead h1 {
+  margin: 0;
+
+  color: var(--ink);
+
+  font-size: clamp(2rem, 4vw, 3.7rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.page-mark {
+  padding-top: 4px;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.journal-introduction {
+  max-width: 790px;
+  margin: 21px 0 23px;
+
+  color: var(--ink-soft);
+
+  font-size: 1.02rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.heavy-rule {
+  height: 2px;
+  margin-bottom: 29px;
+
+  background: var(--line);
+}
+
+/* ---------- Entries ---------- */
+
+.journal-entry {
+  max-width: 940px;
+}
+
+.entry-meta {
+  margin-bottom: 7px;
+
+  color: var(--aged-crimson);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.entry-header h2 {
+  margin: 0;
+
+  font-size: clamp(1.55rem, 3vw, 2.6rem);
+  line-height: 1.08;
+}
+
+.entry-header h2 a {
+  color: var(--ink);
+  background: none;
+
+  text-decoration: none;
+}
+
+.entry-header h2 a:hover {
+  color: var(--aged-crimson);
+  background: none;
+  text-decoration: underline;
+}
+
+.entry-deck {
+  max-width: 790px;
+  margin: 11px 0 19px;
+
+  color: var(--ink-soft);
+
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.47;
+}
+
+.entry-body {
+  max-width: 790px;
+
+  font-size: 0.98rem;
+}
+
+.entry-body.compact {
+  font-size: 0.93rem;
+}
+
+.entry-body p {
+  margin: 0 0 1.1em;
+}
+
+.drop-cap::first-letter {
+  float: left;
+
+  margin: 5px 8px 0 0;
+
+  color: var(--aged-crimson);
+
+  font-size: 4.1rem;
+  font-weight: 700;
+  line-height: 0.72;
+}
+
+blockquote {
+  margin: 24px 0;
+  padding: 13px 20px;
+
+  border-top: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+  border-left: 7px solid var(--aged-crimson);
+
+  color: var(--ink-soft);
+  background: rgba(215, 189, 131, 0.28);
+
+  font-size: 1.03rem;
+  font-style: italic;
+}
+
+.entry-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 22px;
+
+  margin-top: 19px;
+  padding-top: 10px;
+
+  border-top: 1px dotted var(--line);
+
+  font-size: 0.73rem;
+}
+
+.continue-link {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.entry-divider {
+  height: 9px;
+  margin: 36px 0;
+
+  border-top: 1px solid var(--line);
+  border-bottom: 4px solid var(--line);
+}
+
+/* ---------- Pagination ---------- */
+
+.journal-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+
+  margin-top: 42px;
+  padding-top: 14px;
+
+  border-top: 4px double var(--line);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.journal-pagination .disabled {
+  color: rgba(28, 14, 8, 0.45);
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  min-height: 54px;
+  padding: 12px 20px;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+
+  border-top: 4px double var(--line);
+
+  color: var(--paper-light);
+  background: var(--ink);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.site-footer > :nth-child(2) {
+  text-align: center;
+}
+
+.site-footer > :last-child {
+  text-align: right;
+}
+
+.site-footer a {
+  color: var(--gold-light);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 850px) {
+  .site-frame {
+    width: min(calc(100% - 10px), var(--page-max));
+    margin: 5px auto;
+  }
+
+  .site-header {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "subtitle"
+      "issue";
+  }
+
+  .issue-mark {
+    margin-top: 11px;
+    text-align: left;
+  }
+
+  .site-body {
+    display: block;
+  }
+
+  .left-rail {
+    border-right: 0;
+    border-bottom: 4px double var(--line);
+  }
+
+  .main-menu {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 12px;
+  }
+
+  .main-menu .rail-heading {
+    grid-column: 1 / -1;
+  }
+
+  .left-rail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .main-menu {
+    grid-column: 1 / -1;
+  }
+
+  .rail-box {
+    margin-top: 0;
+  }
+
+  .journal-panel {
+    padding: 28px 23px 38px;
+  }
+
+  .site-footer {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .site-footer > :nth-child(2),
+  .site-footer > :last-child {
+    text-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    font-size: 14px;
+  }
+
+  .site-header {
+    padding: 18px;
+  }
+
+  .site-subtitle {
+    line-height: 1.5;
+  }
+
+  .left-rail {
+    display: block;
+  }
+
+  .rail-box {
+    margin-top: 20px;
+  }
+
+  .journal-masthead {
+    display: block;
+  }
+
+  .page-mark {
+    margin-top: 12px;
+  }
+
+  .entry-footer {
+    display: block;
+  }
+
+  .continue-link {
+    display: inline-block;
+    margin-top: 8px;
+  }
+
+  .journal-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
