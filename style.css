@@ -760,3 +760,109 @@ blockquote {
     flex-direction: column;
   }
 }
+
+/* =========================================================
+   FIXED DESKTOP JOURNAL LAYOUT
+   Header, sidebar, masthead, and footer remain visible.
+   Only journal entries scroll.
+   ========================================================= */
+
+@media (min-width: 851px) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    min-height: 0;
+  }
+
+  .site-frame {
+    height: calc(100vh - 20px);
+    margin: 10px auto;
+
+    display: grid;
+    grid-template-rows:
+      auto
+      minmax(0, 1fr)
+      auto;
+
+    overflow: hidden;
+  }
+
+  .site-header {
+    position: relative;
+    z-index: 10;
+  }
+
+  .site-body {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .left-rail {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .journal-panel {
+    min-height: 0;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-rows:
+      auto
+      auto
+      auto
+      minmax(0, 1fr);
+
+    padding-bottom: 0;
+  }
+
+  .journal-masthead {
+    flex-shrink: 0;
+  }
+
+  .journal-introduction {
+    flex-shrink: 0;
+  }
+
+  .heavy-rule {
+    flex-shrink: 0;
+  }
+
+  .journal-scroll {
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding-right: 20px;
+    padding-bottom: 38px;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+      var(--aged-crimson)
+      var(--paper-dark);
+  }
+
+  .journal-scroll::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  .journal-scroll::-webkit-scrollbar-track {
+    background: var(--paper-dark);
+
+    border-left: 1px solid var(--line);
+  }
+
+  .journal-scroll::-webkit-scrollbar-thumb {
+    background: var(--aged-crimson);
+
+    border: 2px solid var(--paper-dark);
+  }
+
+  .journal-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--aged-crimson-dark);
+  }
+}
