@@ -1,261 +1,311 @@
-/* =========================================================
-   DRAGONSRITUAL COLOR SYSTEM
-   Provisional signature color: Aged Crimson
-   ========================================================= */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-:root {
-  --dragonsritual-red: #8d1d1c;
-  --dragonsritual-red-light: #a33e3c;
-  --dragonsritual-red-dark: #671617;
-  --dragonsritual-red-soft: rgba(141, 29, 28, 0.22);
-}
+  <meta
+    name="description"
+    content="DragonsRitual — a fantasy development journal about games, worlds, art, lore, and strange experiments."
+  >
 
-* {
-  box-sizing: border-box;
-}
+  <title>DragonsRitual — Journal of Worlds</title>
 
-body {
-  margin: 0;
-  background: #1b130f;
-  color: #20140d;
-  font-family: Georgia, "Times New Roman", serif;
-}
+  <link rel="stylesheet" href="style.css">
+</head>
 
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: #120b08;
-  color: #f6e3b1;
-  border-bottom: 3px solid var(--dragonsritual-red);
-  padding: 14px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+<body>
+  <div class="site-frame">
 
-.brand {
-  font-weight: 900;
-  letter-spacing: 3px;
-}
+    <header class="site-header">
+      <a class="site-title" href="index.html" aria-label="DragonsRitual home">
+        DRAGONSRITUAL
+      </a>
 
-nav a {
-  color: #f6e3b1;
-  margin-left: 16px;
-  text-decoration: none;
-  font-size: 14px;
-  text-transform: uppercase;
-}
+      <div class="site-subtitle">
+        A Journal of Worlds, Games &amp; Strange Things
+      </div>
 
-.magazine {
-  max-width: 1100px;
-  margin: 30px auto;
-  padding: 0 18px;
-}
+      <div class="issue-mark">
+        VOL. I · 2026
+      </div>
+    </header>
 
-.page {
-  background: #f3dfad;
-  border: 4px solid #111;
-  box-shadow: 10px 10px 0 #000;
-  margin-bottom: 38px;
-  padding: 34px;
-  position: relative;
-}
+    <div class="site-body">
 
-.page::before {
-  content: "";
-  position: absolute;
-  inset: 10px;
-  border: 1px solid rgba(0,0,0,.25);
-  pointer-events: none;
-}
+      <aside class="left-rail">
 
-.cover {
-  min-height: 620px;
-  background:
-    radial-gradient(
-  circle at center,
-  var(--dragonsritual-red-soft),
-  transparent 45%
-),
-    #e8c878;
-  text-align: center;
-}
+        <nav class="main-menu" aria-label="Main navigation">
+          <div class="rail-heading">MAIN DIRECTORY</div>
 
-.issue-label,
-.kicker,
-.tag {
-  display: inline-block;
-  background: #111;
-  color: #f6e3b1;
-  padding: 6px 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 12px;
-}
+          <a class="active" href="index.html">Home</a>
+          <a href="news.html">Journal</a>
+          <a href="article.html">Featured Entry</a>
+          <a href="archive.html">Archive</a>
+          <a href="about.html">About DragonsRitual</a>
+          <a href="links.html">Links &amp; Allies</a>
+        </nav>
 
-.cover h1 {
-  font-size: clamp(54px, 10vw, 118px);
-  margin: 30px 0 10px;
-  line-height: .85;
-  text-transform: uppercase;
-  color: var(--dragonsritual-red);
-  text-shadow: 3px 3px 0 #111;
-}
+        <section class="rail-box event-box">
+          <div class="rail-heading">IMPORTANT EVENT</div>
 
-.cover h2 {
-  font-size: 22px;
-  margin-bottom: 40px;
-}
+          <p class="eyebrow">Open Call · Autumn 2026</p>
 
-.cover-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  text-align: left;
-}
+          <h2>Fantasy Art Contest</h2>
 
-.cover-grid article,
-.sidebar,
-.question {
-  background: rgba(255,255,255,.35);
-  border: 2px solid #111;
-  padding: 18px;
-}
+          <p>
+            Submit an original creature, relic, landscape, or character
+            from a world of your own making.
+          </p>
 
-.page-number {
-  position: absolute;
-  top: 12px;
-  right: 18px;
-  font-size: 12px;
-  font-weight: bold;
-}
+          <a class="rail-action" href="#">
+            Submission details →
+          </a>
+        </section>
 
-.contents h2,
-.feature-spread h2,
-.puzzle-page h2,
-.archive h2 {
-  font-size: 46px;
-  margin-top: 10px;
-  border-bottom: 4px solid #111;
-}
+        <section class="rail-box ad-box">
+          <div class="rail-heading">NOTICE FROM THE ROAD</div>
 
-.toc-list {
-  columns: 2;
-  font-size: 24px;
-  line-height: 1.8;
-}
+          <p class="ad-label">SPONSORED MESSAGE / HOUSE AD</p>
 
-.toc-list strong {
-  color: var(--dragonsritual-red)
-  margin-right: 12px;
-}
+          <h2>Your Important Ad Here</h2>
 
-.feature-spread {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 26px;
-}
+          <p>
+            A permanent old-web advertisement space for a game,
+            artist, shop, book, tool, or DragonsRitual project.
+          </p>
 
-.feature-text p {
-  font-size: 20px;
-  line-height: 1.55;
-}
+          <a class="rail-action" href="#">
+            Visit the advertiser →
+          </a>
+        </section>
 
-.sidebar h3 {
-  margin-top: 0;
-  background: var(--dragonsritual-red)
-  color: #f6e3b1;
-  padding: 8px;
-}
+        <section class="rail-box interactive-box">
+          <div class="rail-heading">INTERACTIVE CHAMBER</div>
 
-.intro {
-  font-size: 19px;
-}
+          <h2>The Missing Relic</h2>
 
-.question {
-  margin: 20px 0;
-}
+          <p>
+            Enter the puzzle room, uncover the hidden word,
+            and unlock a fragment of forgotten lore.
+          </p>
 
-.letter-row {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
-}
+          <a class="chamber-button" href="ritual.html">
+            Enter the Chamber
+          </a>
 
-.letter-row input {
-  width: 48px;
-  height: 56px;
-  text-align: center;
-  font-size: 30px;
-  font-family: Georgia, serif;
-  font-weight: bold;
-  border: 3px solid #111;
-  background: #fff3c7;
-  text-transform: uppercase;
-}
+          <div class="small-links">
+            <a href="radio.html">Radio</a>
+            <span>·</span>
+            <a href="tv.html">TV</a>
+            <span>·</span>
+            <a href="station.html">Station</a>
+          </div>
+        </section>
 
-.letter-row input.highlight {
-  background: #ffc645;
-}
+        <section class="rail-box dispatch-box">
+          <div class="rail-heading">LATEST DISPATCHES</div>
 
-button {
-  background: #111;
-  color: #f6e3b1;
-  border: 0;
-  padding: 14px 22px;
-  font-weight: bold;
-  text-transform: uppercase;
-  cursor: pointer;
-}
+          <ol>
+            <li>
+              <a href="#entry-one">Building a World That Remembers</a>
+            </li>
 
-.hidden-word {
-  margin-top: 22px;
-  font-size: 28px;
-  font-weight: bold;
-}
+            <li>
+              <a href="#entry-two">The Shape of the Wilderness</a>
+            </li>
 
-#hiddenWord {
-  color: var(--dragonsritual-red);
-  letter-spacing: 8px;
-}
+            <li>
+              <a href="#entry-three">Separating Tools from Weapons</a>
+            </li>
+          </ol>
+        </section>
 
-#puzzleResult {
-  font-size: 20px;
-  font-weight: bold;
-}
+      </aside>
 
-footer {
-  color: #f6e3b1;
-  text-align: center;
-  padding: 30px;
-}
+      <main class="journal-panel">
 
-@media (max-width: 800px) {
-  .site-header {
-    display: block;
-    text-align: center;
-  }
+        <div class="journal-masthead">
+          <div>
+            <p class="kicker">THE DRAGONSRITUAL JOURNAL</p>
+            <h1>Notes From the Ritual Desk</h1>
+          </div>
 
-  nav {
-    margin-top: 12px;
-  }
+          <div class="page-mark">
+            PAGE 01
+          </div>
+        </div>
 
-  nav a {
-    display: inline-block;
-    margin: 6px;
-  }
+        <p class="journal-introduction">
+          DragonsRitual is a journal about building fantasy worlds:
+          games, creatures, systems, artwork, tools, forgotten websites,
+          experiments, and the ideas discovered along the way.
+        </p>
 
-  .cover-grid,
-  .feature-spread {
-    grid-template-columns: 1fr;
-  }
+        <div class="heavy-rule"></div>
 
-  .toc-list {
-    columns: 1;
-  }
+        <article class="journal-entry featured-entry" id="entry-one">
+          <header class="entry-header">
+            <div class="entry-meta">
+              24 JULY 2026 · DEVELOPMENT JOURNAL · ENTRY 001
+            </div>
 
-  .page {
-    padding: 24px;
-  }
-}
+            <h2>
+              <a href="article.html">Building a World That Remembers</a>
+            </h2>
+
+            <p class="entry-deck">
+              The first real question is not how large the world should be.
+              It is whether the places inside it can remember what happened there.
+            </p>
+          </header>
+
+          <div class="entry-body">
+            <p class="drop-cap">
+              I have been thinking about what makes an old fantasy world feel
+              believable. It is rarely the number of quests, enemies, or map tiles.
+              It is the sense that the world existed before the player arrived
+              and continues to carry the marks left behind.
+            </p>
+
+            <p>
+              A tree should not simply disappear when it is cut. A stump remains.
+              The logs fall in the direction of the strike. A clearing slowly
+              becomes a camp, then a shelter, then perhaps a settlement with its
+              own history.
+            </p>
+
+            <blockquote>
+              The goal is not merely to build a large map. The goal is to create
+              places that begin to belong to the player.
+            </blockquote>
+
+            <p>
+              That principle now guides the work: gathering, construction,
+              followers, weather, creatures, roads, abandoned buildings, and
+              every system that will eventually touch the wilderness.
+            </p>
+          </div>
+
+          <footer class="entry-footer">
+            <div>
+              Filed under:
+              <a href="#">Worldbuilding</a>,
+              <a href="#">Game Development</a>
+            </div>
+
+            <a class="continue-link" href="article.html">
+              Continue reading →
+            </a>
+          </footer>
+        </article>
+
+        <div class="entry-divider"></div>
+
+        <article class="journal-entry" id="entry-two">
+          <header class="entry-header">
+            <div class="entry-meta">
+              22 JULY 2026 · FIELD NOTES · ENTRY 002
+            </div>
+
+            <h2>
+              <a href="#">The Shape of the Wilderness</a>
+            </h2>
+
+            <p class="entry-deck">
+              Trees, stones, water, and grass are only the beginning.
+              The wilderness needs recognizable places and useful memories.
+            </p>
+          </header>
+
+          <div class="entry-body compact">
+            <p>
+              The earliest version of the world contains clustered trees,
+              stone deposits, ponds, workers, and simple gathering. The next
+              stage is to make those systems feel connected rather than placed
+              beside one another.
+            </p>
+          </div>
+
+          <footer class="entry-footer">
+            <div>
+              Filed under:
+              <a href="#">The World</a>
+            </div>
+
+            <a class="continue-link" href="#">
+              Read entry →
+            </a>
+          </footer>
+        </article>
+
+        <div class="entry-divider"></div>
+
+        <article class="journal-entry" id="entry-three">
+          <header class="entry-header">
+            <div class="entry-meta">
+              19 JULY 2026 · WORKSHOP LOG · ENTRY 003
+            </div>
+
+            <h2>
+              <a href="#">Separating Tools from Weapons</a>
+            </h2>
+
+            <p class="entry-deck">
+              A woodcutting axe and a battle axe may share a silhouette,
+              but they should not share the same purpose, rhythm, or animation.
+            </p>
+          </header>
+
+          <div class="entry-body compact">
+            <p>
+              Working animations belong to professions and resources.
+              Combat animations belong to weapons and danger. Keeping those
+              systems separate now will make both of them stronger later.
+            </p>
+          </div>
+
+          <footer class="entry-footer">
+            <div>
+              Filed under:
+              <a href="#">Workshop</a>,
+              <a href="#">Animation</a>
+            </div>
+
+            <a class="continue-link" href="#">
+              Read entry →
+            </a>
+          </footer>
+        </article>
+
+        <nav class="journal-pagination" aria-label="Journal pages">
+          <span class="disabled">← Newer entries</span>
+          <span>PAGE 1 OF 1</span>
+          <a href="archive.html">Older entries →</a>
+        </nav>
+
+      </main>
+
+    </div>
+
+    <footer class="site-footer">
+      <div>
+        © 2026 DragonsRitual
+      </div>
+
+      <div>
+        Games · Art · Lore · Worlds · Strange Pages
+      </div>
+
+      <div>
+        <a href="archive.html">Archive</a>
+        <span>·</span>
+        <a href="about.html">About</a>
+        <span>·</span>
+        <a href="links.html">Links</a>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
