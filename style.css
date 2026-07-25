@@ -1,3 +1,15 @@
+/* =========================================================
+   DRAGONSRITUAL COLOR SYSTEM
+   Provisional signature color: Aged Crimson
+   ========================================================= */
+
+:root {
+  --dragonsritual-red: #8d1d1c;
+  --dragonsritual-red-light: #a33e3c;
+  --dragonsritual-red-dark: #671617;
+  --dragonsritual-red-soft: rgba(141, 29, 28, 0.22);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -15,7 +27,7 @@ body {
   z-index: 10;
   background: #120b08;
   color: #f6e3b1;
-  border-bottom: 3px solid #a8321e;
+  border-bottom: 3px solid var(--dragonsritual-red);
   padding: 14px 24px;
   display: flex;
   justify-content: space-between;
@@ -61,7 +73,11 @@ nav a {
 .cover {
   min-height: 620px;
   background:
-    radial-gradient(circle at center, rgba(160,40,20,.25), transparent 45%),
+    radial-gradient(
+  circle at center,
+  var(--dragonsritual-red-soft),
+  transparent 45%
+),
     #e8c878;
   text-align: center;
 }
@@ -83,7 +99,7 @@ nav a {
   margin: 30px 0 10px;
   line-height: .85;
   text-transform: uppercase;
-  color: #981f16;
+  color: var(--dragonsritual-red);
   text-shadow: 3px 3px 0 #111;
 }
 
@@ -131,7 +147,7 @@ nav a {
 }
 
 .toc-list strong {
-  color: #9c2418;
+  color: var(--dragonsritual-red)
   margin-right: 12px;
 }
 
@@ -148,7 +164,7 @@ nav a {
 
 .sidebar h3 {
   margin-top: 0;
-  background: #9c2418;
+  background: var(--dragonsritual-red)
   color: #f6e3b1;
   padding: 8px;
 }
@@ -200,7 +216,7 @@ button {
 }
 
 #hiddenWord {
-  color: #9c2418;
+  color: var(--dragonsritual-red);
   letter-spacing: 8px;
 }
 
