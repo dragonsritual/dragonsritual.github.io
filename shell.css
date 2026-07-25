@@ -1462,3 +1462,17 @@ body {
   background: rgba(197, 163, 90, 0.08) !important;
   color: #f2ede3 !important;
 }
+
+/* =========================================================
+   DRAGONSRITUAL COLOR SYSTEM
+   Provisional signature color: Aged Crimson
+   ========================================================= */
+
+:root {
+  --dragonsritual-red: #8d1d1c;
+  --dragonsritual-red-light: #a73735;
+  --dragonsritual-red-dark: #641516;
+  --dragonsritual-red-soft: rgba(141, 29, 28, 0.18);
+  --dragonsritual-red-border: rgba(141, 29, 28, 0.62);
+  --dragonsritual-red-glow: rgba(141, 29, 28, 0.28);
+}
