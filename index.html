@@ -1,142 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DragonsRitual Magazine</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="DragonsRitual — a fantasy development journal about games, worlds, art, lore, and strange experiments."
+  >
+
+  <title>DragonsRitual — Journal of Worlds</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <div class="site-frame">
 
-  <header class="site-header">
-    <div class="brand">DRAGONSRITUAL</div>
-    <nav>
-      <a href="#cover">Cover</a>
-      <a href="#contents">Contents</a>
-      <a href="#hellfire">Hellfire</a>
-      <a href="#puzzle">Puzzle</a>
-      <a href="#archive">Archive</a>
-    </nav>
-  </header>
+    <header class="site-header">
+      <a class="site-title" href="index.html" aria-label="DragonsRitual home">
+        DRAGONSRITUAL
+      </a>
 
-  <main class="magazine">
-
-    <section id="cover" class="cover page">
-      <div class="issue-label">Issue 001 · Web Edition</div>
-      <h1>DragonsRitual</h1>
-      <h2>Fantasy Games · Art · Lore · Strange Pages</h2>
-
-      <div class="cover-grid">
-        <article>
-          <span class="tag">Cover Feature</span>
-          <h3>HELLFIRE</h3>
-          <p>A dark fantasy game feature begins here: monsters, relics, puzzles, art, and playable experiments from the ritual desk.</p>
-        </article>
-
-        <article>
-          <span class="tag">Inside</span>
-          <h3>The Puzzle Page</h3>
-          <p>Solve the missing letters. Find the hidden word. Unlock the next piece of lore.</p>
-        </article>
-
-        <article>
-          <span class="tag">Coming Soon</span>
-          <h3>Foldout Art</h3>
-          <p>Poster-style fantasy artwork built like an old magazine spread, but made for the web.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="contents" class="page contents">
-      <div class="page-number">PAGE 02</div>
-      <h2>Table of Contents</h2>
-
-      <div class="toc-list">
-        <div><strong>04</strong> Editor’s Note</div>
-        <div><strong>08</strong> Hellfire Preview</div>
-        <div><strong>14</strong> Bestiary File</div>
-        <div><strong>18</strong> Puzzle Page</div>
-        <div><strong>24</strong> Foldout Art</div>
-        <div><strong>32</strong> Archive Shelf</div>
-      </div>
-    </section>
-
-    <section id="hellfire" class="page feature-spread">
-      <div class="page-number">PAGE 08</div>
-      <div class="feature-text">
-        <p class="kicker">Game Feature</p>
-        <h2>HELLFIRE</h2>
-        <p>
-          A small dark fantasy project from DragonsRitual. Built around mystery, dungeon crawling,
-          strange relics, and old-school game magazine energy.
-        </p>
-        <p>
-          This page will become the first real feature spread: screenshots, creature notes,
-          development updates, and links to playable builds.
-        </p>
+      <div class="site-subtitle">
+        A Journal of Worlds, Games &amp; Strange Things
       </div>
 
-      <aside class="sidebar">
-        <h3>Field Notes</h3>
-        <p>Monsters should feel collectible. Items should feel physical. Every page should feel like it was printed, edited, and discovered.</p>
+      <div class="issue-mark">
+        VOL. I · 2026
+      </div>
+    </header>
+
+    <div class="site-body">
+
+      <aside class="left-rail">
+
+        <nav class="main-menu" aria-label="Main navigation">
+          <div class="rail-heading">MAIN DIRECTORY</div>
+
+          <a class="active" href="index.html">Home</a>
+          <a href="news.html">Journal</a>
+          <a href="article.html">Featured Entry</a>
+          <a href="archive.html">Archive</a>
+          <a href="about.html">About DragonsRitual</a>
+          <a href="links.html">Links &amp; Allies</a>
+        </nav>
+
+        <section class="rail-box event-box">
+          <div class="rail-heading">IMPORTANT EVENT</div>
+
+          <p class="eyebrow">Open Call · Autumn 2026</p>
+
+          <h2>Fantasy Art Contest</h2>
+
+          <p>
+            Submit an original creature, relic, landscape, or character
+            from a world of your own making.
+          </p>
+
+          <a class="rail-action" href="#">
+            Submission details →
+          </a>
+        </section>
+
+        <section class="rail-box ad-box">
+          <div class="rail-heading">NOTICE FROM THE ROAD</div>
+
+          <p class="ad-label">SPONSORED MESSAGE / HOUSE AD</p>
+
+          <h2>Your Important Ad Here</h2>
+
+          <p>
+            A permanent old-web advertisement space for a game,
+            artist, shop, book, tool, or DragonsRitual project.
+          </p>
+
+          <a class="rail-action" href="#">
+            Visit the advertiser →
+          </a>
+        </section>
+
+        <section class="rail-box interactive-box">
+          <div class="rail-heading">INTERACTIVE CHAMBER</div>
+
+          <h2>The Missing Relic</h2>
+
+          <p>
+            Enter the puzzle room, uncover the hidden word,
+            and unlock a fragment of forgotten lore.
+          </p>
+
+          <a class="chamber-button" href="ritual.html">
+            Enter the Chamber
+          </a>
+
+          <div class="small-links">
+            <a href="radio.html">Radio</a>
+            <span>·</span>
+            <a href="tv.html">TV</a>
+            <span>·</span>
+            <a href="station.html">Station</a>
+          </div>
+        </section>
+
+        <section class="rail-box dispatch-box">
+          <div class="rail-heading">LATEST DISPATCHES</div>
+
+          <ol>
+            <li>
+              <a href="#entry-one">Building a World That Remembers</a>
+            </li>
+
+            <li>
+              <a href="#entry-two">The Shape of the Wilderness</a>
+            </li>
+
+            <li>
+              <a href="#entry-three">Separating Tools from Weapons</a>
+            </li>
+          </ol>
+        </section>
+
       </aside>
-    </section>
 
-    <section id="puzzle" class="page puzzle-page">
-      <div class="page-number">PAGE 18</div>
-      <p class="kicker">Interactive Page</p>
-      <h2>The Missing Relic</h2>
-      <p class="intro">
-        Fill in the missing letters. The highlighted boxes reveal the hidden word below.
-      </p>
+      <main class="journal-panel">
 
-      <div class="question">
-        <h3>1. A warrior enters the crypt carrying a rusted ______.</h3>
-        <div class="letter-row" data-answer="BLADE" data-highlight="1,3">
-          <input maxlength="1">
-          <input maxlength="1" class="highlight">
-          <input maxlength="1">
-          <input maxlength="1" class="highlight">
-          <input maxlength="1">
+        <div class="journal-masthead">
+          <div>
+            <p class="kicker">THE DRAGONSRITUAL JOURNAL</p>
+            <h1>Notes From the Ritual Desk</h1>
+          </div>
+
+          <div class="page-mark">
+            PAGE 01
+          </div>
         </div>
+
+        <p class="journal-introduction">
+          DragonsRitual is a journal about building fantasy worlds:
+          games, creatures, systems, artwork, tools, forgotten websites,
+          experiments, and the ideas discovered along the way.
+        </p>
+
+        <div class="heavy-rule"></div>
+
+        <article class="journal-entry featured-entry" id="entry-one">
+          <header class="entry-header">
+            <div class="entry-meta">
+              24 JULY 2026 · DEVELOPMENT JOURNAL · ENTRY 001
+            </div>
+
+            <h2>
+              <a href="article.html">Building a World That Remembers</a>
+            </h2>
+
+            <p class="entry-deck">
+              The first real question is not how large the world should be.
+              It is whether the places inside it can remember what happened there.
+            </p>
+          </header>
+
+          <div class="entry-body">
+            <p class="drop-cap">
+              I have been thinking about what makes an old fantasy world feel
+              believable. It is rarely the number of quests, enemies, or map tiles.
+              It is the sense that the world existed before the player arrived
+              and continues to carry the marks left behind.
+            </p>
+
+            <p>
+              A tree should not simply disappear when it is cut. A stump remains.
+              The logs fall in the direction of the strike. A clearing slowly
+              becomes a camp, then a shelter, then perhaps a settlement with its
+              own history.
+            </p>
+
+            <blockquote>
+              The goal is not merely to build a large map. The goal is to create
+              places that begin to belong to the player.
+            </blockquote>
+
+            <p>
+              That principle now guides the work: gathering, construction,
+              followers, weather, creatures, roads, abandoned buildings, and
+              every system that will eventually touch the wilderness.
+            </p>
+          </div>
+
+          <footer class="entry-footer">
+            <div>
+              Filed under:
+              <a href="#">Worldbuilding</a>,
+              <a href="#">Game Development</a>
+            </div>
+
+            <a class="continue-link" href="article.html">
+              Continue reading →
+            </a>
+          </footer>
+        </article>
+
+        <div class="entry-divider"></div>
+
+        <article class="journal-entry" id="entry-two">
+          <header class="entry-header">
+            <div class="entry-meta">
+              22 JULY 2026 · FIELD NOTES · ENTRY 002
+            </div>
+
+            <h2>
+              <a href="#">The Shape of the Wilderness</a>
+            </h2>
+
+            <p class="entry-deck">
+              Trees, stones, water, and grass are only the beginning.
+              The wilderness needs recognizable places and useful memories.
+            </p>
+          </header>
+
+          <div class="entry-body compact">
+            <p>
+              The earliest version of the world contains clustered trees,
+              stone deposits, ponds, workers, and simple gathering. The next
+              stage is to make those systems feel connected rather than placed
+              beside one another.
+            </p>
+          </div>
+
+          <footer class="entry-footer">
+            <div>
+              Filed under:
+              <a href="#">The World</a>
+            </div>
+
+            <a class="continue-link" href="#">
+              Read entry →
+            </a>
+          </footer>
+        </article>
+
+        <div class="entry-divider"></div>
+
+        <article class="journal-entry" id="entry-three">
+          <header class="entry-header">
+            <div class="entry-meta">
+              19 JULY 2026 · WORKSHOP LOG · ENTRY 003
+            </div>
+
+            <h2>
+              <a href="#">Separating Tools from Weapons</a>
+            </h2>
+
+            <p class="entry-deck">
+              A woodcutting axe and a battle axe may share a silhouette,
+              but they should not share the same purpose, rhythm, or animation.
+            </p>
+          </header>
+
+          <div class="entry-body compact">
+            <p>
+              Working animations belong to professions and resources.
+              Combat animations belong to weapons and danger. Keeping those
+              systems separate now will make both of them stronger later.
+            </p>
+          </div>
+
+          <footer class="entry-footer">
+            <div>
+              Filed under:
+              <a href="#">Workshop</a>,
+              <a href="#">Animation</a>
+            </div>
+
+            <a class="continue-link" href="#">
+              Read entry →
+            </a>
+          </footer>
+        </article>
+
+        <nav class="journal-pagination" aria-label="Journal pages">
+          <span class="disabled">← Newer entries</span>
+          <span>PAGE 1 OF 1</span>
+          <a href="archive.html">Older entries →</a>
+        </nav>
+
+      </main>
+
+    </div>
+
+    <footer class="site-footer">
+      <div>
+        © 2026 DragonsRitual
       </div>
 
-      <div class="question">
-        <h3>2. A dead king wears a cracked golden ______.</h3>
-        <div class="letter-row" data-answer="CROWN" data-highlight="0,4">
-          <input maxlength="1" class="highlight">
-          <input maxlength="1">
-          <input maxlength="1">
-          <input maxlength="1">
-          <input maxlength="1" class="highlight">
-        </div>
+      <div>
+        Games · Art · Lore · Worlds · Strange Pages
       </div>
 
-      <button id="checkPuzzle">Check Answers</button>
-
-      <div class="hidden-word">
-        Hidden Word:
-        <span id="hiddenWord">____</span>
+      <div>
+        <a href="archive.html">Archive</a>
+        <span>·</span>
+        <a href="about.html">About</a>
+        <span>·</span>
+        <a href="links.html">Links</a>
       </div>
+    </footer>
 
-      <p id="puzzleResult"></p>
-    </section>
-
-    <section id="archive" class="page archive">
-      <div class="page-number">PAGE 32</div>
-      <h2>Archive Shelf</h2>
-      <p>
-        Future issues, project pages, puzzle pages, art drops, fake ads, interviews,
-        and game features will live here.
-      </p>
-    </section>
-
-  </main>
-
-  <footer>
-    © DragonsRitual · Fantasy magazine pages for games, art, lore, and experiments.
-  </footer>
-
-  <script src="script.js"></script>
+  </div>
 </body>
 </html>
