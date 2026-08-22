@@ -1,0 +1,20 @@
+DRAGON RADIO — PUBLIC RELEASE 01 LOCK
+
+1. Copy this pass into your existing DragonsRitual Astro project root.
+2. Replace matching files.
+3. Add approved MP3 files to: public/radio/audio/
+4. Add artwork to: public/radio/artwork/
+5. Edit public/radio/library.json to add tracks.
+6. Test: npm run dev
+7. Deploy:
+   git add -A
+   git commit -m "Launch Dragon Radio public release 01"
+   git push origin main
+
+PUBLIC BEHAVIOR:
+- dragonsritual.com/ is Dragon Radio.
+- /radio/ is Dragon Radio.
+- Other SiteLayout/AdminLayout pages redirect to / on production.
+- localhost remains unlocked so you can keep developing the full Dragon site privately.
+
+NOTE: GitHub Pages is static hosting, not a security boundary. This launch lock removes normal public access/navigation and redirects known Astro pages, but it is not authentication. Do not put secrets/private data in the published repository.

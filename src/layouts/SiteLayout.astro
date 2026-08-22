@@ -28,6 +28,13 @@ const {
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script is:inline>
+      (() => {
+        const local = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+        const radio = location.pathname === "/" || location.pathname.startsWith("/radio");
+        if (!local && !radio) location.replace("/");
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />

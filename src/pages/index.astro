@@ -1,12 +1,30 @@
 ---
-import SiteLayout from '../layouts/SiteLayout.astro'; import PublicHeader from '../components/PublicHeader.astro'; import PublicFooter from '../components/PublicFooter.astro'; import { listPublishedArticles, type NewsroomArticleSummary } from '../services/journal'; import { getGamingDashboard } from '../services/gamingDashboardService';
-let articles:NewsroomArticleSummary[]=[]; try{articles=(await listPublishedArticles()).slice(0,6)}catch(e){console.warn('TODAY journal unavailable',e)}
-const gaming=await getGamingDashboard(); const lead=articles[0]; const upcoming=gaming.schedule?.[0];
+import SiteLayout from '../layouts/SiteLayout.astro';
 ---
-<SiteLayout title="DragonsRitual — Today" description="A living studio for games, stories, creators, broadcasts, radio and community.">
-<PublicHeader active="today"/><main class="world-main">
-<section class="today-hero"><div class="today-lead"><span class="editorial-kicker">DRAGONSRITUAL / TODAY</span><h1>{lead?.title ?? 'Games, stories, creators and strange work worth finding.'}</h1><p>{lead?.subtitle ?? lead?.excerpt ?? 'A living independent studio and network: development, art, writing, broadcasts, creators, community and experiments collected in one place.'}</p><div class="today-lead__actions"><a class="dr-button dr-button--primary" href={lead?`/journal/${lead.slug}/`:'/projects/'}>{lead?'READ THE LEAD STORY':'ENTER PROJECTS'}</a><a class="dr-button" href="/journal/">EXPLORE STORIES</a></div></div><aside class="today-rail"><a class="signal-card" href="/live/"><span>LIVE / BROADCAST</span><h3>Enter the broadcast room</h3><p>Streams, sessions, clips and the live DragonsRitual feed.</p></a><a class="signal-card" href="/radio/"><span>RADIO</span><h3>Dark Cloud Radio</h3><p>Independent music, programs, audio and future live station activity.</p></a><a class="signal-card" href="/community/"><span>COMMUNITY</span><h3>The forum is taking shape</h3><p>Old-school discussion structure with a modern creator network behind it.</p></a></aside></section>
-<section class="editorial-section"><div class="editorial-head"><div><span class="editorial-kicker">LATEST DISPATCHES</span><h2>Stories & field notes</h2></div><p>Development journals, essays, creator features, studio reports and things worth keeping.</p></div><div class="story-grid">{articles.length?articles.slice(0,3).map(a=><a class="story-card" href={`/journal/${a.slug}/`}><time>{a.publishedAt?new Date(a.publishedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'JOURNAL'}</time><h3>{a.title}</h3><p>{a.subtitle??a.excerpt??'Open dispatch.'}</p></a>):<a class="story-card" href="/journal/"><span>NEWSROOM</span><h3>The journal is ready for the next dispatch.</h3><p>Published stories will automatically enter this front page.</p></a>}</div></section>
-<section class="editorial-section"><div class="editorial-head"><div><span class="editorial-kicker">AROUND THE RITUAL</span><h2>Choose a door</h2></div><p>Simple entrances into a much larger network.</p></div><div class="world-grid"><a class="world-door" href="/creators/"><b>Creators</b><span>Artists, writers, musicians, collaborators and featured work.</span></a><a class="world-door" href="/projects/"><b>Projects</b><span>Games, software, experiments and work currently in development.</span></a><a class="world-door" href="/live/"><b>Live</b><span>Broadcasts, gaming sessions, recordings and clips.</span></a><a class="world-door" href="/community/"><b>Community</b><span>Forum discussions, gatherings and the people around the work.</span></a></div></section>
-<section class="editorial-section"><div class="editorial-head"><div><span class="editorial-kicker">FROM THE WORKSHOP</span><h2>Current play</h2></div><p>{upcoming?`Next scheduled: ${upcoming.game} — ${upcoming.date}`:'Projects and gaming sessions feed the public record here.'}</p></div><div class="story-grid">{gaming.games.slice(0,3).map(g=><a class="story-card" href="/projects/"><span>{g.platform} · {g.status}</span><h3>{g.title}</h3><p>{g.sessions} sessions · {g.hours} hours logged · {g.progress}% progress</p></a>)}</div></section>
-</main><PublicFooter/></SiteLayout>
+<SiteLayout title="Dragon Radio — DragonsRitual" description="Dragon Radio — independent music from DragonsRitual.">
+<main class="radio-shell">
+  <header class="radio-top"><a href="/" class="radio-brand"><b>DR</b><span>DRAGON RADIO<small>DRAGONSRITUAL</small></span></a><span id="livePill" class="live-pill">● ON AIR</span></header>
+  <section class="radio-player">
+    <div class="cover-wrap"><img id="cover" src="/icons/dr-512.png" alt="Current program artwork" /></div>
+    <div class="now"><span>NOW PLAYING</span><h1 id="title">Dragon Radio</h1><p id="artist">Loading station…</p></div>
+    <div class="progress"><span id="elapsed">0:00</span><input id="seek" type="range" min="0" max="100" value="0" aria-label="Seek"/><span id="duration">0:00</span></div>
+    <div class="controls"><button id="prev" aria-label="Previous">‹‹</button><button id="play" class="play" aria-label="Play">▶</button><button id="next" aria-label="Next">››</button></div>
+    <div class="volume"><span>VOL</span><input id="volume" type="range" min="0" max="1" value="0.85" step="0.01" aria-label="Volume"/></div>
+  </section>
+  <nav class="radio-tabs radio-tabs--single"><button class="active" data-tab="queue">UP NEXT</button></nav>
+  <section id="queue" class="radio-panel active"><div id="queueList" class="queue-list"></div></section>
+  
+  <audio id="audio" preload="metadata"></audio>
+</main>
+<script>
+const audio=document.querySelector('#audio'); const play=document.querySelector('#play'); const title=document.querySelector('#title'); const artist=document.querySelector('#artist'); const cover=document.querySelector('#cover'); const queueList=document.querySelector('#queueList'); const seek=document.querySelector('#seek'); const elapsed=document.querySelector('#elapsed'); const duration=document.querySelector('#duration'); const volume=document.querySelector('#volume');
+let tracks=[],index=0;
+const fmt=s=>!Number.isFinite(s)?'0:00':`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+function renderQueue(){queueList.innerHTML=''; tracks.forEach((t,i)=>{const b=document.createElement('button'); b.className='queue-item'+(i===index?' current':''); b.innerHTML=`<span class="queue-num">${String(i+1).padStart(2,'0')}</span><span><b>${t.title}</b><small>${t.artist||'Dragon Radio'}${t.type?` · ${t.type}`:''}</small></span><span>▶</span>`; b.onclick=()=>load(i,true); queueList.appendChild(b);});}
+function load(i,autoplay=false){if(!tracks.length)return; index=(i+tracks.length)%tracks.length; const t=tracks[index]; audio.src=t.src; title.textContent=t.title; artist.textContent=t.artist||'Dragon Radio'; cover.src=t.artwork||'/icons/dr-512.png'; renderQueue(); if(autoplay) audio.play().catch(()=>{});}
+play.onclick=()=>audio.paused?audio.play():audio.pause(); document.querySelector('#prev').onclick=()=>load(index-1,true); document.querySelector('#next').onclick=()=>load(index+1,true); audio.onplay=()=>play.textContent='❚❚'; audio.onpause=()=>play.textContent='▶'; audio.onended=()=>load(index+1,true); audio.ontimeupdate=()=>{elapsed.textContent=fmt(audio.currentTime); duration.textContent=fmt(audio.duration); seek.value=audio.duration?(audio.currentTime/audio.duration)*100:0}; seek.oninput=()=>{if(audio.duration)audio.currentTime=(+seek.value/100)*audio.duration}; volume.oninput=()=>audio.volume=+volume.value; audio.volume=+volume.value;
+
+fetch('/radio/library.json?'+Date.now()).then(r=>{if(!r.ok)throw Error();return r.json()}).then(data=>{tracks=(data.tracks||[]).filter(t=>t.src); if(tracks.length)load(0); else {title.textContent='Dragon Radio';artist.textContent='Station library is being loaded.'}}).catch(()=>{title.textContent='Dragon Radio';artist.textContent='Station temporarily offline.'});
+</script>
+<style is:global>@import '/src/styles/radio.css';</style>
+</SiteLayout>
