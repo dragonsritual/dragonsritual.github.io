@@ -1,0 +1,61 @@
+---
+import { siteNavigation } from "../config/navigation";
+
+interface Props {
+  active?: string;
+}
+
+const { active = "gaming" } = Astro.props;
+const enabledItems = siteNavigation.filter((item) => item.enabled);
+
+const icons: Record<string, string> = {
+  gaming: "GM",
+  journal: "JR"
+};
+
+const subtitles: Record<string, string> = {
+  gaming: "League & streams",
+  journal: "News & dispatches"
+};
+---
+
+<aside class="site-rail" aria-label="Global site navigation">
+  <div class="site-rail__top">
+    <a class="site-rail__brand" href="/" aria-label="DragonsRitual home">
+      <span class="site-rail__brand-mark">DR</span>
+
+      <span class="site-rail__brand-copy">
+        <strong>DRAGONSRITUAL</strong>
+        <small>STUDIO NETWORK</small>
+      </span>
+    </a>
+
+    <div class="site-rail__section-label">SITE</div>
+
+    <nav class="site-rail__nav">
+      {enabledItems.map((item) => (
+        <a
+          class:list={["site-rail__item", item.id === active && "is-active"]}
+          href={item.href}
+          aria-current={item.id === active ? "page" : undefined}
+        >
+          <span class="site-rail__icon">{icons[item.id] ?? "DR"}</span>
+
+          <span class="site-rail__item-copy">
+            <strong>{item.label}</strong>
+            <small>{subtitles[item.id] ?? "DragonsRitual"}</small>
+          </span>
+        </a>
+      ))}
+    </nav>
+  </div>
+
+  <div class="site-rail__bottom">
+    <div class="site-rail__status">
+      <span class="site-rail__status-dot"></span>
+      <span>Network Online</span>
+    </div>
+
+    <small>ASTRO / SUPABASE / SANITY</small>
+  </div>
+</aside>

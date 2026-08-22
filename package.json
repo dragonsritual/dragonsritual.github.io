@@ -1,0 +1,25 @@
+{
+  "name": "dragonsritual-site",
+  "private": true,
+  "version": "1.5.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "data:validate": "node scripts/validate-data.mjs",
+    "newsroom": "sanity dev",
+    "newsroom:build": "sanity build",
+    "newsroom:deploy": "sanity deploy"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.26.2",
+    "@sanity/vision": "^6.9.1",
+    "@supabase/supabase-js": "^2.57.0",
+    "astro": "latest",
+    "sanity": "^6.9.1",
+    "styled-components": "^6.5.1",
+    "zod": "^3.25.0"
+  }
+}

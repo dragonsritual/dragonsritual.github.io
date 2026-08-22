@@ -1,0 +1,18 @@
+DRAGON RADIO PUBLIC 01 — DEPLOY NOW
+
+This ZIP is the COMPLETE public GitHub Pages root for the temporary Radio-only launch.
+It intentionally contains NO links to the unfinished DragonsRitual website.
+
+Before replacing main, create a backup branch in GitHub (recommended):
+1. Repository > branch selector (currently main).
+2. Type: journal-backup-2026-08
+3. Choose "Create branch ... from main".
+4. Return to main.
+
+Then replace the public main branch contents with the contents of this ZIP.
+KEEP CNAME exactly as included.
+
+After GitHub Pages finishes deployment, open:
+https://dragonsritual.com/
+
+You do NOT run npm run dev for the public radio deployment.

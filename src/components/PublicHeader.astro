@@ -1,0 +1,13 @@
+---
+import { siteNavigation } from '../config/navigation';
+interface Props { active?: string; }
+const { active='today' } = Astro.props;
+const activeIndex=Math.max(0,siteNavigation.findIndex(x=>x.id===active));
+---
+<header class="world-header" data-dr-header transition:persist="dragon-global-header">
+  <a class="world-brand" href="/" data-dr-route data-rail-index="0" aria-label="DragonsRitual home"><span class="world-brand__mark">DR</span><span><strong>DRAGONSRITUAL</strong><small>STUDIO · NETWORK · PUBLICATION</small></span></a>
+  <nav class="world-nav" aria-label="Dragon Rail" data-dr-rail data-active-index={activeIndex}>
+    {siteNavigation.filter(x=>x.enabled).map((item,index) => <a class:list={[active===item.id && 'is-active']} href={item.href} data-dr-route data-rail-index={index}><i></i><span>{item.label}</span></a>)}
+  </nav>
+  <div class="world-tools"><a href="/radio/">RADIO</a><a href="/live/">WATCH LIVE</a></div>
+</header>

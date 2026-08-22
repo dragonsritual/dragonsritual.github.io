@@ -1,0 +1,183 @@
+﻿.page-intro {
+  padding: 64px 0 28px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  border-bottom: 1px solid var(--line);
+}
+.page-intro > span { grid-column: 1 / -1; color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .24em; }
+.page-intro h1 { margin: 10px 0 0; font: 700 clamp(38px, 6vw, 82px)/.9 Georgia, serif; letter-spacing: -.04em; }
+.page-intro p { margin: 0 0 5px; max-width: 520px; color: var(--muted); line-height: 1.6; text-align: right; }
+
+.broadcast-layout {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: minmax(230px, .72fr) minmax(500px, 2.2fr) minmax(230px, .72fr);
+  gap: 12px;
+}
+.panel, .broadcast-main { border: 1px solid var(--line); background: rgba(17,19,25,.92); }
+.broadcast-side { min-height: 430px; padding: 20px; }
+.panel-label { color: var(--accent); font-size: 10px; font-weight: 900; letter-spacing: .2em; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
+
+.queue-list { display: grid; margin-top: 10px; }
+.queue-item { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; padding: 17px 0; border-bottom: 1px solid var(--line); }
+.queue-item:hover strong { color: var(--accent); }
+.queue-rank { color: #555d6b; font: 700 11px/1 ui-monospace, monospace; }
+.queue-item strong, .queue-item small { display: block; }
+.queue-item strong { font-size: 13px; line-height: 1.25; }
+.queue-item small { color: var(--muted); margin-top: 4px; font-size: 10px; }
+.queue-item em { font-style: normal; color: var(--accent); font-size: 8px; font-weight: 900; letter-spacing: .13em; }
+
+.broadcast-main { padding: 10px; }
+.broadcast-screen {
+  height: 370px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  background:
+    radial-gradient(circle at 70% 20%, rgba(103,65,171,.42), transparent 32%),
+    linear-gradient(135deg, #181521, #0b0c10 55%, #171016);
+}
+.screen-grid {
+  position: absolute; inset: 0; opacity: .2;
+  background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+.broadcast-status {
+  position: absolute; top: 18px; left: 18px; padding: 7px 10px;
+  background: var(--danger); font-size: 9px; font-weight: 900; letter-spacing: .16em;
+}
+.broadcast-copy { position: relative; padding: 28px; max-width: 720px; }
+.broadcast-copy span { color: var(--accent); font-size: 10px; font-weight: 900; letter-spacing: .2em; }
+.broadcast-copy h1 { margin: 9px 0 10px; font: 700 clamp(34px, 5vw, 70px)/.92 Georgia, serif; letter-spacing: -.04em; }
+.broadcast-copy p { margin: 0; color: #bec2cb; max-width: 580px; }
+.broadcast-meta { height: 40px; display: flex; justify-content: space-between; align-items: center; padding: 0 8px; font-size: 9px; letter-spacing: .14em; color: var(--muted); }
+.broadcast-meta strong { color: var(--text); }
+
+.season-stats { margin: 10px 0 24px; }
+.season-stats div { display: flex; justify-content: space-between; align-items: end; padding: 17px 0; border-bottom: 1px solid var(--line); gap: 10px; }
+.season-stats dt { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+.season-stats dd { margin: 0; font: 700 20px/1 Georgia, serif; }
+.text-link { color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: .08em; }
+
+.schedule-strip { margin-top: 12px; border: 1px solid var(--line); background: var(--panel); display: grid; grid-template-columns: 170px repeat(3, 1fr); min-height: 100px; }
+.schedule-title { padding: 20px; background: #e7bd4f; color: #0a0b0d; display: flex; flex-direction: column; justify-content: center; }
+.schedule-title span { font-size: 9px; font-weight: 900; letter-spacing: .18em; }
+.schedule-title strong { margin-top: 5px; font: 800 18px/1 Georgia, serif; }
+.schedule-game { display: grid; grid-template-columns: 60px 1fr auto; gap: 14px; align-items: center; padding: 18px; border-left: 1px solid var(--line); }
+.schedule-game:hover { background: rgba(255,255,255,.025); }
+.schedule-game time { color: var(--accent); font: 800 10px/1 ui-monospace, monospace; }
+.schedule-game strong, .schedule-game small { display: block; }
+.schedule-game strong { font-size: 13px; }
+.schedule-game small { color: var(--muted); margin-top: 4px; font-size: 10px; }
+.schedule-game em { color: var(--muted); font-size: 8px; font-style: normal; text-transform: uppercase; letter-spacing: .1em; }
+
+.league-section { margin-top: 70px; }
+.section-heading { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 30px; margin-bottom: 22px; }
+.section-heading span, .eyebrow { color: var(--accent); font-size: 10px; font-weight: 900; letter-spacing: .2em; }
+.section-heading h2, .journal-preview h2 { margin: 8px 0 0; font: 700 clamp(32px, 4vw, 56px)/1 Georgia, serif; letter-spacing: -.03em; }
+.section-heading p { color: var(--muted); line-height: 1.7; margin: 0; max-width: 650px; justify-self: end; }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); }
+.stats-table { width: 100%; border-collapse: collapse; min-width: 1050px; background: var(--panel); }
+.stats-table th { color: #777f8c; font-size: 9px; text-transform: uppercase; letter-spacing: .16em; text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line); }
+.stats-table td { padding: 20px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; font-size: 12px; }
+.stats-table tbody tr:hover { background: rgba(255,255,255,.024); }
+.game-title { font-size: 14px; font-weight: 800; }
+.stats-table td small { display: block; color: var(--muted); margin-top: 4px; }
+.stats-table td a:hover { color: var(--accent); }
+.status-pill { display: inline-block; border: 1px solid var(--line); padding: 5px 8px; font-size: 9px; text-transform: uppercase; letter-spacing: .08em; }
+.progress-cell { min-width: 130px; }
+.progress-cell > span { color: var(--muted); font-size: 9px; }
+.progress-track { height: 3px; margin-top: 7px; background: #292d36; }
+.progress-track i { display: block; height: 100%; background: var(--accent); }
+.recap-link { color: var(--accent); font-size: 9px; font-weight: 900; letter-spacing: .1em; }
+
+.journal-preview { margin-top: 70px; min-height: 250px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 44px 0; display: grid; grid-template-columns: 1fr 1fr auto; gap: 40px; align-items: center; }
+.journal-preview p { color: var(--muted); line-height: 1.7; }
+.journal-preview > a { color: var(--accent); font-size: 10px; font-weight: 900; letter-spacing: .1em; white-space: nowrap; }
+
+@media (max-width: 1120px) {
+  .broadcast-layout { grid-template-columns: 1fr 2fr; }
+  .season-panel { grid-column: 1 / -1; min-height: auto; }
+  .season-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .season-stats div { padding-right: 20px; }
+  .schedule-strip { grid-template-columns: 140px 1fr; }
+  .schedule-game:nth-of-type(n+3) { border-top: 1px solid var(--line); }
+}
+
+@media (max-width: 760px) {
+  .page-intro { grid-template-columns: 1fr; }
+  .page-intro p { margin-top: 18px; text-align: left; }
+  .broadcast-layout { grid-template-columns: 1fr; }
+  .broadcast-side { min-height: auto; }
+  .broadcast-screen { height: 320px; }
+  .season-stats { grid-template-columns: 1fr 1fr; }
+  .schedule-strip { grid-template-columns: 1fr; }
+  .schedule-game { border-left: 0; border-top: 1px solid var(--line); }
+  .section-heading, .journal-preview { grid-template-columns: 1fr; }
+  .section-heading p { justify-self: start; }
+}
+
+/* v0.3 Twitch broadcast */
+.twitch-screen {
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  display: block;
+  background: #000;
+}
+
+.twitch-player {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  border: 0;
+  background: #000;
+}
+
+.broadcast-meta {
+  min-height: 48px;
+  height: auto;
+  gap: 16px;
+}
+
+.broadcast-meta > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.broadcast-meta > div span {
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: .12em;
+}
+
+.broadcast-twitch-link {
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  white-space: nowrap;
+}
+
+.broadcast-twitch-link:hover {
+  color: var(--text);
+}
+
+/* v1.2 live schedule */
+.schedule-empty {
+  min-height: 100%;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  color: #747b87;
+  font-size: 9px;
+  letter-spacing: .04em;
+}
+
+/* PROJECT TITAN weekend web test */
+.titan-page{width:min(1960px,calc(100% - 20px));margin:0 auto;padding:14px 0 54px}.titan-topbar{display:flex;justify-content:space-between;align-items:end;padding:18px 0 14px;border-bottom:1px solid var(--line)}.titan-kicker{color:var(--accent);font-size:9px;font-weight:900;letter-spacing:.2em}.titan-topbar h1{margin:5px 0 0;font:700 clamp(24px,3vw,42px)/1 Georgia,serif}.titan-room{display:flex;align-items:center;gap:10px;font:800 9px/1 ui-monospace,monospace;letter-spacing:.1em}.titan-room span{color:var(--muted)}.titan-room button,.titan-action{border:1px solid var(--line);background:#15171d;color:var(--text);padding:9px 11px;font:800 8px/1 inherit;letter-spacing:.1em;cursor:pointer}.titan-room button:hover,.titan-action:hover{border-color:var(--accent);color:var(--accent)}.titan-frame{display:grid;grid-template-columns:minmax(150px,210px) minmax(760px,1fr) minmax(165px,230px);gap:8px;margin-top:10px;min-height:clamp(690px,78vh,980px)}.titan-panel,.titan-stage{border:1px solid var(--line);background:rgba(12,13,17,.97)}.titan-panel{padding:16px}.titan-identity{display:flex;gap:10px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)}.titan-identity i,.titan-roster-row i{width:8px;height:8px;border-radius:50%;background:#62d58b;box-shadow:0 0 12px rgba(98,213,139,.5)}.titan-identity strong,.titan-identity small{display:block}.titan-identity small{margin-top:4px;color:var(--muted);font-size:8px;letter-spacing:.12em}.titan-panel dl{margin:10px 0 16px}.titan-panel dl div{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}.titan-panel dt{color:var(--muted);font-size:8px}.titan-panel dd{margin:0;font:800 9px/1 ui-monospace,monospace}.titan-note,.titan-copy{color:var(--muted);font-size:10px;line-height:1.65}.titan-stage{display:grid;grid-template-rows:38px 1fr 34px;padding:7px}.titan-stage-head,.titan-stage-foot{display:flex;align-items:center;justify-content:space-between;padding:0 9px;font-size:8px;letter-spacing:.12em;color:var(--muted)}.titan-stage-head strong{color:var(--text)}.titan-game-shell{background:#000;min-height:0;overflow:hidden;border:1px solid #242731}.titan-game-shell iframe{display:block;width:100%;height:100%;min-height:clamp(620px,72vh,900px);border:0;background:#050506}.titan-roster{display:grid;margin-top:10px}.titan-roster>p{color:var(--muted);font-size:10px}.titan-roster-row{display:grid;grid-template-columns:12px 1fr auto;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}.titan-roster-row small{color:#62d58b;font-size:7px;letter-spacing:.12em}.titan-divider{height:24px;border-bottom:1px solid var(--line);margin-bottom:16px}.titan-subnav{display:flex;overflow:auto;border:1px solid var(--line);border-top:0;background:#0d0e12}.titan-subnav a{padding:14px 18px;border-right:1px solid var(--line);font-size:8px;font-weight:900;letter-spacing:.12em;color:var(--muted);white-space:nowrap}.titan-subnav a:hover,.titan-subnav a.is-active{color:var(--accent);background:rgba(255,255,255,.02)}.titan-lower-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.titan-lower-grid article{border:1px solid var(--line);background:var(--panel);padding:20px}.titan-lower-grid small{color:var(--accent);font-weight:900;letter-spacing:.14em}.titan-lower-grid h2{font:700 22px/1.1 Georgia,serif;margin:8px 0}.titan-lower-grid p{color:var(--muted);font-size:11px;line-height:1.65}.titan-lower-grid code{color:#d8c47c}@media(max-width:1180px){.titan-frame{grid-template-columns:160px 1fr}.titan-match-panel{grid-column:1/-1;min-height:150px}.titan-lower-grid{grid-template-columns:1fr}}@media(max-width:720px){.titan-page{width:min(100% - 16px,1680px)}.titan-topbar{align-items:start;gap:12px;flex-direction:column}.titan-frame{grid-template-columns:1fr}.titan-player-panel,.titan-match-panel{min-height:0}.titan-game-shell iframe{min-height:56vw}.titan-room{flex-wrap:wrap}}

@@ -1,0 +1,1 @@
+export { getGamingDashboard } from "../gamingDashboardService";

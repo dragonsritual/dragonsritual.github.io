@@ -1,0 +1,35 @@
+DRAGONSRITUAL v1.5 — PUBLIC JOURNAL
+
+This ZIP is the updated source project, with node_modules, dist, .astro,
+.git, .migration-backups and .env.local excluded.
+
+APPLY:
+1. Stop Astro/Sanity with Ctrl+C if either terminal is actively running.
+2. Back up your current dragonsritual.github.io folder if desired.
+3. Extract this ZIP over:
+   C:\DEV\PROJECTS\WEBSITE\DragonsRitual\dragonsritual.github.io
+   and allow matching source files to be replaced.
+4. KEEP your existing .env.local. This ZIP intentionally does not contain it.
+5. From the project folder run:
+      npm install
+      npm run build
+      npm run dev
+6. Open:
+      http://localhost:4321/journal/
+7. Click "DragonsRitual Newsroom Is Online" and verify the article route.
+
+SANITY:
+- Studio remains: npm run newsroom
+- Studio URL: http://localhost:3333
+- Project ID: 5dooc6p7
+- Dataset: production
+
+WHAT CHANGED:
+- /journal/
+- /journal/[slug]/ static article generation
+- rich Portable Text rendering
+- hero media, author, categories, tags
+- SEO/canonical/noindex/social image support
+- related Supabase Game/Session resolution foundation
+- Journal added to the global site rail because it is now a real site function
+- latest published Journal articles surfaced on the Gaming homepage

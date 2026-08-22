@@ -1,0 +1,153 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteRail from "../../components/SiteRail.astro";
+import JournalHeader from "../../components/journal/JournalHeader.astro";
+import { listPublishedArticleDocuments, type NewsroomArticle } from "../../services/journal";
+import { renderPortableText } from "../../utils/renderPortableText";
+import { dataService } from "../../services/dataService";
+import type { Game, Session } from "../../domain/schemas";
+
+export async function getStaticPaths() {
+  try {
+    const articles = await listPublishedArticleDocuments();
+
+    return articles.map((article) => ({
+      params: { slug: article.slug },
+      props: { article }
+    }));
+  } catch (error) {
+    console.error("DragonsRitual could not generate Journal article routes.", error);
+    return [];
+  }
+}
+
+interface Props {
+  article: NewsroomArticle;
+}
+
+const { article } = Astro.props;
+
+function formatDate(value: string | null) {
+  if (!value) return "Unscheduled";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Unscheduled";
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric"
+  }).format(date);
+}
+
+let relatedGame: Game | null = null;
+let relatedSession: Session | null = null;
+
+if (article.supabaseGameId) {
+  try {
+    const games = await dataService.listGames();
+    relatedGame = games.find((game) => game.id === article.supabaseGameId) ?? null;
+
+    if (relatedGame && article.supabaseSessionId) {
+      const sessions = await dataService.listSessionsForGame(relatedGame.id);
+      relatedSession = sessions.find((session) => session.id === article.supabaseSessionId) ?? null;
+    }
+  } catch (error) {
+    console.error("Journal relation resolution failed.", error);
+  }
+}
+
+const pageTitle = article.seoTitle || `${article.title} — DragonsRitual Journal`;
+const pageDescription = article.seoDescription || article.excerpt || article.subtitle || "DragonsRitual Journal article.";
+const articleHtml = renderPortableText(article.body);
+---
+
+<SiteLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonical={article.canonicalUrl ?? undefined}
+  noIndex={article.noIndex}
+  ogImage={article.heroMedia?.url}
+  ogType="article"
+>
+  <div class="app-shell">
+    <SiteRail active="journal" />
+
+    <div class="app-main">
+      <JournalHeader />
+
+      <div class="app-page journal-page">
+        <main class="article-shell">
+          <a class="article-back" href="/journal/">← Journal</a>
+
+          <article class="journal-article">
+            <header class="article-header">
+              <div class="article-kicker">
+                <span>DRAGONSRITUAL JOURNAL</span>
+                <time datetime={article.publishedAt ?? undefined}>{formatDate(article.publishedAt)}</time>
+              </div>
+
+              <h1>{article.title}</h1>
+
+              {article.subtitle && <p class="article-deck">{article.subtitle}</p>}
+
+              <div class="article-byline">
+                <span>{article.authorName ? `By ${article.authorName}` : "DragonsRitual Newsroom"}</span>
+                {article.categories?.length > 0 && (
+                  <span>{article.categories.map((item) => item.title).join(" / ")}</span>
+                )}
+              </div>
+            </header>
+
+            {article.heroMedia?.url && (
+              <figure class="article-hero">
+                <img src={article.heroMedia.url} alt={article.heroMedia.alt ?? ""} />
+                {article.heroMedia.caption && <figcaption>{article.heroMedia.caption}</figcaption>}
+              </figure>
+            )}
+
+            {article.excerpt && <p class="article-excerpt">{article.excerpt}</p>}
+
+            <div class="journal-prose" set:html={articleHtml} />
+
+            {(relatedGame || relatedSession || article.tags?.length > 0) && (
+              <footer class="article-relations">
+                {(relatedGame || relatedSession) && (
+                  <div class="article-related-records">
+                    <span>CONNECTED RECORDS</span>
+                    {relatedGame && (
+                      <a href="/#stats">
+                        <strong>{relatedGame.title}</strong>
+                        <small>Gaming record →</small>
+                      </a>
+                    )}
+                    {relatedSession && (
+                      <a href="/#schedule">
+                        <strong>{relatedSession.title}</strong>
+                        <small>Session record →</small>
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {article.tags?.length > 0 && (
+                  <div class="article-tags">
+                    <span>FILED UNDER</span>
+                    <div>
+                      {article.tags.map((tag) => <em>{tag.title}</em>)}
+                    </div>
+                  </div>
+                )}
+              </footer>
+            )}
+          </article>
+        </main>
+
+        <footer class="site-footer">
+          <strong>DRAGONSRITUAL</strong>
+          <span>Journal / {article.slug}</span>
+        </footer>
+      </div>
+    </div>
+  </div>
+</SiteLayout>

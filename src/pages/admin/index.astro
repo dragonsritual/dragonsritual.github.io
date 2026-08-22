@@ -1,0 +1,506 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="DragonsRitual Control Room">
+  <div class="admin-auth-page">
+    <section id="admin-login" class="admin-login-card">
+      <div class="admin-login-brand">
+        <span class="admin-brand__mark">DR</span>
+        <div>
+          <span>DRAGONSRITUAL</span>
+          <h1>Control Room</h1>
+        </div>
+      </div>
+
+      <p>
+        Owner access. Sign in with the Supabase account authorized for
+        DragonsRitual administration.
+      </p>
+
+      <form id="admin-login-form" class="admin-login-form">
+        <label>
+          <span>Email</span>
+          <input
+            id="admin-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+          />
+        </label>
+
+        <label>
+          <span>Password</span>
+          <input
+            id="admin-password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+          />
+        </label>
+
+        <button id="admin-login-button" type="submit">
+          Sign In
+        </button>
+      </form>
+
+      <div id="admin-login-message" class="admin-login-message" aria-live="polite"></div>
+
+      <a class="admin-public-link" href="/">ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â Return to Public Gaming</a>
+    </section>
+
+    <section id="admin-unauthorized" class="admin-login-card" hidden>
+      <span class="admin-auth-kicker">SIGNED IN / NOT AUTHORIZED</span>
+      <h1>Owner access required.</h1>
+      <p>
+        This Supabase account is valid, but it is not listed in
+        <code>admin_users</code>.
+      </p>
+
+      <div class="admin-auth-actions">
+        <button id="admin-copy-user-id" type="button">Copy My User ID</button>
+        <button id="admin-unauthorized-logout" type="button">Sign Out</button>
+      </div>
+
+      <div id="admin-user-id" class="admin-user-id"></div>
+    </section>
+
+    <div id="admin-app" class="admin-shell" hidden>
+      <aside class="admin-rail">
+        <a class="admin-brand" href="/admin/">
+          <span class="admin-brand__mark">DR</span>
+          <span>
+            <strong>CONTROL ROOM</strong>
+            <small>DRAGONSRITUAL</small>
+          </span>
+        </a>
+
+        <div class="admin-rail__label">ADMIN</div>
+
+        <nav class="admin-nav" aria-label="Admin navigation">
+          <a class="is-active" href="/admin/">
+            <span>01</span>
+            <strong>Overview</strong>
+          </a>
+
+          <a href="/admin/games/">
+            <span>02</span>
+            <strong>Games</strong>
+            <em>LIVE</em>
+          </a>
+
+          <a href="/admin/sessions/">
+            <span>03</span>
+            <strong>Sessions</strong>
+            <em>LIVE</em>
+          </a>
+
+          <a href="/admin/schedule/">
+          <span>04</span>
+          <strong>Schedule</strong>
+          <em>LIVE</em>
+        </a>
+
+          <a href="/admin/media/">
+          <span>05</span>
+          <strong>Media</strong>
+          <em>LIVE</em>
+        </a>
+
+          <a href="/admin/newsroom/">
+          <span>06</span>
+          <strong>Newsroom</strong>
+          <em>LIVE</em>
+        </a>
+        </nav>
+
+        <div class="admin-rail__bottom">
+          <button id="admin-logout" class="admin-logout" type="button">Sign Out</button>
+          <a href="/">ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â Public Gaming</a>
+          <small>OWNER GATE v0.9</small>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-topbar">
+          <div>
+            <span>DRAGONSRITUAL / OWNER</span>
+            <h1>Control Room</h1>
+          </div>
+
+          <div class="admin-status">
+            <span class="admin-status__dot is-live"></span>
+            <div>
+              <strong>AUTHORIZED</strong>
+              <small id="admin-owner-email">OWNER SESSION</small>
+            </div>
+          </div>
+        </header>
+
+        <section class="admin-warning admin-warning--secure">
+          <strong>OWNER SESSION ACTIVE</strong>
+          <p>
+            Supabase Auth and admin membership are verified before this
+            interface is shown. Database mutations remain limited by RLS.
+          </p>
+        </section>
+
+        <section class="admin-metrics">
+          <article>
+            <span>DATABASE</span>
+            <strong>ONLINE</strong>
+            <small>Supabase / PostgreSQL</small>
+          </article>
+
+          <article>
+            <span>GAMES</span>
+            <strong id="metric-games">ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â</strong>
+            <small id="metric-active-games">Loading</small>
+          </article>
+
+          <article>
+            <span>SESSIONS</span>
+            <strong id="metric-sessions">ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â</strong>
+            <small>Season total</small>
+          </article>
+
+          <article>
+            <span>HOURS</span>
+            <strong id="metric-hours">ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â</strong>
+            <small>Logged play time</small>
+          </article>
+        </section>
+
+        <section class="admin-grid">
+          <article class="admin-panel admin-panel--wide">
+            <header class="admin-panel__header">
+              <div>
+                <span>LIVE DATABASE</span>
+                <h2>Game Records</h2>
+              </div>
+
+              <span class="admin-readonly">AUTHENTICATED</span>
+            </header>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Game</th>
+                    <th>Status</th>
+                    <th>Sessions</th>
+                    <th>Hours</th>
+                    <th>Progress</th>
+                    <th>Last Played</th>
+                    <th>Current Result</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-games-body">
+                  <tr>
+                    <td colspan="7">Loading live recordsÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="admin-panel">
+            <header class="admin-panel__header">
+              <div>
+                <span>SECURITY</span>
+                <h2>Access State</h2>
+              </div>
+            </header>
+
+            <dl class="admin-system-list">
+              <div><dt>Authentication</dt><dd>Supabase Auth</dd></div>
+              <div><dt>Authorization</dt><dd>admin_users</dd></div>
+              <div><dt>Database writes</dt><dd>RLS protected</dd></div>
+              <div><dt>Admin route</dt><dd>Client gated</dd></div>
+              <div><dt>Secrets in browser</dt><dd>None</dd></div>
+            </dl>
+          </article>
+
+          <article class="admin-panel">
+            <header class="admin-panel__header">
+              <div>
+                <span>NEXT SYSTEM</span>
+                <h2>Game Editor</h2>
+              </div>
+            </header>
+
+            <div class="admin-next">
+              <span class="admin-next__number">v1.2</span>
+              <h3>Schedule + Aggregates</h3>
+              <p>
+                Game and Session editors are live. Next we connect scheduled
+                sessions to the public schedule and add safe stat aggregation.
+              </p>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    import { getSupabaseBrowserClient } from "../../lib/supabaseBrowser";
+
+    const supabase = getSupabaseBrowserClient();
+
+    const login = document.querySelector("#admin-login");
+    const unauthorized = document.querySelector("#admin-unauthorized");
+    const app = document.querySelector("#admin-app");
+
+    const form = document.querySelector("#admin-login-form");
+    const emailInput = document.querySelector("#admin-email");
+    const passwordInput = document.querySelector("#admin-password");
+    const loginButton = document.querySelector("#admin-login-button");
+    const message = document.querySelector("#admin-login-message");
+
+    const ownerEmail = document.querySelector("#admin-owner-email");
+    const userIdBox = document.querySelector("#admin-user-id");
+
+    function showLogin() {
+      login?.removeAttribute("hidden");
+      unauthorized?.setAttribute("hidden", "");
+      app?.setAttribute("hidden", "");
+    }
+
+    function showUnauthorized(user) {
+      login?.setAttribute("hidden", "");
+      app?.setAttribute("hidden", "");
+      unauthorized?.removeAttribute("hidden");
+
+      if (userIdBox) {
+        userIdBox.textContent = user.id;
+      }
+    }
+
+    async function isAdmin(userId) {
+      const { data, error } = await supabase
+        .from("admin_users")
+        .select("user_id")
+        .eq("user_id", userId)
+        .maybeSingle();
+
+      if (error) {
+        console.error(error);
+        return false;
+      }
+
+      return Boolean(data);
+    }
+
+    function formatDate(value) {
+      if (!value) return "ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â";
+
+      const date = new Date(`${value}T12:00:00`);
+      if (Number.isNaN(date.getTime())) return value;
+
+      return new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric"
+      }).format(date);
+    }
+
+    async function loadControlRoom(user) {
+      login?.setAttribute("hidden", "");
+      unauthorized?.setAttribute("hidden", "");
+      app?.removeAttribute("hidden");
+
+      if (ownerEmail) ownerEmail.textContent = user.email ?? "OWNER SESSION";
+
+      const [{ data: games, error: gamesError }, { data: platforms, error: platformsError }] =
+        await Promise.all([
+          supabase
+            .from("games")
+            .select(`
+              id,
+              title,
+              platform_id,
+              status,
+              session_count,
+              hours_played,
+              progress_percent,
+              last_played_at,
+              current_objective
+            `)
+            .order("title"),
+
+          supabase
+            .from("platforms")
+            .select("id,name")
+        ]);
+
+      if (gamesError) throw gamesError;
+      if (platformsError) throw platformsError;
+
+      const platformMap = new Map(
+        (platforms ?? []).map((platform) => [platform.id, platform.name])
+      );
+
+      const rows = games ?? [];
+
+      const totalSessions = rows.reduce(
+        (sum, game) => sum + Number(game.session_count ?? 0),
+        0
+      );
+
+      const totalHours = rows.reduce(
+        (sum, game) => sum + Number(game.hours_played ?? 0),
+        0
+      );
+
+      const activeGames = rows.filter((game) => game.status === "active").length;
+
+      const metricGames = document.querySelector("#metric-games");
+      const metricActiveGames = document.querySelector("#metric-active-games");
+      const metricSessions = document.querySelector("#metric-sessions");
+      const metricHours = document.querySelector("#metric-hours");
+
+      if (metricGames) metricGames.textContent = String(rows.length);
+      if (metricActiveGames) metricActiveGames.textContent = `${activeGames} active`;
+      if (metricSessions) metricSessions.textContent = String(totalSessions);
+      if (metricHours) metricHours.textContent = totalHours.toFixed(1);
+
+      const tbody = document.querySelector("#admin-games-body");
+
+      if (tbody) {
+        tbody.innerHTML = "";
+
+        for (const game of rows) {
+          const tr = document.createElement("tr");
+
+          const platform = platformMap.get(game.platform_id) ?? "Unknown";
+          const status =
+            game.status.charAt(0).toUpperCase() + game.status.slice(1);
+
+          const cells = [
+            `${game.title}|||${platform}`,
+            status,
+            String(game.session_count ?? 0),
+            String(game.hours_played ?? 0),
+            `${game.progress_percent ?? 0}%`,
+            formatDate(game.last_played_at),
+            game.current_objective ?? "ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â"
+          ];
+
+          cells.forEach((value, index) => {
+            const td = document.createElement("td");
+
+            if (index === 0) {
+              const [title, sub] = value.split("|||");
+              const strong = document.createElement("strong");
+              const small = document.createElement("small");
+              strong.textContent = title;
+              small.textContent = sub;
+              td.append(strong, small);
+            } else if (index === 1) {
+              const pill = document.createElement("span");
+              pill.className = "admin-pill";
+              pill.textContent = value;
+              td.appendChild(pill);
+            } else {
+              td.textContent = value;
+            }
+
+            tr.appendChild(td);
+          });
+
+          tbody.appendChild(tr);
+        }
+      }
+    }
+
+    async function resolveSession() {
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session?.user) {
+        showLogin();
+        return;
+      }
+
+      const allowed = await isAdmin(session.user.id);
+
+      if (!allowed) {
+        showUnauthorized(session.user);
+        return;
+      }
+
+      await loadControlRoom(session.user);
+    }
+
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const email = emailInput?.value?.trim();
+      const password = passwordInput?.value ?? "";
+
+      if (!email || !password) return;
+
+      if (message) message.textContent = "Signing inÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦";
+      if (loginButton) loginButton.disabled = true;
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (loginButton) loginButton.disabled = false;
+
+      if (error || !data.user) {
+        if (message) {
+          message.textContent = error?.message ?? "Unable to sign in.";
+        }
+        return;
+      }
+
+      if (message) message.textContent = "";
+
+      const allowed = await isAdmin(data.user.id);
+
+      if (!allowed) {
+        showUnauthorized(data.user);
+        return;
+      }
+
+      await loadControlRoom(data.user);
+    });
+
+    async function logout() {
+      await supabase.auth.signOut();
+      location.reload();
+    }
+
+    document.querySelector("#admin-logout")
+      ?.addEventListener("click", logout);
+
+    document.querySelector("#admin-unauthorized-logout")
+      ?.addEventListener("click", logout);
+
+    document.querySelector("#admin-copy-user-id")
+      ?.addEventListener("click", async () => {
+        const value = userIdBox?.textContent ?? "";
+        if (!value) return;
+
+        await navigator.clipboard.writeText(value);
+
+        const button = document.querySelector("#admin-copy-user-id");
+        if (button) button.textContent = "Copied";
+      });
+
+    resolveSession().catch((error) => {
+      console.error(error);
+
+      if (message) {
+        message.textContent =
+          error instanceof Error ? error.message : "Admin failed to load.";
+      }
+
+      showLogin();
+    });
+  </script>
+</AdminLayout>

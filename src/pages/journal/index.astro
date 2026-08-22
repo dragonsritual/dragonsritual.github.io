@@ -1,0 +1,79 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import PublicHeader from "../../components/PublicHeader.astro";
+import PublicFooter from "../../components/PublicFooter.astro";
+
+import ArticleCard from "../../components/journal/ArticleCard.astro";
+import { listPublishedArticles, type NewsroomArticleSummary } from "../../services/journal";
+
+let articles: NewsroomArticleSummary[] = [];
+let loadError = false;
+
+try {
+  articles = await listPublishedArticles();
+} catch (error) {
+  loadError = true;
+  console.error("DragonsRitual Journal failed to load Sanity articles.", error);
+}
+
+const [featured, ...archive] = articles;
+---
+
+<SiteLayout
+  title="DragonsRitual Journal"
+  description="DragonsRitual dispatches, gaming coverage, development notes and studio updates."
+>
+  <PublicHeader active="stories" />
+  <div class="journal-page">
+        <main class="world-main page-shell">
+          <section class="journal-masthead">
+            <span>DRAGONSRITUAL / JOURNAL</span>
+            <h1>Dispatches from the network.</h1>
+            <p>
+              Gaming coverage, stream recaps, development notes, studio updates
+              and records from the wider DragonsRitual world.
+            </p>
+          </section>
+
+          {loadError ? (
+            <section class="journal-state">
+              <strong>NEWSROOM CONNECTION UNAVAILABLE</strong>
+              <p>The public Journal could not reach Sanity during this request.</p>
+            </section>
+          ) : featured ? (
+            <>
+              <section class="journal-feature" aria-label="Featured article">
+                <ArticleCard article={featured} featured />
+              </section>
+
+              <section class="journal-archive" id="archive">
+                <header class="journal-section-heading">
+                  <div>
+                    <span>NEWSROOM ARCHIVE</span>
+                    <h2>Latest Dispatches</h2>
+                  </div>
+                  <strong>{articles.length} PUBLISHED</strong>
+                </header>
+
+                {archive.length > 0 ? (
+                  <div class="journal-grid">
+                    {archive.map((article) => <ArticleCard article={article} />)}
+                  </div>
+                ) : (
+                  <div class="journal-state journal-state--quiet">
+                    <strong>THE ARCHIVE STARTS HERE</strong>
+                    <p>Your first published article is live. Future Sanity publications will appear automatically.</p>
+                  </div>
+                )}
+              </section>
+            </>
+          ) : (
+            <section class="journal-state">
+              <strong>NO PUBLISHED ARTICLES YET</strong>
+              <p>Publish an Article in the DragonsRitual Sanity Newsroom and it will appear here.</p>
+            </section>
+          )}
+        </main>
+  </div>
+  <PublicFooter />
+</SiteLayout>

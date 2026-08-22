@@ -1,0 +1,134 @@
+---
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import PublicHeader from '../../../components/PublicHeader.astro';
+import PublicFooter from '../../../components/PublicFooter.astro';
+---
+<SiteLayout title="PROJECT TITAN — Weekend Test — DragonsRitual" description="PROJECT TITAN browser test room on DragonsRitual.">
+  <PublicHeader active="gaming" />
+  <main class="titan-page">
+    <header class="titan-topbar">
+      <div><span class="titan-kicker">DRAGONSRITUAL / PROJECT TITAN</span><h1>WEEKEND TEST</h1></div>
+      <div class="titan-room"><span>ROOM</span><strong data-room>WEEKEND-01</strong><button type="button" data-copy> COPY INVITE</button></div>
+    </header>
+
+    <section class="titan-frame">
+      <aside class="titan-panel titan-player-panel">
+        <span class="panel-label">YOUR STATION</span>
+        <div class="titan-identity"><i></i><div><strong data-player-name>GUEST</strong><small>TEST PILOT</small></div></div>
+        <dl><div><dt>STATUS</dt><dd data-status>CONNECTING</dd></div><div><dt>ROOM</dt><dd data-room-side>WEEKEND-01</dd></div><div><dt>BUILD</dt><dd>WEB TEST 02A</dd></div></dl>
+        <button class="titan-action" type="button" data-randomize>NEW CALLSIGN</button>
+        <p class="titan-note">PROJECT TITAN is mounted directly in the center workbench. Supabase Presence handles the Dragon room roster while gameplay networking is wired in the next multiplayer pass.</p>
+      </aside>
+
+      <section class="titan-stage">
+        <div class="titan-stage-head"><span>LIVE GAME WINDOW</span><strong>PROJECT TITAN</strong><span data-online>0 ONLINE</span></div>
+        <div class="titan-game-shell">
+          <iframe title="PROJECT TITAN" src="/titan/index.html" allow="fullscreen; gamepad" referrerpolicy="same-origin"></iframe>
+        </div>
+        <div class="titan-stage-foot"><span>WASD MOVE · MOUSE LOOK · LMB FIRE</span><span>TEST ENVIRONMENT</span></div>
+      </section>
+
+      <aside class="titan-panel titan-match-panel">
+        <span class="panel-label">ROOM ROSTER</span>
+        <div class="titan-roster" data-roster><p>Waiting for room…</p></div>
+        <div class="titan-divider"></div>
+        <span class="panel-label">WEEKEND OBJECTIVE</span>
+        <p class="titan-copy">Get invited players into the same Dragon room, verify connections, then wire TITAN's real match events into the channel.</p>
+      </aside>
+    </section>
+
+    <nav class="titan-subnav" aria-label="Project Titan sections"><a class="is-active" href="#play">PLAY</a><a href="/projects/">GAME INFO</a><a href="#players">PLAYERS</a><a href="#league">LEAGUE</a><a href="/community/">COMMUNITY</a><a href="/live/">WATCH LIVE</a></nav>
+
+    <section class="titan-lower-grid">
+      <article><small>TEST STATUS</small><h2>Invite room foundation</h2><p>Share the exact page URL. The <code>?room=</code> value keeps invited testers together and Presence shows who currently has the room open.</p></article>
+      <article><small>GAME BUILD</small><h2>PROJECT TITAN is mounted</h2><p>The current Three.js build now runs from <code>public/titan/</code>. Next we connect gameplay events and remote players to the Dragon room.</p></article>
+      <article><small>SECURITY</small><h2>Public key only</h2><p>The browser uses only the Supabase publishable key. Never place a Supabase service-role/secret key in this project or in client JavaScript.</p></article>
+    </section>
+  </main>
+  <PublicFooter />
+
+  <script>
+    import { getSupabaseRealtimeClient } from '../../../lib/supabaseRealtime';
+
+    const qs = (s) => document.querySelector(s);
+    const cleanRoom = (value) => (value || 'WEEKEND-01').toUpperCase().replace(/[^A-Z0-9_-]/g, '').slice(0, 32) || 'WEEKEND-01';
+    const params = new URLSearchParams(location.search);
+    const room = cleanRoom(params.get('room'));
+    const nameKey = 'dragon:titan:callsign';
+    const makeName = () => `PILOT-${Math.floor(1000 + Math.random() * 9000)}`;
+    let playerName = localStorage.getItem(nameKey) || makeName();
+    localStorage.setItem(nameKey, playerName);
+
+    const roomEls = document.querySelectorAll('[data-room], [data-room-side]');
+    roomEls.forEach((el) => el.textContent = room);
+    const playerEl = qs('[data-player-name]');
+    if (playerEl) playerEl.textContent = playerName;
+
+    const renderRoster = (state) => {
+      const roster = qs('[data-roster]');
+      if (!roster) return;
+      const people = [];
+      Object.values(state || {}).forEach((entries) => {
+        (entries || []).forEach((entry) => people.push(entry));
+      });
+      roster.innerHTML = '';
+      if (!people.length) roster.innerHTML = '<p>No pilots detected.</p>';
+      people.slice(0, 12).forEach((person) => {
+        const row = document.createElement('div');
+        row.className = 'titan-roster-row';
+        const dot = document.createElement('i');
+        const strong = document.createElement('strong');
+        strong.textContent = person.callsign || 'PILOT';
+        const small = document.createElement('small');
+        small.textContent = 'ONLINE';
+        row.append(dot, strong, small);
+        roster.append(row);
+      });
+      const online = qs('[data-online]');
+      if (online) online.textContent = `${people.length} ONLINE`;
+    };
+
+    let channel;
+    try {
+      const supabase = getSupabaseRealtimeClient();
+      channel = supabase.channel(`titan:${room}`, { config: { presence: { key: crypto.randomUUID() } } });
+      channel.on('presence', { event: 'sync' }, () => renderRoster(channel.presenceState()));
+      channel.subscribe(async (status) => {
+        const statusEl = qs('[data-status]');
+        if (status === 'SUBSCRIBED') {
+          if (statusEl) statusEl.textContent = 'ONLINE';
+          await channel.track({ callsign: playerName, joined_at: new Date().toISOString(), build: 'WEB-TEST-02' });
+          return;
+        }
+        if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT' || status === 'CLOSED') {
+          if (statusEl) statusEl.textContent = 'ROOM OFFLINE';
+          const roster = qs('[data-roster]');
+          if (roster) roster.innerHTML = '<p>Dragon room backend is offline. Local TITAN can still run.</p>';
+          try { await channel.unsubscribe(); } catch {}
+          try { supabase.realtime.disconnect(); } catch {}
+          return;
+        }
+        if (statusEl) statusEl.textContent = status;
+      });
+    } catch (error) {
+      console.warn('TITAN room connection unavailable', error);
+      const statusEl = qs('[data-status]');
+      if (statusEl) statusEl.textContent = 'LOCAL ONLY';
+      const roster = qs('[data-roster]');
+      if (roster) roster.innerHTML = '<p>Supabase is not configured for this build yet.</p>';
+    }
+
+    qs('[data-copy]')?.addEventListener('click', async (event) => {
+      const url = new URL(location.href); url.searchParams.set('room', room);
+      await navigator.clipboard.writeText(url.toString());
+      event.currentTarget.textContent = 'COPIED';
+      setTimeout(() => event.currentTarget.textContent = 'COPY INVITE', 1200);
+    });
+
+    qs('[data-randomize]')?.addEventListener('click', async () => {
+      playerName = makeName(); localStorage.setItem(nameKey, playerName);
+      if (playerEl) playerEl.textContent = playerName;
+      if (channel) await channel.track({ callsign: playerName, joined_at: new Date().toISOString(), build: 'WEB-TEST-02' });
+    });
+  </script>
+</SiteLayout>

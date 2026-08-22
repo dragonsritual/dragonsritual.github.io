@@ -1,0 +1,35 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="Newsroom — DragonsRitual">
+  <div class="newsroom-launcher">
+    <span>DRAGONSRITUAL / EDITORIAL</span>
+    <h1>Newsroom</h1>
+
+    <p>
+      Sanity is the editorial publishing system for DragonsRitual.
+      The Studio runs separately during development so the public Astro
+      application and editorial environment remain cleanly separated.
+    </p>
+
+    <div class="newsroom-command">
+      <small>FROM THE PROJECT TERMINAL</small>
+      <code>npm run newsroom</code>
+    </div>
+
+    <p>
+      Then open <strong>http://localhost:3333</strong>. Sign in with the
+      Sanity account that owns the DragonsRitual organization.
+    </p>
+
+    <div class="admin-auth-actions">
+      <a class="admin-primary-button admin-button-link" href="/admin/">
+        ← Control Room
+      </a>
+      <a class="admin-secondary-button admin-button-link" href="/">
+        Public Gaming
+      </a>
+    </div>
+  </div>
+</AdminLayout>

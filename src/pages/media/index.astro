@@ -1,0 +1,8 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro'; import PublicPage from '../../components/PublicPage.astro'; import TwitchPlayer from '../../components/TwitchPlayer.astro';
+---
+<SiteLayout title="Media — DragonsRitual"><PublicPage active="media" eyebrow="MEDIA / WATCH / LISTEN" title="Stay with what you're watching." intro="Live broadcasts, video, clips, radio and future podcasts share one media district. Move elsewhere and the experience is designed to follow you.">
+<nav class="context-rail"><a class="is-active" href="/media/">MEDIA HOME</a><a href="/live/" data-dr-media-start>LIVE</a><a href="#video">VIDEO</a><a href="#clips">CLIPS</a><a href="/radio/">RADIO</a><a href="/community/">DISCUSSION</a></nav>
+<section class="media-room"><div class="media-room__player"><span class="editorial-kicker">LIVE WINDOW</span><TwitchPlayer /></div><aside><small>CONTEXT</small><h2>What you're watching</h2><p>Stream identity, game/project information, related stories and discussion will live beside the player so the next move has meaning.</p><a href="/gaming/">EXPLORE GAMING →</a><a href="/community/">JOIN DISCUSSION →</a></aside></section>
+<section class="knowledge-strip" id="video"><article><small>VIDEO</small><h3>Long-form viewing</h3><p>Recordings, features, studio films and development sessions.</p></article><article id="clips"><small>CLIPS</small><h3>Fast discoveries</h3><p>Highlights with paths back to their original stream, game and creator.</p></article><article><small>RADIO</small><h3>Keep listening</h3><p>Audio persists while the rest of DragonsRitual remains explorable.</p><a href="/radio/">ENTER RADIO →</a></article></section>
+</PublicPage></SiteLayout>

@@ -1,0 +1,52 @@
+<div class="broadcast-screen twitch-screen">
+  <iframe
+    id="dragonsritual-twitch-player"
+    class="twitch-player"
+    title="DragonsRitual Twitch stream"
+    allowfullscreen
+    allow="autoplay; fullscreen"
+    loading="eager">
+  </iframe>
+</div>
+
+<div class="broadcast-meta">
+  <div>
+    <strong>LIVE BROADCAST</strong>
+    <span>TWITCH / DRAGONSRITUAL</span>
+  </div>
+
+  <a
+    class="broadcast-twitch-link"
+    href="https://www.twitch.tv/dragonsritual"
+    target="_blank"
+    rel="noreferrer"
+  >
+    OPEN TWITCH →
+  </a>
+</div>
+
+<script is:inline>
+  (() => {
+    const frame = document.getElementById("dragonsritual-twitch-player");
+    if (!frame) return;
+
+    const parents = new Set([
+      window.location.hostname,
+      "dragonsritual.com",
+      "www.dragonsritual.com",
+      "dragonsritual.github.io",
+      "localhost"
+    ]);
+
+    const url = new URL("https://player.twitch.tv/");
+    url.searchParams.set("channel", "dragonsritual");
+    url.searchParams.set("autoplay", "false");
+    url.searchParams.set("muted", "false");
+
+    [...parents]
+      .filter(Boolean)
+      .forEach((parent) => url.searchParams.append("parent", parent));
+
+    frame.src = url.toString();
+  })();
+</script>

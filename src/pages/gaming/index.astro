@@ -1,0 +1,15 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PublicPage from '../../components/PublicPage.astro';
+import {getGamingDashboard} from '../../services/gamingDashboardService';
+const d=await getGamingDashboard();
+---
+<SiteLayout title="Gaming — DragonsRitual"><PublicPage active="gaming" eyebrow="GAMING / KNOWLEDGE NETWORK" title="Games are worlds. Explore them like worlds." intro="Projects, games we cover, guides, databases, development journals, media and community — connected around the game instead of scattered across the site.">
+<nav class="context-rail" aria-label="Gaming navigation"><a class="is-active" href="/gaming/">FEATURED</a><a href="/projects/">GAMES</a><a href="#guides">GUIDES</a><a href="#database">DATABASE</a><a href="/journal/">NEWS</a><a href="/community/">COMMUNITY</a></nav>
+<section class="gaming-hub-grid">
+ <article class="game-hub game-hub--lead"><small>DRAGONSRITUAL WORKSHOP</small><h2>Projects under construction</h2><p>Follow systems, builds, experiments and development history. Each game can grow into its own deep hub.</p><div class="game-hub-actions"><a class="dr-button dr-button--primary" href="/gaming/project-titan/">PLAY PROJECT TITAN</a><a class="dr-button" href="/projects/">ENTER PROJECTS</a></div></article>
+ <aside class="game-hub-index"><span>GAMING INDEX</span><b>Guides</b><b>Wiki / Database</b><b>Characters & Builds</b><b>Weapons & Items</b><b>Media & Streams</b><b>Community</b></aside>
+</section>
+<section class="editorial-section"><div class="editorial-head"><div><span class="editorial-kicker">ACTIVE GAMES</span><h2>From the workshop</h2></div><p>These records will become Fextralife-style game hubs without copying its visual identity.</p></div><div class="section-cards">{d.games.map(g=><article class="section-card"><small>{g.status} · {g.platform}</small><h2>{g.title}</h2><p>{g.sessions} sessions · {g.hours} hours · {g.progress}% progress.</p><a href="/projects/">OPEN GAME HUB →</a></article>)}</div></section>
+<section id="guides" class="knowledge-strip"><article><small>GUIDES</small><h3>Learn the game</h3><p>Walkthroughs, mechanics, builds and authored strategy.</p></article><article id="database"><small>DATABASE</small><h3>Know the world</h3><p>Characters, items, weapons, enemies, locations and systems.</p></article><article><small>COMMUNITY</small><h3>Talk about it</h3><p>Threads, questions, discoveries and live discussion attached to the game.</p></article></section>
+</PublicPage></SiteLayout>

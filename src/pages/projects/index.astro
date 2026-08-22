@@ -1,0 +1,4 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro'; import PublicPage from '../../components/PublicPage.astro'; import {getGamingDashboard} from '../../services/gamingDashboardService'; const d=await getGamingDashboard();
+---
+<SiteLayout title="Projects — DragonsRitual"><PublicPage active="gaming" eyebrow="WORKSHOP / PROJECTS" title="Made here. Broken here. Built again." intro="Games, applications, experiments and long-running studio work — with the process visible instead of hidden behind a launch trailer."><section class="section-cards">{d.games.map(g=><article class="section-card"><small>{g.status} · {g.platform}</small><h2>{g.title}</h2><p>{g.sessions} sessions logged · {g.hours} hours · {g.progress}% progress.</p><a href="/live/">WATCH / FOLLOW DEVELOPMENT →</a></article>)}</section></PublicPage></SiteLayout>

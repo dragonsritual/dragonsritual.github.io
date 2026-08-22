@@ -1,0 +1,6 @@
+---
+import PublicHeader from './PublicHeader.astro'; import PublicFooter from './PublicFooter.astro';
+interface Props { active?:string; eyebrow:string; title:string; intro:string; }
+const {active='more',eyebrow,title,intro}=Astro.props;
+---
+<PublicHeader active={active}/><main class="world-main"><section class="world-mast"><span>{eyebrow}</span><h1>{title}</h1><p>{intro}</p></section><slot /></main><PublicFooter/>

@@ -1,0 +1,58 @@
+---
+import type { NewsroomArticleSummary } from "../../services/journal";
+
+interface Props {
+  article: NewsroomArticleSummary;
+  featured?: boolean;
+}
+
+const { article, featured = false } = Astro.props;
+
+function formatDate(value: string | null) {
+  if (!value) return "Unscheduled";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Unscheduled";
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  }).format(date);
+}
+---
+
+<article class:list={["journal-card", featured && "journal-card--featured"]}>
+  <a class="journal-card__media" href={`/journal/${article.slug}/`}>
+    {article.heroMediaUrl ? (
+      <img
+        src={article.heroMediaUrl}
+        alt={article.heroMediaAlt ?? ""}
+        loading={featured ? "eager" : "lazy"}
+      />
+    ) : (
+      <div class="journal-card__placeholder" aria-hidden="true">
+        <span>DR</span>
+      </div>
+    )}
+  </a>
+
+  <div class="journal-card__body">
+    <div class="journal-card__meta">
+      <time datetime={article.publishedAt ?? undefined}>{formatDate(article.publishedAt)}</time>
+      {article.authorName && <span>{article.authorName}</span>}
+    </div>
+
+    <h2>
+      <a href={`/journal/${article.slug}/`}>{article.title}</a>
+    </h2>
+
+    {(article.subtitle || article.excerpt) && (
+      <p>{article.subtitle ?? article.excerpt}</p>
+    )}
+
+    <a class="journal-card__read" href={`/journal/${article.slug}/`}>
+      Read dispatch →
+    </a>
+  </div>
+</article>
