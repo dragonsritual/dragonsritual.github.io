@@ -3,6 +3,7 @@ import "../styles/core.css";
 import "../styles/gaming.css";
 import "../styles/journal.css";
 import "../styles/public.css";
+import "../styles/launch.css";
 import { ClientRouter } from "astro:transitions";
 
 interface Props {
@@ -22,6 +23,8 @@ const {
   ogImage,
   ogType = "website"
 } = Astro.props;
+
+const isPublicLaunchRoute = Astro.url.pathname === "/" || Astro.url.pathname.startsWith("/radio");
 ---
 
 <!doctype html>
@@ -69,7 +72,7 @@ const {
     <div id="dragon-media-dock" class="dragon-media-dock" hidden><button type="button" data-dock-return>RETURN TO MEDIA</button><button type="button" data-dock-close aria-label="Close player">×</button><div data-dock-label>MEDIA CONTINUES HERE</div></div>
     <slot />
 
-    <script is:inline src="/dragon-rail.js"></script>
+    {!isPublicLaunchRoute && <script is:inline src="/dragon-rail.js"></script>}
     <script is:inline>
       (() => {
         const isLocal =
