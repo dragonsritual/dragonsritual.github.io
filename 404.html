@@ -1,76 +1,12 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#07080a" />
-  <meta name="description" content="Dragon Radio — independent music curated by DragonsRitual." />
-  <title>Dragon Radio — DragonsRitual</title>
-  <link rel="stylesheet" href="/radio.css?v=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="refresh" content="0;url=/">
+  <title>DragonsRitual</title>
+  <script>location.replace("/");</script>
 </head>
-<body>
-  <main class="app" aria-label="Dragon Radio">
-    <header class="topbar">
-      <div class="brand" aria-label="Dragon Radio">
-        <div class="mark">DR</div>
-        <div class="brand-copy"><strong>DRAGON RADIO</strong><span>DRAGONSRITUAL</span></div>
-      </div>
-      <div class="on-air"><i></i> ON AIR</div>
-    </header>
-
-    <section class="player-card">
-      <div class="cover-shell">
-        <img id="cover" alt="Now playing artwork" />
-        <div id="coverFallback" class="cover-fallback">DR</div>
-      </div>
-
-      <div class="now-playing">
-        <div class="eyebrow">NOW PLAYING</div>
-        <h1 id="title">Dragon Radio</h1>
-        <p id="artist">Loading station library…</p>
-      </div>
-
-      <div class="timeline">
-        <span id="elapsed">0:00</span>
-        <input id="seek" type="range" min="0" max="100" value="0" aria-label="Seek through current track" />
-        <span id="duration">0:00</span>
-      </div>
-
-      <div class="transport">
-        <button id="prev" class="transport-secondary" aria-label="Previous track">‹‹</button>
-        <button id="play" class="play" aria-label="Play Dragon Radio">▶</button>
-        <button id="next" class="transport-secondary" aria-label="Next track">››</button>
-      </div>
-
-      <div class="volume-row">
-        <span>VOL</span><input id="volume" type="range" min="0" max="1" value="0.85" step="0.01" aria-label="Volume" />
-      </div>
-    </section>
-
-    <section class="station-strip">
-      <div><span>STATION</span><strong>DRAGON RADIO</strong></div>
-      <button id="shareBtn">SHARE</button>
-    </section>
-
-    <nav class="tabs" aria-label="Radio sections">
-      <button class="active" data-tab="queue">UP NEXT</button>
-      <button data-tab="artists">ARTISTS</button>
-      <button data-tab="about">ABOUT</button>
-    </nav>
-
-    <section id="queue" class="panel active"><div id="queueList" class="queue-list"></div></section>
-    <section id="artists" class="panel"><div id="artistList" class="artist-list"></div></section>
-    <section id="about" class="panel">
-      <article>
-        <div class="eyebrow">DRAGON RADIO</div>
-        <h2>Independent music. Shared with permission.</h2>
-        <p>This first public release is a fan-based station for independent artists. Music is added only after DragonsRitual records permission or applicable rights information from the artist or rights holder.</p>
-      </article>
-    </section>
-
-    <footer><span>© 2026 DRAGONSRITUAL</span><span>PUBLIC RADIO RELEASE 01</span></footer>
-    <audio id="audio" preload="metadata"></audio>
-  </main>
-  <script src="/radio.js?v=1" defer></script>
-</body>
+<body></body>
 </html>
