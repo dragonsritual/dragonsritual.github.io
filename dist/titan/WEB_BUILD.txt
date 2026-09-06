@@ -1,3 +1,0 @@
-PROJECT TITAN — WEEKEND WEB TEST 02
-Browser extraction from the Electron/Three.js development build.
-Electron shell, Oracle local server, and unused retarget source assets are intentionally excluded.
