@@ -1,0 +1,42 @@
+{
+  "name": "@sanity/lezer-groq",
+  "version": "1.0.4",
+  "description": "Lezer grammar for GROQ query language (CodeMirror 6)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sanity-io/groq-syntax.git",
+    "directory": "packages/lezer-groq"
+  },
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src/groq.grammar"
+  ],
+  "dependencies": {
+    "@codemirror/language": "^6.0.0",
+    "@lezer/common": "^1.2.0",
+    "@lezer/highlight": "^1.0.0",
+    "@lezer/lr": "^1.0.0"
+  },
+  "devDependencies": {
+    "@lezer/generator": "^1.7.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "rollup": "^4.0.0",
+    "rollup-plugin-esbuild": "^6.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "lezer-generator src/groq.grammar -o src/parser && rollup -c && cp src/index.d.ts dist/",
+    "build:debug": "lezer-generator src/groq.grammar --names -o src/parser && rollup -c && cp src/index.d.ts dist/"
+  }
+}

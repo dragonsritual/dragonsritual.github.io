@@ -1,0 +1,343 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import LaunchHeader from "../components/LaunchHeader.astro";
+import DragonNetworkBar from "../components/DragonNetworkBar.astro";
+import "../styles/creator-base.css";
+import "../styles/writer-studio.css";
+---
+<SiteLayout title="Writer Room — DRAGON" description="Private professional writer desk inside DragonsRitual.">
+<LaunchHeader />
+<DragonNetworkBar context="WRITER STATION" />
+<main class="writer-room wr17">
+  <header class="writer-room__mast" data-office-mast>
+    <div class="wr-office-cover" data-office-cover aria-hidden="true"></div>
+    <div class="wr-office-mast__content">
+      <div>
+        <span class="wr-kicker">DRAGONSRITUAL / PRIVATE WRITING OFFICE</span>
+        <h1>THE WRITER'S<br/>ROOM</h1>
+        <p class="wr17-welcome">A private place for the work only you can write.</p>
+        <div class="wr19-house-mark"><span>WRITER · DRAGONSRITUAL</span><i></i><span data-office-status>OFFICE OPEN</span></div>
+      </div>
+      <div class="writer-room__identity">
+        <div class="wr-office-avatar" data-office-avatar>
+          <img data-avatar-image alt="Writer profile" hidden />
+          <span data-avatar-fallback>WR</span>
+        </div>
+        <div class="wr-office-idcopy">
+          <span data-author-name>WRITER</span>
+          <span class="wr17-session" data-session-state>SESSION OPEN</span>
+        </div>
+        <button type="button" data-finish>FINISH SESSION</button>
+      </div>
+    </div>
+  </header>
+  <nav class="writer-room__nav wr19-nav"><button class="is-active" data-view="desk"><small>01</small> MY DESK</button><button data-view="drafts"><small>02</small> LIBRARY</button><button data-view="submitted"><small>03</small> EDITOR'S TABLE</button><button data-view="published"><small>04</small> PUBLISHED WORK</button><button data-view="profile"><small>05</small> MY OFFICE</button></nav>
+  <section class="writer-room__loading" data-loading>OPENING YOUR DESK</section>
+
+  <section class="wr17-dashboard wr19-dashboard" data-dashboard hidden>
+    <div class="wr19-today">
+      <span class="wr-kicker">AT YOUR DESK</span>
+      <strong data-dash-message>Make something worth returning to.</strong>
+      <small>Your work saves privately until you choose to send it across the Editor's Table.</small>
+    </div>
+    <div class="wr17-stat"><span>THIS SESSION</span><strong data-session-words>0 WORDS</strong></div>
+    <div class="wr17-stat"><span>WEEKLY RHYTHM</span><strong data-goal-progress>0 / 2,500</strong></div>
+    <div class="wr17-stat"><span>IN PRINT</span><strong data-published-count>0</strong></div>
+  </section>
+
+  <section class="wr19-desk-intro" data-desk-intro hidden>
+    <div><span class="wr-kicker">THE DESK</span><h2>Write without the noise.</h2></div>
+    <p>This room is yours. Draft privately, shape the piece, preview it as a reader will see it, then send it to DragonsRitual editorial when you decide it is ready.</p>
+  </section>
+
+  <section class="writer-room__workspace" data-workspace hidden>
+    <aside class="writer-room__side">
+      <span class="wr-kicker">MANUSCRIPT FILE</span>
+      <div class="writer-room__status"><span>STATUS</span><strong data-status>DRAFT</strong></div>
+      <div class="wr20-draft-chip"><span>PRIVATE DRAFT</span><p>Not public. Save whenever you stop. Keep an outside backup of important work.</p></div>
+      <label><span>FORMAT</span><select data-content-type><option>STORY</option><option>ARTICLE</option><option>JOURNAL</option><option>REVIEW</option><option>INTERVIEW</option><option>LORE</option><option>DEVLOG</option><option>OTHER</option></select></label>
+      <label><span>GENRE / DESK</span><select data-genre><option>FANTASY</option><option>HORROR</option><option>SCI-FI</option><option>WEIRD FICTION</option><option>CULTURE</option><option>GAMES</option><option>ART</option><option>MUSIC</option><option>OTHER</option></select></label>
+      <label><span>EDITORIAL DESTINATION</span><select data-section><option>EDITOR DECIDES</option><option>TODAY FEATURE</option><option>FICTION</option><option>CULTURE</option><option>GAMES</option><option>ART</option><option>MUSIC</option><option>JOURNAL</option></select></label>
+      <label><span>TAGS</span><input data-tags placeholder="magic, ruins, character" /></label>
+      <div class="writer-room__metric"><span>WORDS</span><strong data-words>0</strong></div><div class="writer-room__metric"><span>READ</span><strong data-read>0 MIN</strong></div><div class="writer-room__metric"><span>FILE</span><strong data-save-state>NEW</strong></div>
+      <button class="wr-secondary" type="button" data-new>+ START NEW WORK</button>
+    </aside>
+
+    <article class="writer-editor">
+      <div class="wr17-toolbar"><span data-autosave>AUTOSAVE READY</span><span>EDITORIAL SUBMISSION — NOT PUBLIC UNTIL APPROVED</span></div>
+      <input class="writer-editor__title" data-title placeholder="Give it a title"/>
+      <input class="writer-editor__deck" data-deck placeholder="A subtitle, hook, or one-line promise to the reader"/>
+      <div class="writer-editor__rule"></div>
+      <textarea class="writer-editor__body" data-body placeholder="Begin here…"></textarea>
+      <section class="wr17-assets">
+        <div><span class="wr-kicker">ART / REFERENCE DESK</span><p>Add a cover or supporting images. They travel with the submission for the editor.</p></div>
+        <label class="wr17-upload">+ ADD IMAGES<input type="file" accept="image/*" multiple data-media-input /></label>
+        <div class="wr17-media-grid" data-media-grid></div>
+      </section>
+      <section class="wr17-notes"><label><span>NOTE ACROSS THE EDITOR'S TABLE</span><textarea data-writer-note placeholder="Anything the editor should know? Context, desired placement, image credit, unfinished questions…"></textarea></label></section>
+      <footer class="writer-editor__actions"><div><button class="wr-secondary" data-save>SAVE NOW</button><button class="wr-secondary" data-preview>READER PREVIEW</button></div><button class="wr-primary wr17-submit" data-submit-editor>SEND TO EDITOR'S TABLE →</button></footer>
+      <p class="wr-message" data-room-message></p>
+    </article>
+
+    <aside class="wr20-studio-rail" aria-label="Writer studio sidebar">
+      <section class="wr20-rail-section wr20-inspiration">
+        <header><div><span class="wr-kicker">FROM YOUR SHELF</span><h3>Old work, close by.</h3></div><button type="button" class="wr20-text-button" data-open-library>LIBRARY</button></header>
+        <div class="wr20-cover-feed" data-inspiration-feed>
+          <article class="wr20-cover-card is-empty">
+            <div class="wr20-cover-placeholder"><span>DR</span></div>
+            <h4>Your published work will live here.</h4>
+            <p>Cover art + title, ready to reopen when you need to remember what you can do.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="wr20-rail-section">
+        <header><div><span class="wr-kicker">STUDIO CALENDAR</span><h3 data-calendar-month>Calendar</h3></div></header>
+        <div class="wr20-calendar" data-calendar-grid></div>
+        <div class="wr20-event-list">
+          <div><time>TODAY</time><p>Your private writing schedule</p></div>
+          <div class="is-muted"><time>SITE</time><p>DragonsRitual event sync is ready for the site-events backend.</p></div>
+        </div>
+      </section>
+
+      <section class="wr20-rail-section wr20-traffic">
+        <header><div><span class="wr-kicker">READER SIGNAL</span><h3>How your work travels.</h3></div></header>
+        <div class="wr20-signal-grid">
+          <div><strong data-traffic-views>—</strong><span>VIEWS</span></div>
+          <div><strong data-traffic-reads>—</strong><span>READS</span></div>
+          <div><strong data-traffic-best>—</strong><span>BEST WORK</span></div>
+        </div>
+        <p class="wr20-data-note">Traffic begins when published content is connected to reader analytics. No fake numbers are shown.</p>
+      </section>
+
+      <section class="wr20-rail-section wr20-draft-safety">
+        <span class="wr-kicker">DRAFT SAFETY</span>
+        <h3>Your draft is private—not your only copy.</h3>
+        <p>Save here often, but keep your own backup of important work. The Writer Room should never be your sole archive.</p>
+        <button type="button" class="wr-secondary" data-save-rail>SAVE DRAFT NOW</button>
+      </section>
+    </aside>
+  </section>
+
+  <section class="writer-library" data-library hidden><header><span class="wr-kicker">THE LIBRARY</span><h2 data-library-title>Manuscripts</h2><p data-library-subtitle>Everything starts as a draft.</p></header><div class="writer-library__list" data-library-list></div></section>
+
+  <section class="wr17-profile" data-profile hidden>
+    <div class="wr17-profile-card">
+      <span class="wr-kicker">YOUR OFFICE IDENTITY</span>
+      <div class="wr-office-profile-heading">
+        <div class="wr-office-profile-avatar" data-profile-avatar>
+          <img data-profile-avatar-image alt="Writer profile" hidden />
+          <span data-profile-avatar-fallback>WR</span>
+        </div>
+        <div><h2 data-profile-name>Writer</h2><span class="wr17-badge" data-badge>CONTRIBUTOR</span></div>
+      </div>
+      <label>ABOUT YOUR VOICE<textarea data-bio placeholder="What do you write? What should readers expect from you?"></textarea></label>
+      <label>WEEKLY WORD GOAL<input type="number" min="100" step="100" data-weekly-goal value="2500"/></label>
+    </div>
+
+    <div class="wr-office-customize">
+      <div class="wr-office-customize__head">
+        <div><span class="wr-kicker">MAKE THE ROOM YOURS</span><h3>Your private office.</h3></div>
+        <p>Give your desk a face, a wall, and a mood. These settings belong to your Writer Room.</p>
+      </div>
+
+      <div class="wr-office-cover-preview" data-cover-preview>
+        <span>HEADER IMAGE</span>
+        <strong>YOUR WALL / YOUR WORLD</strong>
+      </div>
+
+      <div class="wr-office-customize__grid">
+        <label class="wr-office-upload">
+          <span>PROFILE PICTURE</span>
+          <strong>Choose portrait</strong>
+          <small>Square images work best.</small>
+          <input type="file" accept="image/*" data-avatar-input />
+        </label>
+        <label class="wr-office-upload">
+          <span>HEADER PHOTO</span>
+          <strong>Choose wide image</strong>
+          <small>Landscape images work best.</small>
+          <input type="file" accept="image/*" data-header-input />
+        </label>
+      </div>
+
+      <div class="wr-office-theme-block">
+        <span>ROOM THEME</span>
+        <div class="wr-office-themes" data-theme-picker>
+          <button type="button" data-theme="ember"><i></i><strong>EMBER</strong><small>Dragon house</small></button>
+          <button type="button" data-theme="ink"><i></i><strong>INK</strong><small>Quiet black</small></button>
+          <button type="button" data-theme="forest"><i></i><strong>FOREST</strong><small>Deep green</small></button>
+          <button type="button" data-theme="wine"><i></i><strong>WINE</strong><small>Dark burgundy</small></button>
+        </div>
+      </div>
+
+      <div class="wr-office-customize__actions">
+        <p data-office-message>Personalization saves to this writer profile.</p>
+        <button class="wr-primary" data-save-profile>SAVE MY OFFICE</button>
+      </div>
+    </div>
+
+    <section class="wr19-office-record">
+      <div>
+        <span class="wr-kicker">DRAGONSRITUAL WRITER RECORD</span>
+        <h3>Your history starts here.</h3>
+        <p>Every finished manuscript, editorial handoff, and published piece becomes part of the record of your work with DragonsRitual.</p>
+      </div>
+      <blockquote>“Build the body of work people will know you by.”</blockquote>
+    </section>
+
+    <div class="wr17-career-grid"><div><span>TOTAL WORDS</span><strong data-career-words>0</strong></div><div><span>MANUSCRIPTS</span><strong data-career-files>0</strong></div><div><span>WITH EDITOR</span><strong data-career-submitted>0</strong></div><div><span>PUBLISHED</span><strong data-career-published>0</strong></div><div><span>AVG. READER RATING</span><strong data-career-rating>—</strong></div><div><span>READER FEEDBACK</span><strong data-career-feedback>0</strong></div></div>
+    <div class="wr17-milestones"><span class="wr-kicker">MILESTONES</span><div data-badges></div></div>
+  </section>
+
+  <dialog class="writer-preview" data-preview-dialog><button class="writer-preview__close" data-close-preview>CLOSE</button><span class="wr-kicker" data-preview-genre>FICTION</span><h1 data-preview-title>Untitled</h1><p class="writer-preview__deck" data-preview-deck></p><div class="writer-preview__byline">BY <span data-preview-author></span> / DRAGON</div><div class="wr17-preview-media" data-preview-media></div><div class="writer-preview__body" data-preview-body></div></dialog>
+
+  <dialog class="wr17-finish" data-finish-dialog><span class="wr-kicker">SESSION COMPLETE</span><h2>Close the desk?</h2><p>You wrote <strong data-finish-words>0</strong> words this session.</p><div><button class="wr-secondary" data-keep-writing>KEEP WRITING</button><button class="wr-primary" data-save-signout>SAVE & SIGN OUT</button></div></dialog>
+</main>
+<script>
+import { getSupabaseBrowserClient } from '../lib/supabaseBrowser';
+const supabase=getSupabaseBrowserClient(); const {data:{session}}=await supabase.auth.getSession(); if(!session)location.href='/join/'; const user=session?.user;
+if(user){
+  const {data:agreementProfile,error:agreementError}=await supabase
+    .from('dr_creator_profiles')
+    .select('contributor_agreement_version,contributor_agreement_accepted_at')
+    .eq('user_id',user.id)
+    .maybeSingle();
+  if(agreementError || agreementProfile?.contributor_agreement_version!=='1.0' || !agreementProfile?.contributor_agreement_accepted_at){
+    location.href='/contributor-agreement/';
+    throw new Error('Contributor agreement required');
+  }
+}
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const workspace=$('[data-workspace]'),dashboard=$('[data-dashboard]'),library=$('[data-library]'),profile=$('[data-profile]'),title=$('[data-title]'),deck=$('[data-deck]'),body=$('[data-body]'),genre=$('[data-genre]'),contentType=$('[data-content-type]'),section=$('[data-section]'),tags=$('[data-tags]'),writerNote=$('[data-writer-note]'),words=$('[data-words]'),read=$('[data-read]'),status=$('[data-status]'),saveState=$('[data-save-state]'),message=$('[data-room-message]');
+let currentId=null,currentStatus='draft',dirty=false,mediaUrls=[],initialWords=0,autosaveTimer=null,profileData={};
+const author=user?.user_metadata?.display_name||user?.email?.split('@')[0]||'Writer';
+ $('[data-author-name]').textContent=author.toUpperCase(); $('[data-profile-name]').textContent=author;
+const wc=t=>t.trim()?t.trim().split(/\s+/).length:0; const say=(t,b=false)=>{message.textContent=t;message.classList.toggle('is-error',b)};
+function count(){const n=wc(body.value);words.textContent=n.toLocaleString();read.textContent=`${Math.max(1,Math.ceil(n/225))} MIN`; $('[data-session-words]').textContent=`${Math.max(0,n-initialWords).toLocaleString()} WORDS`;if(dirty)saveState.textContent='UNSAVED'}
+function markDirty(){dirty=true;count();$('[data-autosave]').textContent='CHANGES WAITING';clearTimeout(autosaveTimer);autosaveTimer=setTimeout(()=>{if(currentStatus==='draft'&&body.value.trim())save(true)},1800)}
+[title,deck,body,genre,contentType,section,tags,writerNote].forEach(el=>el.addEventListener('input',markDirty));
+function showDesk(){workspace.hidden=false;library.hidden=true;profile.hidden=true;dashboard.hidden=false}
+function reset(){currentId=null;currentStatus='draft';title.value='';deck.value='';body.value='';genre.value='FANTASY';contentType.value='STORY';section.value='EDITOR DECIDES';tags.value='';writerNote.value='';mediaUrls=[];renderMedia();status.textContent='DRAFT';saveState.textContent='NEW';dirty=false;initialWords=0;count();say('');showDesk()}
+function payload(){return {user_id:user.id,title:title.value.trim()||'Untitled manuscript',deck:deck.value.trim(),body:body.value,genre:genre.value,status:currentStatus,content_type:contentType.value,intended_section:section.value,tags:tags.value.split(',').map(x=>x.trim()).filter(Boolean),writer_note:writerNote.value.trim(),cover_url:mediaUrls[0]||null,media_urls:mediaUrls}}
+async function save(quiet=false){if(!quiet)say('SAVING…');const p=payload();const r=currentId?await supabase.from('dr_writer_manuscripts').update(p).eq('id',currentId).select().single():await supabase.from('dr_writer_manuscripts').insert(p).select().single();if(r.error){say(r.error.message,true);return false}currentId=r.data.id;dirty=false;saveState.textContent='SAVED';$('[data-autosave]').textContent='SAVED TO DRAGON';if(!quiet)say('DRAFT SAVED.');return true}
+$('[data-save]').addEventListener('click',()=>save(false));$('[data-new]').addEventListener('click',reset);
+$('[data-submit-editor]').addEventListener('click',async()=>{if(!body.value.trim()||wc(body.value)<10){say('ADD A LITTLE MORE BEFORE SENDING IT TO THE EDITOR.',true);return}if(!(await save()))return;const {error}=await supabase.from('dr_writer_manuscripts').update({status:'submitted',submitted_at:new Date().toISOString()}).eq('id',currentId);if(error){say(error.message,true);return}currentStatus='submitted';status.textContent='WITH EDITOR';say('DELIVERED TO THE EDITOR. YOUR DRAFT IS SAFE.');await refreshCareer()});
+function renderMedia(){const g=$('[data-media-grid]');g.innerHTML='';mediaUrls.forEach((url,i)=>{const d=document.createElement('div');d.innerHTML='<img><button type="button">REMOVE</button>';d.querySelector('img').src=url;d.querySelector('button').onclick=()=>{mediaUrls.splice(i,1);renderMedia();markDirty()};g.appendChild(d)})}
+$('[data-media-input]').addEventListener('change',async e=>{const fs=[...e.target.files];if(!fs.length)return;say('UPLOADING ART…');for(const f of fs.slice(0,6)){const safe=f.name.replace(/[^a-zA-Z0-9._-]/g,'-');const path=`${user.id}/${Date.now()}-${Math.random().toString(36).slice(2,7)}-${safe}`;const {error}=await supabase.storage.from('writer-media').upload(path,f,{upsert:false});if(error){say(error.message,true);continue}const {data}=supabase.storage.from('writer-media').getPublicUrl(path);mediaUrls.push(data.publicUrl)}renderMedia();markDirty();say(`${mediaUrls.length} IMAGE${mediaUrls.length===1?'':'S'} ATTACHED.`);e.target.value=''})
+const dlg=$('[data-preview-dialog]');$('[data-preview]').addEventListener('click',()=>{$('[data-preview-genre]').textContent=`${contentType.value} / ${genre.value}`;$('[data-preview-title]').textContent=title.value.trim()||'Untitled';$('[data-preview-deck]').textContent=deck.value;$('[data-preview-author]').textContent=author.toUpperCase();const m=$('[data-preview-media]');m.innerHTML='';mediaUrls.forEach(u=>{const im=document.createElement('img');im.src=u;m.appendChild(im)});const dest=$('[data-preview-body]');dest.innerHTML='';body.value.split(/\n\s*\n/).filter(Boolean).forEach(t=>{const p=document.createElement('p');p.textContent=t;dest.appendChild(p)});dlg.showModal()});$('[data-close-preview]').onclick=()=>dlg.close();
+async function showLibrary(kind){workspace.hidden=true;const deskIntro=$('[data-desk-intro]');if(deskIntro)deskIntro.hidden=true;profile.hidden=true;dashboard.hidden=false;library.hidden=false;const cfg={drafts:['Manuscripts','Drafts, returned work, and pieces still taking shape.',['draft']],submitted:['With Editor','Submitted work is locked into the editorial queue until you revise it.',['submitted','ready']],published:['Published Works','Your growing DragonsRitual byline.',['published']]}[kind];$('[data-library-title]').textContent=cfg[0];$('[data-library-subtitle]').textContent=cfg[1];const list=$('[data-library-list]');list.innerHTML='<div class="writer-library__empty">LOADING…</div>';const {data,error}=await supabase.from('dr_writer_manuscripts').select('*').in('status',cfg[2]).order('updated_at',{ascending:false});if(error){list.textContent=error.message;return}if(!data.length){list.innerHTML='<div class="writer-library__empty">Nothing here yet. Your next piece starts at the desk.</div>';return}list.innerHTML='';data.forEach(item=>{const b=document.createElement('button');b.className='writer-library__item';b.innerHTML='<span></span><strong></strong><small></small><em></em>';b.children[0].textContent=`${item.content_type||'STORY'} / ${item.genre}`;b.children[1].textContent=item.title;b.children[2].textContent=`${item.status.toUpperCase()} · ${wc(item.body||'').toLocaleString()} WORDS · ${new Date(item.updated_at).toLocaleDateString()}`;b.children[3].textContent=item.editor_note?`EDITOR: ${item.editor_note}`:'';b.onclick=()=>loadItem(item);list.appendChild(b)})}
+function loadItem(item){currentId=item.id;currentStatus=item.status;title.value=item.title;deck.value=item.deck||'';body.value=item.body||'';genre.value=item.genre||'FANTASY';contentType.value=item.content_type||'STORY';section.value=item.intended_section||'EDITOR DECIDES';tags.value=(item.tags||[]).join(', ');writerNote.value=item.writer_note||'';mediaUrls=item.media_urls||[];renderMedia();status.textContent=item.status==='submitted'?'WITH EDITOR':item.status.toUpperCase();dirty=false;saveState.textContent='SAVED';initialWords=wc(body.value);count();showDesk();say(item.editor_note?`EDITOR NOTE: ${item.editor_note}`:'')}
+async function refreshCareer(){const {data=[]}=await supabase.from('dr_writer_manuscripts').select('body,status,rating,feedback_count');const total=data.reduce((a,x)=>a+wc(x.body||''),0),pub=data.filter(x=>x.status==='published'),sub=data.filter(x=>['submitted','ready'].includes(x.status)),ratings=pub.map(x=>Number(x.rating)).filter(Boolean);$('[data-career-words]').textContent=total.toLocaleString();$('[data-career-files]').textContent=data.length;$('[data-career-submitted]').textContent=sub.length;$('[data-career-published]').textContent=pub.length;$('[data-published-count]').textContent=pub.length;$('[data-career-rating]').textContent=ratings.length?(ratings.reduce((a,b)=>a+b,0)/ratings.length).toFixed(1):'—';$('[data-career-feedback]').textContent=pub.reduce((a,x)=>a+(x.feedback_count||0),0);const goal=profileData.weekly_word_goal||2500;$('[data-goal-progress]').textContent=`${Math.min(total,goal).toLocaleString()} / ${goal.toLocaleString()}`;const badges=[];if(data.length)badges.push('FIRST MANUSCRIPT');if(total>=1000)badges.push('1K WORDS');if(total>=5000)badges.push('5K WORDS');if(pub.length)badges.push('PUBLISHED AUTHOR');if(pub.length>=5)badges.push('COLUMN REGULAR');$('[data-badges]').innerHTML=badges.length?badges.map(x=>`<span>${x}</span>`).join(''):'<small>Your first milestone is waiting.</small>'}
+const officeKey=`dragon-writer-office:${user.id}`;
+let officeDraft={avatar_url:'',header_url:'',room_theme:'ember'};
+const officeMessage=$('[data-office-message]');
+function initials(){return author.split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase()||'WR'}
+function readLocalOffice(){try{return JSON.parse(localStorage.getItem(officeKey)||'{}')}catch{return {}}}
+function setOfficeImage(selector,url){const img=$(selector);if(!img)return;if(url){img.src=url;img.hidden=false}else{img.removeAttribute('src');img.hidden=true}}
+function applyOffice(){
+  const theme=officeDraft.room_theme||'ember';
+  document.querySelector('.writer-room')?.setAttribute('data-room-theme',theme);
+  $$('[data-theme]').forEach(b=>b.classList.toggle('is-selected',b.dataset.theme===theme));
+  const cover=$('[data-office-cover]');
+  const preview=$('[data-cover-preview]');
+  if(cover)cover.style.backgroundImage=officeDraft.header_url?`linear-gradient(90deg,rgba(4,5,6,.86),rgba(4,5,6,.3) 58%,rgba(4,5,6,.72)),url(\"${officeDraft.header_url.replace(/\"/g,'')}\")`:'';
+  if(preview)preview.style.backgroundImage=officeDraft.header_url?`linear-gradient(90deg,rgba(5,6,7,.48),rgba(5,6,7,.18)),url(\"${officeDraft.header_url.replace(/\"/g,'')}\")`:'';
+  setOfficeImage('[data-avatar-image]',officeDraft.avatar_url);
+  setOfficeImage('[data-profile-avatar-image]',officeDraft.avatar_url);
+  $('[data-avatar-fallback]').textContent=initials();
+  $('[data-profile-avatar-fallback]').textContent=initials();
+}
+async function uploadProfileAsset(file,kind){
+  if(!file)return;
+  if(!file.type.startsWith('image/')){officeMessage.textContent='PLEASE CHOOSE AN IMAGE FILE.';return}
+  if(file.size>8*1024*1024){officeMessage.textContent='PLEASE USE AN IMAGE UNDER 8 MB.';return}
+  officeMessage.textContent=`UPLOADING ${kind==='avatar'?'PROFILE PICTURE':'HEADER PHOTO'}…`;
+  const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,'-');
+  const path=`${user.id}/office-${kind}-${Date.now()}-${safe}`;
+  const {error}=await supabase.storage.from('writer-media').upload(path,file,{upsert:false});
+  if(error){officeMessage.textContent=`UPLOAD FAILED: ${error.message}`;return}
+  const {data}=supabase.storage.from('writer-media').getPublicUrl(path);
+  if(kind==='avatar')officeDraft.avatar_url=data.publicUrl;else officeDraft.header_url=data.publicUrl;
+  localStorage.setItem(officeKey,JSON.stringify(officeDraft));
+  applyOffice();
+  officeMessage.textContent='LOOKS GOOD. SAVE MY OFFICE TO KEEP IT WITH YOUR PROFILE.';
+}
+$('[data-avatar-input]').addEventListener('change',e=>{uploadProfileAsset(e.target.files?.[0],'avatar');e.target.value=''});
+$('[data-header-input]').addEventListener('change',e=>{uploadProfileAsset(e.target.files?.[0],'header');e.target.value=''});
+$$('[data-theme]').forEach(btn=>btn.addEventListener('click',()=>{officeDraft.room_theme=btn.dataset.theme;localStorage.setItem(officeKey,JSON.stringify(officeDraft));applyOffice();officeMessage.textContent='THEME PREVIEWED. SAVE MY OFFICE TO KEEP IT WITH YOUR PROFILE.'}));
+async function loadProfile(){
+  const {data}=await supabase.from('dr_creator_profiles').select('*').eq('user_id',user.id).maybeSingle();
+  profileData=data||{};
+  const local=readLocalOffice();
+  officeDraft={avatar_url:profileData.avatar_url||local.avatar_url||'',header_url:profileData.header_url||local.header_url||'',room_theme:profileData.room_theme||local.room_theme||'ember'};
+  $('[data-bio]').value=profileData.bio||'';
+  $('[data-weekly-goal]').value=profileData.weekly_word_goal||2500;
+  $('[data-badge]').textContent=profileData.badge||'CONTRIBUTOR';
+  applyOffice();
+  await refreshCareer();
+}
+$('[data-save-profile]').onclick=async()=>{
+  const base={user_id:user.id,display_name:author,creator_type:'writer',bio:$('[data-bio]').value,weekly_word_goal:Number($('[data-weekly-goal]').value)||2500};
+  const full={...base,avatar_url:officeDraft.avatar_url||null,header_url:officeDraft.header_url||null,room_theme:officeDraft.room_theme||'ember'};
+  officeMessage.textContent='SAVING YOUR OFFICE…';
+  let {error}=await supabase.from('dr_creator_profiles').upsert(full);
+  if(error && /avatar_url|header_url|room_theme|column/i.test(error.message)){
+    const retry=await supabase.from('dr_creator_profiles').upsert(base);
+    error=retry.error;
+    if(!error)officeMessage.textContent='PROFILE SAVED. OFFICE LOOK SAVED ON THIS DEVICE — RUN THE INCLUDED PERSONALIZATION SQL TO SYNC IT ACROSS DEVICES.';
+  }
+  if(error){officeMessage.textContent=error.message;return}
+  localStorage.setItem(officeKey,JSON.stringify(officeDraft));
+  profileData={...profileData,...full};
+  await refreshCareer();
+  if(!officeMessage.textContent.includes('THIS DEVICE'))officeMessage.textContent='YOUR WRITER ROOM IS SAVED.';
+};
+$$('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{$$('[data-view]').forEach(b=>b.classList.toggle('is-active',b===btn));if(btn.dataset.view==='desk')reset();else if(btn.dataset.view==='profile'){workspace.hidden=true;const deskIntro=$('[data-desk-intro]');if(deskIntro)deskIntro.hidden=true;library.hidden=true;profile.hidden=false;dashboard.hidden=false;loadProfile()}else showLibrary(btn.dataset.view)}));
+const finish=$('[data-finish-dialog]');$('[data-finish]').onclick=()=>{$('[data-finish-words]').textContent=Math.max(0,wc(body.value)-initialWords).toLocaleString();finish.showModal()};$('[data-keep-writing]').onclick=()=>finish.close();$('[data-save-signout]').onclick=async()=>{if(dirty&&body.value.trim())await save(true);await supabase.auth.signOut();location.href='/'};
+$('[data-loading]').hidden=true;dashboard.hidden=false;reset();loadProfile();
+
+// PASS 20 — writer studio experience helpers
+const calendarGrid=document.querySelector('[data-calendar-grid]');
+const calendarMonth=document.querySelector('[data-calendar-month]');
+function renderWriterCalendar(){
+  if(!calendarGrid||!calendarMonth)return;
+  const d=new Date(), y=d.getFullYear(), m=d.getMonth();
+  calendarMonth.textContent=d.toLocaleDateString(undefined,{month:'long',year:'numeric'});
+  const first=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate();
+  calendarGrid.innerHTML=['S','M','T','W','T','F','S'].map(x=>`<b>${x}</b>`).join('');
+  for(let i=0;i<first;i++)calendarGrid.insertAdjacentHTML('beforeend','<i></i>');
+  for(let day=1;day<=days;day++){
+    const today=day===d.getDate();
+    calendarGrid.insertAdjacentHTML('beforeend',`<button type="button" class="${today?'is-today':''}" aria-label="${d.toLocaleDateString(undefined,{month:'long'})} ${day}">${day}</button>`);
+  }
+}
+renderWriterCalendar();
+
+document.querySelector('[data-save-rail]')?.addEventListener('click',()=>document.querySelector('[data-save]')?.click());
+document.querySelector('[data-open-library]')?.addEventListener('click',()=>document.querySelector('[data-view="published"]')?.click());
+
+async function loadWriterInspiration(){
+  const feed=document.querySelector('[data-inspiration-feed]');
+  if(!feed)return;
+  const {data,error}=await supabase.from('dr_writer_manuscripts').select('id,title,deck,media,status,updated_at').in('status',['published','draft']).order('updated_at',{ascending:false}).limit(6);
+  if(error||!data?.length)return;
+  feed.innerHTML=data.map((item,index)=>{
+    const media=Array.isArray(item.media)?item.media:[];
+    const image=media.find(x=>x?.url||x?.src);
+    const url=image?.url||image?.src||'';
+    const cover=url?`<img src="${url}" alt="" loading="lazy"/>`:`<div class="wr20-cover-placeholder"><span>${String(index+1).padStart(2,'0')}</span></div>`;
+    return `<button type="button" class="wr20-cover-card" data-inspire-id="${item.id}">
+      ${cover}<h4>${item.title||'Untitled manuscript'}</h4>
+      <p>${item.status==='published'?'PUBLISHED':'DRAFT'} · ${item.deck||'Return to this work.'}</p>
+    </button>`;
+  }).join('');
+  feed.querySelectorAll('[data-inspire-id]').forEach(btn=>btn.addEventListener('click',()=>{
+    document.querySelector('[data-view="drafts"]')?.click();
+  }));
+}
+loadWriterInspiration();
+
+</script>
+</SiteLayout>
+

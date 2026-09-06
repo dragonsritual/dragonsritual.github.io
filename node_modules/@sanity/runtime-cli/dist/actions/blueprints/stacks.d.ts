@@ -1,0 +1,137 @@
+import type { Blueprint } from '@sanity/blueprints-parser';
+import type { Logger } from '../../utils/logger.js';
+import type { AuthParams, ScopeType, Stack, StackMutation, StackSummary } from '../../utils/types.js';
+export declare const stacksUrl: string;
+type ListStacksResponse = {
+    ok: true;
+    error: null;
+    stacks: StackSummary[];
+} | {
+    ok: false;
+    error: string;
+    stacks?: unknown;
+};
+export declare function listStacks(auth: AuthParams, logger: Logger): Promise<ListStacksResponse>;
+type GetStackResponse = {
+    ok: true;
+    error: null;
+    stack: Stack;
+    response?: Response;
+} | {
+    ok: false;
+    error: string;
+    stack?: unknown;
+    response?: Response;
+};
+export declare function getStack({ stackId, auth, logger, }: {
+    stackId: string;
+    auth: AuthParams;
+    logger: Logger;
+}): Promise<GetStackResponse>;
+type CreateStackResponse = GetStackResponse;
+export declare function createStack({ stackMutation, auth, logger, }: {
+    stackMutation: StackMutation;
+    auth: AuthParams;
+    logger: Logger;
+}): Promise<CreateStackResponse>;
+export declare function createEmptyStack({ token, scopeType, scopeId, name, logger, }: {
+    token: string;
+    scopeType: ScopeType;
+    scopeId: string;
+    name: string;
+    logger: Logger;
+}): Promise<Stack>;
+type UpdateStackResponse = {
+    ok: true;
+    error: null;
+    stack: Stack & {
+        operationId: string;
+    };
+} | {
+    ok: false;
+    error: string;
+    stack?: unknown;
+};
+export declare function updateStack({ stackId, stackMutation, auth, logger, }: {
+    stackId: string;
+    stackMutation: StackMutation;
+    auth: AuthParams;
+    logger: Logger;
+}): Promise<UpdateStackResponse>;
+interface PlanResourceSnapshot {
+    name: string;
+    type: string;
+    parameters: Record<string, unknown>;
+}
+export interface PlanActionDetails {
+    name: string;
+    type: string;
+    parameters?: Record<string, unknown>;
+    existingResource?: PlanResourceSnapshot & {
+        id: string;
+        externalId?: string;
+    };
+    updatedResource?: PlanResourceSnapshot;
+}
+export interface DeploymentPlanAction {
+    type: 'create' | 'update' | 'destroy' | 'skip' | 'attach' | 'detach';
+    resourceType: string;
+    details: PlanActionDetails | null;
+}
+export interface DeploymentPlan {
+    plan: DeploymentPlanAction[];
+    summary: {
+        createCount: number;
+        updateCount: number;
+        destroyCount: number;
+        skipCount: number;
+        attachCount: number;
+        detachCount: number;
+    };
+}
+type PlanStackResponse = {
+    ok: true;
+    error: null;
+    problems: null;
+    deploymentPlan: DeploymentPlan;
+} | {
+    ok: false;
+    error: string;
+    problems: {
+        message: string;
+    }[] | null;
+    deploymentPlan: null;
+};
+export declare function planStack({ stackId, document, auth, logger, }: {
+    stackId: string;
+    document: Blueprint;
+    auth: AuthParams;
+    logger: Logger;
+}): Promise<PlanStackResponse>;
+export declare function resolveStackIdByNameOrId(value: string, auth: AuthParams, logger: Logger): Promise<string>;
+type PromoteStackResponse = {
+    ok: true;
+    error: null;
+    stack: Stack & {
+        alreadyPromoted: boolean;
+    };
+    response?: Response;
+} | {
+    ok: false;
+    error: string;
+    stack?: unknown;
+    response?: Response;
+};
+export declare function promoteStack({ stackId, auth, logger, name, }: {
+    stackId: string;
+    auth: AuthParams;
+    logger: Logger;
+    name?: string;
+}): Promise<PromoteStackResponse>;
+type DestroyStackResponse = UpdateStackResponse;
+export declare function destroyStack({ stackId, auth, logger, }: {
+    stackId: string;
+    auth: AuthParams;
+    logger: Logger;
+}): Promise<DestroyStackResponse>;
+export {};

@@ -1,0 +1,95 @@
+﻿---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import LaunchHeader from "../../components/LaunchHeader.astro";
+import { dragonTV } from "../../data/dragonTV.js";
+---
+<SiteLayout title="Dragon TV â€” DragonsRitual" description="Dragon TV live broadcasts, games and programs.">
+  <LaunchHeader />
+
+  <main class="tv-shell">
+    <section class="tv-grid">
+      <aside class="tv-rail">
+        <div class="tv-rail__mark">DRAGON TV</div>
+        <div class="tv-rail__status"><span class="launch-live-dot"></span>{dragonTV.status}</div>
+
+        <div class="tv-rail__stack">
+          {dragonTV.leftItems.map((item) => (
+            <div class="tv-rail__item">
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </div>
+          ))}
+        </div>
+
+        <a class="tv-rail__link" href="/">TODAY â†’</a>
+      </aside>
+
+      <section class="tv-stage">
+        <header class="tv-stage__header">
+          <div>
+            <span class="tv-kicker">DRAGON / BROADCAST</span>
+            <h1>{dragonTV.title}</h1>
+          </div>
+          <div class="tv-stage__meta">
+            <span>{dragonTV.status}</span>
+            <strong>{dragonTV.program}</strong>
+          </div>
+        </header>
+
+        <div class="tv-player-frame">
+          <div id="dragon-tv-player" class="tv-player"></div>
+          <div class="tv-player__fallback" id="dragon-tv-fallback">
+            <span>DRAGON TV</span>
+            <strong>STANDBY</strong>
+            <small>Broadcast window ready.</small>
+          </div>
+        </div>
+
+        <footer class="tv-stage__footer">
+          <div>
+            <span>UP NEXT</span>
+            <strong>Project TITAN</strong>
+          </div>
+          <div>
+            <span>CHANNEL</span>
+            <strong>DRAGON TV</strong>
+          </div>
+          <div>
+            <span>ROOM</span>
+            <strong>PUBLIC</strong>
+          </div>
+        </footer>
+
+        <section class="tv-understage">
+          <div class="tv-understage__block">
+            <span>RECENT</span>
+            <strong>Broadcast archive</strong>
+            <p>Recent streams and clips will live here.</p>
+          </div>
+          <div class="tv-understage__block">
+            <span>COMMUNITY</span>
+            <strong>Comments / live room</strong>
+            <p>Reserved for the live audience layer.</p>
+          </div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <script define:vars={{ provider: dragonTV.provider, channel: dragonTV.channel }}>
+    const host = window.location.hostname;
+    const mount = document.getElementById("dragon-tv-player");
+    const fallback = document.getElementById("dragon-tv-fallback");
+
+    if (provider === "twitch" && mount && channel) {
+      const iframe = document.createElement("iframe");
+      iframe.src =
+        `https://player.twitch.tv/?channel=${encodeURIComponent(channel)}&parent=${encodeURIComponent(host)}&autoplay=false&muted=false`;
+      iframe.allowFullscreen = true;
+      iframe.allow = "autoplay; fullscreen";
+      iframe.title = "Dragon TV live stream";
+      mount.appendChild(iframe);
+      if (fallback) fallback.remove();
+    }
+  </script>
+</SiteLayout>

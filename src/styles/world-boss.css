@@ -1,0 +1,40 @@
+
+.boss-page{min-height:100vh;background:radial-gradient(circle at 50% 0,rgba(99,18,25,.16),transparent 28%),#060506;color:#d5c7c7;padding-bottom:60px}.boss-nav{height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid #26191c;color:#66585b;font:800 6px Arial;letter-spacing:.1em}.boss-nav a{color:#8d7477;text-decoration:none}.boss-nav b{color:#8e494b}.boss-hero{min-height:300px;display:grid;grid-template-columns:220px 1fr 220px;gap:28px;align-items:center;padding:30px max(24px,5vw);border-bottom:1px solid #2c1b1f;background:linear-gradient(110deg,rgba(30,8,12,.86),rgba(7,6,7,.97)),repeating-linear-gradient(90deg,transparent 0 58px,rgba(255,255,255,.015) 59px 60px)}.boss-hero__seal{width:190px;height:220px;border:1px solid #4b2228;background:radial-gradient(ellipse at 50% 55%,#281014,#090708 62%);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 0 45px #000}.boss-hero__seal span,.boss-kicker{color:#8d484d;font:900 6px Arial;letter-spacing:.15em}.boss-hero__seal b{font:500 88px/1 Georgia;color:#3e2428;text-shadow:0 0 25px #5c161d}.boss-hero__seal small{color:#5f5052;text-align:center;font:700 5px/1.5 Arial;letter-spacing:.1em}.boss-hero h1{margin:7px 0 12px;color:#eee0dd;font:500 clamp(38px,5vw,68px)/.86 Georgia;letter-spacing:-.04em}.boss-hero h1 em{color:#a84b4c;font-style:normal}.boss-hero__copy p{max-width:760px;color:#968487;font:12px/1.65 Georgia}.boss-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:15px}.boss-tags span{border:1px solid #392226;padding:5px 7px;color:#7d6265;font:800 6px Arial;letter-spacing:.08em}.boss-hero__status{border-left:1px solid #3a2024;padding-left:18px;display:flex;flex-direction:column;gap:4px}.boss-hero__status small{color:#70575a;font:800 5.5px Arial;letter-spacing:.1em}.boss-hero__status strong{color:#c85b59;font:500 23px Georgia}.boss-hero__status span{color:#766568;font:7px/1.4 Arial}.boss-hero__status b{color:#c4a2a0;font:500 18px Georgia}.boss-hero__status hr{width:100%;border:0;border-top:1px solid #302025;margin:10px 0}.boss-grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:14px;width:min(1400px,calc(100% - 36px));margin:18px auto}.boss-main{display:grid;gap:14px}.boss-side{display:grid;align-content:start;gap:14px}.boss-panel{border:1px solid #2d2023;background:linear-gradient(145deg,#0d090b,#080708);padding:18px;box-shadow:0 18px 40px rgba(0,0,0,.16)}.boss-panel header span{color:#76464c;font:900 5.5px Arial;letter-spacing:.13em}.boss-panel header h2{margin:4px 0 13px;color:#ddcecd;font:500 22px Georgia}.boss-lore>p{color:#958588;font:12px/1.7 Georgia;max-width:900px}.boss-lore blockquote{margin:18px 0 0;border-left:2px solid #63272e;padding:10px 14px;color:#a58e90;font:italic 14px/1.5 Georgia}.boss-lore blockquote small{display:block;margin-top:6px;color:#66565a;font:7px Arial}.boss-intel{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.boss-intel>div{border:1px solid #291d20;background:#090708;padding:12px}.boss-intel small{color:#6d4a4f;font:800 5px Arial}.boss-intel b{display:block;margin:4px 0;color:#b28f90;font:500 11px Georgia}.boss-intel p{margin:0;color:#6e6264;font:8px/1.45 Arial}.boss-wizard{display:grid;grid-template-columns:1.2fr .8fr .7fr;border:1px solid #322126;background:#080708}.boss-wizard>div{padding:11px;border-right:1px solid #2c1d21}.boss-wizard small{display:block;color:#694c50;font:800 5px Arial}.boss-wizard strong{display:block;color:#d3c1c1;font:500 15px Georgia;margin:3px 0}.boss-wizard span{color:#756568;font:6px Arial}.boss-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.boss-actions button{min-height:66px;display:flex;align-items:center;gap:10px;text-align:left;border:1px solid #3a2227;background:linear-gradient(#130a0d,#090708);color:#a77f81;padding:10px;cursor:pointer}.boss-actions button:hover{border-color:#743139;background:#1a0c10}.boss-actions button>b{font-size:19px;color:#9c4448}.boss-actions button span{font:900 7px Arial;letter-spacing:.07em}.boss-actions button small{display:block;margin-top:4px;color:#695a5d;font:6px Arial;letter-spacing:0}.boss-result{margin-top:9px;min-height:34px;padding:9px 10px;border-left:2px solid #65282f;background:#0a0708;color:#8e797b;font:9px/1.4 Arial}.boss-result b{color:#bd6868}.boss-warning{color:#66595b;font:7px/1.5 Arial}.boss-warning b{color:#945256}.boss-rewards{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.boss-rewards div{border:1px solid #2d2023;padding:11px}.boss-rewards b{display:block;color:#a94d50;font:500 20px Georgia}.boss-rewards span{color:#78686a;font:7px Arial}.boss-side dl{margin:0}.boss-side dl div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #251a1d}.boss-side dt{color:#67575a;font:800 6px Arial}.boss-side dd{margin:0;color:#b59a9a;font:700 9px Arial}.boss-ledger{display:grid;gap:6px}.boss-ledger p,.boss-side li{color:#746669;font:8px/1.5 Arial}.boss-ledger span{border:1px solid #281c1f;padding:7px;color:#67585a;font:700 6px Arial}.boss-side ul{padding-left:15px;margin:0;display:grid;gap:7px}
+@media(max-width:950px){.boss-hero{grid-template-columns:150px 1fr}.boss-hero__status{grid-column:1/-1}.boss-hero__seal{width:145px;height:180px}.boss-grid{grid-template-columns:1fr}.boss-intel,.boss-rewards{grid-template-columns:repeat(2,1fr)}}
+
+
+/* PASS 40D — World Boss readable copy */
+.boss-page p,
+.boss-page li{
+  font-size: 11px !important;
+  line-height: 1.6 !important;
+}
+.boss-page small,
+.boss-page .boss-kicker,
+.boss-page .boss-nav,
+.boss-page .boss-tags span,
+.boss-page dt{
+  font-size: 7px !important;
+  line-height: 1.35 !important;
+}
+.boss-page dd,
+.boss-page .boss-wizard span,
+.boss-page .boss-result,
+.boss-page .boss-ledger span{
+  font-size: 9px !important;
+}
+.boss-actions button span{
+  font-size: 8px !important;
+}
+.boss-actions button small{
+  font-size: 7px !important;
+}
+.boss-hero__copy p{
+  font-size: 13px !important;
+}
+.boss-lore>p{
+  font-size: 13px !important;
+}
+.boss-panel header span{
+  font-size: 7px !important;
+}

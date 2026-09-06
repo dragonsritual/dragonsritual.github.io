@@ -1,0 +1,298 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import LaunchHeader from "../../../components/LaunchHeader.astro";
+import { grimSagas } from "../../../data/grimSagas.js";
+import "../../../styles/grim-sagas.css";
+
+const payload = JSON.stringify(grimSagas);
+---
+
+<SiteLayout
+  title="Grim Sagas — Dragon Books — DragonsRitual"
+  description="The DragonsRitual creative-writing archive: dark fantasy stories, serial fiction, worlds, lore and searchable records."
+>
+  <LaunchHeader />
+
+  <main class="gs-page">
+    <section class="gs-console">
+      <header class="gs-hero">
+        <div class="gs-hero__stamp" aria-hidden="true">GS</div>
+        <div>
+          <span>DRAGON BOOKS // CREATIVE WRITING ARCHIVE</span>
+          <h1>GRIM SAGAS</h1>
+          <p>Original stories from the Realms, cataloged by title, author, genre, theme, faction, character, place, lore, date and archive status.</p>
+        </div>
+        <a href="/books/">RETURN TO DRAGON BOOKS →</a>
+      </header>
+
+      <section class="gs-research" aria-labelledby="gs-search-title">
+        <div class="gs-research__head">
+          <div>
+            <span>ARCHIVE RESEARCH DESK</span>
+            <h2 id="gs-search-title">Search the Grim Sagas archive.</h2>
+          </div>
+          <div class="gs-research__count"><strong id="gs-result-count">{grimSagas.length}</strong><span>RECORDS</span></div>
+        </div>
+
+        <div class="gs-query">
+          <label>
+            <span>CATALOG QUERY</span>
+            <input id="gs-search" type="search" placeholder='Try: demon, "dark magic", theme:war, faction:wizards, year:2024, -sky' autocomplete="off" />
+          </label>
+
+          <div class="gs-query__actions">
+            <select id="gs-sort" aria-label="Sort Grim Sagas">
+              <option value="relevance">SORT: RELEVANCE</option>
+              <option value="newest">SORT: NEWEST</option>
+              <option value="oldest">SORT: OLDEST</option>
+              <option value="title">SORT: TITLE</option>
+            </select>
+            <button id="gs-clear" type="button">CLEAR</button>
+          </div>
+        </div>
+
+        <div class="gs-query__syntax">
+          <span><b>WORDS</b> search everything</span>
+          <span><b>"PHRASE"</b> exact phrase</span>
+          <span><b>-WORD</b> exclude</span>
+          <span><b>FIELD:VALUE</b> precise search</span>
+        </div>
+
+        <div class="gs-research__grid">
+          <aside class="gs-facets">
+            <div class="gs-facet">
+              <span>FIELD SEARCH</span>
+              <button data-gs-example="title:crimson">TITLE</button>
+              <button data-gs-example="author:DragonsRitualMedia">AUTHOR</button>
+              <button data-gs-example="genre:fantasy">GENRE</button>
+              <button data-gs-example="theme:war">THEME</button>
+              <button data-gs-example="faction:wizards">FACTION</button>
+              <button data-gs-example="character:wizards">CHARACTER</button>
+              <button data-gs-example="place:fortress">PLACE</button>
+              <button data-gs-example="lore:abyss">LORE</button>
+              <button data-gs-example="year:2024">YEAR</button>
+            </div>
+
+            <div class="gs-facet">
+              <span>ARCHIVE VIEW</span>
+              <button class="is-active" data-gs-filter="ALL">ALL RECORDS</button>
+              <button data-gs-filter="Dark Fantasy">DARK FANTASY</button>
+              <button data-gs-filter="Short Story">SHORT STORIES</button>
+              <button data-gs-filter="LEGACY">LEGACY</button>
+            </div>
+
+            <div class="gs-research-note">
+              <span>ARCHIVE INDEX</span>
+              <p>Use ordinary words, exact phrases, exclusions, or field searches to move through characters, places, factions, themes, lore and story records.</p>
+            </div>
+          </aside>
+
+          <section class="gs-results">
+            <div class="gs-results__status" id="gs-status">BROWSING THE COMPLETE GRIM SAGAS ARCHIVE.</div>
+            <div id="gs-results" class="gs-card-grid">
+              {grimSagas.map((saga) => (
+                <article class="gs-card">
+                  <a href={saga.href}>
+                    <div class="gs-card__image"><img src={saga.image} alt="" loading="lazy" /></div>
+                    <div class="gs-card__body">
+                      <div class="gs-card__meta"><span>{saga.type}</span><span>{saga.published}</span><span>{saga.readMinutes} MIN</span></div>
+                      <h3>{saga.title}</h3>
+                      <p>{saga.excerpt}</p>
+                      <div class="gs-card__tags">{saga.genres.slice(0,2).map(tag => <span>{tag}</span>)}</div>
+                      <strong>{saga.href.startsWith("http") ? "OPEN LEGACY RECORD ↗" : "READ DRAGON EDITION →"}</strong>
+                    </div>
+                  </a>
+                </article>
+              ))}
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <footer class="gs-footer">
+        <span>GRIM SAGAS // DRAGON BOOKS // ARCHIVE CHAMBER</span>
+        <strong>THE ARCHIVE GROWS WITH THE WORLD.</strong>
+      </footer>
+    </section>
+
+    <script type="application/json" id="gs-data" set:html={payload}></script>
+  </main>
+
+  <script>
+    const root = document.querySelector('.gs-page');
+    const input = document.querySelector('#gs-search');
+    const results = document.querySelector('#gs-results');
+    const count = document.querySelector('#gs-result-count');
+    const status = document.querySelector('#gs-status');
+    const sort = document.querySelector('#gs-sort');
+    const clear = document.querySelector('#gs-clear');
+    const dataNode = document.querySelector('#gs-data');
+
+    const data = (() => {
+      try { return JSON.parse(dataNode?.textContent || '[]'); }
+      catch { return []; }
+    })();
+
+    const norm = (value='') =>
+      String(value).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+    const fieldMap = {
+      title:'title', author:'author', genre:'genres', genres:'genres',
+      theme:'themes', faction:'factions', character:'characters',
+      place:'places', lore:'lore', collection:'collection',
+      status:'status', year:'published', type:'type'
+    };
+
+    let archiveFilter = 'ALL';
+
+    function flatten(value){
+      if(Array.isArray(value)) return value.join(' ');
+      return String(value ?? '');
+    }
+
+    function haystack(record){
+      return norm([
+        record.title, record.author, record.excerpt, record.type, record.collection,
+        record.published, record.updated, record.status,
+        ...(record.genres||[]), ...(record.themes||[]), ...(record.factions||[]),
+        ...(record.characters||[]), ...(record.places||[]), ...(record.lore||[]),
+        ...(record.keywords||[])
+      ].join(' '));
+    }
+
+    function parseQuery(raw){
+      const tokens = [];
+      const rx = /-?"[^"]+"|-?\S+/g;
+      for(const match of raw.matchAll(rx)){
+        let token = match[0];
+        const excluded = token.startsWith('-');
+        if(excluded) token = token.slice(1);
+
+        const colon = token.indexOf(':');
+        let field = null;
+        let value = token;
+
+        if(colon > 0){
+          const candidate = token.slice(0,colon).toLowerCase();
+          if(fieldMap[candidate]){
+            field = fieldMap[candidate];
+            value = token.slice(colon+1);
+          }
+        }
+
+        value = value.replace(/^"|"$/g,'');
+        if(value) tokens.push({excluded,field,value:norm(value)});
+      }
+      return tokens;
+    }
+
+    function scoreRecord(record,tokens){
+      const all = haystack(record);
+      let score = 0;
+
+      for(const token of tokens){
+        const source = token.field ? norm(flatten(record[token.field])) : all;
+        let match = source.includes(token.value);
+
+        if(token.field === 'published' && /^\d{4}$/.test(token.value)){
+          match = norm(record.published).startsWith(token.value);
+        }
+
+        if(token.excluded && match) return -1;
+        if(!token.excluded && !match) return -1;
+        if(!token.excluded){
+          score += token.field ? 12 : 4;
+          if(norm(record.title).includes(token.value)) score += 10;
+          if(norm(record.author).includes(token.value)) score += 5;
+          if(norm((record.keywords||[]).join(' ')).includes(token.value)) score += 3;
+        }
+      }
+      return score;
+    }
+
+    function filterMatch(record){
+      if(archiveFilter === 'ALL') return true;
+      return [
+        record.type, record.status, ...(record.genres||[])
+      ].some(v => norm(v) === norm(archiveFilter));
+    }
+
+    function escapeHtml(s=''){
+      return String(s).replace(/[&<>"']/g,c=>({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+      }[c]));
+    }
+
+    function render(){
+      if(!results) return;
+      const tokens = parseQuery(input?.value.trim() || '');
+      let rows = data
+        .filter(filterMatch)
+        .map(record => ({record,score:scoreRecord(record,tokens)}))
+        .filter(row => row.score >= 0);
+
+      if(sort?.value === 'newest') rows.sort((a,b)=>b.record.published.localeCompare(a.record.published));
+      else if(sort?.value === 'oldest') rows.sort((a,b)=>a.record.published.localeCompare(b.record.published));
+      else if(sort?.value === 'title') rows.sort((a,b)=>a.record.title.localeCompare(b.record.title));
+      else rows.sort((a,b)=>b.score-a.score || b.record.published.localeCompare(a.record.published));
+
+      if(count) count.textContent = String(rows.length);
+      if(status){
+        status.textContent = tokens.length
+          ? `${rows.length} RECORD${rows.length===1?'':'S'} MATCH THE CURRENT RESEARCH QUERY.`
+          : archiveFilter === 'ALL'
+            ? 'BROWSING THE COMPLETE GRIM SAGAS ARCHIVE.'
+            : `FILTERED ARCHIVE: ${archiveFilter.toUpperCase()}.`;
+      }
+
+      results.innerHTML = rows.length ? rows.map(({record}) => `
+        <article class="gs-card">
+          <a href="${escapeHtml(record.href)}">
+            <div class="gs-card__image"><img src="${escapeHtml(record.image)}" alt="" loading="lazy"></div>
+            <div class="gs-card__body">
+              <div class="gs-card__meta">
+                <span>${escapeHtml(record.type)}</span>
+                <span>${escapeHtml(record.published)}</span>
+                <span>${escapeHtml(record.readMinutes)} MIN</span>
+              </div>
+              <h3>${escapeHtml(record.title)}</h3>
+              <p>${escapeHtml(record.excerpt)}</p>
+              <div class="gs-card__tags">${(record.genres||[]).slice(0,2).map(t=>`<span>${escapeHtml(t)}</span>`).join('')}</div>
+              <strong>${record.href.startsWith('http')?'OPEN LEGACY RECORD ↗':'READ DRAGON EDITION →'}</strong>
+            </div>
+          </a>
+        </article>`).join('') :
+        `<div class="gs-empty"><strong>NO RECORDS FOUND.</strong><span>Remove a field, exclusion or archive filter and search again.</span></div>`;
+    }
+
+    input?.addEventListener('input',render);
+    sort?.addEventListener('change',render);
+    clear?.addEventListener('click',()=>{
+      if(input) input.value='';
+      archiveFilter='ALL';
+      document.querySelectorAll('[data-gs-filter]').forEach(b=>b.classList.toggle('is-active',b.dataset.gsFilter==='ALL'));
+      render();
+      input?.focus();
+    });
+
+    document.addEventListener('click',event=>{
+      const target = event.target instanceof Element ? event.target : null;
+      const example = target?.closest('[data-gs-example]');
+      if(example && input){
+        const value = example.getAttribute('data-gs-example') || '';
+        input.value = input.value.trim() ? `${input.value.trim()} ${value}` : value;
+        render();
+        input.focus();
+      }
+
+      const filter = target?.closest('[data-gs-filter]');
+      if(filter){
+        archiveFilter = filter.getAttribute('data-gs-filter') || 'ALL';
+        document.querySelectorAll('[data-gs-filter]').forEach(b=>b.classList.toggle('is-active',b===filter));
+        render();
+      }
+    });
+
+    render();
+  </script>
+</SiteLayout>

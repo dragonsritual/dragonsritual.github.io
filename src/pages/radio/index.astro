@@ -1,38 +1,107 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import LaunchHeader from '../../components/LaunchHeader.astro';
+import '../../styles/radio-card.css';
 ---
-<SiteLayout title="Dragon Radio â€” Live" description="Tune in to Dragon Radio â€” a live, curated signal from Dragon Underground.">
+<SiteLayout title="Dragon Radio — Live" description="Tune in to Dragon Radio — a live, curated signal from Dragon Underground.">
   <LaunchHeader />
-  <main class="station-shell">
-    <section class="station-head station-head--compact">
-      <p class="launch-eyebrow">DRAGON UNDERGROUND / RADIO</p>
-      <div class="station-live"><span class="launch-live-dot"></span><div><strong>LIVE</strong><small>STATION SIGNAL</small></div></div>
-    </section>
-    <section class="broadcast-console">
-      <div class="broadcast-art"><img id="cover" src="/icons/dr-512.png" alt="Current Dragon Radio artwork" /></div>
-      <div class="broadcast-info"><p class="launch-eyebrow">ON AIR NOW</p><h2 id="title">DRAGON RADIO</h2><p id="artist">Preparing the signal.</p>
-        <button id="tune" class="tune-button" type="button"><span class="tune-icon">â–¶</span><span class="tune-copy"><strong>TUNE IN</strong><small>JOIN THE LIVE SIGNAL</small></span></button>
-        <div class="listener-readout" aria-live="polite"><span class="listener-pulse"></span><strong id="listener-count">â€”</strong><span id="listener-label">LISTENING NOW</span></div>
-        <div id="broadcast-progress" class="broadcast-progress" hidden><span id="elapsed">0:00</span><div class="progress-track"><i id="progress-bar"></i></div><span id="duration">0:00</span></div>
+  <main class="station-shell station-shell--itemcard">
+    <section class="radio-card-head">
+      <div>
+        <p class="launch-eyebrow">DRAGON UNDERGROUND / RADIO</p>
+        <h1>Dragon Radio.</h1>
+      </div>
+      <div class="station-live">
+        <span class="launch-live-dot"></span>
+        <div><strong>LIVE</strong><small>STATION SIGNAL</small></div>
       </div>
     </section>
-    <section class="channel-deck" aria-labelledby="channel-heading">
+
+    <section class="radio-item-card" data-radio-card>
+      <header class="radio-item-card__top">
+        <span>TUNED</span>
+        <strong id="channel-title">ALL SIGNAL</strong>
+        <small>DRAGON RADIO NETWORK</small>
+      </header>
+
+      <div class="radio-item-card__frequency">
+        <span class="radio-item-card__band">DR</span>
+        <strong id="frequency">94.1</strong>
+        <small>FM / DIGITAL</small>
+      </div>
+
+      <div class="radio-item-card__body">
+        <div class="radio-item-card__art">
+          <div class="broadcast-art">
+            <img id="cover" src="/icons/dr-512.png" alt="Current Dragon Radio artwork" />
+          </div>
+          <div class="radio-art-caption">
+            <span>NOW BROADCASTING</span>
+            <b id="artist-mini">DRAGON UNDERGROUND</b>
+          </div>
+        </div>
+
+        <div class="radio-item-card__stats">
+          <p class="launch-eyebrow">ON AIR NOW</p>
+          <h2 id="title">DRAGON RADIO</h2>
+          <p id="artist">Preparing the signal.</p>
+
+          <div class="radio-stat radio-stat--primary">
+            <strong id="frequency-readout">94.1</strong>
+            <span>DRAGON FREQUENCY</span>
+          </div>
+
+          <div class="radio-stat radio-stat--violet">
+            <i></i><span id="program-line">CURATED MUSIC · INTERVIEWS · AUDIO WORLDS</span>
+          </div>
+          <div class="radio-stat radio-stat--green">
+            <i></i><span id="signal-line">LIVE HOUSE SIGNAL · ALWAYS ROTATING</span>
+          </div>
+
+          <button id="tune" class="tune-button tune-button--card" type="button">
+            <span class="tune-icon">▶</span>
+            <span class="tune-copy"><strong>TUNE IN</strong><small>JOIN THE LIVE SIGNAL</small></span>
+          </button>
+
+          <div class="listener-readout listener-readout--card" aria-live="polite">
+            <span class="listener-pulse"></span>
+            <strong id="listener-count">—</strong>
+            <span id="listener-label">LISTENING NOW</span>
+          </div>
+
+          <div id="broadcast-progress" class="broadcast-progress broadcast-progress--card" hidden>
+            <span id="elapsed">0:00</span>
+            <div class="progress-track"><i id="progress-bar"></i></div>
+            <span id="duration">0:00</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="radio-item-card__foot">
+        <span><b>SIGNAL</b> DRAGON UNDERGROUND</span>
+        <span><b>MODE</b> LIVE / ROTATION</span>
+        <span><b>ACCESS</b> FREE</span>
+      </footer>
+    </section>
+
+    <section class="channel-deck channel-deck--radio-card" aria-labelledby="channel-heading">
       <div class="channel-deck-head">
-        <p class="launch-eyebrow" id="channel-heading">CHANNELS</p>
+        <p class="launch-eyebrow" id="channel-heading">FREQUENCIES / CHANNELS</p>
+        <p>Switch stations like changing gear: every signal can carry a different mood, show or corner of Dragon.</p>
       </div>
-      <div id="channel-list" class="channel-list">
+      <div id="channel-list" class="channel-list channel-list--frequency">
         <button class="channel-button is-active" type="button" data-channel="all">
-          <span class="channel-dot"></span>
+          <span class="channel-frequency">94.1</span>
           <span><strong>ALL SIGNAL</strong><small>LIVE</small></span>
         </button>
       </div>
     </section>
+
     <audio id="audio" preload="auto"></audio>
   </main>
   <script>
     import { getSupabaseBrowserClient } from '../../lib/supabaseBrowser';
-    const audio=document.querySelector('#audio');const tune=document.querySelector('#tune');const title=document.querySelector('#title');const artist=document.querySelector('#artist');const cover=document.querySelector('#cover');const elapsed=document.querySelector('#elapsed');const duration=document.querySelector('#duration');const progressBar=document.querySelector('#progress-bar');const listenerCount=document.querySelector('#listener-count');const listenerLabel=document.querySelector('#listener-label');const channelList=document.querySelector('#channel-list');const broadcastProgress=document.querySelector('#broadcast-progress');
+    const audio=document.querySelector('#audio');const tune=document.querySelector('#tune');const title=document.querySelector('#title');const artist=document.querySelector('#artist');const cover=document.querySelector('#cover');const elapsed=document.querySelector('#elapsed');const duration=document.querySelector('#duration');const progressBar=document.querySelector('#progress-bar');const listenerCount=document.querySelector('#listener-count');const listenerLabel=document.querySelector('#listener-label');const channelList=document.querySelector('#channel-list');const broadcastProgress=document.querySelector('#broadcast-progress');const frequency=document.querySelector('#frequency');const frequencyReadout=document.querySelector('#frequency-readout');const channelTitle=document.querySelector('#channel-title');const artistMini=document.querySelector('#artist-mini');const programLine=document.querySelector('#program-line');const signalLine=document.querySelector('#signal-line');
     let station={};let allTracks=[];let tracks=[];let currentTrack=null;let presenceChannel=null;let activeChannel='all';
     const fmt=s=>!Number.isFinite(s)?'0:00':`${Math.floor(Math.max(0,s)/60)}:${String(Math.floor(Math.max(0,s)%60)).padStart(2,'0')}`;
     function hashSeed(text){let h=2166136261;for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
@@ -40,12 +109,45 @@ import LaunchHeader from '../../components/LaunchHeader.astro';
     function channelTracks(id){if(id==='all')return [...allTracks];return allTracks.filter(t=>Array.isArray(t.channels)&&t.channels.includes(id));}
     function prepareRotation(id){const base=channelTracks(id);if(station.shuffle===false)return base;const day=new Date().toISOString().slice(0,10);return seededShuffle(base,`${station.shuffleSeed||'dragon-radio'}:${id}:${day}`);}
     function resolveBroadcast(){const valid=tracks.filter(t=>t.src&&Number(t.duration)>0);if(!valid.length)return tracks[0]?{track:tracks[0],offset:0}:null;const cycle=valid.reduce((n,t)=>n+Number(t.duration),0);const epoch=Date.parse(station.broadcastStartedAt||'2026-08-22T00:00:00Z');let cursor=((Date.now()-epoch)/1000)%cycle;if(cursor<0)cursor+=cycle;for(const track of valid){const len=Number(track.duration);if(cursor<len)return{track,offset:cursor};cursor-=len;}return{track:valid[0],offset:0};}
-    function renderChannels(){const channels=Array.isArray(station.channels)&&station.channels.length?station.channels:[{id:'all',label:'ALL SIGNAL',live:true}];channelList.innerHTML='';for(const ch of channels){const button=document.createElement('button');button.type='button';button.className=`channel-button${ch.id===activeChannel?' is-active':''}`;button.dataset.channel=ch.id;button.innerHTML=`<span class="channel-dot"></span><span><strong>${ch.label||ch.id}</strong><small>${ch.live===false?'OFFLINE':'LIVE'}</small></span>`;button.disabled=ch.live===false;button.addEventListener('click',()=>selectChannel(ch.id,ch.label||ch.id));channelList.appendChild(button);}}
-    async function selectChannel(id,label){activeChannel=id;tracks=prepareRotation(id);renderChannels();if(!tracks.length){title.textContent='DRAGON RADIO';artist.textContent='Preparing the signal.';cover.src='/icons/dr-512.png';duration.textContent='0:00';progressBar.style.width='0%';broadcastProgress.hidden=true;if(!audio.paused)audio.pause();return;}paint(resolveBroadcast()?.track);if(!audio.paused)await tuneIn();}
-    function paint(t){if(!t)return;currentTrack=t;title.textContent=t.title||'DRAGON RADIO';artist.textContent=t.artist||'Dragon Underground';cover.src=t.artwork||'/icons/dr-512.png';const total=Number(t.duration)||audio.duration;if(Number.isFinite(total)&&total>0){duration.textContent=fmt(total);broadcastProgress.hidden=false;}else{broadcastProgress.hidden=true;}}
-    async function joinPresence(){if(presenceChannel)return;try{const supabase=getSupabaseBrowserClient();const id=crypto.randomUUID();presenceChannel=supabase.channel('dragon-radio-live',{config:{presence:{key:id}}});presenceChannel.on('presence',{event:'sync'},()=>{const state=presenceChannel.presenceState();const count=Object.values(state).reduce((sum,e)=>sum+(Array.isArray(e)?e.length:0),0);listenerCount.textContent=String(count);listenerLabel.textContent=count===1?'LISTENER TUNED IN':'LISTENING NOW';}).subscribe(async status=>{if(status==='SUBSCRIBED')await presenceChannel.track({tunedInAt:new Date().toISOString(),station:`dragon-radio:${activeChannel}`});});}catch(e){listenerCount.textContent='â€”';listenerLabel.textContent='LIVE COUNT CONNECTING';console.warn('[DRAGON RADIO] Presence unavailable.',e);}}
-    async function tuneIn(){const resolved=resolveBroadcast();if(!resolved?.track?.src){artist.textContent='The first broadcast is being prepared.';return;}paint(resolved.track);const target=new URL(resolved.track.src,location.href).href;if(audio.src!==target)audio.src=resolved.track.src;const setStart=()=>{if(Number.isFinite(audio.duration))audio.currentTime=Math.min(resolved.offset,Math.max(0,audio.duration-.25));else audio.currentTime=resolved.offset;};if(audio.readyState>=1)setStart();else audio.addEventListener('loadedmetadata',setStart,{once:true});try{await audio.play();tune.classList.add('is-playing');tune.querySelector('.tune-icon').textContent='âšâš';tune.querySelector('strong').textContent='ON AIR';tune.querySelector('small').textContent='TAP TO PAUSE';await joinPresence();}catch{artist.textContent='Tap TUNE IN to start the live signal.';}}
-    tune.addEventListener('click',async()=>{if(!audio.paused){audio.pause();tune.classList.remove('is-playing');tune.querySelector('.tune-icon').textContent='â–¶';tune.querySelector('strong').textContent='TUNE IN';tune.querySelector('small').textContent='RETURN TO LIVE SIGNAL';return;}await tuneIn();});
+    function channelFrequency(ch,index=0){
+      if(ch?.frequency)return String(ch.frequency);
+      const preset={'all':'94.1','music':'88.7','talk':'91.3','stories':'97.9','night':'101.9','live':'103.3'};
+      return preset[ch?.id]||[94.1,88.7,91.3,97.9,101.9,103.3][index%6].toFixed(1);
+    }
+    function currentChannelObject(){
+      const channels=Array.isArray(station.channels)&&station.channels.length?station.channels:[{id:'all',label:'ALL SIGNAL',live:true}];
+      return channels.find(ch=>ch.id===activeChannel)||channels[0];
+    }
+    function paintChannel(ch,index=0){
+      const f=channelFrequency(ch,index);
+      if(frequency)frequency.textContent=f;
+      if(frequencyReadout)frequencyReadout.textContent=f;
+      if(channelTitle)channelTitle.textContent=ch?.label||'ALL SIGNAL';
+      if(programLine)programLine.textContent=(ch?.program||station.program||'CURATED MUSIC · INTERVIEWS · AUDIO WORLDS').toUpperCase();
+      if(signalLine)signalLine.textContent=ch?.live===false?'OFFLINE CHANNEL':'LIVE HOUSE SIGNAL · ALWAYS ROTATING';
+    }
+    function renderChannels(){
+      const channels=Array.isArray(station.channels)&&station.channels.length?station.channels:[{id:'all',label:'ALL SIGNAL',live:true}];
+      channelList.innerHTML='';
+      channels.forEach((ch,index)=>{
+        const button=document.createElement('button');
+        button.type='button';
+        button.className=`channel-button${ch.id===activeChannel?' is-active':''}`;
+        button.dataset.channel=ch.id;
+        const f=channelFrequency(ch,index);
+        button.innerHTML=`<span class="channel-frequency">${f}</span><span><strong>${ch.label||ch.id}</strong><small>${ch.live===false?'OFFLINE':'LIVE SIGNAL'}</small></span>`;
+        button.disabled=ch.live===false;
+        button.addEventListener('click',()=>selectChannel(ch.id,ch.label||ch.id,index));
+        channelList.appendChild(button);
+      });
+      const activeIndex=Math.max(0,channels.findIndex(ch=>ch.id===activeChannel));
+      paintChannel(channels[activeIndex],activeIndex);
+    }
+    async function selectChannel(id,label,index=0){activeChannel=id;tracks=prepareRotation(id);renderChannels();paintChannel(currentChannelObject(),index);if(!tracks.length){title.textContent='DRAGON RADIO';artist.textContent='Preparing the signal.';cover.src='/icons/dr-512.png';duration.textContent='0:00';progressBar.style.width='0%';broadcastProgress.hidden=true;if(!audio.paused)audio.pause();return;}paint(resolveBroadcast()?.track);if(!audio.paused)await tuneIn();}
+    function paint(t){if(!t)return;currentTrack=t;title.textContent=t.title||'DRAGON RADIO';artist.textContent=t.artist||'Dragon Underground';if(artistMini)artistMini.textContent=(t.artist||'Dragon Underground').toUpperCase();cover.src=t.artwork||'/icons/dr-512.png';const total=Number(t.duration)||audio.duration;if(Number.isFinite(total)&&total>0){duration.textContent=fmt(total);broadcastProgress.hidden=false;}else{broadcastProgress.hidden=true;}}
+    async function joinPresence(){if(presenceChannel)return;try{const supabase=getSupabaseBrowserClient();const id=crypto.randomUUID();presenceChannel=supabase.channel('dragon-radio-live',{config:{presence:{key:id}}});presenceChannel.on('presence',{event:'sync'},()=>{const state=presenceChannel.presenceState();const count=Object.values(state).reduce((sum,e)=>sum+(Array.isArray(e)?e.length:0),0);listenerCount.textContent=String(count);listenerLabel.textContent=count===1?'LISTENER TUNED IN':'LISTENING NOW';}).subscribe(async status=>{if(status==='SUBSCRIBED')await presenceChannel.track({tunedInAt:new Date().toISOString(),station:`dragon-radio:${activeChannel}`});});}catch(e){listenerCount.textContent='—';listenerLabel.textContent='LIVE COUNT CONNECTING';console.warn('[DRAGON RADIO] Presence unavailable.',e);}}
+    async function tuneIn(){const resolved=resolveBroadcast();if(!resolved?.track?.src){artist.textContent='The first broadcast is being prepared.';return;}paint(resolved.track);const target=new URL(resolved.track.src,location.href).href;if(audio.src!==target)audio.src=resolved.track.src;const setStart=()=>{if(Number.isFinite(audio.duration))audio.currentTime=Math.min(resolved.offset,Math.max(0,audio.duration-.25));else audio.currentTime=resolved.offset;};if(audio.readyState>=1)setStart();else audio.addEventListener('loadedmetadata',setStart,{once:true});try{await audio.play();tune.classList.add('is-playing');tune.querySelector('.tune-icon').textContent='❚❚';tune.querySelector('strong').textContent='ON AIR';tune.querySelector('small').textContent='TAP TO PAUSE';await joinPresence();}catch{artist.textContent='Tap TUNE IN to start the live signal.';}}
+    tune.addEventListener('click',async()=>{if(!audio.paused){audio.pause();tune.classList.remove('is-playing');tune.querySelector('.tune-icon').textContent='▶';tune.querySelector('strong').textContent='TUNE IN';tune.querySelector('small').textContent='RETURN TO LIVE SIGNAL';return;}await tuneIn();});
     audio.addEventListener('timeupdate',()=>{elapsed.textContent=fmt(audio.currentTime);const total=Number(currentTrack?.duration)||audio.duration;progressBar.style.width=`${total?Math.min(100,audio.currentTime/total*100):0}%`;});audio.addEventListener('ended',()=>tuneIn());
     Promise.all([fetch('/radio/library.json?'+Date.now()).then(r=>r.ok?r.json():{tracks:[]}),fetch('/radio/station.json?'+Date.now()).then(r=>r.ok?r.json():{})]).then(([library,s])=>{station=s;allTracks=(library.tracks||[]).filter(t=>t.src);tracks=prepareRotation(activeChannel);renderChannels();const resolved=resolveBroadcast();if(resolved?.track)paint(resolved.track);else artist.textContent='Preparing the signal.';}).catch(()=>artist.textContent='Station signal temporarily unavailable.');
   </script>

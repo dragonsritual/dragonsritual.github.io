@@ -1,0 +1,272 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import LaunchHeader from "../../components/LaunchHeader.astro";
+---
+<SiteLayout title="Editorial Desk — DRAGON" description="DragonsRitual editorial review queue.">
+  <LaunchHeader/>
+  <main class="wr17-editorial">
+    <header class="wr17-editorial-head">
+      <div>
+        <span class="wr-kicker">DRAGON / EDITORIAL CONTROL</span>
+        <h1>EDITORIAL<br/>DESK</h1>
+        <p>Review the work. Protect the standard. Decide where it belongs.</p>
+      </div>
+      <div class="wr17-editorial-id">
+        <span data-editor-email>STUDIO EDITOR</span>
+        <button type="button" data-editor-signout>SIGN OUT</button>
+      </div>
+    </header>
+
+    <section class="wr17-editorial-status" data-editor-status>
+      <span class="wr-kicker">CHECKING EDITOR ACCESS</span>
+      <strong>Opening the desk…</strong>
+    </section>
+
+    <div class="wr17-editorial-grid" data-editor-app hidden>
+      <aside>
+        <div class="wr17-editorial-tabs">
+          <button data-filter="submitted" class="is-active">INBOX</button>
+          <button data-filter="ready">READY</button>
+          <button data-filter="published">PUBLISHED</button>
+        </div>
+        <div data-editor-list></div>
+      </aside>
+
+      <article data-editor-empty>
+        <span class="wr-kicker">NO FILE OPEN</span>
+        <h2>Select a submission.</h2>
+      </article>
+
+      <article data-editor-detail hidden>
+        <div class="wr17-editor-meta">
+          <span data-e-type></span>
+          <span data-e-author></span>
+          <span data-e-words></span>
+        </div>
+        <h2 data-e-title></h2>
+        <p data-e-deck></p>
+        <div class="wr17-editor-images" data-e-images></div>
+        <div class="wr17-editor-body" data-e-body></div>
+
+        <section class="wr17-editor-controls">
+          <label>
+            EDITOR NOTE
+            <textarea data-e-note placeholder="Feedback for the writer…"></textarea>
+          </label>
+          <label>
+            FINAL PLACEMENT
+            <select data-e-placement>
+              <option>TODAY FEATURE</option>
+              <option>FICTION</option>
+              <option>CULTURE</option>
+              <option>GAMES</option>
+              <option>ART</option>
+              <option>MUSIC</option>
+              <option>JOURNAL</option>
+              <option>ARCHIVE</option>
+            </select>
+          </label>
+          <div class="wr17-editor-actions">
+            <button data-return>RETURN TO WRITER</button>
+            <button data-ready>MARK READY</button>
+            <button class="wr-primary" data-publish>APPROVE / PUBLISH STATE</button>
+          </div>
+          <p data-e-message></p>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    import { getSupabaseBrowserClient } from '../../lib/supabaseBrowser';
+
+    const supabase = getSupabaseBrowserClient();
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => [...document.querySelectorAll(s)];
+    const wc = (t) => t?.trim() ? t.trim().split(/\s+/).length : 0;
+
+    let current = null;
+    let filter = 'submitted';
+    let profiles = new Map();
+
+    const statusBox = $('[data-editor-status]');
+    const app = $('[data-editor-app]');
+
+    function fail(title, detail='') {
+      statusBox.hidden = false;
+      app.hidden = true;
+      statusBox.innerHTML = `<span class="wr-kicker">EDITOR ACCESS</span><strong>${title}</strong><p>${detail}</p>`;
+    }
+
+    async function boot() {
+      let { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        location.href = '/join/';
+        return;
+      }
+
+      // Refresh once so policies evaluate against a current authenticated JWT.
+      const refreshed = await supabase.auth.refreshSession();
+      if (refreshed.data?.session) session = refreshed.data.session;
+
+      const email = session.user?.email || '';
+      $('[data-editor-email]').textContent = email.toUpperCase();
+
+      if (email.toLowerCase() !== 'dragonsritual@proton.me') {
+        fail('THIS ACCOUNT IS NOT THE STUDIO EDITOR.',
+          'Sign out and enter with the DragonsRitual studio editor account.');
+        return;
+      }
+
+      // Verify access before rendering the queue.
+      const probe = await supabase
+        .from('dr_writer_manuscripts')
+        .select('id')
+        .limit(1);
+
+      if (probe.error) {
+        fail('EDITOR DATABASE ACCESS IS NOT READY.',
+          `${probe.error.message} — Run DATABASE PERMISSIONS FIX 17B in Supabase, then refresh this page.`);
+        return;
+      }
+
+      const profileResult = await supabase
+        .from('dr_creator_profiles')
+        .select('user_id,display_name,badge');
+
+      if (!profileResult.error) {
+        profiles = new Map((profileResult.data || []).map(p => [p.user_id, p]));
+      }
+
+      statusBox.hidden = true;
+      app.hidden = false;
+      await load();
+    }
+
+    async function load() {
+      const list = $('[data-editor-list]');
+      list.innerHTML = '<p class="wr17-editor-empty">LOADING QUEUE…</p>';
+
+      const sortColumn = filter === 'submitted' ? 'submitted_at' : 'updated_at';
+      const { data, error } = await supabase
+        .from('dr_writer_manuscripts')
+        .select('*')
+        .eq('status', filter)
+        .order(sortColumn, { ascending: false });
+
+      if (error) {
+        list.innerHTML = `<p class="is-error">${error.message}</p>`;
+        return;
+      }
+
+      list.innerHTML = '';
+
+      if (!data?.length) {
+        list.innerHTML = '<p class="wr17-editor-empty">Queue clear.</p>';
+        return;
+      }
+
+      data.forEach(x => {
+        const profile = profiles.get(x.user_id);
+        const author = profile?.display_name || 'Contributor';
+
+        const b = document.createElement('button');
+        b.className = 'wr17-editor-file';
+        b.innerHTML = '<span></span><strong></strong><small></small><em></em>';
+        b.children[0].textContent = `${x.content_type || 'STORY'} / ${x.intended_section || 'EDITOR DECIDES'}`;
+        b.children[1].textContent = x.title;
+        b.children[2].textContent = `${wc(x.body).toLocaleString()} WORDS · ${new Date(x.updated_at).toLocaleDateString()}`;
+        b.children[3].textContent = `BY ${author.toUpperCase()}`;
+        b.onclick = () => openFile(x, author);
+        list.appendChild(b);
+      });
+    }
+
+    function openFile(x, author) {
+      current = x;
+      $('[data-editor-empty]').hidden = true;
+      $('[data-editor-detail]').hidden = false;
+      $('[data-e-type]').textContent = `${x.content_type || 'STORY'} / ${x.genre || 'GENERAL'}`;
+      $('[data-e-author]').textContent = `BY ${author.toUpperCase()}`;
+      $('[data-e-words]').textContent = `${wc(x.body)} WORDS`;
+      $('[data-e-title]').textContent = x.title;
+      $('[data-e-deck]').textContent = x.deck || '';
+      $('[data-e-note]').value = x.editor_note || '';
+
+      const placement = x.placement || x.intended_section || 'TODAY FEATURE';
+      const select = $('[data-e-placement]');
+      const known = [...select.options].some(o => o.value === placement);
+      select.value = known ? placement : 'TODAY FEATURE';
+
+      const body = $('[data-e-body]');
+      body.innerHTML = '';
+      (x.body || '').split(/\n\s*\n/).filter(Boolean).forEach(t => {
+        const p = document.createElement('p');
+        p.textContent = t;
+        body.appendChild(p);
+      });
+
+      const images = $('[data-e-images]');
+      images.innerHTML = '';
+      (x.media_urls || []).forEach(u => {
+        const img = document.createElement('img');
+        img.src = u;
+        img.loading = 'lazy';
+        images.appendChild(img);
+      });
+
+      $('[data-e-message]').textContent = '';
+    }
+
+    async function setState(state) {
+      if (!current) return;
+
+      const patch = {
+        status: state,
+        editor_note: $('[data-e-note]').value,
+        placement: $('[data-e-placement]').value
+      };
+
+      if (state === 'published') patch.published_at = new Date().toISOString();
+
+      const { error } = await supabase
+        .from('dr_writer_manuscripts')
+        .update(patch)
+        .eq('id', current.id);
+
+      $('[data-e-message]').textContent = error
+        ? error.message
+        : `SAVED AS ${state.toUpperCase()}`;
+
+      if (!error) {
+        current = null;
+        $('[data-editor-detail]').hidden = true;
+        $('[data-editor-empty]').hidden = false;
+        await load();
+      }
+    }
+
+    $('[data-return]').onclick = () => setState('draft');
+    $('[data-ready]').onclick = () => setState('ready');
+    $('[data-publish]').onclick = () => setState('published');
+
+    $$('[data-filter]').forEach(b => {
+      b.onclick = async () => {
+        $$('[data-filter]').forEach(x => x.classList.toggle('is-active', x === b));
+        filter = b.dataset.filter;
+        current = null;
+        $('[data-editor-detail]').hidden = true;
+        $('[data-editor-empty]').hidden = false;
+        await load();
+      };
+    });
+
+    $('[data-editor-signout]').onclick = async () => {
+      await supabase.auth.signOut();
+      location.href = '/join/';
+    };
+
+    boot();
+  </script>
+</SiteLayout>

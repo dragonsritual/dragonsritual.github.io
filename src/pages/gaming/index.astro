@@ -1,0 +1,135 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import LaunchHeader from '../../components/LaunchHeader.astro';
+import GamingRealmWire from '../../components/GamingRealmWire.astro';
+import GamingWorldBossBar from '../../components/GamingWorldBossBar.astro';
+import '../../styles/gaming.css';
+import GamingActiveWizard from '../../components/GamingActiveWizard.astro';
+import GamingRealmStatus from '../../components/GamingRealmStatus.astro';
+---
+<SiteLayout title="Dragon Gaming — Live Lounge" description="The live gaming wing of DragonsRitual: realms, characters, records, events and playable worlds.">
+  <LaunchHeader />
+  <main class="gaming-lounge" data-gaming-lounge>
+  <GamingRealmStatus />
+  <GamingActiveWizard />
+    <GamingWorldBossBar />
+    <nav class="gaming-command" aria-label="Dragon Gaming">
+      <a class="is-active" href="/gaming/">LOUNGE</a><a href="/gaming/ninth-spire/">MY CHARACTER</a><a href="#worlds">GAMES</a><a href="#wire">REALM WIRE</a><a href="#records">LEADERBOARDS</a><a href="#events">EVENTS</a><a href="#collections">COLLECTIONS</a>
+      <span class="gaming-command__state"><i></i> REALM GATE OPEN</span>
+    </nav>
+
+    <section class="gaming-lobby-hero">
+      <div class="gaming-lobby-hero__copy">
+        <span class="gaming-kicker">DRAGON GAMING / PLAY • BUILD • WATCH • DISCOVER</span>
+        <h1>COME IN.<br/><em>PLAY SOMETHING STRANGE.</em></h1>
+        <p>Playable worlds, prototypes, characters, streams, dev work, records and discoveries — all living inside the same Dragon Gaming room.</p>
+        <div class="gaming-lobby-actions"><a class="gaming-btn gaming-btn--primary" href="/gaming/ninth-spire/">PLAY THE NINTH SPIRE</a><a class="gaming-btn" href="/gaming/arcade-battle/">OPEN ARCADE BATTLE</a><a class="gaming-btn gaming-btn--quiet" href="/tv/">WATCH DRAGON TV</a></div>
+      </div>
+      <aside class="gaming-character-slab" data-lounge-character>
+        <small>YOUR ACTIVE CHARACTER</small><span class="gaming-character-slab__sigil">IX</span>
+        <h2 data-lounge-name>NO WIZARD YET</h2><p data-lounge-title>Build the character who represents you inside Dragon Underground.</p>
+        <div class="gaming-stat-row"><span>LV <b data-lounge-level>—</b></span><span>FLOOR <b data-lounge-floor>—</b></span><span>LEGACY <b data-lounge-legacy>—</b></span><span>PLAYED <b data-lounge-played>0m</b></span></div>
+        <div class="gaming-affinity" data-lounge-element>UNBOUND</div><a href="/gaming/ninth-spire/" data-lounge-action>BUILD YOUR CHARACTER →</a>
+      </aside>
+      <div class="gaming-lobby-hero__ribs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    </section>
+
+    <section class="gaming-now-strip" aria-label="Dragon Gaming current activity">
+      <a href="/gaming/ninth-spire/"><span>PLAYABLE NOW</span><strong>THE NINTH SPIRE</strong><small>PERSISTENT WIZARD REALM</small></a>
+      <a href="/gaming/first-hold/"><span>SURVIVAL BUILD</span><strong>FIRST HOLD</strong><small>GATHER • BUILD • SURVIVE</small></a>
+      <a href="/gaming/arcade-battle/"><span>ARCADE</span><strong>ARCADE BATTLE</strong><small>TURN-BASED PARTY RUNS</small></a>
+      <a href="/tv/"><span>DRAGON TV</span><strong>WATCH THE BUILD</strong><small>STREAMS • TESTS • PLAY</small></a>
+    </section>
+
+    <section class="gaming-dashboard">
+      <div class="gaming-dashboard__main">
+        <section class="gaming-realm-card" id="worlds">
+          <header><div><span class="gaming-kicker">REALM 001 / ACTIVE</span><h2>The Ninth Spire</h2></div><span class="gaming-live-pill"><i></i> PLAYABLE NOW</span></header>
+          <div class="gaming-realm-card__body"><div class="gaming-realm-art"><b>IX</b><span>THE SPIRE IS LISTENING</span></div><div class="gaming-realm-copy"><p>Raise a persistent wizard through study, hunger, ritual, combat, exploration, books, relics and consequence. Your character is being built to outlive this game.</p><div class="gaming-mini-grid"><span><small>YOUR RECORD</small><b data-realm-floor>—</b> FLOOR</span><span><small>AFFINITY</small><b data-realm-element>UNBOUND</b></span><span><small>STATUS</small><b>OPEN</b></span><span><small>PLAY TIME</small><b data-realm-played>0m</b></span></div><a class="gaming-btn gaming-btn--primary" href="/gaming/ninth-spire/">DESCEND INTO THE SPIRE →</a></div></div>
+        </section>
+
+
+        <section class="gaming-realm-card gaming-realm-card--first-hold">
+          <header><div><span class="gaming-kicker">REALM 002 / SURVIVAL</span><h2>First Hold</h2></div><span class="gaming-live-pill"><i></i> PLAYABLE V1</span></header>
+          <div class="gaming-realm-card__body">
+            <div class="gaming-realm-art gaming-realm-art--hold"><b>Ⅰ</b><span>HOW LONG CAN THE HOLD SURVIVE?</span></div>
+            <div class="gaming-realm-copy">
+              <p>A fast top-down survival realm. Gather Wood and Stone, build defenses and magical infrastructure, earn Gold through danger, improve your wizard, and hold back increasingly difficult incursions.</p>
+              <div class="gaming-mini-grid">
+                <span><small>STYLE</small><b>TOP-DOWN</b></span>
+                <span><small>LOOP</small><b>GATHER / BUILD</b></span>
+                <span><small>GOAL</small><b>SURVIVE</b></span>
+                <span><small>STATE</small><b>V1 LOCAL</b></span>
+              </div>
+              <a class="gaming-btn gaming-btn--primary" href="/gaming/first-hold/">ENTER THE FIRST HOLD →</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="gaming-realm-card gaming-realm-card--arcade">
+          <header><div><span class="gaming-kicker">REALM 003 / ARCADE</span><h2>Arcade Battle</h2></div><span class="gaming-live-pill"><i></i> PLAYABLE NOW</span></header>
+          <div class="gaming-realm-card__body">
+            <div class="gaming-realm-art gaming-realm-art--arcade">
+              <img src="/images/gaming/arcade-battle-banner.png" alt="Arcade Battle" />
+              <span>PLAN YOUR PARTY · READ THE ENEMY · SURVIVE THE WAVE</span>
+            </div>
+            <div class="gaming-realm-copy">
+              <p>The official Arcade Battle browser game. Crack open a random three-combatant lineup, discover rarity and elemental affinity, then use the original planning, enemy-intent, Burn / Bleed / Sunder, elite and boss systems to make the pull survive.</p>
+              <div class="gaming-mini-grid">
+                <span><small>STYLE</small><b>TURN-BASED</b></span>
+                <span><small>DRAW</small><b>RANDOM 3</b></span>
+                <span><small>RUN</small><b>WAVES</b></span>
+                <span><small>STATE</small><b>PLAYABLE</b></span>
+              </div>
+              <a class="gaming-btn gaming-btn--primary" href="/gaming/arcade-battle/">ENTER ARCADE BATTLE →</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="gaming-magazine-row">
+          <a class="gaming-magazine-card gaming-magazine-card--tv" href="/tv/">
+            <span>DRAGON TV // LIVE ROOM</span>
+            <strong>WATCH SOMEBODY PLAY.</strong>
+            <p>Streams, guest games, playtests and broadcasts can stay inside DragonsRitual while you watch.</p>
+            <b>ENTER DRAGON TV →</b>
+          </a>
+
+          <article class="gaming-magazine-card gaming-magazine-card--desk">
+            <span>DEVELOPMENT DESK</span>
+            <strong>BUILT IN PUBLIC.</strong>
+            <p>Playable experiments, change logs, prototypes and development notes belong beside the finished games.</p>
+            <b>DEVLOGS COMING INTO ROTATION</b>
+          </article>
+
+          <article class="gaming-magazine-card gaming-magazine-card--retro">
+            <span>RETRO / DISCOVERY</span>
+            <strong>OLD GAMES STILL MATTER.</strong>
+            <p>Reviews, forgotten systems, strange mechanics and the things older games still teach us.</p>
+            <b>EDITORIAL SLOT</b>
+          </article>
+        </section>
+
+        <section class="gaming-events" id="events"><header><span class="gaming-kicker">REALM CONDITIONS</span><h2>What is happening now.</h2></header><div class="gaming-event-grid" data-event-grid></div></section>
+        <section class="gaming-records" id="records"><header><span class="gaming-kicker">HALL OF RECORDS</span><h2>Records worth chasing.</h2></header><div class="gaming-record-grid"><article><small>YOUR DEEPEST DESCENT</small><strong data-record-floor>—</strong><span>NINTH SPIRE FLOOR</span></article><article><small>YOUR LEGACY</small><strong data-record-legacy>—</strong><span>REALM POINTS</span></article><article><small>BOOKS / RELICS</small><strong>COMING</strong><span>COLLECTION RECORD</span></article><article><small>GLOBAL BOARD</small><strong>LOCKED</strong><span>OPENS WITH LIVE SERVER</span></article></div></section>
+        <section class="gaming-collections" id="collections"><header><span class="gaming-kicker">YOUR GAMING LIFE</span><h2>Things that follow you.</h2></header><div class="gaming-collection-grid"><article><b>01</b><h3>Character</h3><p>Your persistent identity, titles, affinities and history.</p></article><article><b>02</b><h3>Books & Relics</h3><p>Discoveries worth showing other members.</p></article><article><b>03</b><h3>Cards & Recipes</h3><p>Collectible knowledge, tradeable objects and tastes.</p></article><article><b>04</b><h3>Worlds</h3><p>The places your characters have entered across Dragon Gaming.</p></article></div></section>
+      </div>
+      <GamingRealmWire />
+    </section>
+  </main>
+  <script>
+    const KEY='dragon:ninth-spire:character';
+    const $=(s)=>document.querySelector(s);
+    function readCharacter(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch{return null}}
+    function duration(ms){ms=Math.max(0,Number(ms)||0);const m=Math.floor(ms/60000);if(m<60)return `${m}m`;const h=Math.floor(m/60),rm=m%60;if(h<100)return `${h}h ${rm}m`;return `${Math.floor(h/24)}d ${h%24}h`;}
+    function paint(c){if(!c)return; $('[data-lounge-name]').textContent=c.name||'WIZARD'; $('[data-lounge-title]').textContent=c.title||'Wizard of the Ninth Spire'; $('[data-lounge-level]').textContent=String(c.level||1); $('[data-lounge-floor]').textContent=String(c.highestFloor||1); $('[data-lounge-legacy]').textContent=String(c.legacy||0); $('[data-lounge-element]').textContent=(c.element||'UNBOUND').toUpperCase(); $('[data-lounge-action]').textContent='CONTINUE CHARACTER →'; $('[data-realm-floor]').textContent=String(c.highestFloor||1); $('[data-realm-element]').textContent=(c.element||'UNBOUND').toUpperCase(); $('[data-record-floor]').textContent=String(c.highestFloor||1); $('[data-record-legacy]').textContent=String(c.legacy||0); $('[data-lounge-played]').textContent=duration(c.playTimeMs); $('[data-realm-played]').textContent=duration(c.playTimeMs); document.documentElement.dataset.wizardElement=String(c.element||'unbound').toLowerCase().replace(/[^a-z0-9_-]/g,'');}
+    paint(readCharacter()); window.addEventListener('storage',e=>{if(e.key===KEY)paint(readCharacter())}); window.addEventListener('dragon:ninth-spire:update',e=>paint(e.detail));
+    const events=[
+      {kind:'world',eyebrow:'WORLD CONDITION',title:'The Realm Gate Is Open',body:'The Ninth Spire is accepting new and returning characters.',action:'ENTER REALM',href:'/gaming/ninth-spire/'},
+      {kind:'lunar',eyebrow:'LUNAR CLOCK',title:'Moon phase loading…',body:'Lunar conditions are reserved for future Spire rituals and timed discoveries.',action:'VIEW CONDITIONS',href:'#'},
+      {kind:'archive',eyebrow:'ARCHIVE SIGNAL',title:'Character Chronicle Active',body:'Your local Spire record can now surface through the Dragon Gaming shell.',action:'VIEW CHARACTER',href:'/gaming/ninth-spire/'},
+    ];
+    const grid=$('[data-event-grid]');
+    if(grid){grid.innerHTML=events.map((e,i)=>`<article class="gaming-event gaming-event--${e.kind}"><small>${e.eyebrow}</small><h3>${e.title}</h3><p>${e.body}</p><a href="${e.href}">${e.action} →</a></article>`).join('');}
+    async function moon(){try{const now=new Date(); const known=new Date(Date.UTC(2000,0,6,18,14)); const syn=29.53058867; const days=(now-known)/86400000; const age=((days%syn)+syn)%syn; let phase='WAXING'; if(age<1.85||age>27.68)phase='NEW MOON'; else if(age<7.38)phase='WAXING CRESCENT'; else if(age<9.23)phase='FIRST QUARTER'; else if(age<14.77)phase='WAXING GIBBOUS'; else if(age<16.61)phase='FULL MOON'; else if(age<22.15)phase='WANING GIBBOUS'; else if(age<24)phase='LAST QUARTER'; else phase='WANING CRESCENT'; const card=document.querySelector('.gaming-event--lunar'); if(card){card.querySelector('h3').textContent=phase; card.querySelector('p').textContent=`Lunar age ${age.toFixed(1)} days. This clock is live; game effects are not enabled yet.`;}}catch{}} moon();
+  </script>
+</SiteLayout>

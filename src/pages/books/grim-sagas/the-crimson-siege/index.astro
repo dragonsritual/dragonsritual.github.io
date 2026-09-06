@@ -1,0 +1,127 @@
+---
+import SiteLayout from "../../../../layouts/SiteLayout.astro";
+import LaunchHeader from "../../../../components/LaunchHeader.astro";
+import { grimSagasFull } from "../../../../data/grimSagasFull.js";
+import "../../../../styles/grim-sagas.css";
+
+const saga = grimSagasFull["crimson-siege"];
+---
+
+<SiteLayout
+  title="The Crimson Siege — Editorial File — Grim Sagas — DragonsRitual"
+  description="Editorial notes, highlights and archive analysis for The Crimson Siege."
+  ogType="article"
+  ogImage={saga.hero}
+>
+  <LaunchHeader />
+
+  <main class="gs-story-page">
+    <article class="gs-story gs-editorial">
+      <header class="gs-story-hero">
+        <div class="gs-story-hero__art">
+          <img src={saga.hero} alt="The Crimson Siege" />
+        </div>
+
+        <div class="gs-story-hero__copy">
+          <span>GRIM SAGAS // EDITORIAL FILE</span>
+          <h1>THE CRIMSON SIEGE</h1>
+          <p>{saga.subtitle}</p>
+
+          <div class="gs-story-meta">
+            <span>PUBLISHED OCT 2, 2024</span>
+            <span>UPDATED OCT 15, 2024</span>
+            <span>{saga.readMinutes} MIN READ</span>
+          </div>
+
+          <div class="gs-editorial-actions">
+            <a class="gs-editorial-primary" href="/books/grim-sagas/the-crimson-siege/read/">
+              READ THE FULL STORY →
+            </a>
+            <a href="/books/grim-sagas/">RETURN TO GRIM SAGAS</a>
+          </div>
+        </div>
+      </header>
+
+      <div class="gs-story-layout">
+        <aside class="gs-story-index">
+          <span>EDITORIAL FILE</span>
+          <strong>THE CRIMSON SIEGE</strong>
+          <dl>
+            <dt>FORMAT</dt><dd>Story Notes + Highlights</dd>
+            <dt>REALM</dt><dd>{saga.realm}</dd>
+            <dt>STATUS</dt><dd>{saga.status}</dd>
+            <dt>FULL TEXT</dt><dd>Available inside DragonsRitual</dd>
+          </dl>
+
+          <a class="gs-editorial-side-read" href="/books/grim-sagas/the-crimson-siege/read/">
+            OPEN STORY →
+          </a>
+        </aside>
+
+        <div class="gs-story-copy">
+          <section>
+            <span class="gs-story-label">EDITORIAL INTRODUCTION</span>
+            <h2>Beneath the battlefield.</h2>
+            <p class="gs-story-lead">
+              <em>The Crimson Siege</em> is built around two wars happening at once:
+              the visible slaughter above and the older, stranger contest beneath the
+              fortress. The story's battlefield is huge, but its real pressure comes
+              from the hidden wizards who can alter the war without ever stepping into it.
+            </p>
+          </section>
+
+          <section class="gs-story-excerpt">
+            <span class="gs-story-label">FEATURED PASSAGE</span>
+            <blockquote>
+              Above the world, war howls like a rabid beast. A hellish battlefield stretches endlessly, soaked in blood and ash.
+            </blockquote>
+            <p>
+              The opening sells scale immediately, then the story pulls downward into
+              the underground chambers where incense, runes, relics and summoning become
+              the machinery behind the violence above.
+            </p>
+          </section>
+
+          <section>
+            <span class="gs-story-label">EDITORIAL NOTE</span>
+            <h2>Rituals below. Blood above.</h2>
+            <p>
+              One of the strongest ideas in the piece is that the wizards are not clean
+              allies or obvious villains. They summon horrors, influence both sides and
+              continue their work whether the kingdom wins or loses. That ambiguity makes
+              the war feel larger than the soldiers experiencing it.
+            </p>
+          </section>
+
+          <section>
+            <span class="gs-story-label">REALM CONNECTION</span>
+            <h2>A window into the Realms.</h2>
+            <p>
+              The story functions as one archive window into a broader world of warriors,
+              sorcerers, dragons, demons, artifacts and forces that may intersect across
+              later Grim Sagas entries. The post-story note and Keeper of the Core teaser
+              make that larger-world intention explicit.
+            </p>
+          </section>
+
+          <aside class="gs-editorial-read-card">
+            <span>THE ARTICLE ENDS. THE STORY BEGINS.</span>
+            <strong>Read The Crimson Siege in full.</strong>
+            <p>
+              The complete story now lives here on DragonsRitual in the dedicated
+              Dragon Edition reader. No Wix handoff. No leaving the site.
+            </p>
+            <a href="/books/grim-sagas/the-crimson-siege/read/">
+              ENTER FULL STORY →
+            </a>
+          </aside>
+
+          <footer class="gs-story-end">
+            <span>GRIM SAGAS // EDITORIAL FILE 001</span>
+            <a href="/books/grim-sagas/">EXPLORE THE ARCHIVE →</a>
+          </footer>
+        </div>
+      </div>
+    </article>
+  </main>
+</SiteLayout>

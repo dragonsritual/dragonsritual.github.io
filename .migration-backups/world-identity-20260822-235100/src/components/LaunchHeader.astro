@@ -1,0 +1,39 @@
+﻿---
+const path = Astro.url.pathname;
+const isToday = path === "/";
+const isTV = path.startsWith("/tv");
+const isRadio = path.startsWith("/radio");
+---
+<header class="launch-header">
+  <a class="launch-brand" href="/" aria-label="DragonsRitual Today">
+    <span class="launch-mark">DR</span>
+    <span class="launch-wordmark">
+      <strong>DRAGONSRITUAL</strong>
+      <small>MEDIA / CULTURE / PLAY</small>
+    </span>
+  </a>
+
+  <nav class="launch-nav" aria-label="Public navigation">
+    <a class:list={["launch-nav-link",{active:isToday}]} href="/">
+      <i></i><span>TODAY</span>
+    </a>
+    <a class:list={["launch-nav-link",{active:isTV}]} href="/tv/">
+      <i></i><span>TV</span>
+    </a>
+    <a class:list={["launch-nav-link",{active:isRadio}]} href="/radio/">
+      <i></i><span>RADIO</span>
+    </a>
+  </nav>
+
+  <div class="launch-actions">
+    <button class="launch-search" type="button" data-search-open aria-label="Search archive">
+      <span class="launch-search__icon" aria-hidden="true"></span>
+      <span class="launch-search__label">SEARCH</span>
+    </button>
+
+    <a class="launch-listen" href="/tv/">
+      <span class="launch-live-dot"></span>
+      <span>WATCH LIVE</span>
+    </a>
+  </div>
+</header>

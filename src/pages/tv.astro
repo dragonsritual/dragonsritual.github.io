@@ -1,0 +1,733 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import LaunchHeader from '../components/LaunchHeader.astro';
+import '../styles/tv.css';
+
+const channels = [
+  {tag:'DRAGON LIVE', title:'The Studio Is Awake', desc:'Live work, conversations, premieres and whatever is happening inside Dragon.', icon:'LIVE'},
+  {tag:'GAMING', title:'Dragon Gaming', desc:'Streams, matches, game development, events and creator play.', icon:'PLAY'},
+  {tag:'ART', title:'Drawing Room', desc:'Illustration, painting, 3D, process and long-form creative sessions.', icon:'DRAW'},
+  {tag:'STORIES', title:'Films & Features', desc:'Short films, interviews, documentaries, fiction and strange broadcasts.', icon:'FILM'},
+];
+const tonight = [
+  ['NOW','DRAGON LIVE','OPEN CHANNEL'],
+  ['NEXT','DRAWING ROOM','CREATOR SESSION'],
+  ['LATER','DRAGON GAMING','NIGHT PLAY'],
+  ['ARCHIVE','FROM THE VAULT','WATCH ANYTIME']
+];
+---
+<SiteLayout title="Dragon TV — DragonsRitual" description="Watch Dragon TV: live creator broadcasts, gaming, art, films and features.">
+  <LaunchHeader />
+  <main class="dragon-tv">
+    <section class="tv-onair">
+      <div class="tv-onair__screen" data-tv-screen>
+        <video class="tv-onair__video" data-tv-video playsinline muted autoplay hidden></video>
+        <div class="tv-onair__fallback" data-tv-fallback></div>
+        <div class="tv-onair__shade"></div>
+
+        <div class="tv-onair__bug">
+          <span class="live-dot"></span>
+          <b>DRAGON TV</b>
+          <small data-tv-signal-label>ON AIR</small>
+          <em data-live-state>ROTATION</em>
+        </div>
+
+        <div class="tv-onair__copy">
+          <span data-tv-now-kicker>NOW PLAYING</span>
+          <h1 data-tv-now-title>Dragon TV is on.</h1>
+          <p data-tv-now-description>The house signal is already running.</p>
+
+          <div class="tv-onair__identity">
+            <div class="creator-sigil" data-tv-current-avatar>DR</div>
+            <div>
+              <b data-tv-current-channel>DRAGON TV</b>
+              <span data-tv-current-category>HOUSE SIGNAL</span>
+            </div>
+            <button type="button" data-tv-follow-current hidden>FOLLOW</button>
+          </div>
+        </div>
+
+        <div class="tv-onair__controls">
+          <button type="button" data-tv-prev aria-label="Previous program">←</button>
+          <button type="button" data-tv-toggle>PAUSE</button>
+          <button type="button" data-tv-mute>SOUND</button>
+          <button type="button" data-tv-next aria-label="Next program">→</button>
+        </div>
+
+        <div class="tv-onair__progress"><i data-tv-progress></i></div>
+      </div>
+
+      <aside class="tv-onair__sidebar">
+        <header>
+          <div><span>DRAGON TV / SIGNAL</span><h2>Now & next.</h2></div>
+          <button type="button" data-following-open hidden>
+            FOLLOWING <b data-following-count>0</b>
+          </button>
+        </header>
+
+        <div class="tv-source-switch" role="group" aria-label="Signal source">
+          <button type="button" class="is-active" data-source-mode="auto"><span>AUTO</span><small>LIVE WHEN AVAILABLE</small></button>
+          <button type="button" data-source-mode="live"><span>LIVE</span><small>HAPPENING NOW</small></button>
+          <button type="button" data-source-mode="videos"><span>VIDEOS</span><small>ON-DEMAND ROTATION</small></button>
+        </div>
+
+        <div class="tv-onair__mode">
+          <button type="button" class="is-active" data-tuner="mix">MY TV</button>
+          <button type="button" data-tuner="top">TOP</button>
+          <button type="button" data-tuner="recent">NEW</button>
+          <button type="button" data-tuner="discover">DISCOVER</button>
+        </div>
+
+        <div class="tv-onair__queue" data-tv-queue></div>
+
+        <footer>
+          <span data-tv-tuner-status>HOUSE SIGNAL</span>
+          <small data-tv-following-status>Follow creators and your TV starts changing.</small>
+        </footer>
+      </aside>
+    </section>
+
+    <section class="tv-guide">
+      <div class="tv-section-head"><span>HOUSE PROGRAMMING</span><strong>Keep watching or go deeper.</strong></div>
+      <div class="tv-guide-row">
+        {tonight.map(item => <article><time>{item[0]}</time><b>{item[1]}</b><span>{item[2]}</span></article>)}
+      </div>
+    </section>
+
+    <section class="tv-channels" id="channels">
+      <div class="tv-section-head"><span>HOUSE CHANNELS</span><strong>Explore the network.</strong></div>
+      <div class="tv-channel-grid">
+        {channels.map((c,i)=><article class="tv-channel-card">
+          <div class="tv-card-screen"><span>{String(i+1).padStart(2,'0')}</span><strong>{c.icon}</strong></div>
+          <small>{c.tag}</small><h3>{c.title}</h3><p>{c.desc}</p><button type="button">OPEN CHANNEL</button>
+        </article>)}
+      </div>
+    </section>
+
+    <section class="tv-discover">
+      <div class="tv-section-head tv-section-head--split">
+        <div><span>DISCOVER</span><strong>People worth watching.</strong></div>
+        <button type="button" class="tv-following-open" data-following-open hidden>
+          <span>FOLLOWING</span><b data-following-count>0</b>
+        </button>
+      </div>
+
+      <div class="tv-following-latest" data-following-latest hidden>
+        <div class="tv-following-latest__head">
+          <span>NEW FROM YOUR CHANNELS</span>
+          <button type="button" data-following-open>SEE ALL →</button>
+        </div>
+        <div class="tv-following-latest__rail" data-following-latest-rail></div>
+      </div>
+
+      <div class="tv-creator-rail" data-creator-rail>
+        <article><div class="creator-sigil">A</div><div><b>ARTIST CHANNEL</b><span>Illustration / process</span></div><button disabled>LOADING</button></article>
+        <article><div class="creator-sigil">G</div><div><b>GAMING CHANNEL</b><span>Live play / development</span></div><button disabled>LOADING</button></article>
+        <article><div class="creator-sigil">W</div><div><b>WRITER CHANNEL</b><span>Stories / readings / discussion</span></div><button disabled>LOADING</button></article>
+      </div>
+      <p class="tv-pro-note">Only approved DragonsRitual creator channels can appear here.</p>
+    </section>
+
+    <section class="tv-for-you" data-for-you-section>
+      <div class="tv-section-head">
+        <span>FOR YOU</span>
+        <strong>Your channel mix.</strong>
+      </div>
+      <p class="tv-for-you__intro">A living mix of Dragon TV programming. Channels you follow are given priority, while the feed still leaves room for discovery.</p>
+      <div class="tv-reel-rail" data-for-you-rail>
+        <article class="tv-reel-card is-placeholder"><div><span>DRAGON TV</span><strong>YOUR MIX WILL APPEAR HERE</strong></div></article>
+      </div>
+    </section>
+
+    <section class="tv-archive">
+      <div><span class="tv-kicker">FROM THE VAULT</span><h2>Missed it live?</h2><p>Past broadcasts become a browsable library instead of disappearing into a feed.</p></div>
+      <div class="archive-rail">
+        <article><div>01:42:18</div><b>STUDIO SESSION</b><span>ART / ARCHIVE</span></article>
+        <article><div>48:09</div><b>AFTER HOURS</b><span>TALK / ARCHIVE</span></article>
+        <article><div>02:14:31</div><b>GAME NIGHT</b><span>GAMING / ARCHIVE</span></article>
+      </div>
+    </section>
+
+    <aside class="tv-following-drawer" data-following-drawer hidden>
+      <div class="tv-following-drawer__scrim" data-following-close></div>
+      <section class="tv-following-drawer__panel">
+        <header>
+          <div><span>YOUR DRAGON TV</span><h2>Following</h2></div>
+          <button type="button" aria-label="Close following" data-following-close>×</button>
+        </header>
+        <p class="tv-following-drawer__intro">Your channels live here. New posts rise to the top; unfollowing stays available without turning the page into a wall of buttons.</p>
+        <div class="tv-following-list" data-following-list></div>
+      </section>
+    </aside>
+
+    <section class="tv-creator-entry">
+      <div>
+        <span>CREATE ON DRAGON TV</span>
+        <h2>Want to broadcast?</h2>
+        <p>Dragon TV creator tools are available through approved Creator accounts. Viewers stay in the channel; creators get a separate production studio.</p>
+      </div>
+      <a href="/member/" data-tv-creator-entry>CREATOR ACCESS →</a>
+    </section>
+  </main>
+
+<script>
+  import { getSupabaseBrowserClient } from '../lib/supabaseBrowser';
+
+  const supabase=getSupabaseBrowserClient();
+  const $=s=>document.querySelector(s);
+  const $$=s=>[...document.querySelectorAll(s)];
+  const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+
+  let currentUser=null;
+  let channels=[];
+  let follows=new Set();
+  let videos=[];
+  let liveBroadcasts=[];
+  let rotation=[];
+  let rotationIndex=0;
+  let tunerMode='mix';
+  let sourceMode='auto';
+  let slideTimer=null;
+  let progressTimer=null;
+  const ROTATE_MS=12000;
+  const housePrograms=[
+    {id:'house-gaming',creator_user_id:null,title:'Dragon Gaming',description:'Games, streams, development and play from across the Dragon network.',category:'DRAGON GAMING',house:true},
+    {id:'house-drawing',creator_user_id:null,title:'Dragon Drawing',description:'Illustration, process, sketchbooks, painting and studio sessions.',category:'DRAGON DRAWING',house:true},
+    {id:'house-features',creator_user_id:null,title:'Films & Features',description:'Interviews, short films, stories and longer-form Dragon programming.',category:'FILMS & FEATURES',house:true},
+    {id:'house-live',creator_user_id:null,title:'Dragon Live',description:'Whatever is happening inside Dragon right now.',category:'DRAGON LIVE',house:true}
+  ];
+
+  async function loadTV(){
+    const {data:{session}}=await supabase.auth.getSession();
+    currentUser=session?.user||null;
+
+    const cr=await supabase
+      .from('dr_creator_channels')
+      .select('*')
+      .eq('is_approved',true)
+      .eq('is_active',true)
+      .order('featured',{ascending:false})
+      .order('display_name',{ascending:true});
+
+    channels=cr.data||[];
+
+    if(currentUser){
+      const fr=await supabase.from('dr_creator_follows').select('creator_user_id').eq('follower_user_id',currentUser.id);
+      follows=new Set((fr.data||[]).map(x=>x.creator_user_id));
+    }
+
+    const vr=await supabase
+      .from('dr_tv_videos')
+      .select('*')
+      .eq('status','published')
+      .eq('visibility','public')
+      .order('published_at',{ascending:false})
+      .limit(100);
+
+    videos=vr.data||[];
+
+    const nowIso=new Date().toISOString();
+    const lr=await supabase
+      .from('dr_tv_live_broadcasts')
+      .select('*')
+      .eq('status','live')
+      .eq('visibility','public')
+      .lte('starts_at',nowIso)
+      .or(`ends_at.is.null,ends_at.gt.${nowIso}`)
+      .order('priority',{ascending:false})
+      .order('starts_at',{ascending:true});
+
+    liveBroadcasts=(lr.data||[]).map(x=>({...x,live:true}));
+
+    renderCreators();
+    renderFollowing();
+    renderLatest();
+    renderForYou();
+    buildRotation(true);
+    updateTunerStatus();
+  }
+
+  function initials(name){
+    return String(name||'DR').trim().split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase();
+  }
+
+  function channelFor(userId){return channels.find(c=>c.user_id===userId)}
+
+  function buildRotation(reset=false){
+    const followed=videos.filter(v=>follows.has(v.creator_user_id));
+    const discovery=videos.filter(v=>!follows.has(v.creator_user_id));
+    const featured=videos.filter(v=>channelFor(v.creator_user_id)?.featured);
+
+    let videoRotation=[];
+
+    if(tunerMode==='recent'){
+      videoRotation=[...videos].sort((a,b)=>new Date(b.published_at||b.created_at)-new Date(a.published_at||a.created_at));
+    }else if(tunerMode==='top'){
+      videoRotation=[
+        ...featured,
+        ...videos.filter(v=>!featured.some(f=>f.id===v.id))
+      ];
+    }else if(tunerMode==='discover'){
+      videoRotation=discovery.length?discovery:[...videos];
+    }else{
+      // MY TV: give each followed creator one early slot, then mix discovery.
+      const seenCreators=new Set();
+      const firstFromEach=[];
+      const laterFollowed=[];
+      for(const v of followed){
+        if(!seenCreators.has(v.creator_user_id)){
+          seenCreators.add(v.creator_user_id);
+          firstFromEach.push(v);
+        }else{
+          laterFollowed.push(v);
+        }
+      }
+
+      let a=0,b=0;
+      while(videoRotation.length<30 && (a<firstFromEach.length||b<discovery.length)){
+        if(a<firstFromEach.length)videoRotation.push(firstFromEach[a++]);
+        if(b<discovery.length)videoRotation.push(discovery[b++]);
+      }
+      videoRotation.push(...laterFollowed);
+      videoRotation.push(...discovery.filter(v=>!videoRotation.some(x=>x.id===v.id)));
+      if(!videoRotation.length)videoRotation=[...videos];
+    }
+
+    if(!videoRotation.length)videoRotation=[...housePrograms];
+
+    if(sourceMode==='live'){
+      rotation=liveBroadcasts.length?[...liveBroadcasts]:[];
+    }else if(sourceMode==='videos'){
+      rotation=videoRotation;
+    }else{
+      // AUTO = actual television behavior:
+      // if something is live, it takes the signal; otherwise prerecorded programming runs.
+      rotation=liveBroadcasts.length?[...liveBroadcasts]:videoRotation;
+    }
+
+    if(reset)rotationIndex=0;
+    if(rotationIndex>=rotation.length)rotationIndex=0;
+    renderSignal();
+  }
+
+  function renderSignal(){
+    clearTimeout(slideTimer);
+    clearInterval(progressTimer);
+
+    const video=$('[data-tv-video]');
+    const fallback=$('[data-tv-fallback]');
+    const item=rotation[rotationIndex];
+
+    if(!item){
+      video.hidden=true;
+      video.removeAttribute('src');
+      fallback.hidden=false;
+      fallback.style.backgroundImage='';
+      video.hidden=true;
+      video.removeAttribute('src');
+      fallback.hidden=false;
+      fallback.style.backgroundImage='';
+      $('[data-tv-now-kicker]').textContent=sourceMode==='live'?'LIVE':'DRAGON TV';
+      $('[data-tv-now-title]').textContent=sourceMode==='live'?'Nothing is live right now.':'Dragon TV is on.';
+      $('[data-tv-now-description]').textContent=sourceMode==='live'
+        ? 'Switch to AUTO or VIDEOS and the prerecorded Dragon signal keeps playing.'
+        : 'House programming is running while the next creator broadcast comes online.';
+      const liveState=$('[data-live-state]');
+      if(liveState)liveState.textContent=sourceMode==='live'?'OFF AIR':'ROTATION';
+      renderQueue();
+      return;
+    }
+
+    const c=channelFor(item.creator_user_id);
+    const isFollowed=follows.has(item.creator_user_id);
+    const isLive=!!item.live;
+    const sourceUrl=isLive?item.stream_url:item.video_url;
+    const hasVideo=!item.house&&!!sourceUrl;
+    const liveState=$('[data-live-state]');
+    if(liveState)liveState.textContent=isLive?'LIVE NOW':'ROTATION';
+    const signalLabel=$('[data-tv-signal-label]');
+    if(signalLabel)signalLabel.textContent=isLive?'LIVE':'ON AIR';
+
+    $('[data-tv-now-kicker]').textContent=isLive?'LIVE NOW':(isFollowed?'FROM A CHANNEL YOU FOLLOW':'ON DRAGON TV');
+    $('[data-tv-now-title]').textContent=item.title||'Dragon TV';
+    $('[data-tv-now-description]').textContent=item.description||`${c?.display_name||'Dragon creator'} · ${item.category||'Dragon TV'}`;
+    const currentAvatar=$('[data-tv-current-avatar]');
+    const currentChannel=$('[data-tv-current-channel]');
+    const currentCategory=$('[data-tv-current-category]');
+    if(currentAvatar) currentAvatar.textContent=item.house?'DR':(c?.avatar_text||initials(c?.display_name));
+    if(currentChannel) currentChannel.textContent=item.house?'DRAGON TV':(c?.display_name||'DRAGON TV');
+    if(currentCategory) currentCategory.textContent=item.category||c?.channel_type||'HOUSE SIGNAL';
+
+    $('[data-tv-follow-current]').hidden=!currentUser||!c;
+    $('[data-tv-follow-current]').textContent=isFollowed?'FOLLOWING':'FOLLOW';
+    $('[data-tv-follow-current]').dataset.creatorId=c?.user_id||'';
+
+    fallback.hidden=hasVideo;
+    if(item.thumbnail_url){
+      fallback.style.backgroundImage=`linear-gradient(180deg,rgba(3,4,5,.05),rgba(3,4,5,.64)),url("${item.thumbnail_url.replace(/"/g,'%22')}")`;
+    }else{
+      const houseLooks={
+        'house-gaming':'radial-gradient(circle at 72% 28%,#3b315b 0,transparent 27%),radial-gradient(circle at 25% 72%,#18293c 0,transparent 30%),linear-gradient(145deg,#15171b,#08090b)',
+        'house-drawing':'radial-gradient(circle at 67% 24%,#5b2c35 0,transparent 26%),radial-gradient(circle at 32% 76%,#3c2c1d 0,transparent 30%),linear-gradient(145deg,#171415,#09090a)',
+        'house-features':'radial-gradient(circle at 68% 25%,#243e43 0,transparent 27%),radial-gradient(circle at 25% 70%,#382735 0,transparent 30%),linear-gradient(145deg,#121517,#08090a)',
+        'house-live':'radial-gradient(circle at 70% 26%,#55222a 0,transparent 28%),radial-gradient(circle at 28% 72%,#22272c 0,transparent 32%),linear-gradient(145deg,#151719,#08090a)'
+      };
+      fallback.style.backgroundImage=houseLooks[item.id]||'';
+    }
+
+    if(hasVideo){
+      video.hidden=false;
+      if(video.src!==sourceUrl)video.src=sourceUrl;
+      video.muted=true;
+      video.play().catch(()=>{});
+      $('[data-tv-toggle]').textContent='PAUSE';
+    }else{
+      video.hidden=true;
+      video.removeAttribute('src');
+    }
+
+    renderQueue();
+    if(isLive){
+      const bar=$('[data-tv-progress]');
+      if(bar)bar.style.width='100%';
+    }else{
+      startProgress();
+    }
+  }
+
+  function renderQueue(){
+    const root=$('[data-tv-queue]');
+    if(!root)return;
+
+    if(!rotation.length){
+      root.innerHTML='<p class="tv-onair__empty">Signal loading…</p>';
+      return;
+    }
+
+    const items=[];
+    for(let offset=0;offset<Math.min(5,rotation.length);offset++){
+      const idx=(rotationIndex+offset)%rotation.length;
+      items.push({item:rotation[idx],idx,offset});
+    }
+
+    root.innerHTML=items.map(({item,idx,offset})=>{
+      const c=channelFor(item.creator_user_id);
+      const channel=item.house?'DRAGON TV':(c?.display_name||'Dragon creator');
+      const avatar=item.house?'DR':(c?.avatar_text||initials(channel));
+      return `<button type="button" class="tv-onair__queue-item ${offset===0?'is-now':''}" data-queue-index="${idx}">
+        <div class="creator-sigil">${esc(avatar)}</div>
+        <div>
+          <span>${item.live?'LIVE':(offset===0?'NOW':`NEXT ${offset}`)}</span>
+          <b>${esc(item.title)}</b>
+          <small>${esc(channel)} · ${esc(item.category||'DRAGON TV')}</small>
+        </div>
+        <i>${offset===0?'●':'›'}</i>
+      </button>`;
+    }).join('');
+  }
+
+  function startProgress(){
+    const bar=$('[data-tv-progress]');
+    const started=Date.now();
+    if(bar)bar.style.width='0%';
+
+    progressTimer=setInterval(()=>{
+      const pct=Math.min(100,((Date.now()-started)/ROTATE_MS)*100);
+      if(bar)bar.style.width=`${pct}%`;
+    },100);
+
+    slideTimer=setTimeout(nextSignal,ROTATE_MS);
+  }
+
+  function nextSignal(){
+    if(!rotation.length)return;
+    rotationIndex=(rotationIndex+1)%rotation.length;
+    renderSignal();
+  }
+
+  function prevSignal(){
+    if(!rotation.length)return;
+    rotationIndex=(rotationIndex-1+rotation.length)%rotation.length;
+    renderSignal();
+  }
+
+  function updateTunerStatus(){
+    const count=follows.size;
+    const status=$('[data-tv-tuner-status]');
+    const following=$('[data-tv-following-status]');
+
+    if(sourceMode==='live'){
+      status.textContent=liveBroadcasts.length?'LIVE NOW':'NO LIVE SIGNAL';
+      following.textContent=liveBroadcasts.length
+        ? `${liveBroadcasts.length} live broadcast${liveBroadcasts.length===1?'':'s'} happening now.`
+        : 'Nothing is live right now. AUTO will keep Dragon TV playing.';
+      return;
+    }
+
+    if(sourceMode==='videos'){
+      status.textContent='VIDEO ROTATION';
+      following.textContent=count
+        ? 'Prerecorded programming weighted toward channels you follow.'
+        : 'Prerecorded Dragon programming and approved creator videos.';
+      return;
+    }
+
+    if(liveBroadcasts.length){
+      status.textContent='AUTO · LIVE';
+      following.textContent='A live broadcast is currently taking priority over the video rotation.';
+      return;
+    }
+
+    if(tunerMode==='mix'){
+      status.textContent=count?'YOUR DRAGON TV':'HOUSE SIGNAL';
+      following.textContent=count
+        ? `${count} followed channel${count===1?'':'s'} shaping what comes on.`
+        : 'Follow creators and your TV starts changing.';
+    }else if(tunerMode==='top'){
+      status.textContent='TOP HITS';
+      following.textContent='Featured and high-priority Dragon TV programming.';
+    }else if(tunerMode==='recent'){
+      status.textContent='RECENT';
+      following.textContent='Newest published videos first.';
+    }else{
+      status.textContent='DISCOVER';
+      following.textContent='Creators outside your current following list.';
+    }
+  }
+
+  function renderCreators(){
+    const rail=$('[data-creator-rail]');
+    if(!rail)return;
+
+    if(!channels.length){
+      rail.innerHTML=`<article><div class="creator-sigil">DR</div><div><b>CREATOR CHANNELS</b><span>Approved creator channels will appear here.</span></div><button disabled>COMING ONLINE</button></article>`;
+      return;
+    }
+
+    rail.innerHTML=channels.slice(0,12).map(c=>{
+      const following=follows.has(c.user_id);
+      return `<article data-channel="${c.user_id}">
+        <div class="creator-sigil">${esc(c.avatar_text||initials(c.display_name))}</div>
+        <div><b>${esc(c.display_name)}</b><span>${esc(c.channel_type||'Creator channel')}</span></div>
+        <button type="button" data-follow-toggle="${c.user_id}" class="${following?'is-following':''}">
+          ${following?'FOLLOWING':'FOLLOW'}
+        </button>
+      </article>`;
+    }).join('');
+  }
+
+  async function toggleFollow(creatorId){
+    if(!currentUser){
+      location.href='/join/?next=/tv/';
+      return;
+    }
+
+    if(follows.has(creatorId)){
+      const r=await supabase.rpc('dr_unfollow_creator',{target_creator:creatorId});
+      if(r.error)return;
+      follows.delete(creatorId);
+    }else{
+      const r=await supabase.rpc('dr_follow_creator',{target_creator:creatorId});
+      if(r.error)return;
+      follows.add(creatorId);
+    }
+
+    renderCreators();
+    renderFollowing();
+    renderLatest();
+    renderForYou();
+    buildRotation(true);
+    updateTunerStatus();
+  }
+
+  function renderFollowing(){
+    const open=$('[data-following-open]');
+    const count=$('[data-following-count]');
+    const list=$('[data-following-list]');
+    if(open)open.hidden=!currentUser;
+    if(count)count.textContent=follows.size;
+    if(!list)return;
+
+    const mine=channels.filter(c=>follows.has(c.user_id));
+    if(!currentUser){
+      list.innerHTML='<p class="tv-following-empty">Sign in to keep your Dragon TV channels in one place.</p>';
+      return;
+    }
+    if(!mine.length){
+      list.innerHTML='<p class="tv-following-empty">You are not following any Dragon TV channels yet.</p>';
+      return;
+    }
+
+    list.innerHTML=mine.map(c=>{
+      const latest=videos.find(v=>v.creator_user_id===c.user_id);
+      return `<article>
+        <div class="creator-sigil">${esc(c.avatar_text||initials(c.display_name))}</div>
+        <div class="tv-following-list__identity">
+          <b>${esc(c.display_name)}</b>
+          <span>${latest?`NEWEST · ${esc(latest.title)}`:esc(c.channel_type||'Creator channel')}</span>
+        </div>
+        <details>
+          <summary aria-label="Manage ${esc(c.display_name)}">•••</summary>
+          <button type="button" data-follow-toggle="${c.user_id}">UNFOLLOW</button>
+        </details>
+      </article>`;
+    }).join('');
+  }
+
+  function renderLatest(){
+    const box=$('[data-following-latest]');
+    const rail=$('[data-following-latest-rail]');
+    if(!box||!rail)return;
+
+    const mine=videos.filter(v=>follows.has(v.creator_user_id)).slice(0,8);
+    box.hidden=!currentUser||!mine.length;
+
+    rail.innerHTML=mine.map(v=>{
+      const c=channelFor(v.creator_user_id);
+      return `<article class="tv-mini-video" data-play-video="${v.id}">
+        <div class="tv-mini-video__screen">${v.duration_seconds?`<span>${Math.floor(v.duration_seconds/60)}:${String(v.duration_seconds%60).padStart(2,'0')}</span>`:''}</div>
+        <b>${esc(v.title)}</b>
+        <span>${esc(c?.display_name||'Dragon creator')}</span>
+      </article>`;
+    }).join('');
+  }
+
+  function renderForYou(){
+    const rail=$('[data-for-you-rail]');
+    if(!rail)return;
+    const followed=videos.filter(v=>follows.has(v.creator_user_id));
+    const discovery=videos.filter(v=>!follows.has(v.creator_user_id));
+
+    const mixed=[];
+    let fi=0,di=0;
+    while(mixed.length<12 && (fi<followed.length||di<discovery.length)){
+      if(fi<followed.length)mixed.push(followed[fi++]);
+      if(fi<followed.length)mixed.push(followed[fi++]);
+      if(di<discovery.length)mixed.push(discovery[di++]);
+    }
+
+    if(!mixed.length){
+      rail.innerHTML='<article class="tv-reel-card is-placeholder"><div><span>DRAGON TV</span><strong>VIDEOS FROM APPROVED CREATORS WILL BUILD THIS FEED</strong></div></article>';
+      return;
+    }
+
+    rail.innerHTML=mixed.map(v=>{
+      const c=channelFor(v.creator_user_id);
+      const followedFlag=follows.has(v.creator_user_id);
+      return `<article class="tv-reel-card" data-play-video="${v.id}">
+        <div class="tv-reel-card__screen">
+          ${v.thumbnail_url?`<img src="${esc(v.thumbnail_url)}" alt="">`:''}
+          <span class="tv-reel-card__tag">${esc(v.category||'DRAGON TV')}</span>
+        </div>
+        <div class="tv-reel-card__meta">
+          <b>${esc(v.title)}</b>
+          <span>${esc(c?.display_name||'Dragon creator')}${followedFlag?' · FOLLOWING':''}</span>
+        </div>
+      </article>`;
+    }).join('');
+  }
+
+  function tuneToVideo(id){
+    const item=videos.find(v=>v.id===id);
+    if(!item)return;
+    rotation=[item,...rotation.filter(v=>v.id!==id)];
+    rotationIndex=0;
+    window.scrollTo({top:0,behavior:'smooth'});
+    renderSignal();
+  }
+
+  document.addEventListener('click',e=>{
+    const t=e.target instanceof Element?e.target:null;
+    if(!t)return;
+
+    const follow=t.closest('[data-follow-toggle]');
+    if(follow){toggleFollow(follow.dataset.followToggle);return}
+
+    if(t.closest('[data-tv-follow-current]')){
+      const creator=t.closest('[data-tv-follow-current]').dataset.creatorId;
+      if(creator)toggleFollow(creator);
+      return;
+    }
+
+    const source=t.closest('[data-source-mode]');
+    if(source){
+      sourceMode=source.dataset.sourceMode;
+      $$('[data-source-mode]').forEach(b=>b.classList.toggle('is-active',b===source));
+      buildRotation(true);
+      updateTunerStatus();
+      return;
+    }
+
+    const tuner=t.closest('[data-tuner]');
+    if(tuner){
+      tunerMode=tuner.dataset.tuner;
+      $$('[data-tuner]').forEach(b=>b.classList.toggle('is-active',b===tuner));
+      buildRotation(true);
+      updateTunerStatus();
+      return;
+    }
+
+    const queueItem=t.closest('[data-queue-index]');
+    if(queueItem){
+      rotationIndex=Number(queueItem.dataset.queueIndex)||0;
+      renderSignal();
+      return;
+    }
+
+    if(t.closest('[data-tv-next]')){nextSignal();return}
+    if(t.closest('[data-tv-prev]')){prevSignal();return}
+    if(t.closest('[data-tv-toggle]')){
+      const v=$('[data-tv-video]');
+      if(v&&!v.hidden){
+        if(v.paused){v.play();t.closest('[data-tv-toggle]').textContent='PAUSE'}
+        else{v.pause();t.closest('[data-tv-toggle]').textContent='PLAY'}
+      }
+      return;
+    }
+    if(t.closest('[data-tv-mute]')){
+      const v=$('[data-tv-video]');
+      if(v&&!v.hidden){
+        v.muted=!v.muted;
+        t.closest('[data-tv-mute]').textContent=v.muted?'SOUND':'MUTE';
+      }
+      return;
+    }
+    const play=t.closest('[data-play-video]');
+    if(play){tuneToVideo(play.dataset.playVideo);return}
+
+    if(t.closest('[data-following-open]')){
+      const drawer=$('[data-following-drawer]');
+      if(drawer)drawer.hidden=false;
+      return;
+    }
+    if(t.closest('[data-following-close]')){
+      const drawer=$('[data-following-drawer]');
+      if(drawer)drawer.hidden=true;
+    }
+  });
+
+  loadTV();
+
+  // Re-check the live board every minute so AUTO can switch into a broadcast
+  // that begins while the viewer already has Dragon TV open.
+  setInterval(async()=>{
+    const nowIso=new Date().toISOString();
+    const lr=await supabase
+      .from('dr_tv_live_broadcasts')
+      .select('*')
+      .eq('status','live')
+      .eq('visibility','public')
+      .lte('starts_at',nowIso)
+      .or(`ends_at.is.null,ends_at.gt.${nowIso}`)
+      .order('priority',{ascending:false})
+      .order('starts_at',{ascending:true});
+
+    const nextLive=(lr.data||[]).map(x=>({...x,live:true}));
+    const changed=JSON.stringify(nextLive.map(x=>x.id))!==JSON.stringify(liveBroadcasts.map(x=>x.id));
+    liveBroadcasts=nextLive;
+    if(changed && (sourceMode==='auto'||sourceMode==='live'))buildRotation(true);
+    updateTunerStatus();
+  },60000);
+</script>
+
+</SiteLayout>

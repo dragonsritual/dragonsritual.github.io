@@ -1,0 +1,169 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import LaunchHeader from "../../components/LaunchHeader.astro";
+import DragonNetworkBar from "../../components/DragonNetworkBar.astro";
+import "../../styles/creator-base.css";
+---
+<SiteLayout title="Creator Base Station — DragonsRitual" description="Private DragonsRitual creator base station and workstation routing." noIndex={true}>
+  <LaunchHeader />
+  <DragonNetworkBar context="CREATOR BASE STATION" showBaseStation={false} />
+
+  <main class="creator-base">
+    <header class="creator-base__hero">
+      <div class="creator-base__sessionbar">
+        <span data-session-email>SESSION ACTIVE</span>
+        <button type="button" data-creator-signout-top>SIGN OUT</button>
+      </div>
+      <div>
+        <span class="creator-base__eyebrow">DRAGON UNDERGROUND / INTERNAL STUDIO</span>
+        <h1>YOUR <span>BASE STATION.</span></h1>
+        <p>Your workstations, studio signals, assignments and creator record begin here. You should never need to remember a hidden website address to find where you work.</p>
+      </div>
+      <aside class="creator-base__identity">
+        <small>CREATOR IDENTITY</small>
+        <strong data-creator-name>Opening station…</strong>
+        <span data-creator-roles>VERIFYING CREATOR ACCESS</span>
+      </aside>
+    </header>
+
+    <div class="creator-base__body" data-base-content hidden>
+      <section class="creator-base__status">
+        <div class="creator-base__brief">
+          <span>STUDIO STATUS</span>
+          <strong>Base Station online.</strong>
+          <p>Your assigned workstation appears first. Shared studio systems will connect here as they come online.</p>
+        </div>
+        <div><span>WORKSTATIONS</span><strong data-station-count>—</strong></div>
+        <div><span>NETWORK</span><strong>LIVE</strong></div>
+        <div><span>RADIO</span><strong>AVAILABLE</strong></div>
+      </section>
+
+      <section class="creator-base__section">
+        <header class="creator-base__section-head">
+          <div><span class="creator-base__eyebrow">MY WORKSTATIONS</span><h2>Where you work.</h2></div>
+          <p>Your role determines the doors that open here. Creators with more than one role can eventually move between multiple stations from the same account.</p>
+        </header>
+        <div class="creator-workstations" data-workstations></div>
+      </section>
+
+      <section class="creator-base__section">
+        <header class="creator-base__section-head">
+          <div><span class="creator-base__eyebrow">SHARED STUDIO SYSTEMS</span><h2>The building around your room.</h2></div>
+          <p>These systems belong to every creator regardless of discipline. They are being established here once so Writer, Illustrator, Radio, Comics and future stations share the same studio infrastructure.</p>
+        </header>
+        <div class="creator-tools">
+          <article class="creator-tool"><strong>Assignments</strong><span>Volunteer, paid and commissioned project briefs.</span><em>FOUNDATION NEXT</em></article>
+          <article class="creator-tool"><strong>Messages</strong><span>Director, editor and project conversations with context.</span><em>FOUNDATION NEXT</em></article>
+          <article class="creator-tool"><strong>Files</strong><span>Agreements, briefs, paid assignment records and creator archive.</span><em>PLANNED</em></article>
+          <article class="creator-tool"><strong>Calendar</strong><span>Studio events, publication dates, project calls and deadlines.</span><em>PLANNED</em></article>
+          <article class="creator-tool"><strong>Dragon Points</strong><span>Persistent contribution record and future project reward pools.</span><em>PLANNED</em></article>
+          <article class="creator-tool"><strong>Creator Record</strong><span>Your contributions, publications, projects and history with DragonsRitual.</span><em>GROWING</em></article>
+        </div>
+      </section>
+
+      <footer class="creator-base__signout">
+        <p>Creator access is private. Finish your session when you are done using a shared device.</p>
+        <button type="button" data-creator-signout>SIGN OUT</button>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    import { getSupabaseBrowserClient } from '../../lib/supabaseBrowser';
+
+    const supabase=getSupabaseBrowserClient();
+    const {data:{session}}=await supabase.auth.getSession();
+    if(!session){
+      location.href='/join/';
+      throw new Error('Creator session required');
+    }
+
+    const user=session.user;
+    const creatorName=user.user_metadata?.display_name||user.email?.split('@')[0]||'Creator';
+    document.querySelector('[data-creator-name]').textContent=creatorName;
+    const sessionEmail=document.querySelector('[data-session-email]');
+    if(sessionEmail) sessionEmail.textContent=(user.email||'SESSION ACTIVE').toUpperCase();
+
+    const roleResult=await supabase.rpc('dr_my_roles');
+    const secureRoles=Array.isArray(roleResult.data)?roleResult.data.map(v=>String(v).trim().toLowerCase()):[];
+    const adminResult=await supabase.rpc('is_admin');
+    const isDirector=adminResult.data===true;
+
+    const roleAliases={
+      writing:'writer',author:'writer',
+      art:'illustrator',artist:'illustrator',illustration:'illustrator',
+      music:'radio',dj:'radio',broadcaster:'radio',
+      comic:'comics'
+    };
+    const normalized=[...new Set(secureRoles.map(r=>roleAliases[r]||r))];
+    const isEditorial=isDirector||normalized.includes('editor');
+    const isCreator=isDirector||normalized.some(r=>['creator','writer','illustrator','radio','comics','streaming','3d','editor'].includes(r));
+
+    if(!isCreator){
+      location.replace('/member/');
+      throw new Error('Creator role required');
+    }
+
+    const stationCatalog=[
+      ...(isEditorial?[{id:'editorial',number:'00',title:'Editorial Desk',role:'EDITOR / DIRECTOR',href:'/admin/editorial/',description:'Private editorial review, approval and publication control. This station is never exposed to normal visitors.'}]:[]),
+      {id:'writer',number:'01',title:"Writer's Room",role:'WRITER / AUTHOR',href:'/writer-room/',description:'Draft, develop, submit and track your written work inside your private DragonsRitual writing office.'},
+      {id:'illustrator',number:'02',title:'Illustrator Studio',role:'ART / ILLUSTRATION',href:null,description:'Illustration briefs, references, WIPs, art-direction handoffs and portfolio history.'},
+      {id:'radio',number:'03',title:'Radio Station',role:'AUDIO / BROADCAST',href:'/radio/',description:'Dragon Radio programming, artist rotation, station material and future broadcast controls.'},
+      {id:'comics',number:'04',title:'Comics Workshop',role:'COMICS / SEQUENTIAL',href:null,description:'Pages, scripts, lettering, issue production and collaborative sequential-art work.'},
+      {id:'streaming',number:'05',title:'Broadcast Station',role:'STREAM / VIDEO',href:null,description:'Streams, programming, event promotion, clips and DragonsRitual broadcast participation.'},
+      {id:'3d',number:'06',title:'3D Workshop',role:'3D / GAME ART',href:null,description:'Models, assets, project briefs, reviews and production handoffs.'}
+    ];
+
+    const active=stationCatalog.filter(s=>s.id==='editorial'?isEditorial:normalized.includes(s.id));
+    // Existing creator accounts were originally created as writers.
+    // If the profile is unavailable but auth metadata says writer, the Writer Room remains immediately reachable.
+    const displayStations=active.length?active:[];
+
+    const workstationRoot=document.querySelector('[data-workstations]');
+    if(displayStations.length){
+      workstationRoot.innerHTML=displayStations.map((s,index)=>`
+        <article class="creator-station ${index===0?'is-primary':''}">
+          <div>
+            <div class="creator-station__top"><span class="creator-station__number">${s.number}</span><span class="creator-station__state">ASSIGNED</span></div>
+            <h3>${s.title}</h3><p>${s.description}</p>
+          </div>
+          <footer class="creator-station__foot"><span class="creator-station__role">${s.role}</span>${s.href?`<a class="creator-station__enter" href="${s.href}">ENTER STATION →</a>`:'<span class="creator-station__locked">STATION FOUNDATION IN DEVELOPMENT</span>'}</footer>
+        </article>`).join('');
+
+      // Show the future internal-studio architecture without pretending unassigned roles belong to this creator.
+      const future=stationCatalog.filter(s=>s.id!=='editorial'&&!normalized.includes(s.id)).slice(0,2);
+      workstationRoot.insertAdjacentHTML('beforeend',future.map(s=>`
+        <article class="creator-station is-locked">
+          <div>
+            <div class="creator-station__top"><span class="creator-station__number">${s.number}</span><span class="creator-station__state">OTHER DEPARTMENT</span></div>
+            <h3>${s.title}</h3><p>${s.description}</p>
+          </div>
+          <footer class="creator-station__foot"><span class="creator-station__role">${s.role}</span><span class="creator-station__locked">NOT ASSIGNED TO THIS ACCOUNT</span></footer>
+        </article>`).join(''));
+    }else{
+      workstationRoot.innerHTML=`
+        <article class="creator-station is-primary">
+          <div>
+            <div class="creator-station__top"><span class="creator-station__number">00</span><span class="creator-station__state">MEMBER</span></div>
+            <h3>Creator access is not assigned yet.</h3>
+            <p>This account is signed in, but it does not currently carry a creator role. A DragonsRitual creator role can open the appropriate workstation here without requiring a new login.</p>
+          </div>
+          <footer class="creator-station__foot"><span class="creator-station__role">MEMBER ACCESS</span><span class="creator-station__locked">NO WORKSTATION ASSIGNED</span></footer>
+        </article>`;
+    }
+
+    document.querySelector('[data-station-count]').textContent=String(displayStations.length);
+    document.querySelector('[data-creator-roles]').textContent=
+      normalized.length&&normalized[0]!=='member'
+        ? normalized.map(r=>r.toUpperCase()).join(' · ')+' · DRAGONSRITUAL'
+        : 'MEMBER · DRAGONSRITUAL';
+
+    document.querySelector('[data-base-content]').hidden=false;
+    const signOutCreator=async()=>{
+      await supabase.auth.signOut();
+      location.href='/join/';
+    };
+    document.querySelector('[data-creator-signout]')?.addEventListener('click',signOutCreator);
+    document.querySelector('[data-creator-signout-top]')?.addEventListener('click',signOutCreator);
+  </script>
+</SiteLayout>

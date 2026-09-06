@@ -1,0 +1,10 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import { featuredWriting as feature } from "../../../data/featuredWriting.js";
+---
+<SiteLayout title={`${feature.author} — DragonsRitual`}>
+<main class="writer-page"><a class="reading-page__back" href="/">← TODAY</a><div class="writer-page__identity">{feature.photo ? <img src={feature.photo} alt="" /> : <div class="writer-page__initial">{feature.author.slice(0,1)}</div>}<div><div class="writer-page__label">WRITER</div><h1>{feature.author}</h1><p>{feature.bio}</p></div></div><section class="writer-page__work"><div class="writer-page__label">FICTION</div><a href={`/read/${feature.slug}/`}><strong>{feature.title}</strong><span>{feature.genre}</span></a></section></main>
+</SiteLayout>
+
+
+

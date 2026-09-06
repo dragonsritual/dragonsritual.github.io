@@ -60,3 +60,120 @@ html[data-rail-direction="back"]::view-transition-new(dragon-stage){animation-na
 
 /* PASS 05 — TOWN SQUARE / MEMBERSHIP FOUNDATION */
 .town-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,.55fr);border:1px solid var(--dr-rule);min-height:390px}.town-lead{padding:clamp(30px,5vw,68px);display:flex;flex-direction:column;justify-content:flex-end;background:radial-gradient(circle at 20% 15%,rgba(111,39,50,.3),transparent 48%),#0d0b0d}.town-lead small,.town-board>span,.community-pillars small,.town-meeting small{color:var(--dr-brass);font-size:8px;font-weight:900;letter-spacing:.18em}.town-lead h2{margin:10px 0;font:500 clamp(36px,5vw,64px)/.98 Georgia}.town-lead p{max-width:700px;color:#a89d94;font:15px/1.65 Georgia}.town-actions{display:flex;gap:8px;margin-top:18px}.town-board{padding:28px;border-left:1px solid var(--dr-rule);display:flex;flex-direction:column;justify-content:flex-end}.town-board b{padding:15px 0;border-bottom:1px solid rgba(255,255,255,.07);font:500 17px Georgia}.community-pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:24px;background:var(--dr-rule);border:1px solid var(--dr-rule)}.community-pillars article{padding:24px;background:#100e10;min-height:190px}.community-pillars h3{font:500 23px Georgia;margin:9px 0}.community-pillars p,.town-meeting p{color:#91877f;font-size:11px;line-height:1.65}.town-meeting{margin-top:24px;padding:28px;border:1px solid var(--dr-rule);background:linear-gradient(140deg,#171113,#0c0a0b)}.town-meeting h2{font:500 30px Georgia;margin:8px 0}.town-meeting>div{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}.town-meeting span{padding:7px 9px;border:1px solid var(--dr-rule);font-size:8px;letter-spacing:.1em;color:#b9aea4}@media(max-width:1000px){.community-pillars{grid-template-columns:repeat(2,1fr)}}@media(max-width:720px){.town-grid{grid-template-columns:1fr}.town-board{border-left:0;border-top:1px solid var(--dr-rule)}.community-pillars{grid-template-columns:1fr}}
+
+/* PASS 40C — media mini-player above Member Dock */
+.dragon-media-dock{right:18px!important;bottom:92px!important;width:360px!important;min-height:0!important;padding:0!important;border-color:#3b283e!important;background:#08070a!important;overflow:hidden;transition:width .2s}
+.dragon-media-dock.is-expanded{width:min(620px,calc(100vw - 36px))!important}
+.dragon-media-dock__head{height:31px;display:flex;align-items:center;justify-content:space-between;padding:0 7px 0 10px;border-bottom:1px solid #2b202e;background:#0e0a11;color:#7e6c82;font:800 6px Arial;letter-spacing:.09em}
+.dragon-media-dock__head>div{display:flex;gap:4px}.dragon-media-dock__head button{float:none!important;padding:4px 6px!important;font-size:5.5px!important}
+.dragon-media-dock__player{aspect-ratio:16/9;display:grid;place-items:center;background:#030304;color:#554b58;font:700 7px Arial}
+.dragon-media-dock__player iframe{width:100%;height:100%;border:0;display:block}
+@media(max-width:640px){.dragon-media-dock{right:9px!important;bottom:78px!important;width:calc(100vw - 18px)!important}}
+
+
+/* PASS 40D — media dock legibility */
+.dragon-media-dock__head{
+  font-size: 7px !important;
+}
+.dragon-media-dock__head button{
+  font-size: 6.5px !important;
+}
+.dragon-media-dock__player{
+  font-size: 8px !important;
+}
+
+
+/* ==========================================================
+   PASS 40K — GLOBAL DRAGON SCROLLBARS
+   No default browser scrollbars anywhere in DragonsRitual.
+   ========================================================== */
+
+:root{
+  --dragon-scroll-track:#09080b;
+  --dragon-scroll-track-2:#0d0a0f;
+  --dragon-scroll-thumb:#3b2a40;
+  --dragon-scroll-thumb-hover:#624368;
+  --dragon-scroll-thumb-active:#815788;
+  --dragon-scroll-edge:#1f1823;
+}
+
+/* Firefox */
+html,
+body,
+*{
+  scrollbar-width:thin;
+  scrollbar-color:var(--dragon-scroll-thumb) var(--dragon-scroll-track);
+}
+
+/* Chromium / Edge / Safari */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar{
+  width:10px;
+  height:10px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track{
+  background:
+    linear-gradient(90deg,var(--dragon-scroll-track),var(--dragon-scroll-track-2));
+  border-left:1px solid var(--dragon-scroll-edge);
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb{
+  background:
+    linear-gradient(180deg,#4a334f,#2b2130);
+  border:2px solid var(--dragon-scroll-track);
+  border-radius:0;
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.035),
+    inset 0 -1px rgba(0,0,0,.35);
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover{
+  background:
+    linear-gradient(180deg,#6b486f,#3a2940);
+}
+
+html::-webkit-scrollbar-thumb:active,
+body::-webkit-scrollbar-thumb:active,
+*::-webkit-scrollbar-thumb:active{
+  background:
+    linear-gradient(180deg,#845a89,#49314f);
+}
+
+html::-webkit-scrollbar-corner,
+body::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-corner{
+  background:var(--dragon-scroll-track);
+}
+
+/* Narrower, denser scrollbars for utility widgets */
+.realm-wire__stream::-webkit-scrollbar,
+.dragon-media-dock::-webkit-scrollbar,
+.gaming-lounge *::-webkit-scrollbar{
+  width:8px;
+  height:8px;
+}
+
+.realm-wire__stream::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,#5a3b61,#302336);
+  border:2px solid #09070b;
+}
+
+/* Make horizontal utility bars deliberate instead of browser-default */
+.realm-wire__filters::-webkit-scrollbar,
+.realm-wire__stream::-webkit-scrollbar:horizontal{
+  height:6px;
+}
+
+/* Selection color for consistency with the UI */
+::selection{
+  background:#5f365f;
+  color:#f4e8f2;
+}

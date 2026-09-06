@@ -1,0 +1,146 @@
+---
+const { saga } = Astro.props;
+const renderable = saga.story || [];
+---
+
+<article class="gs-reader" data-gs-reader>
+  <header class="gs-reader-hero">
+    <figure class="gs-reader-hero__art">
+      <img src={saga.hero} alt="" />
+    </figure>
+
+    <div class="gs-reader-hero__copy">
+      <span>GRIM SAGAS // {saga.realm}</span>
+      <h1>{saga.title}</h1>
+      <p>{saga.subtitle}</p>
+
+      <div class="gs-reader-meta">
+        <span>PUBLISHED {saga.published}</span>
+        <span>UPDATED {saga.updated}</span>
+        <span>{saga.readMinutes} MIN READ</span>
+        <span>{saga.status}</span>
+      </div>
+
+      <a href="/books/grim-sagas/">← RETURN TO THE ARCHIVE</a>
+    </div>
+  </header>
+
+  <div class="gs-reading-console">
+    <aside class="gs-reading-rail">
+      <div class="gs-reading-rail__top">
+        <span>READING SIGNAL</span>
+        <strong>{saga.title}</strong>
+      </div>
+
+      <div class="gs-reading-progress">
+        <span id="gs-progress-label">0%</span>
+        <div><i id="gs-progress-bar"></i></div>
+      </div>
+
+      <button type="button" id="gs-save-place">MARK MY PLACE</button>
+      <button type="button" id="gs-resume-place" hidden>RESUME</button>
+
+      <div class="gs-reading-rail__note">
+        <span>DRAGON EDITION</span>
+        <p>The complete story is here. No legacy-site handoff.</p>
+      </div>
+    </aside>
+
+    <main class="gs-reading-page" id="gs-reading-page">
+      <div class="gs-reading-head">
+        <span>FULL STORY // ARCHIVE TEXT</span>
+        <strong>{saga.title}</strong>
+      </div>
+
+      <div class="gs-reading-body">
+        {renderable.map((block, index) => {
+          if (block.type === "heading") {
+            return (
+              <section class="gs-story-section">
+                <div class="gs-section-break" aria-hidden="true"><span>◆</span></div>
+                <h2>{block.text}</h2>
+              </section>
+            );
+          }
+
+          if (block.type === "subheading") return <h3>{block.text}</h3>;
+
+          if (block.type === "paragraph") {
+            return <p class:list={[index === 0 && "gs-opening-paragraph"]}>{block.text}</p>;
+          }
+
+          if (block.type === "divider") {
+            return <div class="gs-section-break" aria-hidden="true"><span>◆</span></div>;
+          }
+
+          return null;
+        })}
+
+        {saga.note && (
+          <aside class="gs-afterword">
+            <span>{saga.note.title}</span>
+            <p>{saga.note.text}</p>
+          </aside>
+        )}
+
+        {saga.teaser && (
+          <aside class="gs-next-tease">
+            <span>{saga.teaser.title}</span>
+            <h2>{saga.teaser.footer}</h2>
+            <p>{saga.teaser.text}</p>
+          </aside>
+        )}
+
+        <footer class="gs-reader-end">
+          <span>END OF ARCHIVE TEXT</span>
+          <strong>{saga.title}</strong>
+          <div>
+            <a href="/books/grim-sagas/">EXPLORE GRIM SAGAS →</a>
+            {saga.next && <a href={saga.next.href}>NEXT: {saga.next.label} →</a>}
+          </div>
+        </footer>
+      </div>
+    </main>
+  </div>
+</article>
+
+<script>
+  const reader = document.querySelector('[data-gs-reader]');
+  const page = document.querySelector('#gs-reading-page');
+  const bar = document.querySelector('#gs-progress-bar');
+  const label = document.querySelector('#gs-progress-label');
+  const save = document.querySelector('#gs-save-place');
+  const resume = document.querySelector('#gs-resume-place');
+
+  if (reader && page && bar && label) {
+    const key = `dragonsritual-reading-place:${location.pathname}`;
+
+    const updateProgress = () => {
+      const rect = page.getBoundingClientRect();
+      const pageTop = window.scrollY + rect.top;
+      const max = Math.max(1, page.offsetHeight - window.innerHeight * 0.45);
+      const progress = Math.min(1, Math.max(0, (window.scrollY - pageTop + window.innerHeight * 0.2) / max));
+      const pct = Math.round(progress * 100);
+      bar.style.width = `${pct}%`;
+      label.textContent = `${pct}%`;
+    };
+
+    const saved = Number(localStorage.getItem(key) || 0);
+    if (resume && saved > 0) resume.hidden = false;
+
+    save?.addEventListener('click', () => {
+      localStorage.setItem(key, String(window.scrollY));
+      if (resume) resume.hidden = false;
+      save.textContent = 'PLACE MARKED';
+      setTimeout(() => { save.textContent = 'MARK MY PLACE'; }, 1400);
+    });
+
+    resume?.addEventListener('click', () => {
+      const y = Number(localStorage.getItem(key) || 0);
+      if (y > 0) window.scrollTo({ top: y, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+</script>

@@ -1,0 +1,17 @@
+import type { BlueprintResource } from '@sanity/blueprints';
+import type { Logger } from '../logger.js';
+import type { AuthParams } from '../types.js';
+interface ResolveOptions {
+    resources: BlueprintResource[];
+    stackId?: string;
+    auth?: AuthParams;
+    logger: Logger;
+}
+/**
+ * Returns the local blueprint resources, annotated with externalIds from the
+ * deployed stack where a match is found (by name + type). Locally-added
+ * resources that aren't yet deployed are preserved without an externalId.
+ * Any failure to fetch the stack falls back to the raw local resources.
+ */
+export declare function resolveDeployedResources({ resources, stackId, auth, logger, }: ResolveOptions): Promise<BlueprintResource[]>;
+export {};

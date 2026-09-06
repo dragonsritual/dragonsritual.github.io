@@ -1,0 +1,151 @@
+﻿---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import LaunchHeader from "../../components/LaunchHeader.astro";
+import { dragonTV } from "../../data/dragonTV.js";
+const hasDiscord = Boolean(dragonTV.discordInvite);
+---
+<SiteLayout title="Dragon TV â€” DragonsRitual" description="Dragon TV live broadcasts, games and programs.">
+  <LaunchHeader />
+
+  <main class="dtv-console" data-dtv-console>
+    <header class="dtv-console__top">
+      <div class="dtv-console__identity">
+        <span class="dtv-console__eyebrow">DRAGON / TRANSMISSION</span>
+        <h1>DRAGON TV</h1>
+      </div>
+      <div class="dtv-console__signal">
+        <span class="launch-live-dot"></span>
+        <span>{dragonTV.status}</span>
+        <b>{dragonTV.program}</b>
+      </div>
+    </header>
+
+    <nav class="dtv-tabs" aria-label="Dragon TV console modes">
+      <button class="is-active" type="button" data-dtv-tab="live">LIVE</button>
+      <button type="button" data-dtv-tab="event">EVENT</button>
+      <button type="button" data-dtv-tab="players">PLAYERS</button>
+      <button type="button" data-dtv-tab="schedule">SCHEDULE</button>
+      <button type="button" data-dtv-tab="results">RESULTS</button>
+      {hasDiscord
+        ? <a class="dtv-tabs__discord" href={dragonTV.discordInvite} target="_blank" rel="noreferrer">DISCORD â†—</a>
+        : <button class="dtv-tabs__discord is-disabled" type="button" disabled>DISCORD</button>}
+    </nav>
+
+    <div class="dtv-layout">
+      <aside class="dtv-rail">
+        <section class="dtv-rail__block">
+          <span class="dtv-label">TRANSMISSION</span>
+          <strong>{dragonTV.transmission.title}</strong>
+          <small>{dragonTV.transmission.subtitle}</small>
+        </section>
+
+        <section class="dtv-rail__readout">
+          <div><span>PLATFORM</span><b>{dragonTV.transmission.platform}</b></div>
+          <div><span>SOURCE</span><b>{dragonTV.transmission.source}</b></div>
+          <div><span>VIEWERS</span><b>â€”</b></div>
+          <div><span>STATUS</span><b>{dragonTV.status}</b></div>
+        </section>
+
+        <section class="dtv-rail__block dtv-rail__titan">
+          <span class="dtv-label">GAME LAB</span>
+          <strong>{dragonTV.projectTitan.title}</strong>
+          <small>{dragonTV.projectTitan.state}</small>
+          <p>{dragonTV.projectTitan.note}</p>
+          <button type="button" disabled>NOT PUBLIC YET</button>
+        </section>
+
+        {hasDiscord
+          ? <a class="dtv-live-room" href={dragonTV.discordInvite} target="_blank" rel="noreferrer">
+              <span>LIVE ROOM</span><strong>ENTER DISCORD â†—</strong><small>#{dragonTV.discordChannelName}</small>
+            </a>
+          : <div class="dtv-live-room is-disabled">
+              <span>LIVE ROOM</span><strong>DISCORD READY</strong><small>Add channel invite in config</small>
+            </div>}
+      </aside>
+
+      <section class="dtv-stage">
+        <header class="dtv-stage__head">
+          <div><span class="dtv-label">NOW TRANSMITTING</span><strong>{dragonTV.transmission.title}</strong></div>
+          <div class="dtv-stage__head-right"><span>{dragonTV.status}</span><b>CH 01</b></div>
+        </header>
+
+        <div class="dtv-player-shell">
+          <div id="dragon-tv-player" class="dtv-player"></div>
+          <div class="dtv-player__fallback" id="dragon-tv-fallback">
+            <span>DRAGON TV</span><strong>STANDBY</strong><small>Start a Twitch broadcast from PS5 Pro when ready.</small>
+          </div>
+        </div>
+
+        <section class="dtv-hud">
+          <div class="dtv-hud__primary"><span class="dtv-label">CURRENT MODE</span><strong id="dtv-hud-title">LIVE BROADCAST</strong></div>
+          <div class="dtv-hud__stat"><span>EVENT</span><b>â€”</b></div>
+          <div class="dtv-hud__stat"><span>ROUND</span><b>â€”</b></div>
+          <div class="dtv-hud__stat"><span>SCORE</span><b>â€”</b></div>
+        </section>
+
+        <section class="dtv-deck">
+          <div class="dtv-panel is-active" data-dtv-panel="live">
+            <div class="dtv-panel__header"><div><span class="dtv-label">TRANSMISSION DECK</span><h2>Live</h2></div><span class="dtv-panel__state">{dragonTV.status}</span></div>
+            <div class="dtv-live-grid">
+              <article><span>NOW</span><strong>{dragonTV.transmission.title}</strong><p>{dragonTV.transmission.subtitle}</p></article>
+              <article><span>NEXT</span><strong>{dragonTV.schedule[0]?.title || "Not scheduled"}</strong><p>{dragonTV.schedule[0]?.meta || ""}</p></article>
+              <article><span>PLATFORM</span><strong>Twitch</strong><p>Broadcast from PS5 Pro.</p></article>
+            </div>
+          </div>
+
+          <div class="dtv-panel" data-dtv-panel="event" hidden>
+            <div class="dtv-panel__header"><div><span class="dtv-label">COMPETITIVE MODE</span><h2>Event</h2></div><span class="dtv-panel__state">PREP</span></div>
+            <div class="dtv-event-card">
+              <div class="dtv-event-card__mark">TITAN</div>
+              <div><span>{dragonTV.projectTitan.state}</span><strong>{dragonTV.projectTitan.title}</strong><p>{dragonTV.projectTitan.note}</p></div>
+              <button type="button" disabled>LOCKED</button>
+            </div>
+          </div>
+
+          <div class="dtv-panel" data-dtv-panel="players" hidden>
+            <div class="dtv-panel__header"><div><span class="dtv-label">ROSTER</span><h2>Players</h2></div><span class="dtv-panel__state">0 ACTIVE</span></div>
+            <div class="dtv-empty"><strong>No public roster yet.</strong><span>Player profiles will appear here when competitive testing opens.</span></div>
+          </div>
+
+          <div class="dtv-panel" data-dtv-panel="schedule" hidden>
+            <div class="dtv-panel__header"><div><span class="dtv-label">PROGRAMMING</span><h2>Schedule</h2></div><span class="dtv-panel__state">LOCAL</span></div>
+            <div class="dtv-schedule">
+              {dragonTV.schedule.map((item) => (
+                <div class="dtv-schedule__row"><time>{item.time}</time><strong>{item.title}</strong><span>{item.meta}</span></div>
+              ))}
+            </div>
+          </div>
+
+          <div class="dtv-panel" data-dtv-panel="results" hidden>
+            <div class="dtv-panel__header"><div><span class="dtv-label">ARCHIVE</span><h2>Results</h2></div><span class="dtv-panel__state">EMPTY</span></div>
+            <div class="dtv-empty"><strong>No results yet.</strong><span>Finished matches and events will remain here when competition begins.</span></div>
+          </div>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <script define:vars={{ provider: dragonTV.provider, channel: dragonTV.channel }}>
+    const root = document.querySelector('[data-dtv-console]');
+    const tabs = [...root.querySelectorAll('[data-dtv-tab]')];
+    const panels = [...root.querySelectorAll('[data-dtv-panel]')];
+    const hudTitle = root.querySelector('#dtv-hud-title');
+    const labels = {live:'LIVE BROADCAST',event:'EVENT MODE',players:'PLAYER ROSTER',schedule:'PROGRAM SCHEDULE',results:'RESULTS ARCHIVE'};
+    tabs.forEach((tab) => tab.addEventListener('click', () => {
+      const target = tab.dataset.dtvTab;
+      tabs.forEach((b) => b.classList.toggle('is-active', b === tab));
+      panels.forEach((p) => { const on = p.dataset.dtvPanel === target; p.hidden = !on; p.classList.toggle('is-active', on); });
+      if (hudTitle) hudTitle.textContent = labels[target] || 'DRAGON TV';
+    }));
+
+    const mount = document.getElementById('dragon-tv-player');
+    if (provider === 'twitch' && mount && channel) {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://player.twitch.tv/?channel=${encodeURIComponent(channel)}&parent=${encodeURIComponent(window.location.hostname)}&autoplay=false&muted=false`;
+      iframe.allowFullscreen = true;
+      iframe.allow = 'autoplay; fullscreen';
+      iframe.title = 'Dragon TV Twitch broadcast';
+      mount.appendChild(iframe);
+    }
+  </script>
+</SiteLayout>

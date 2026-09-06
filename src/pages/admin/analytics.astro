@@ -1,0 +1,252 @@
+---
+import PrivateStudioLayout from "../../layouts/PrivateStudioLayout.astro";
+import "../../styles/director-analytics.css";
+---
+<PrivateStudioLayout title="Director Analytics — DragonsRitual" description="Private DragonsRitual launch and traffic analytics.">
+  <main class="dr-analytics" data-analytics-shell hidden>
+    <div class="dr-analytics__shell">
+      <header class="dr-analytics__head">
+        <div><span>DRAGON / DIRECTOR ANALYTICS</span><h1>Watch the building come alive.</h1></div>
+        <p>First-party launch analytics for DragonsRitual: traffic sources, campaigns, landing pages, content, session paths, devices and live activity. No third-party ad tracker required.</p>
+      </header>
+
+      <div class="dr-analytics__controls">
+        <button type="button" data-range="today" class="is-active">TODAY</button>
+        <button type="button" data-range="7d">7 DAYS</button>
+        <button type="button" data-range="30d">30 DAYS</button>
+        <button type="button" data-range="all">ALL TIME</button>
+        <select data-env><option value="prod">PRODUCTION ONLY</option><option value="all">INCLUDE LOCAL TESTING</option></select>
+        <button type="button" data-refresh>REFRESH</button>
+      </div>
+
+      <section class="dr-analytics__kpis">
+        <article class="dr-kpi"><span>SESSIONS</span><strong data-kpi-sessions>0</strong><small>Visits in range</small></article>
+        <article class="dr-kpi"><span>PAGE VIEWS</span><strong data-kpi-views>0</strong><small>Pages opened</small></article>
+        <article class="dr-kpi"><span>AVG SESSION</span><strong data-kpi-duration>0m</strong><small>Approximate engaged time</small></article>
+        <article class="dr-kpi"><span>BOUNCE</span><strong data-kpi-bounce>0%</strong><small>One-page sessions</small></article>
+        <article class="dr-kpi"><span><i class="dr-live-dot"></i>LIVE NOW</span><strong data-kpi-live>0</strong><small>Active in last 5 min</small></article>
+        <article class="dr-kpi"><span>CAMPAIGN SESSIONS</span><strong data-kpi-campaign>0</strong><small>UTM/ref-tagged visits</small></article>
+      </section>
+
+      <section class="dr-analytics__grid">
+        <article class="dr-analytics-card">
+          <header class="dr-analytics-card__head"><div><span>ACQUISITION</span><h2>Traffic sources</h2></div></header>
+          <div class="dr-list" data-sources></div>
+        </article>
+
+        <article class="dr-analytics-card">
+          <header class="dr-analytics-card__head"><div><span>ENTRY</span><h2>Landing pages</h2></div></header>
+          <div class="dr-list" data-landings></div>
+        </article>
+
+        <article class="dr-analytics-card">
+          <header class="dr-analytics-card__head"><div><span>CONTENT</span><h2>Top pages</h2></div></header>
+          <div class="dr-list" data-pages></div>
+        </article>
+
+        <article class="dr-analytics-card">
+          <header class="dr-analytics-card__head"><div><span>CAMPAIGNS</span><h2>UTM performance</h2></div></header>
+          <div class="dr-list" data-campaigns></div>
+        </article>
+
+        <article class="dr-analytics-card">
+          <header class="dr-analytics-card__head"><div><span>AUDIENCE TECH</span><h2>Devices</h2></div></header>
+          <div class="dr-list" data-devices></div>
+        </article>
+
+        <article class="dr-analytics-card">
+          <header class="dr-analytics-card__head"><div><span>REFERRALS</span><h2>Referring domains</h2></div></header>
+          <div class="dr-list" data-referrers></div>
+        </article>
+
+        <article class="dr-analytics-card is-wide">
+          <header class="dr-analytics-card__head"><div><span>BEHAVIOR</span><h2>Session paths</h2></div><span>CLICK A SESSION</span></header>
+          <div class="dr-paths" data-paths></div>
+        </article>
+
+        <article class="dr-analytics-card">
+          <header class="dr-analytics-card__head"><div><span>EXIT</span><h2>Exit pages</h2></div></header>
+          <div class="dr-list" data-exits></div>
+        </article>
+
+        <article class="dr-analytics-card is-full">
+          <header class="dr-analytics-card__head"><div><span>MARKETING TOOL</span><h2>Campaign URL builder</h2></div><span>TAG EVERY AD / POST</span></header>
+          <div class="dr-campaign-builder">
+            <label><span>DESTINATION</span><input data-campaign-url value="https://dragonsritual.com/" /></label>
+            <label><span>SOURCE</span><input data-utm-source placeholder="instagram" /></label>
+            <label><span>MEDIUM</span><input data-utm-medium placeholder="social" /></label>
+            <label><span>CAMPAIGN</span><input data-utm-campaign placeholder="launch_wave_01" /></label>
+            <label><span>CONTENT</span><input data-utm-content placeholder="bio_link" /></label>
+            <div class="dr-campaign-output">
+              <input data-campaign-output readonly />
+              <button type="button" data-copy-campaign>COPY TAGGED LINK</button>
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <aside class="dr-session-drawer" data-session-drawer hidden>
+      <header class="dr-session-drawer__head"><button type="button" data-close-session>×</button><span>ANONYMOUS SESSION TRAIL</span><h2 data-session-title>Session</h2></header>
+      <div class="dr-session-drawer__body" data-session-events></div>
+    </aside>
+  </main>
+
+  <script>
+    import { getSupabaseBrowserClient } from '../../lib/supabaseBrowser';
+    const supabase=getSupabaseBrowserClient();
+
+    const {data:{session}}=await supabase.auth.getSession();
+    if(!session){location.replace('/');throw new Error('director session required')}
+
+    const adminResult=await supabase.rpc('is_admin');
+    const isDirector=adminResult.data===true;
+    if(!isDirector){location.replace('/member/');throw new Error('director role required')}
+
+    let range='today';
+    let sessions=[];
+    let events=[];
+
+    const $=s=>document.querySelector(s);
+
+    function since(){
+      const d=new Date();
+      if(range==='today'){d.setHours(0,0,0,0);return d.toISOString()}
+      if(range==='7d'){d.setDate(d.getDate()-7);return d.toISOString()}
+      if(range==='30d'){d.setDate(d.getDate()-30);return d.toISOString()}
+      return null;
+    }
+    function fmtDuration(ms){
+      const s=Math.round((ms||0)/1000);
+      if(s<60)return `${s}s`;
+      const m=Math.round(s/60);
+      if(m<60)return `${m}m`;
+      return `${Math.floor(m/60)}h ${m%60}m`;
+    }
+    function group(items,keyFn){
+      const m=new Map();
+      for(const x of items){const k=keyFn(x)||'Unknown';m.set(k,(m.get(k)||0)+1)}
+      return [...m.entries()].sort((a,b)=>b[1]-a[1]);
+    }
+    function list(rootSelector,rows,total){
+      const root=$(rootSelector);
+      const max=rows[0]?.[1]||1;
+      root.innerHTML=rows.slice(0,8).map(([name,count])=>`
+        <div class="dr-list__row"><strong title="${String(name).replace(/"/g,'&quot;')}">${name}</strong><span>${count}</span>
+          <div class="dr-list__bar"><i style="width:${Math.max(3,(count/max)*100)}%"></i></div>
+        </div>`).join('')||'<div class="dr-list__row"><strong>No data yet</strong><span>—</span></div>';
+    }
+
+    async function load(){
+      let sq=supabase.from('dr_analytics_sessions').select('*').order('started_at',{ascending:false}).limit(10000);
+      let eq=supabase.from('dr_analytics_events').select('*').order('created_at',{ascending:false}).limit(20000);
+      const s=since();
+      if(s){sq=sq.gte('started_at',s);eq=eq.gte('created_at',s)}
+      if($('[data-env]').value==='prod'){sq=sq.eq('is_local',false);eq=eq.eq('is_local',false)}
+      const [sr,er]=await Promise.all([sq,eq]);
+      sessions=sr.data||[];events=er.data||[];
+      render();
+      $('[data-analytics-shell]').hidden=false;
+    }
+
+    function render(){
+      const views=events.filter(e=>e.event_type==='page_view');
+      const leaves=events.filter(e=>e.event_type==='page_leave');
+      const totalDuration=leaves.reduce((a,e)=>a+(Number(e.duration_ms)||0),0);
+      const perSessionViews=new Map();
+      views.forEach(v=>perSessionViews.set(v.session_id,(perSessionViews.get(v.session_id)||0)+1));
+      const bounce=sessions.length?Math.round([...sessions].filter(s=>(perSessionViews.get(s.session_id)||0)<=1).length/sessions.length*100):0;
+      const cutoff=Date.now()-5*60*1000;
+      const live=new Set(events.filter(e=>new Date(e.created_at).getTime()>=cutoff).map(e=>e.session_id)).size;
+      const campaignSessions=sessions.filter(s=>s.utm_source||s.utm_campaign||s.campaign_ref).length;
+
+      $('[data-kpi-sessions]').textContent=sessions.length;
+      $('[data-kpi-views]').textContent=views.length;
+      $('[data-kpi-duration]').textContent=fmtDuration(sessions.length?totalDuration/sessions.length:0);
+      $('[data-kpi-bounce]').textContent=`${bounce}%`;
+      $('[data-kpi-live]').textContent=live;
+      $('[data-kpi-campaign]').textContent=campaignSessions;
+
+      list('[data-sources]',group(sessions,s=>s.channel),sessions.length);
+      list('[data-landings]',group(sessions,s=>s.landing_path),sessions.length);
+      list('[data-pages]',group(views,e=>e.path),views.length);
+      list('[data-campaigns]',group(sessions,s=>s.utm_campaign||s.utm_source||s.campaign_ref).filter(([k])=>k!=='Unknown'),sessions.length);
+      list('[data-devices]',group(sessions,s=>s.device_type),sessions.length);
+      list('[data-referrers]',group(sessions,s=>s.referrer_domain||'Direct / None'),sessions.length);
+
+      const exits=new Map();
+      leaves.forEach(e=>exits.set(e.path,(exits.get(e.path)||0)+1));
+      list('[data-exits]',[...exits.entries()].sort((a,b)=>b[1]-a[1]),leaves.length);
+
+      renderPaths();
+    }
+
+    function renderPaths(){
+      const root=$('[data-paths]');
+      root.innerHTML=sessions.slice(0,10).map(s=>{
+        const ev=events.filter(e=>e.session_id===s.session_id).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+        const nodes=ev.filter(e=>e.event_type==='page_view').map(e=>e.path);
+        const duration=ev.filter(e=>e.event_type==='page_leave').reduce((a,e)=>a+(Number(e.duration_ms)||0),0);
+        return `<button type="button" class="dr-path" data-session-id="${s.session_id}">
+          <div class="dr-path__top"><strong>${s.channel||'Direct / None'} · ${s.device_type||'Unknown'}</strong><span>${new Date(s.started_at).toLocaleString()} · ${fmtDuration(duration)}</span></div>
+          <div class="dr-path__nodes">${nodes.slice(0,8).map((n,i)=>`${i?'<i>→</i>':''}<b>${n}</b>`).join('')||'<b>No page views yet</b>'}</div>
+        </button>`;
+      }).join('')||'<div class="dr-path">No sessions yet.</div>';
+    }
+
+    function openSession(id){
+      const s=sessions.find(x=>x.session_id===id);if(!s)return;
+      const ev=events.filter(e=>e.session_id===id).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+      $('[data-session-title]').textContent=`${s.channel||'Direct / None'} · ${s.device_type||'Unknown'}`;
+      $('[data-session-events]').innerHTML=ev.map(e=>{
+        const d=new Date(e.created_at);
+        const title=e.event_type==='page_view'?'Viewed page':e.event_type==='click'?'Clicked':e.event_type==='outbound_click'?'Opened external link':'Left page';
+        const detail=e.event_type==='click'
+          ? `${e.element_label||'control'}${e.target_path?` → ${e.target_path}`:''}`
+          : e.event_type==='outbound_click'
+          ? `${e.element_label||'link'} → ${e.outbound_domain||'external'}`
+          : `${e.path||''}${e.duration_ms?` · ${fmtDuration(e.duration_ms)}`:''}`;
+        return `<div class="dr-event-line">
+          <div class="dr-event-line__time">${d.toLocaleDateString()}<br>${d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
+          <div class="dr-event-line__rail"></div>
+          <div class="dr-event-line__body"><strong>${title}</strong><span>${detail}</span></div>
+        </div>`;
+      }).join('');
+      $('[data-session-drawer]').hidden=false;
+    }
+
+    function buildCampaign(){
+      const base=$('[data-campaign-url]').value.trim()||'https://dragonsritual.com/';
+      let u;
+      try{u=new URL(base)}catch{return}
+      const map={
+        utm_source:$('[data-utm-source]').value.trim(),
+        utm_medium:$('[data-utm-medium]').value.trim(),
+        utm_campaign:$('[data-utm-campaign]').value.trim(),
+        utm_content:$('[data-utm-content]').value.trim()
+      };
+      Object.entries(map).forEach(([k,v])=>v?u.searchParams.set(k,v):u.searchParams.delete(k));
+      $('[data-campaign-output]').value=u.toString();
+    }
+
+    document.addEventListener('click',e=>{
+      const t=e.target instanceof Element?e.target:null;
+      const rangeBtn=t?.closest('[data-range]');
+      if(rangeBtn){
+        range=rangeBtn.dataset.range;
+        document.querySelectorAll('[data-range]').forEach(b=>b.classList.toggle('is-active',b===rangeBtn));
+        load();return;
+      }
+      if(t?.closest('[data-refresh]')){load();return}
+      const path=t?.closest('[data-session-id]');if(path){openSession(path.dataset.sessionId);return}
+      if(t?.closest('[data-close-session]')){$('[data-session-drawer]').hidden=true;return}
+      if(t?.closest('[data-copy-campaign]')){
+        navigator.clipboard.writeText($('[data-campaign-output]').value||'').then(()=>t.textContent='COPIED');
+      }
+    });
+    $('[data-env]').addEventListener('change',load);
+    document.querySelectorAll('[data-campaign-url],[data-utm-source],[data-utm-medium],[data-utm-campaign],[data-utm-content]').forEach(i=>i.addEventListener('input',buildCampaign));
+    buildCampaign();
+    load();
+  </script>
+</PrivateStudioLayout>

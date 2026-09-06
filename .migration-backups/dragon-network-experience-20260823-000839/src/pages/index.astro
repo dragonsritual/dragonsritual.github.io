@@ -1,0 +1,166 @@
+﻿---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import LaunchHeader from '../components/LaunchHeader.astro';
+import WriterFeature from '../components/WriterFeature.astro';
+import { featuredWriting } from '../data/featuredWriting.js';
+---
+<SiteLayout
+  title="Today â€” DragonsRitual"
+  description="Dragon Radio, fiction, broadcasts and current releases."
+>
+  <LaunchHeader />
+
+  <main class="today-shell">
+  <section class="dragon-impact-band" aria-label="Dragon">
+    <div class="dragon-impact-word">DRAGON</div>
+  </section>
+    <section class="today-board">
+      <div class="today-broadcast">
+<div class="today-broadcast__status">
+          <span class="launch-live-dot"></span>
+          <span>ON AIR</span>
+        </div>
+
+        <h1>Dragon Radio</h1>
+        <p class="today-deck">Independent music, podcasts and interviews.</p>
+
+        <div class="today-now">
+          <span class="today-now__label">NOW PLAYING</span>
+          <strong id="today-track">LIVE SIGNAL</strong>
+          <span id="today-artist">Independent music</span>
+        </div>
+
+        <a class="primary-action today-tune" href="/radio/">
+          <span class="launch-live-dot"></span>
+          TUNE IN
+        </a>
+      </div>
+
+      <WriterFeature feature={featuredWriting} />
+    </section>
+
+    <section class="today-section today-feed" id="today">
+      <header class="section-head compact-section-head">
+        <div>
+          <p class="launch-eyebrow">TODAY</p>
+          <h2>THE SIGNAL</h2>
+        </div>
+      </header>
+
+      <div class="today-feed-grid">
+        <a class="today-feed-card" href="/radio/">
+          <div>
+            <span class="today-feed-card__type">RADIO</span>
+            <strong id="feed-track">Dragon Radio</strong>
+            <small id="feed-artist">All Signal</small>
+          </div>
+          <b>LISTEN â†’</b>
+        </a>
+
+        <a class="today-feed-card" href={`/read/${featuredWriting.slug}/`}>
+          <div>
+            <span class="today-feed-card__type">FICTION</span>
+            <strong>{featuredWriting.title}</strong>
+            <small>{featuredWriting.author}</small>
+          </div>
+          <b>READ â†’</b>
+        </a>
+              <a class="today-feed-card" href="/tv/">
+          <div>
+            <span class="today-feed-card__type">DRAGON TV</span>
+            <strong>Broadcast</strong>
+            <small>Live / Games / Video</small>
+          </div>
+          <b>WATCH â†’</b>
+        </a></div>
+    </section>
+  </main>
+
+      <section class="home-score-wire" aria-labelledby="score-wire-title">
+      <div class="home-score-wire__head">
+        <div>
+          <span class="launch-eyebrow">SCORE WIRE</span>
+          <h2 id="score-wire-title">SCORE WIRE</h2>
+        </div>
+
+        <button class="home-spoiler-toggle" type="button" data-home-spoiler-toggle aria-pressed="false">
+          <span class="home-spoiler-toggle__ring"><i></i></span>
+          <span><small>SPOILERS</small><strong data-home-spoiler-state>OFF</strong></span>
+        </button>
+      </div>
+
+      <article class="home-score-card" data-home-score>
+        <div class="home-score-card__meta">
+          <span>MLB</span>
+          <strong>FINAL</strong>
+          <small>AUG 22</small>
+        </div>
+
+        <div class="home-score-card__match">
+          <div><span>SF</span><strong>San Francisco</strong><b>2</b></div>
+          <i>â€”</i>
+          <div><span>BOS</span><strong>Boston</strong><b>3</b></div>
+        </div>
+
+        <div class="home-score-card__mask" data-home-score-mask>
+          <span>RESULT HIDDEN</span>
+          <button type="button" data-home-score-reveal>REVEAL</button>
+        </div>
+      </article>
+    </section>
+  <footer class="launch-footer">
+    <strong>DRAGONSRITUAL</strong>
+    <span>Â© 2026</span>
+  </footer>
+
+  <script>
+    fetch('/radio/library.json?' + Date.now())
+      .then((response) => response.ok ? response.json() : Promise.reject())
+      .then((data) => {
+        const track = (data.tracks || []).find((item) => item.src);
+        if (!track) return;
+
+        const title = track.title || 'Dragon Radio';
+        const artist = track.artist || 'Independent music';
+
+        document.querySelectorAll('#today-track, #feed-track').forEach((el) => {
+          el.textContent = title;
+        });
+
+        document.querySelectorAll('#today-artist, #feed-artist').forEach((el) => {
+          el.textContent = artist;
+        });
+      })
+      .catch(() => {});
+  </script>
+  <script>
+    const spoilerRoot = document.querySelector('.home-score-wire');
+    const spoilerToggle = document.querySelector('[data-home-spoiler-toggle]');
+    const spoilerState = document.querySelector('[data-home-spoiler-state]');
+    const scoreCard = document.querySelector('[data-home-score]');
+    const storageKey = 'dragonSportsSpoilers';
+
+    const setSpoilers = (show) => {
+      spoilerRoot?.classList.toggle('spoilers-on', show);
+      spoilerToggle?.setAttribute('aria-pressed', String(show));
+      if (spoilerState) spoilerState.textContent = show ? 'ON' : 'OFF';
+      try { localStorage.setItem(storageKey, show ? 'on' : 'off'); } catch {}
+    };
+
+    let stored = false;
+    try { stored = localStorage.getItem(storageKey) === 'on'; } catch {}
+    setSpoilers(stored);
+
+    spoilerToggle?.addEventListener('click', () => {
+      setSpoilers(!spoilerRoot?.classList.contains('spoilers-on'));
+    });
+
+    document.querySelector('[data-home-score-reveal]')?.addEventListener('click', () => {
+      scoreCard?.classList.add('is-revealed');
+    });
+  </script>
+</SiteLayout>
+
+
+
+

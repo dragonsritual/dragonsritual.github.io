@@ -1,0 +1,17 @@
+{
+  "name": "dragonsritual-site",
+  "private": true,
+  "version": "0.5.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "data:validate": "node scripts/validate-data.mjs"
+  },
+  "dependencies": {
+    "astro": "latest",
+    "zod": "^3.25.0"
+  }
+}

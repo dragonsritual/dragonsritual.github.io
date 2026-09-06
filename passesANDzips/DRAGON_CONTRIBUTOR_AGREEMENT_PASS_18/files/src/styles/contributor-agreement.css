@@ -1,0 +1,132 @@
+
+/* DRAGON CONTRIBUTOR AGREEMENT — PASS 18 */
+.dr-agreement {
+  width: min(1120px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: 72px 0 120px;
+}
+.dr-agreement__shell { display:grid; gap:36px; }
+.dr-agreement__head {
+  max-width: 760px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid #343238;
+}
+.dr-agreement__head h1 {
+  margin: 12px 0 14px;
+  color:#ece7df;
+  font: 500 clamp(52px,8vw,104px)/.82 Georgia,serif;
+  letter-spacing:-.055em;
+}
+.dr-agreement__head p,
+.dr-agreement__summary,
+.dr-agreement__document p,
+.dr-agreement__accept p {
+  color:#92949b;
+  font: 500 13px/1.7 system-ui,sans-serif;
+}
+.dr-agreement__summary {
+  border:1px solid #3b3935;
+  background:rgba(15,15,17,.62);
+  padding:26px 30px;
+}
+.dr-agreement__summary ul {
+  margin:18px 0 0;
+  padding-left:20px;
+  columns:2;
+  column-gap:44px;
+}
+.dr-agreement__summary li {
+  break-inside:avoid;
+  margin:0 0 13px;
+}
+.dr-agreement__document {
+  border-top:1px solid #4b4124;
+  border-bottom:1px solid #4b4124;
+  padding:36px 0;
+}
+.dr-agreement__document-title {
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:36px;
+  color:#d9b733;
+  font:900 9px/1 system-ui,sans-serif;
+  letter-spacing:.14em;
+}
+.dr-agreement__document-title small { color:#686b72; }
+.dr-agreement__document section {
+  max-width:850px;
+  padding:24px 0;
+  border-top:1px solid #24262b;
+}
+.dr-agreement__document h2 {
+  margin:0 0 13px;
+  color:#e8e1d6;
+  font:500 25px/1.1 Georgia,serif;
+}
+.dr-agreement__document p { margin:0 0 14px; }
+.dr-agreement__legal-note {
+  max-width:850px;
+  margin-top:26px;
+  padding:18px 20px;
+  border-left:2px solid #9f8125;
+  color:#757981;
+  font:500 11px/1.6 system-ui,sans-serif;
+}
+.dr-agreement__accept {
+  max-width:760px;
+  padding:32px;
+  border:1px solid #4a4537;
+  background:linear-gradient(180deg,rgba(30,28,22,.5),rgba(10,10,12,.5));
+}
+.dr-agreement__accept h2 {
+  color:#eee8df;
+  font:500 44px/1 Georgia,serif;
+  margin:10px 0 6px;
+}
+.dr-agreement__accept form {
+  display:grid;
+  gap:18px;
+  margin-top:26px;
+}
+.dr-agreement__accept label > span:first-child:not(:only-child) {
+  display:block;
+  margin-bottom:7px;
+  color:#777c84;
+  font:800 7px/1 system-ui,sans-serif;
+  letter-spacing:.13em;
+}
+.dr-agreement__accept input[type="text"],
+.dr-agreement__accept input:not([type]) {
+  width:100%;
+  box-sizing:border-box;
+  padding:15px;
+  border:1px solid #363940;
+  background:#090a0c;
+  color:#eee;
+}
+.dr-agreement__check {
+  display:flex !important;
+  align-items:flex-start;
+  gap:12px;
+  color:#a1a4aa;
+  font:500 12px/1.55 system-ui,sans-serif;
+}
+.dr-agreement__check input { margin-top:3px; }
+.dr-agreement__check span { margin:0 !important; color:inherit !important; font:inherit !important; letter-spacing:0 !important; }
+.dr-agreement__signout {
+  margin-top:18px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#70737a;
+  cursor:pointer;
+  font:800 7px/1 system-ui,sans-serif;
+  letter-spacing:.12em;
+}
+@media(max-width:760px){
+  .dr-agreement { width:min(100% - 24px,1120px); padding-top:42px; }
+  .dr-agreement__summary ul { columns:1; }
+  .dr-agreement__document-title { flex-direction:column; }
+  .dr-agreement__accept { padding:24px 18px; }
+}

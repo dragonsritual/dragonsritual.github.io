@@ -1,0 +1,24 @@
+{
+  "pass": "46B",
+  "new_assets": [
+    "RTS Human Knight Attack",
+    "RTS Human Swordsman Walk/Attack",
+    "RTS Human Archer Walk/Attack",
+    "RTS Human Knight Walk/Attack for stable defenders"
+  ],
+  "new_systems": [
+    "stone/iron/gold/gem mining identities",
+    "gemstone and iron pickups",
+    "manual melee F / contextual E / ranged Space-click",
+    "procedural named elemental elites",
+    "elite affixes and wards",
+    "Barracks swordsmen",
+    "Archery defenders",
+    "Stables mounted patrols",
+    "Farm provisions/recovery",
+    "structure inspection panel",
+    "right-side filtered RTS construction shelf",
+    "base-Y resource depth sorting",
+    "flat top-down ground language"
+  ]
+}

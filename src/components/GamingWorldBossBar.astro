@@ -1,0 +1,141 @@
+---
+const compact = Astro.props.compact ?? false;
+---
+<section class:list={["dragon-world-boss",{"dragon-world-boss--compact":compact}]} data-world-boss aria-label="Active world boss event">
+  <div class="dragon-world-boss__event">
+    <i></i>
+    <div>
+      <span>PUBLIC WORLD EVENT</span>
+      <b>ENGAGED</b>
+    </div>
+  </div>
+
+  <div class="dragon-world-boss__crest" aria-hidden="true">
+    <span>Ⅸ</span>
+  </div>
+
+  <div class="dragon-world-boss__center">
+    <div class="dragon-world-boss__title">
+      <div>
+        <small>LV <b data-boss-level>72</b> · WORLD ENTITY</small>
+        <strong data-boss-name>VHALZUR, THE BURIED MOUTH</strong>
+      </div>
+      <div class="dragon-world-boss__location">
+        <small>LOCATION</small>
+        <b data-boss-location>THE OSSUARY GATE</b>
+      </div>
+    </div>
+
+    <div class="dragon-world-boss__barrow">
+      <div class="dragon-world-boss__phase" data-boss-phase>PHASE I</div>
+      <div class="dragon-world-boss__track" aria-label="World boss health">
+        <i class="dragon-world-boss__fill" data-boss-fill></i>
+        <span class="boss-breakpoint" style="left:12.5%"></span>
+        <span class="boss-breakpoint" style="left:25%"></span>
+        <span class="boss-breakpoint" style="left:37.5%"></span>
+        <span class="boss-breakpoint" style="left:50%"></span>
+        <span class="boss-breakpoint" style="left:62.5%"></span>
+        <span class="boss-breakpoint" style="left:75%"></span>
+        <span class="boss-breakpoint" style="left:87.5%"></span>
+        <b class="dragon-world-boss__percent" data-boss-percent>100.00%</b>
+      </div>
+      <div class="dragon-world-boss__numbers">
+        <span>REALM HP</span>
+        <b><span data-boss-hp>9,600,000</span> <i>/</i> <span data-boss-max>9,600,000</span></b>
+      </div>
+    </div>
+
+    <div class="dragon-world-boss__subbar">
+      <span>WARD PRESSURE</span>
+      <div><i data-boss-ward></i></div>
+      <b data-boss-ward-label>STABLE</b>
+    </div>
+  </div>
+
+  <div class="dragon-world-boss__right">
+    <div class="dragon-world-boss__personal">
+      <span><small>YOUR DAMAGE</small><b data-boss-personal>0</b></span>
+      <span><small>ATTEMPTS</small><b data-boss-attempts>0</b></span>
+    </div>
+    <a class="dragon-world-boss__enter" href="/gaming/world-boss/">
+      <span>OPEN EVENT</span>
+      <b>→</b>
+    </a>
+  </div>
+</section>
+
+<script>
+(()=>{
+  const root=document.querySelector('[data-world-boss]');
+  if(!root || root.dataset.ready==='1') return;
+  root.dataset.ready='1';
+
+  const KEY='dragon:gaming:world-boss:vhalzur-001';
+  const MAX=9600000;
+
+  function read(){
+    try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch{return null}
+  }
+
+  function state(){
+    return read()||{
+      bossId:'vhalzur-001',
+      hp:MAX,
+      maxHp:MAX,
+      personalDamage:0,
+      attempts:0,
+      wardPressure:0,
+      createdAt:Date.now()
+    };
+  }
+
+  function phaseFor(pct){
+    if(pct<=12.5) return 8;
+    if(pct<=25) return 7;
+    if(pct<=37.5) return 6;
+    if(pct<=50) return 5;
+    if(pct<=62.5) return 4;
+    if(pct<=75) return 3;
+    if(pct<=87.5) return 2;
+    return 1;
+  }
+
+  function roman(n){
+    return ['','I','II','III','IV','V','VI','VII','VIII'][n] || 'I';
+  }
+
+  function paint(s){
+    const hp=Math.max(0,Math.min(MAX,Number(s.hp)||0));
+    const pct=(hp/MAX)*100;
+    const phase=phaseFor(pct);
+    const ward=Math.max(0,Math.min(100,Number(s.wardPressure)||0));
+
+    root.querySelector('[data-boss-hp]').textContent=Math.round(hp).toLocaleString();
+    root.querySelector('[data-boss-max]').textContent=MAX.toLocaleString();
+    root.querySelector('[data-boss-percent]').textContent=pct.toFixed(2)+'%';
+    root.querySelector('[data-boss-fill]').style.width=pct+'%';
+    root.querySelector('[data-boss-personal]').textContent=Math.round(s.personalDamage||0).toLocaleString();
+    root.querySelector('[data-boss-attempts]').textContent=String(s.attempts||0);
+    root.querySelector('[data-boss-phase]').textContent=hp<=0?'DEFEATED':`PHASE ${roman(phase)}`;
+
+    const wardFill=root.querySelector('[data-boss-ward]');
+    if(wardFill) wardFill.style.width=ward+'%';
+    const wardLabel=root.querySelector('[data-boss-ward-label]');
+    if(wardLabel){
+      wardLabel.textContent=ward>=100?'BROKEN':ward>=66?'FRACTURING':ward>=33?'STRAINED':'STABLE';
+    }
+
+    root.classList.toggle('is-critical',pct<=25 && hp>0);
+    root.classList.toggle('is-defeated',hp<=0);
+
+    root.querySelectorAll('.boss-breakpoint').forEach((mark,idx)=>{
+      const threshold=(idx+1)*12.5;
+      mark.classList.toggle('is-broken',pct<=threshold);
+    });
+  }
+
+  paint(state());
+  addEventListener('storage',e=>{if(e.key===KEY)paint(state())});
+  addEventListener('dragon:boss:update',e=>paint(e.detail||state()));
+})();
+</script>

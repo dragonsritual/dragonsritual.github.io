@@ -1,0 +1,150 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import LaunchHeader from '../components/LaunchHeader.astro';
+import '../styles/books.css';
+import '../styles/grim-sagas.css';
+
+const clubShelf = [
+  { title:'The Fellowship of the Ring', author:'J.R.R. Tolkien', mark:'JRRT', tone:'forest', note:'FOUNDATIONAL FANTASY' },
+  { title:'A Wizard of Earthsea', author:'Ursula K. Le Guin', mark:'UKLG', tone:'sea', note:'MYTH / MAGIC / SELF' },
+  { title:'The Last Unicorn', author:'Peter S. Beagle', mark:'PSB', tone:'violet', note:'FANTASY CLASSIC' },
+  { title:'The Once and Future King', author:'T.H. White', mark:'THW', tone:'ivory', note:'ARTHURIAN FANTASY' },
+  { title:'The Black Company', author:'Glen Cook', mark:'GC', tone:'ash', note:'DARK FANTASY' },
+];
+
+const indieShelf = [
+  { title:'OPEN SHELF 001', author:'Independent creator feature', mark:'INDIE', tone:'rust', note:'SUBMISSION SLOT' },
+  { title:'OPEN SHELF 002', author:'Independent creator feature', mark:'INDIE', tone:'ink', note:'SUBMISSION SLOT' },
+  { title:'OPEN SHELF 003', author:'Independent creator feature', mark:'INDIE', tone:'gold', note:'SUBMISSION SLOT' },
+  { title:'OPEN SHELF 004', author:'Independent creator feature', mark:'INDIE', tone:'moss', note:'SUBMISSION SLOT' },
+];
+---
+<SiteLayout title="Dragon Books — DragonsRitual" description="The DragonsRitual book club, reading room, indie shelf and used-book exchange.">
+  <LaunchHeader />
+
+  <main class="books">
+    <section class="books-hero">
+      <div class="books-hero__copy">
+        <span class="books-kicker">DRAGON BOOKS / READING ROOM</span>
+        <h1>Come in.<br/><em>Find a world.</em></h1>
+        <p>A living reading room for fantasy, strange fiction, old favorites, independent voices, original DragonsRitual stories, used books looking for another home, and conversations that continue after the last page.</p>
+        <div class="books-hero__actions">
+          <a href="#club">ENTER BOOK CLUB</a>
+          <a href="#indie" class="quiet">EXPLORE INDIE</a>
+        </div>
+      </div>
+      <div class="books-hero__objects" aria-label="Dragon Books reading room">
+        <div class="books-object books-object--red"><span>DR</span><strong>STORIES</strong></div>
+        <div class="books-object books-object--green"><span>BOOK CLUB</span><strong>READ</strong></div>
+        <div class="books-object books-object--blue"><span>GRIM SAGAS</span><strong>ARCHIVE</strong></div>
+        <div class="books-object books-object--paper"><span>INDIE</span><strong>SMALL PRESS</strong></div>
+        <div class="books-object-seal"><b>DR</b><span>READING ROOM</span></div>
+      </div>
+    </section>
+
+    <nav class="books-subnav" aria-label="Dragon Books">
+      <a href="#grim-sagas">GRIM SAGAS</a><a href="#club">BOOK CLUB</a><a href="#shelves">SHELVES</a><a href="#indie">INDIE</a><a href="#used">USED BOOKS</a><a href="#forum">FORUM</a>
+    </nav>
+
+
+    <section class="books-grim" id="grim-sagas">
+      <div class="books-section-head">
+        <div><span>00 / ORIGINAL FICTION</span><h2>Grim Sagas.</h2></div>
+        <p>The DragonsRitual story archive: original fiction, serial worlds, realm records, recurring characters and lore that can be searched as the canon grows.</p>
+      </div>
+
+      <a class="books-grim__gate" href="/books/grim-sagas/">
+        <div class="books-grim__art">
+          <img
+            src="https://static.wixstatic.com/media/799cff_cc36ecfe9eba44469cff16066b1beec8~mv2.jpeg/v1/fill/w_980%2Ch_980%2Cal_c%2Cq_85%2Cusm_0.66_1.00_0.01%2Cenc_avif%2Cquality_auto/799cff_cc36ecfe9eba44469cff16066b1beec8~mv2.jpeg"
+            alt=""
+            loading="lazy"
+          />
+          <span>GS</span>
+        </div>
+        <div class="books-grim__copy">
+          <span>ORIGINAL FICTION // FROM THE REALMS</span>
+          <strong>GRIM SAGAS</strong>
+          <p>Search the canon. Open editorial files. Follow worlds, factions and lore. Then disappear into the full stories.</p>
+          <small>THE CRIMSON SIEGE • THE RISE OF THE SKY LORDS • MORE TO COME</small>
+        </div>
+        <b>ENTER THE ARCHIVE →</b>
+      </a>
+    </section>
+
+    <section class="books-club" id="club">
+      <div class="books-section-head">
+        <div><span>01 / THE CLUB</span><h2>Read together.</h2></div>
+        <p>The communal table. One featured read can anchor discussion while the wider shelves stay open for wandering.</p>
+      </div>
+      <article class="club-feature">
+        <div class="club-feature__book">
+          <div class="book-cover book-cover--hero forest"><span>DRAGON<br/>BOOK CLUB</span><strong>THE NEXT<br/>READ</strong><small>SELECTION OPEN</small></div>
+        </div>
+        <div class="club-feature__body">
+          <span class="eyebrow">NEXT CLUB SELECTION</span>
+          <h3>The table is open.</h3>
+          <p>This slot is ready for the first official Dragon Book Club selection. The page is built so the club can later carry reading dates, chapter checkpoints, live discussion nights, member reactions and archived club history.</p>
+          <div class="club-stats"><span><b>01</b> CURRENT READ</span><span><b>∞</b> DIRECTIONS</span><span><b>OPEN</b> DISCUSSION</span></div>
+          <a class="books-button" href="#forum">GO TO THE CLUB ROOM</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="books-shelf" id="shelves">
+      <div class="books-section-head">
+        <div><span>02 / THE SHELVES</span><h2>Books worth pulling down.</h2></div>
+        <p>A cover-first browsing wall built like a bookstore shelf, not a database list.</p>
+      </div>
+      <div class="book-carousel" tabindex="0" aria-label="Dragon book shelf">
+        {clubShelf.map((book,index)=>(
+          <article class="book-card">
+            <div class:list={["book-cover",book.tone]}>
+              <span>{book.mark}</span><strong>{book.title}</strong><small>{book.note}</small>
+            </div>
+            <div class="book-card__meta"><b>{book.title}</b><span>{book.author}</span><small>VIEW BOOK · {String(index+1).padStart(2,'0')}</small></div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="books-shelf books-shelf--indie" id="indie">
+      <div class="books-section-head">
+        <div><span>03 / INDEPENDENT SHELF</span><h2>Small press. Self-published. Strange.</h2></div>
+        <p>A permanent front-facing shelf for independent writers instead of hiding them behind the established catalog.</p>
+      </div>
+      <div class="book-carousel" tabindex="0" aria-label="Independent book shelf">
+        {indieShelf.map(book=>(
+          <article class="book-card">
+            <div class:list={["book-cover",book.tone]}><span>{book.mark}</span><strong>{book.title}</strong><small>{book.note}</small></div>
+            <div class="book-card__meta"><b>{book.title}</b><span>{book.author}</span><small>INDIE SHELF</small></div>
+          </article>
+        ))}
+      </div>
+      <div class="indie-callout"><span>WRITERS / SMALL PRESSES</span><strong>There should always be room on the shelf.</strong><p>Future creator publishing profiles can feed directly into this section: author page, book page, sample chapters, club discussions and subscriber communities.</p></div>
+    </section>
+
+    <section class="books-market" id="used">
+      <div class="books-section-head">
+        <div><span>04 / USED BOOK EXCHANGE</span><h2>Let the book travel.</h2></div>
+        <p>The commerce foundation is intentionally presentation-only for now; checkout and seller systems should be connected only when the real commerce backend is ready.</p>
+      </div>
+      <div class="market-grid">
+        <article><span>USED SHELF</span><h3>Fantasy & Science Fiction</h3><p>Pre-owned editions, old covers, reading copies and books that deserve another reader.</p><button disabled>MARKET COMING LATER</button></article>
+        <article><span>COLLECTOR CABINET</span><h3>Art Books & Illustrated Editions</h3><p>Visual-development books, fantasy illustration, comics, oversized editions and unusual print objects.</p><button disabled>MARKET COMING LATER</button></article>
+        <article><span>MEMBER SHELF</span><h3>Sell / Trade / Pass It On</h3><p>A future member-to-member shelf with listings, condition, photos, offers and reputation attached to real member accounts.</p><button disabled>MARKET COMING LATER</button></article>
+      </div>
+    </section>
+
+    <section class="books-forum" id="forum">
+      <div class="forum-copy"><span>05 / BOOK CLUB FORUM</span><h2>The conversation after the page.</h2><p>Designed as the future home for current-read threads, chapter rooms, recommendations, author visits, spoiler-marked discussion and member reading journals.</p></div>
+      <div class="forum-board">
+        <div><span>PINNED</span><strong>What should Dragon read first?</strong><small>BOOK CLUB · OPEN</small></div>
+        <div><span>READING ROOM</span><strong>What are you reading right now?</strong><small>GENERAL · OPEN</small></div>
+        <div><span>INDIE</span><strong>Independent books worth finding</strong><small>DISCOVERY · OPEN</small></div>
+        <div><span>ARCHIVE</span><strong>Old fantasy covers we still think about</strong><small>ART / BOOKS · OPEN</small></div>
+      </div>
+      <p class="forum-note">Forum cards are the finished visual foundation; posting is not falsely enabled until the member discussion backend is connected.</p>
+    </section>
+  </main>
+</SiteLayout>

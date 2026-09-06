@@ -1,0 +1,849 @@
+/* DRAGON WRITER STUDIO — PASS 18B
+   Dedicated contributor agreement + writer office personalization layer. */
+
+/* ---------- Contributor agreement ---------- */
+.dr-agreement {
+  --agreement-paper: #e8e1d7;
+  --agreement-muted: #9298a1;
+  --agreement-line: #282c33;
+  min-height: 100vh;
+  padding: 64px 18px 120px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(126, 91, 34, .08), transparent 28%),
+    linear-gradient(180deg, #07080a 0%, #050607 100%);
+}
+.dr-agreement__shell { width: min(1080px, 100%); margin: 0 auto; }
+.dr-agreement__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, .72fr);
+  gap: clamp(32px, 8vw, 110px);
+  align-items: end;
+  padding: 44px 0 54px;
+  border-bottom: 1px solid var(--agreement-line);
+}
+.dr-agreement__head .wr-kicker { grid-column: 1 / -1; }
+.dr-agreement__head h1 {
+  grid-column: 1;
+  margin: 0;
+  color: #eee7dc;
+  font: 500 clamp(54px, 8vw, 92px)/.91 Georgia, serif;
+  letter-spacing: -.045em;
+}
+.dr-agreement__head p {
+  grid-column: 2;
+  margin: 0 0 7px;
+  color: var(--agreement-muted);
+  font: 400 15px/1.72 system-ui, sans-serif;
+}
+.dr-agreement__summary {
+  margin: 30px 0 0 auto;
+  width: min(760px, 100%);
+  padding: 28px 32px 30px;
+  box-sizing: border-box;
+  border: 1px solid #3a3427;
+  background: rgba(12, 13, 15, .82);
+}
+.dr-agreement__summary ul { margin: 18px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.dr-agreement__summary li {
+  position: relative;
+  padding-left: 21px;
+  color: #c8c2b9;
+  font: 500 13px/1.55 system-ui, sans-serif;
+}
+.dr-agreement__summary li::before { content: "◆"; position: absolute; left: 0; top: 1px; color: #ae8c3a; font-size: 8px; }
+.dr-agreement__document {
+  width: min(820px, 100%);
+  margin: 54px auto 0;
+  padding: clamp(34px, 6vw, 66px);
+  box-sizing: border-box;
+  border: 1px solid #292d34;
+  background: #0a0b0d;
+  box-shadow: 0 34px 90px rgba(0,0,0,.34);
+}
+.dr-agreement__document-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 23px;
+  margin-bottom: 34px;
+  border-bottom: 1px solid #39342a;
+  color: #d8bc69;
+  font: 900 9px/1.35 system-ui, sans-serif;
+  letter-spacing: .15em;
+}
+.dr-agreement__document-title small { color: #686f79; font: inherit; }
+.dr-agreement__document section + section { margin-top: 35px; padding-top: 31px; border-top: 1px solid #22262c; }
+.dr-agreement__document h2 { margin: 0 0 13px; color: var(--agreement-paper); font: 600 21px/1.25 Georgia, serif; }
+.dr-agreement__document p { margin: 0; color: #a8aeb6; font: 400 14px/1.78 system-ui, sans-serif; }
+.dr-agreement__document p + p { margin-top: 14px; }
+.dr-agreement__legal-note {
+  margin-top: 38px;
+  padding: 20px 22px;
+  border-left: 2px solid #8d7133;
+  background: #08090b;
+  color: #757c86;
+  font: 500 12px/1.65 system-ui, sans-serif;
+}
+.dr-agreement__accept {
+  position: relative;
+  width: min(820px, 100%);
+  margin: 28px auto 0;
+  padding: clamp(28px, 5vw, 46px);
+  box-sizing: border-box;
+  border: 1px solid #4b4028;
+  background: linear-gradient(135deg, rgba(64, 48, 21, .16), rgba(8,9,11,.94) 42%);
+}
+.dr-agreement__accept h2 { margin: 10px 0 8px; color: #eee7dc; font: 500 clamp(34px, 5vw, 52px)/1 Georgia, serif; }
+.dr-agreement__accept > p { color: #777e88; font: 500 12px/1.5 system-ui, sans-serif; }
+.dr-agreement__accept form { display: grid; gap: 17px; margin-top: 30px; }
+.dr-agreement__accept form > label:first-child { display: grid; gap: 8px; }
+.dr-agreement__accept form > label:first-child > span { color: #737a84; font: 900 7px/1 system-ui, sans-serif; letter-spacing: .14em; }
+.dr-agreement__accept input[type="text"], .dr-agreement__accept input[name="legal_name"] {
+  width: 100%; box-sizing: border-box; border: 1px solid #353941; background: #08090b; color: #e4ddd4; padding: 14px; outline: none;
+}
+.dr-agreement__check { display: grid; grid-template-columns: 18px 1fr; gap: 12px; align-items: start; color: #a6abb2; font: 500 12px/1.55 system-ui, sans-serif; }
+.dr-agreement__check input { margin-top: 2px; accent-color: #b28c36; }
+.dr-agreement__accept .wr-primary { justify-self: start; min-height: 46px; margin-top: 8px; }
+.dr-agreement__signout { margin-top: 7px; border: 0; background: transparent; color: #606771; font: 900 6px/1 system-ui, sans-serif; letter-spacing: .14em; cursor: pointer; }
+
+/* ---------- Writer private office ---------- */
+.writer-room { --office-accent: #d7b64d; --office-accent-rgb: 215,182,77; --office-room: #07080a; }
+.writer-room[data-room-theme="ink"] { --office-accent: #b8bec8; --office-accent-rgb: 184,190,200; --office-room: #070809; }
+.writer-room[data-room-theme="forest"] { --office-accent: #91a776; --office-accent-rgb: 145,167,118; --office-room: #070a08; }
+.writer-room[data-room-theme="wine"] { --office-accent: #bd7c86; --office-accent-rgb: 189,124,134; --office-room: #0b0709; }
+.writer-room[data-room-theme] .wr-kicker,
+.writer-room[data-room-theme] .writer-room__mast h1,
+.writer-room[data-room-theme] .writer-room__status strong { color: var(--office-accent); }
+.writer-room[data-room-theme] .writer-room__nav button.is-active { color: var(--office-accent); box-shadow: inset 0 -1px 0 var(--office-accent); }
+.writer-room__mast { position: relative; overflow: hidden; isolation: isolate; }
+.wr-office-cover { position: absolute; inset: 0; z-index: -2; background-position: center; background-size: cover; opacity: .76; }
+.wr-office-cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,6,7,.2), var(--office-room) 98%); }
+.wr-office-mast__content { width: 100%; display: flex; justify-content: space-between; align-items: end; gap: 30px; }
+.writer-room__identity { position: relative; }
+.wr-office-avatar, .wr-office-profile-avatar {
+  overflow: hidden; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid rgba(var(--office-accent-rgb),.7); background: #0a0b0d; color: var(--office-accent); font: 700 16px/1 Georgia, serif;
+}
+.wr-office-avatar { width: 54px; height: 54px; border-radius: 50%; }
+.wr-office-profile-avatar { width: 76px; height: 76px; border-radius: 50%; }
+.wr-office-avatar img, .wr-office-profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.wr-office-idcopy { display: grid; gap: 7px; }
+.wr17-profile { grid-template-columns: 360px minmax(0,1fr); }
+.wr-office-profile-heading { display: flex; gap: 16px; align-items: center; }
+.wr-office-profile-heading h2 { font-size: 34px; }
+.wr-office-customize { padding: 30px; border: 1px solid #292c33; background: linear-gradient(180deg, rgba(var(--office-accent-rgb),.04), #08090b 28%); }
+.wr-office-customize__head { display: grid; grid-template-columns: 1fr minmax(220px, 320px); gap: 30px; align-items: end; }
+.wr-office-customize__head h3 { margin: 9px 0 0; color: #e7e0d7; font: 500 38px/1 Georgia, serif; }
+.wr-office-customize__head p { margin: 0; color: #717984; font: 12px/1.55 system-ui, sans-serif; }
+.wr-office-cover-preview { min-height: 180px; margin-top: 28px; padding: 24px; box-sizing: border-box; border: 1px solid #343840; background: radial-gradient(circle at 70% 30%, rgba(var(--office-accent-rgb),.16), transparent 35%), #0b0c0f; background-position: center; background-size: cover; display: flex; flex-direction: column; justify-content: end; gap: 8px; }
+.wr-office-cover-preview span, .wr-office-theme-block > span, .wr-office-upload > span { color: #737b86; font: 900 6px/1 system-ui, sans-serif; letter-spacing: .15em; }
+.wr-office-cover-preview strong { color: #efe8df; font: 600 21px/1 Georgia, serif; }
+.wr-office-customize__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.wr-office-upload { min-height: 94px; padding: 17px; box-sizing: border-box; border: 1px solid #292d34; background: #07080a; display: flex; flex-direction: column; justify-content: center; gap: 7px; cursor: pointer; }
+.wr-office-upload:hover { border-color: rgba(var(--office-accent-rgb),.55); }
+.wr-office-upload strong { color: #d8d2c9; font: 500 15px/1.2 Georgia, serif; }
+.wr-office-upload small { color: #616974; font: 10px/1.4 system-ui, sans-serif; }
+.wr-office-upload input { display: none; }
+.wr-office-theme-block { margin-top: 28px; }
+.wr-office-themes { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-top: 11px; }
+.wr-office-themes button { min-height: 80px; padding: 12px; border: 1px solid #292d34; background: #07080a; color: #aaa49c; display: grid; grid-template-columns: 18px 1fr; grid-template-rows: auto auto; column-gap: 9px; text-align: left; cursor: pointer; }
+.wr-office-themes button i { grid-row: 1 / 3; width: 16px; height: 38px; border: 1px solid #4a4f58; background: #b18e3e; }
+.wr-office-themes button[data-theme="ink"] i { background: #a6acb5; }
+.wr-office-themes button[data-theme="forest"] i { background: #71875d; }
+.wr-office-themes button[data-theme="wine"] i { background: #8e4e5a; }
+.wr-office-themes button strong { color: #cbc5bd; font: 900 7px/1 system-ui, sans-serif; letter-spacing: .1em; }
+.wr-office-themes button small { color: #5d6570; font: 10px/1.3 system-ui, sans-serif; }
+.wr-office-themes button.is-selected { border-color: var(--office-accent); background: rgba(var(--office-accent-rgb),.06); }
+.wr-office-customize__actions { display: flex; justify-content: space-between; gap: 20px; align-items: center; margin-top: 26px; padding-top: 20px; border-top: 1px solid #252930; }
+.wr-office-customize__actions p { margin: 0; color: #6f7782; font: 10px/1.45 system-ui, sans-serif; }
+.writer-room[data-room-theme] .wr-primary { border-color: rgba(var(--office-accent-rgb),.65); color: var(--office-accent); background: rgba(var(--office-accent-rgb),.06); }
+.wr17-career-grid { grid-column: 1 / -1; }
+.wr17-milestones { grid-column: 1 / -1; }
+
+@media (max-width: 760px) {
+  .dr-agreement { padding: 34px 14px 70px; }
+  .dr-agreement__head { grid-template-columns: 1fr; gap: 22px; padding: 30px 0 36px; }
+  .dr-agreement__head h1, .dr-agreement__head p { grid-column: 1; }
+  .dr-agreement__summary { padding: 22px 20px; }
+  .dr-agreement__document { margin-top: 24px; padding: 28px 20px; }
+  .dr-agreement__document-title { display: grid; }
+  .wr-office-mast__content { align-items: end; }
+  .wr-office-avatar { width: 44px; height: 44px; }
+  .wr-office-idcopy { display: none; }
+  .wr17-profile { grid-template-columns: 1fr; padding: 28px 14px; }
+  .wr-office-customize__head { grid-template-columns: 1fr; gap: 12px; }
+  .wr-office-customize { padding: 22px 16px; }
+  .wr-office-customize__grid, .wr-office-themes { grid-template-columns: 1fr 1fr; }
+  .wr-office-customize__actions { align-items: stretch; flex-direction: column; }
+}
+
+
+/* =========================================================
+   PASS 19 — THE WRITER'S OFFICE
+   Experience layer: prestigious private fantasy-studio room.
+   ========================================================= */
+
+.writer-room.wr17 {
+  --wr19-paper: #e9e1d4;
+  --wr19-muted: #858c95;
+  --wr19-line: rgba(255,255,255,.085);
+  background:
+    radial-gradient(circle at 16% 8%, rgba(var(--office-accent-rgb),.07), transparent 26%),
+    linear-gradient(180deg, var(--office-room), #050607 70%);
+}
+.writer-room__mast {
+  min-height: 310px;
+  padding: 58px clamp(24px,5vw,76px) 42px !important;
+  border-bottom: 1px solid rgba(var(--office-accent-rgb),.25);
+}
+.writer-room__mast::before {
+  content:"";
+  position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.2) 1px, transparent 1px),
+    linear-gradient(rgba(0,0,0,.13) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.45), transparent 85%);
+}
+.writer-room__mast h1 {
+  margin: 12px 0 12px;
+  color: var(--wr19-paper) !important;
+  font: 500 clamp(48px,6vw,78px)/.88 Georgia,serif !important;
+  letter-spacing: -.045em;
+  text-shadow: 0 5px 30px rgba(0,0,0,.5);
+}
+.writer-room__mast h1 span { color: var(--office-accent); }
+.wr17-welcome { max-width: 610px; color:#b1aaa0 !important; font: 400 16px/1.6 Georgia,serif !important; }
+.wr19-house-mark { display:flex; align-items:center; gap:12px; margin-top:24px; color:#777f88; font:800 7px/1 system-ui,sans-serif; letter-spacing:.15em; }
+.wr19-house-mark i { width:34px; height:1px; background:rgba(var(--office-accent-rgb),.55); }
+
+.writer-room__identity {
+  min-width: 245px; padding: 13px 14px !important;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(5,6,7,.72) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 50px rgba(0,0,0,.26);
+}
+.wr-office-avatar { width:60px; height:60px; }
+.wr-office-idcopy > span:first-child { color:#e5ddd2; font:600 14px/1.2 Georgia,serif; }
+.wr17-session { color:var(--office-accent) !important; }
+
+.wr19-nav {
+  position:sticky; top:0; z-index:20;
+  min-height:62px; padding:0 clamp(18px,5vw,70px) !important;
+  background:rgba(6,7,8,.94) !important;
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--wr19-line);
+}
+.wr19-nav button { min-height:62px; padding:0 clamp(12px,2.1vw,30px) !important; letter-spacing:.1em !important; }
+.wr19-nav button small { margin-right:9px; color:#4e555e; font-size:7px; }
+
+.wr19-dashboard {
+  width:min(1440px,calc(100% - 48px)); margin:24px auto 0 !important;
+  grid-template-columns:minmax(300px,1.8fr) repeat(3,minmax(130px,.55fr)) !important;
+  border:1px solid var(--wr19-line) !important;
+  background:linear-gradient(110deg,rgba(var(--office-accent-rgb),.055),rgba(9,10,12,.9) 34%) !important;
+  box-shadow:0 24px 60px rgba(0,0,0,.16);
+}
+.wr19-today { padding:22px 26px !important; }
+.wr19-today strong { display:block; margin-top:8px; color:#e2dbd1; font:500 20px/1.2 Georgia,serif !important; }
+.wr19-today small { display:block; max-width:560px; margin-top:7px; color:#666e78; font:10px/1.45 system-ui,sans-serif; }
+.wr17-stat { display:flex; flex-direction:column; justify-content:center; padding:18px 22px !important; border-left:1px solid var(--wr19-line); }
+.wr17-stat span { color:#5e6670 !important; font-size:7px !important; letter-spacing:.13em; }
+.wr17-stat strong { margin-top:8px; color:#cfc8be !important; font:500 18px/1 Georgia,serif !important; }
+
+.wr19-desk-intro {
+  width:min(1440px,calc(100% - 48px)); margin:34px auto 16px;
+  display:grid; grid-template-columns:minmax(280px,.72fr) minmax(360px,1fr);
+  gap:70px; align-items:end; padding:0 2px 20px; border-bottom:1px solid var(--wr19-line);
+}
+.wr19-desk-intro[hidden] { display:none; }
+.wr19-desk-intro h2 { margin:7px 0 0; color:var(--wr19-paper); font:500 36px/1 Georgia,serif; letter-spacing:-.025em; }
+.wr19-desk-intro p { margin:0; max-width:690px; color:#747b84; font:12px/1.65 system-ui,sans-serif; }
+
+.writer-room__workspace {
+  width:min(1440px,calc(100% - 48px)) !important; margin:0 auto 60px !important;
+  border:1px solid rgba(255,255,255,.09) !important;
+  background:#08090b !important;
+  box-shadow:0 32px 90px rgba(0,0,0,.28);
+}
+.writer-room__side {
+  background:
+    linear-gradient(180deg,rgba(var(--office-accent-rgb),.045),transparent 30%),
+    #07080a !important;
+  border-right:1px solid var(--wr19-line) !important;
+}
+.writer-editor { background:linear-gradient(180deg,#0b0c0e,#090a0c) !important; }
+.wr17-toolbar { min-height:42px; border-bottom:1px solid var(--wr19-line) !important; }
+.writer-editor__title {
+  margin-top:10px !important; color:#eee6db !important;
+  font:500 clamp(34px,4vw,54px)/1.08 Georgia,serif !important;
+  letter-spacing:-.035em;
+}
+.writer-editor__deck { color:#8d949d !important; font:italic 16px/1.45 Georgia,serif !important; }
+.writer-editor__body {
+  min-height:430px !important; max-width:850px;
+  color:#d2cbc1 !important; font:400 17px/1.82 Georgia,serif !important;
+  letter-spacing:.002em;
+}
+.writer-editor__body::placeholder,.writer-editor__title::placeholder,.writer-editor__deck::placeholder { color:#454b53 !important; }
+.writer-editor__actions { position:sticky; bottom:0; z-index:8; background:rgba(9,10,12,.94); backdrop-filter:blur(10px); }
+
+.writer-library {
+  width:min(1260px,calc(100% - 48px)) !important; margin:44px auto 80px !important;
+}
+.writer-library > header h2 { font:500 48px/1 Georgia,serif !important; color:#e7dfd4 !important; }
+.writer-library__item { transition:transform .16s ease,border-color .16s ease,background .16s ease; }
+.writer-library__item:hover { transform:translateX(4px); border-color:rgba(var(--office-accent-rgb),.38) !important; background:rgba(var(--office-accent-rgb),.035) !important; }
+
+.wr17-profile {
+  width:min(1380px,calc(100% - 48px)); margin:42px auto 90px; gap:18px !important;
+}
+.wr17-profile-card,.wr-office-customize,.wr19-office-record,.wr17-career-grid,.wr17-milestones {
+  box-shadow:0 24px 70px rgba(0,0,0,.16);
+}
+.wr19-office-record {
+  grid-column:1/-1; display:grid; grid-template-columns:1fr minmax(300px,.7fr); gap:60px; align-items:center;
+  padding:34px 38px; border:1px solid rgba(var(--office-accent-rgb),.24);
+  background:linear-gradient(100deg,rgba(var(--office-accent-rgb),.065),#08090b 42%);
+}
+.wr19-office-record h3 { margin:8px 0; color:#e8e0d5; font:500 30px/1.1 Georgia,serif; }
+.wr19-office-record p { max-width:680px; margin:0; color:#707883; font:11px/1.6 system-ui,sans-serif; }
+.wr19-office-record blockquote { margin:0; padding-left:28px; border-left:1px solid rgba(var(--office-accent-rgb),.45); color:#a69e93; font:italic 18px/1.55 Georgia,serif; }
+
+@media (max-width: 980px) {
+  .wr19-dashboard { grid-template-columns:1fr 1fr 1fr !important; }
+  .wr19-today { grid-column:1/-1; }
+  .wr17-stat:first-of-type { border-left:0; }
+  .wr19-desk-intro { grid-template-columns:1fr; gap:12px; }
+  .wr19-office-record { grid-template-columns:1fr; gap:22px; }
+}
+@media (max-width: 760px) {
+  .writer-room__mast { min-height:260px; padding:38px 18px 28px !important; }
+  .writer-room__mast h1 { font-size:46px !important; }
+  .wr19-house-mark { display:none; }
+  .wr19-nav { position:static; overflow-x:auto; padding:0 8px !important; }
+  .wr19-nav button { flex:0 0 auto; }
+  .wr19-dashboard,.wr19-desk-intro,.writer-room__workspace,.writer-library,.wr17-profile { width:calc(100% - 24px) !important; }
+  .wr19-dashboard { grid-template-columns:1fr !important; }
+  .wr19-today { grid-column:auto; }
+  .wr17-stat { border-left:0; border-top:1px solid var(--wr19-line); }
+  .wr19-desk-intro { margin-top:24px; }
+  .writer-editor__body { min-height:360px !important; font-size:16px !important; }
+  .wr19-office-record { padding:25px 20px; }
+}
+
+/* =========================================================
+   PASS 20 — WRITER STUDIO / DEEP WORK DESK
+   ========================================================= */
+.writer-room.wr17 { font-size:16px; }
+.writer-room__loading {
+  min-height:88px !important; height:auto !important; padding:28px 24px !important;
+  display:flex !important; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+  color:#747c86 !important; letter-spacing:.12em;
+}
+.writer-room__loading[hidden] { display:none !important; }
+.writer-room__loading strong { color:var(--office-accent); font:800 9px/1 system-ui,sans-serif; letter-spacing:.18em; }
+.writer-room__loading span { color:#59616b; font:500 11px/1.4 system-ui,sans-serif; letter-spacing:.02em; }
+
+.writer-room__mast h1 { font-size:clamp(58px,6vw,86px) !important; }
+.wr17-welcome { font-size:18px !important; }
+.wr19-nav button { font-size:10px !important; }
+.wr-kicker { font-size:8px !important; }
+.wr19-today strong { font-size:24px !important; }
+.wr19-today small,.wr19-desk-intro p { font-size:13px !important; }
+.wr17-stat span { font-size:8px !important; }
+.wr17-stat strong { font-size:21px !important; }
+
+.writer-room__workspace {
+  grid-template-columns:260px minmax(560px,1fr) 320px !important;
+  max-width:1580px !important;
+}
+.writer-room__side { padding:24px 18px !important; }
+.writer-room__side label > span,.writer-room__status span,.writer-room__metric span { font-size:8px !important; }
+.writer-room__side select,.writer-room__side input,.writer-room__side textarea { font-size:12px !important; min-height:42px; }
+.writer-room__metric strong { font-size:16px !important; }
+.wr20-draft-chip {
+  margin:14px 0 20px; padding:12px 13px; border:1px solid rgba(var(--office-accent-rgb),.22);
+  background:rgba(var(--office-accent-rgb),.035);
+}
+.wr20-draft-chip span { color:var(--office-accent); font:800 8px/1 system-ui,sans-serif; letter-spacing:.12em; }
+.wr20-draft-chip p { margin:7px 0 0; color:#747c86; font:11px/1.5 system-ui,sans-serif; }
+
+.writer-editor { padding:28px clamp(28px,3vw,54px) 0 !important; }
+.wr17-toolbar { font-size:8px !important; }
+.writer-editor__title { font-size:clamp(42px,4vw,62px) !important; }
+.writer-editor__deck { font-size:18px !important; }
+.writer-editor__body {
+  min-height:560px !important; max-width:76ch !important;
+  font-size:19px !important; line-height:1.82 !important;
+}
+.wr17-assets p,.wr17-notes textarea,.writer-editor__actions button,.wr-message { font-size:11px !important; }
+
+.wr20-studio-rail {
+  min-width:0; border-left:1px solid var(--wr19-line);
+  background:linear-gradient(180deg,rgba(var(--office-accent-rgb),.025),#07080a 24%);
+}
+.wr20-rail-section { padding:22px 18px; border-bottom:1px solid var(--wr19-line); }
+.wr20-rail-section header { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:14px; }
+.wr20-rail-section h3 { margin:5px 0 0; color:#ddd5ca; font:500 18px/1.15 Georgia,serif; }
+.wr20-text-button { border:0; background:none; color:#7c838c; font:800 7px/1 system-ui,sans-serif; letter-spacing:.12em; cursor:pointer; }
+
+.wr20-cover-feed {
+  max-height:430px; overflow:auto; padding-right:5px; display:flex; flex-direction:column; gap:16px;
+  scrollbar-width:thin; scrollbar-color:rgba(var(--office-accent-rgb),.32) transparent;
+}
+.wr20-cover-card { width:100%; padding:0 0 14px; border:0; border-bottom:1px solid var(--wr19-line); background:none; text-align:left; cursor:pointer; color:inherit; }
+.wr20-cover-card img,.wr20-cover-placeholder {
+  width:100%; aspect-ratio:16/9; object-fit:cover; display:grid; place-items:center;
+  border:1px solid rgba(255,255,255,.08); background:radial-gradient(circle at 30% 20%,rgba(var(--office-accent-rgb),.12),transparent 40%),#0b0c0e;
+}
+.wr20-cover-placeholder span { color:rgba(var(--office-accent-rgb),.7); font:500 30px/1 Georgia,serif; }
+.wr20-cover-card h4 { margin:9px 0 4px; color:#d6cec3; font:500 15px/1.2 Georgia,serif; }
+.wr20-cover-card p { margin:0; color:#656d77; font:9px/1.45 system-ui,sans-serif; }
+
+.wr20-calendar { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; }
+.wr20-calendar b,.wr20-calendar i,.wr20-calendar button { aspect-ratio:1; display:grid; place-items:center; }
+.wr20-calendar b { color:#505862; font:800 7px/1 system-ui,sans-serif; }
+.wr20-calendar button { border:1px solid transparent; background:transparent; color:#858d97; font:10px/1 system-ui,sans-serif; cursor:pointer; }
+.wr20-calendar button:hover { border-color:rgba(255,255,255,.1); }
+.wr20-calendar button.is-today { border-color:rgba(var(--office-accent-rgb),.6); color:var(--office-accent); background:rgba(var(--office-accent-rgb),.06); }
+.wr20-event-list { margin-top:14px; display:grid; gap:7px; }
+.wr20-event-list div { display:grid; grid-template-columns:42px 1fr; gap:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,.055); }
+.wr20-event-list time { color:var(--office-accent); font:800 7px/1.5 system-ui,sans-serif; }
+.wr20-event-list p { margin:0; color:#747c86; font:10px/1.4 system-ui,sans-serif; }
+.wr20-event-list .is-muted { opacity:.58; }
+
+.wr20-signal-grid { display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--wr19-line); }
+.wr20-signal-grid div { padding:12px 8px; border-right:1px solid var(--wr19-line); }
+.wr20-signal-grid div:last-child { border-right:0; }
+.wr20-signal-grid strong { display:block; color:#d9d1c6; font:500 16px/1 Georgia,serif; overflow:hidden; text-overflow:ellipsis; }
+.wr20-signal-grid span { display:block; margin-top:5px; color:#59616b; font:800 6px/1 system-ui,sans-serif; letter-spacing:.1em; }
+.wr20-data-note,.wr20-draft-safety p { color:#6a727c; font:10px/1.55 system-ui,sans-serif; }
+.wr20-draft-safety .wr-secondary { width:100%; min-height:40px; margin-top:8px; }
+
+.writer-room button:focus-visible,.writer-room input:focus-visible,.writer-room textarea:focus-visible,.writer-room select:focus-visible {
+  outline:2px solid var(--office-accent) !important; outline-offset:2px;
+}
+
+@media(max-width:1250px){
+  .writer-room__workspace { grid-template-columns:230px minmax(500px,1fr) !important; }
+  .wr20-studio-rail { grid-column:1/-1; display:grid; grid-template-columns:repeat(2,1fr); border-left:0; border-top:1px solid var(--wr19-line); }
+  .wr20-rail-section { border-right:1px solid var(--wr19-line); }
+}
+@media(max-width:760px){
+  .writer-room__workspace { grid-template-columns:1fr !important; }
+  .wr20-studio-rail { grid-template-columns:1fr; }
+  .writer-editor__body { font-size:18px !important; min-height:440px !important; }
+}
+
+/* =========================================================
+   PASS 20B — OXBLOOD MATERIAL ROOM
+   Reference: user's matte oxblood/red binder.
+   The ROOM carries the color; the manuscript remains a
+   quiet black/charcoal writing surface.
+   ========================================================= */
+
+.writer-room.wr17 {
+  /* Binder-inspired oxblood family */
+  --oxblood-0:#12090b;
+  --oxblood-1:#211013;
+  --oxblood-2:#32171b;
+  --oxblood-3:#482126;
+  --oxblood-4:#5b292f;
+  --oxblood-edge:#74383f;
+  --oxblood-soft:#8a4a50;
+  --parchment:#e7ddd0;
+  --parchment-muted:#b8aaa0;
+  --ink-well:#090a0b;
+  --ink-paper:#0d0e10;
+
+  --office-room:var(--oxblood-1);
+  --office-panel:var(--oxblood-2);
+  --office-accent:#c08078;
+  --office-accent-rgb:192,128,120;
+
+  background:
+    radial-gradient(ellipse at 52% -10%, rgba(130,58,66,.28), transparent 42%),
+    radial-gradient(ellipse at 5% 42%, rgba(112,43,52,.14), transparent 32%),
+    linear-gradient(180deg,var(--oxblood-2) 0%,var(--oxblood-1) 48%,var(--oxblood-0) 100%) !important;
+}
+
+/* Very restrained physical grain — CSS only, no image dependency. */
+.writer-room.wr17::before {
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.16;
+  background-image:
+    repeating-linear-gradient(17deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4px),
+    repeating-linear-gradient(103deg,rgba(0,0,0,.026) 0 1px,transparent 1px 5px);
+  mix-blend-mode:soft-light;
+}
+.writer-room.wr17 > * { position:relative; z-index:1; }
+
+.writer-room__mast {
+  background:
+    linear-gradient(90deg,rgba(8,5,6,.93),rgba(37,15,19,.77) 48%,rgba(62,25,31,.58)),
+    var(--office-header-image, none),
+    linear-gradient(135deg,var(--oxblood-1),var(--oxblood-4)) !important;
+  background-size:cover !important;
+  background-position:center !important;
+  border-bottom-color:rgba(177,92,94,.35) !important;
+}
+.writer-room__mast h1 { color:var(--parchment) !important; }
+.writer-room__mast h1 span,.wr-kicker { color:#c58a83 !important; }
+.wr17-welcome { color:var(--parchment-muted) !important; }
+
+.wr19-nav {
+  background:linear-gradient(180deg,rgba(34,14,18,.97),rgba(20,10,12,.98)) !important;
+  border-bottom:1px solid rgba(143,67,75,.34) !important;
+  box-shadow:0 12px 30px rgba(5,2,3,.24);
+}
+.wr19-nav button { color:#9d8e88 !important; }
+.wr19-nav button:hover { color:#e2d4ca !important; background:rgba(112,48,56,.16) !important; }
+.wr19-nav button.is-active {
+  color:#efe2d6 !important;
+  background:linear-gradient(180deg,rgba(109,48,56,.27),rgba(71,28,34,.18)) !important;
+  box-shadow:inset 0 -2px #a96366;
+}
+
+.wr19-dashboard {
+  background:
+    linear-gradient(110deg,rgba(91,39,46,.42),rgba(24,11,14,.92) 36%,rgba(12,9,10,.94)) !important;
+  border-color:rgba(135,63,71,.38) !important;
+}
+.wr17-stat { border-left-color:rgba(139,68,75,.25) !important; }
+.wr17-stat strong,.wr19-today strong { color:#e5d8cd !important; }
+
+.wr19-desk-intro { border-bottom-color:rgba(139,68,75,.28) !important; }
+.wr19-desk-intro h2 { color:#eadfd4 !important; }
+
+/* The physical desk frame is oxblood. */
+.writer-room__workspace {
+  border-color:rgba(145,70,78,.45) !important;
+  background:var(--oxblood-1) !important;
+  box-shadow:
+    0 34px 90px rgba(3,1,2,.43),
+    0 0 0 1px rgba(80,30,36,.3),
+    inset 0 1px rgba(255,255,255,.025) !important;
+}
+.writer-room__side {
+  background:
+    radial-gradient(circle at 15% 0,rgba(138,63,72,.16),transparent 28%),
+    linear-gradient(180deg,var(--oxblood-3),var(--oxblood-2) 34%,var(--oxblood-1)) !important;
+  border-right-color:rgba(145,70,78,.34) !important;
+}
+.writer-room__side select,
+.writer-room__side input,
+.writer-room__side textarea {
+  background:rgba(14,8,9,.64) !important;
+  border-color:rgba(144,73,79,.34) !important;
+  color:#d9cdc3 !important;
+}
+.writer-room__side select:focus,
+.writer-room__side input:focus,
+.writer-room__side textarea:focus { border-color:#9e5a5d !important; }
+
+/* Keep the manuscript black: the "paper" sits inside the red folio. */
+.writer-editor {
+  background:
+    linear-gradient(180deg,#101012 0%,#0b0c0e 13%,#090a0b 100%) !important;
+  box-shadow:
+    inset 18px 0 35px rgba(0,0,0,.18),
+    inset -18px 0 35px rgba(0,0,0,.13);
+}
+.writer-editor__title { color:#f0e5d9 !important; }
+.writer-editor__deck { color:#b9aaa1 !important; }
+.writer-editor__body { color:#ded5cb !important; caret-color:#c6817b; }
+.writer-editor__rule {
+  background:linear-gradient(90deg,#a55f62,rgba(123,56,64,.35),transparent) !important;
+}
+.wr17-toolbar {
+  color:#8e7f7a !important;
+  border-bottom-color:rgba(130,62,69,.22) !important;
+}
+.writer-editor__actions {
+  background:linear-gradient(180deg,rgba(11,11,12,.9),rgba(17,9,11,.98)) !important;
+  border-top:1px solid rgba(137,64,72,.25);
+}
+
+/* Right-side studio rail = red leather/binder environment. */
+.wr20-studio-rail {
+  background:
+    radial-gradient(circle at 100% 0,rgba(150,70,78,.12),transparent 24%),
+    linear-gradient(180deg,var(--oxblood-3),var(--oxblood-2) 38%,var(--oxblood-1)) !important;
+  border-left-color:rgba(145,70,78,.34) !important;
+}
+.wr20-rail-section { border-bottom-color:rgba(143,67,75,.28) !important; }
+.wr20-rail-section h3 { color:#e2d5ca !important; }
+.wr20-cover-card { border-bottom-color:rgba(143,67,75,.25) !important; }
+.wr20-cover-card img,.wr20-cover-placeholder {
+  border-color:rgba(160,82,88,.32) !important;
+  background:
+    radial-gradient(circle at 30% 20%,rgba(155,72,81,.24),transparent 40%),
+    linear-gradient(145deg,#281216,#120b0d) !important;
+}
+.wr20-calendar button { color:#b09e98 !important; }
+.wr20-calendar button:hover { background:rgba(127,55,64,.2) !important; }
+.wr20-calendar button.is-today {
+  color:#f0d7cc !important;
+  border-color:#a95f63 !important;
+  background:rgba(139,62,70,.28) !important;
+}
+.wr20-signal-grid {
+  border-color:rgba(143,67,75,.31) !important;
+  background:rgba(12,7,8,.26);
+}
+.wr20-signal-grid div { border-right-color:rgba(143,67,75,.25) !important; }
+.wr20-draft-safety {
+  background:linear-gradient(135deg,rgba(116,47,56,.18),transparent);
+}
+
+/* Library / office areas should feel like objects sitting in the same room. */
+.writer-library,
+.wr17-profile { color:#c8bab0; }
+.writer-library__item,
+.wr17-profile-card,
+.wr-office-customize,
+.wr19-office-record,
+.wr17-career-grid,
+.wr17-milestones {
+  border-color:rgba(142,67,74,.36) !important;
+  background:
+    linear-gradient(145deg,rgba(70,29,35,.66),rgba(22,11,14,.94)) !important;
+}
+.writer-library__item:hover {
+  background:linear-gradient(145deg,rgba(91,38,45,.78),rgba(29,13,17,.96)) !important;
+  border-color:rgba(178,88,93,.52) !important;
+}
+.wr19-office-record {
+  background:
+    radial-gradient(circle at 0 0,rgba(153,69,78,.16),transparent 32%),
+    linear-gradient(105deg,#3a191e,#160c0f 50%,#0b090a) !important;
+}
+
+/* Oxblood should read as a real material option in the theme picker. */
+[data-theme-choice="ember"] {
+  background:linear-gradient(135deg,#632d33,#2b1418) !important;
+  border-color:#8e4a50 !important;
+}
+[data-theme-choice="ember"]::after {
+  content:"OXBLOOD";
+  color:#eadbd0;
+}
+
+/* Buttons become restrained brass/parchment-on-red, not neon red. */
+.wr-primary,.wr17-submit {
+  background:linear-gradient(180deg,#a66364,#7d4047) !important;
+  border-color:#bb7774 !important;
+  color:#fff3e7 !important;
+  box-shadow:0 8px 22px rgba(45,13,18,.28);
+}
+.wr-primary:hover,.wr17-submit:hover {
+  background:linear-gradient(180deg,#b47270,#8c4950) !important;
+}
+.wr-secondary {
+  border-color:rgba(157,78,84,.44) !important;
+  color:#c9b8ae !important;
+  background:rgba(31,13,16,.42) !important;
+}
+.wr-secondary:hover { background:rgba(93,38,45,.3) !important; color:#eaded3 !important; }
+
+/* On smaller screens retain material distinction without flooding everything red. */
+@media(max-width:760px){
+  .writer-room__workspace { background:#12090b !important; }
+  .writer-editor { box-shadow:none !important; }
+}
+
+/* =========================================================
+   PASS 20C — MANUSCRIPT VISUAL AUTHORITY
+   Make the writing surface the unquestioned center of gravity.
+   ========================================================= */
+
+/* Give the manuscript more territory than the controls/rail. */
+.writer-room__workspace {
+  grid-template-columns: 238px minmax(680px, 1fr) 292px !important;
+  max-width: 1660px !important;
+  min-height: 760px;
+}
+
+/* Side systems visually recede; they remain useful, but the book owns the room. */
+.writer-room__side,
+.wr20-studio-rail {
+  font-size: 95%;
+}
+.writer-room__side { box-shadow: inset -18px 0 34px rgba(0,0,0,.09); }
+.wr20-studio-rail { box-shadow: inset 18px 0 34px rgba(0,0,0,.08); }
+
+/* The black manuscript becomes a deep, elevated writing slab inside the oxblood folio. */
+.writer-editor {
+  position: relative;
+  padding: 34px clamp(42px,4.2vw,76px) 0 !important;
+  background:
+    radial-gradient(ellipse at 50% 0,rgba(255,246,232,.025),transparent 35%),
+    linear-gradient(180deg,#111214 0%,#0b0c0e 18%,#08090a 100%) !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.025),
+    inset 28px 0 58px rgba(0,0,0,.22),
+    inset -28px 0 58px rgba(0,0,0,.18),
+    0 22px 55px rgba(0,0,0,.18) !important;
+}
+.writer-editor::before {
+  content:"";
+  position:absolute;
+  top:0; bottom:0; left:50%;
+  width:min(100%, 1040px);
+  transform:translateX(-50%);
+  pointer-events:none;
+  border-left:1px solid rgba(255,255,255,.018);
+  border-right:1px solid rgba(255,255,255,.018);
+}
+
+/* Manuscript header now reads like a title page rather than form fields. */
+.writer-editor__title,
+.writer-editor__deck,
+.writer-editor__body,
+.writer-editor__rule {
+  position:relative;
+  z-index:1;
+}
+.writer-editor__title {
+  width:100%;
+  margin-top:18px !important;
+  color:#f2e8dc !important;
+  font:500 clamp(48px,4.8vw,70px)/1.03 Georgia,serif !important;
+  letter-spacing:-.042em !important;
+}
+.writer-editor__deck {
+  width:100%;
+  margin-top:9px !important;
+  color:#b9aaa0 !important;
+  font:italic 19px/1.5 Georgia,serif !important;
+}
+.writer-editor__rule {
+  width:76px !important;
+  height:2px !important;
+  margin:24px 0 28px !important;
+}
+
+/* Main writing: larger, warmer, and intentionally book-like. */
+.writer-editor__body {
+  width:100%;
+  max-width: 72ch !important;
+  min-height: 610px !important;
+  padding-bottom: 100px !important;
+  color:#e2d9cf !important;
+  font:400 20px/1.88 Georgia,serif !important;
+  letter-spacing:.003em !important;
+  text-rendering:optimizeLegibility;
+}
+.writer-editor__body::selection,
+.writer-editor__title::selection,
+.writer-editor__deck::selection {
+  background:rgba(158,76,82,.52);
+  color:#fff7ed;
+}
+.writer-editor__body::placeholder { color:#514d4b !important; }
+
+/* Toolbar becomes a quiet manuscript instrument strip. */
+.wr17-toolbar {
+  min-height:50px !important;
+  margin:0 -12px 8px !important;
+  padding:0 12px !important;
+  border-bottom:1px solid rgba(137,64,72,.2) !important;
+}
+.wr17-toolbar button,
+.wr17-toolbar select {
+  min-height:34px;
+  font-size:10px !important;
+}
+.wr17-toolbar [data-save-state] {
+  margin-left:auto;
+  color:#a88982 !important;
+  font-size:9px !important;
+  letter-spacing:.08em;
+}
+
+/* Writing actions remain reachable without visually shouting over the manuscript. */
+.writer-editor__actions {
+  min-height:66px;
+  margin:0 calc(clamp(42px,4.2vw,76px) * -1) !important;
+  padding:12px clamp(42px,4.2vw,76px) !important;
+  border-top:1px solid rgba(145,70,78,.22);
+}
+.writer-editor__actions button { min-height:40px; }
+
+/* Stronger "desk" entrance and less dashboard dominance above it. */
+.wr19-desk-intro {
+  margin-top:28px !important;
+  padding-bottom:24px !important;
+}
+.wr19-desk-intro h2 {
+  font-size:42px !important;
+  letter-spacing:-.035em !important;
+}
+.wr19-dashboard {
+  margin-top:18px !important;
+}
+.wr19-dashboard .wr17-stat {
+  min-height:74px;
+}
+
+/* Side rail cards are denser so more inspiration is visible without stealing width. */
+.wr20-cover-feed { max-height:500px !important; gap:13px !important; }
+.wr20-cover-card img,
+.wr20-cover-placeholder { aspect-ratio: 1.78 !important; }
+.wr20-cover-card h4 { font-size:16px !important; }
+.wr20-cover-card p { font-size:9px !important; }
+
+/* Add a calm focus response when the writer is actually typing. */
+.writer-editor:focus-within {
+  box-shadow:
+    0 0 0 1px rgba(185,105,104,.11),
+    inset 28px 0 58px rgba(0,0,0,.20),
+    inset -28px 0 58px rgba(0,0,0,.16),
+    0 26px 70px rgba(0,0,0,.24) !important;
+}
+.writer-editor:focus-within .writer-editor__body {
+  color:#e9e0d6 !important;
+}
+
+/* Wide screens: let the actual manuscript breathe. */
+@media (min-width: 1500px) {
+  .writer-room__workspace {
+    grid-template-columns:250px minmax(780px,1fr) 310px !important;
+  }
+  .writer-editor__body { font-size:21px !important; }
+}
+
+/* Laptop: keep center authority rather than squeezing it for side widgets. */
+@media (max-width: 1320px) {
+  .writer-room__workspace {
+    grid-template-columns:220px minmax(600px,1fr) !important;
+  }
+  .wr20-studio-rail {
+    grid-column:1/-1;
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  }
+  .wr20-cover-feed { max-height:330px !important; }
+}
+
+/* Tablet/mobile: manuscript first, support systems after. */
+@media (max-width: 900px) {
+  .writer-room__workspace { grid-template-columns:1fr !important; }
+  .writer-room__side { border-right:0 !important; border-bottom:1px solid rgba(145,70,78,.3); }
+  .wr20-studio-rail { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+  .writer-editor { padding:28px 28px 0 !important; }
+  .writer-editor__actions { margin:0 -28px !important; padding:12px 28px !important; }
+  .writer-editor__body { max-width:none !important; font-size:19px !important; }
+}
+@media (max-width: 620px) {
+  .wr20-studio-rail { grid-template-columns:1fr !important; }
+  .writer-editor { padding:24px 20px 0 !important; }
+  .writer-editor__actions { margin:0 -20px !important; padding:12px 20px !important; }
+  .writer-editor__title { font-size:42px !important; }
+  .writer-editor__body { font-size:18px !important; line-height:1.8 !important; }
+}

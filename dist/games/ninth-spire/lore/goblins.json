@@ -1,0 +1,51 @@
+{
+  "id": "goblins",
+  "label": "Goblins",
+  "subject": "goblins",
+
+  "kind": "blog",
+  "title": "ON GOBLINS AND THE NOISE BETWEEN WARS",
+  "subtitle": "They breed in the cracks between wars. No king funds a crusade against them, yet every village knows their tracks.",
+
+  "sections": [
+    {
+      "heading": "THE CRACKS BETWEEN WARS",
+      "body": [
+        "They breed in the cracks between wars. Not on the grand battlefields where songs are forged, but in the ditches that never earn a name.",
+        "No king ever funds a crusade against them, yet every village knows their tracks. Doors warped from being kicked in too often. Chickens that go silent all at once. A cart found stripped of iron and rope but somehow left standing.",
+        "Goblins are not the weakest thing in the dark — only the loudest. They survive because no one takes them seriously until it is too late for someone small and unimportant."
+      ]
+    },
+    {
+      "heading": "WHAT GOBLINS REALLY ARE",
+      "body": [
+        "A goblin is hunger given fingers. They do not build, they unmake. They gnaw metal until it forgets its shape, chew books until words fall out of them.",
+        "Left alone, they turn forgotten roads into warrens and abandoned watchtowers into echoing flutes of broken stone. They are the sound of neglect made busy and vicious."
+      ]
+    },
+    {
+      "heading": "COMMON BREEDS IN THE TOWER’S LEDGER",
+      "list": [
+        "Road-snatchers – Lurk under bridges and in culverts, leaping for reins, boots, and anything that jingles.",
+        "Ashpickers – Follow behind real armies, tearing through camps and mass graves alike for metal, leather, and teeth.",
+        "Torchbiters – Mad little fire-drunk things that chew pitch, set themselves alight, and run screaming through granaries.",
+        "Quiet-hands – Rare and dangerous. They learn to move without clatter, and sometimes they learn to listen."
+      ]
+    },
+    {
+      "heading": "WHY WIZARDS ARE SENT AGAINST THEM",
+      "body": [
+        "The tower does not waste true wizardry on goblins, but it does measure apprentices against them. A dustling who cannot outthink a goblin band will not survive anything greater.",
+        "Goblins are cowardly until they are not. They will flee from a single spark, then circle back the moment a lantern gutter s. They test whether your pupil remembers that danger does not vanish just because it runs away.",
+        "Defeating goblins is not about being stronger. It is about noticing the loose board, the shadow that lingers, the silence where there should be chickens."
+      ]
+    },
+    {
+      "heading": "LESSONS FOR YOUR WIZARD",
+      "body": [
+        "Teach him that mockery is a weapon goblins wield on themselves. They cackle, they jeer, they pretend to be harmless. The moment your wizard agrees with them, he has already stepped into the snare.",
+        "If he can walk out of a goblin-haunted wood with his pack intact and his heart still listening, the tower will consider him ready for quieter, worse things."
+      ]
+    }
+  ]
+}

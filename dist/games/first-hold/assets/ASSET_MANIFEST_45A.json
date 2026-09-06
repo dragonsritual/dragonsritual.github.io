@@ -1,0 +1,23 @@
+{
+  "pass": "45A",
+  "source_library": "Minifantasy.zip supplied by user",
+  "packs_detected": 55,
+  "actively_integrated_this_pass": [
+    "Minifantasy Crafting & Professions I",
+    "Minifantasy Builders",
+    "Minifantasy Raided Village",
+    "Minifantasy Farm",
+    "existing RTS Humans / RTS Orcs / Temples & Shrines"
+  ],
+  "systems": [
+    "real tree harvesting sprites",
+    "real mining nodes",
+    "single-nearest wall graph",
+    "wood/stone wall material tiers",
+    "B-prefix construction hotkeys",
+    "visual build cards",
+    "tier-2 autonomous repair workers",
+    "shared Realm Stores repair economy",
+    "damage smoke/fire feedback"
+  ]
+}

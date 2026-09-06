@@ -1,0 +1,109 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import LaunchHeader from "../../components/LaunchHeader.astro";
+import "../../styles/member-system.css";
+---
+<SiteLayout title="My Member Home — DragonsRitual" description="Your DragonsRitual member home." noIndex={true}>
+  <LaunchHeader />
+  <main class="dr-member-page">
+    <div class="dr-member-page__shell" data-member-shell hidden>
+      <header class="dr-member-page__top">
+        <div><span class="dr-member-page__kicker">DRAGON / MEMBER HOME</span><h1>Your place in Dragon.</h1></div>
+        <p>One account follows you across the public site, creator spaces and future university systems. Your role determines which doors open.</p>
+      </header>
+
+      <div class="dr-member-message" data-tv-access-note hidden style="margin:18px 0;padding:14px;border:1px solid rgba(160,79,84,.3);background:rgba(80,31,38,.18);">
+        Dragon TV creator tools are available to approved Creator accounts. Your public member account is still active.
+      </div>
+      <div class="dr-member-grid">
+        <aside class="dr-member-card">
+          <div class="dr-member-card__avatar" data-profile-avatar>DR</div>
+          <h2 data-profile-name>Member</h2>
+          <p data-profile-email></p>
+          <div class="dr-member-card__meta">
+            <div><span>MEMBER TYPE</span><strong data-profile-type>MEMBER</strong></div>
+            <div><span>JOINED</span><strong data-profile-joined>—</strong></div>
+          </div>
+          <div class="dr-member-card__actions">
+            <a class="dr-member-button" href="/creator/" data-creator-door hidden>ENTER CREATOR BASE STATION</a>
+            <a class="dr-member-button" href="/admin/analytics/" data-analytics-door hidden>OPEN DIRECTOR ANALYTICS</a>
+            <a class="dr-member-button" href="/admin/members/" data-director-door hidden>OPEN MEMBER CONTROL</a>
+            <button class="dr-member-button is-quiet" type="button" data-member-signout>SIGN OUT</button>
+          </div>
+        </aside>
+
+        <section class="dr-member-panel">
+          <h3>Profile</h3>
+          <p>Keep this simple for now. Later this can expand into favorites, collections, creator portfolios, classes, subscriptions and more.</p>
+          <form class="dr-profile-form" data-profile-form>
+            <label><span>DISPLAY NAME</span><input name="display_name" maxlength="80" /></label>
+            <label><span>PUBLIC HANDLE</span><input name="handle" maxlength="50" placeholder="optional" /></label>
+            <label class="is-wide"><span>ABOUT</span><textarea name="bio" maxlength="500" placeholder="A short member or creator bio."></textarea></label>
+            <div class="is-wide"><button class="dr-member-button" type="submit">SAVE PROFILE</button></div>
+          </form>
+          <p class="dr-member-message" data-profile-message></p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    import { getSupabaseBrowserClient } from '../../lib/supabaseBrowser';
+    const supabase=getSupabaseBrowserClient();
+    const {data:{session}}=await supabase.auth.getSession();
+    if(!session){location.replace('/join/');throw new Error('member session required')}
+
+    let profile=null;
+    const result=await supabase.from('dr_member_profiles').select('*').eq('user_id',session.user.id).maybeSingle();
+    if(!result.error)profile=result.data;
+
+    const roleResult=await supabase.rpc('dr_my_roles');
+    const secureRoles=Array.isArray(roleResult.data)?roleResult.data.map(v=>String(v).toLowerCase()):[];
+    const adminResult=await supabase.rpc('is_admin');
+    const isDirector=adminResult.data===true;
+    const isCreator=isDirector||secureRoles.some(r=>['creator','writer','illustrator','radio','comics','streaming','3d','editor'].includes(r));
+
+    const display=profile?.display_name||session.user.user_metadata?.display_name||session.user.email?.split('@')[0]||'Member';
+    document.querySelector('[data-profile-name]').textContent=display;
+    document.querySelector('[data-profile-email]').textContent=session.user.email||'';
+    document.querySelector('[data-profile-avatar]').textContent=display.slice(0,2).toUpperCase();
+    document.querySelector('[data-profile-type]').textContent=isDirector?'DIRECTOR':isCreator?'CREATOR':'MEMBER';
+    document.querySelector('[data-profile-joined]').textContent=new Date(profile?.created_at||session.user.created_at).toLocaleDateString();
+    document.querySelector('[data-creator-door]').hidden=!isCreator;
+    document.querySelector('[data-director-door]').hidden=!isDirector;
+    document.querySelector('[data-analytics-door]').hidden=!isDirector;
+
+    const form=document.querySelector('[data-profile-form]');
+    form.display_name.value=display;
+    form.handle.value=profile?.handle||'';
+    form.bio.value=profile?.bio||'';
+    
+
+    form.addEventListener('submit',async e=>{
+      e.preventDefault();
+      const fd=new FormData(form);
+      
+      const displayName=String(fd.get('display_name')||'').trim();
+      const handle=String(fd.get('handle')||'').trim();
+      const bio=String(fd.get('bio')||'').trim();
+
+      const profileWrite=await supabase.from('dr_member_profiles').upsert({
+        user_id:session.user.id,display_name:displayName,handle:handle||null,bio:bio||null
+      },{onConflict:'user_id'});
+
+      const metaWrite=await supabase.auth.updateUser({data:{...session.user.user_metadata,display_name:displayName}});
+      const msg=document.querySelector('[data-profile-message]');
+      if(profileWrite.error||metaWrite.error){msg.textContent=profileWrite.error?.message||metaWrite.error?.message||'Could not save.';return}
+      msg.textContent='PROFILE SAVED.';
+      setTimeout(()=>location.reload(),450);
+    });
+
+    document.querySelector('[data-member-signout]').addEventListener('click',async()=>{
+      await supabase.auth.signOut();location.href='/join/';
+    });
+    const params=new URLSearchParams(location.search);
+    const tvNote=document.querySelector('[data-tv-access-note]');
+    if(tvNote && params.get('notice')==='tv_creator_access') tvNote.hidden=false;
+    document.querySelector('[data-member-shell]').hidden=false;
+  </script>
+</SiteLayout>

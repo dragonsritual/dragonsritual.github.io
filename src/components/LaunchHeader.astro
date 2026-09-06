@@ -1,16 +1,82 @@
 ---
 const path = Astro.url.pathname;
-const isToday = path === "/";
+const isDaily = path === "/";
+const isTV = path.startsWith("/tv");
 const isRadio = path.startsWith("/radio");
+const isBooks = path.startsWith("/books");
+const isGaming = path.startsWith("/gaming");
 ---
 <header class="launch-header">
-  <a class="launch-brand" href="/" aria-label="DragonsRitual Today">
+  <a class="launch-brand" href="/" aria-label="DragonsRitual Daily">
     <span class="launch-mark">DR</span>
-    <span class="launch-wordmark"><strong>DRAGONSRITUAL</strong><small>DRAGON UNDERGROUND</small></span>
+    <span class="launch-wordmark">
+      <strong>DRAGONSRITUAL</strong>
+      <small>MEDIA / CULTURE / PLAY</small>
+    </span>
   </a>
+
   <nav class="launch-nav" aria-label="Public navigation">
-    <a class:list={["launch-nav-link", { active: isToday }]} href="/"><i></i><span>TODAY</span></a>
-    <a class:list={["launch-nav-link", { active: isRadio }]} href="/radio/"><i></i><span>RADIO</span></a>
+    <a class:list={["launch-nav-link",{active:isDaily}]} href="/">
+      <i></i><span>DAILY</span>
+    </a>
+    <a class:list={["launch-nav-link",{active:isTV}]} href="/tv/">
+      <i></i><span>TV</span>
+    </a>
+    <a class:list={["launch-nav-link",{active:isRadio}]} href="/radio/">
+      <i></i><span>RADIO</span>
+    </a>
+    <a class:list={["launch-nav-link",{active:isBooks}]} href="/books/">
+      <i></i><span>BOOKS</span>
+    </a>
+    <a class:list={["launch-nav-link",{active:isGaming}]} href="/gaming/">
+      <i></i><span>GAMING</span>
+    </a>
   </nav>
-  <a class="launch-tune" href="/radio/"><span class="launch-live-dot"></span><span>LISTEN LIVE</span></a>
+
+  <div class="launch-actions">
+    <a class="launch-wizard-pulse" href="/gaming/wizard-feeder/" data-wizard-pulse hidden aria-label="Wizard Feeder activity">
+      <span class="launch-wizard-pulse__orb">W</span>
+      <span class="launch-wizard-pulse__copy">
+        <strong data-wizard-pulse-title>WIZARD</strong>
+        <small data-wizard-pulse-status>CHECK IN</small>
+      </span>
+      <i data-wizard-pulse-dot></i>
+    </a>
+
+    <button class="launch-search" type="button" data-search-open aria-label="Search archive">
+      <span class="launch-search__icon" aria-hidden="true"></span>
+      <span class="launch-search__label">SEARCH</span>
+    </button>
+
+    <a class="launch-listen" href="/tv/">
+      <span class="launch-live-dot"></span>
+      <span>WATCH LIVE</span>
+    </a>
+  </div>
 </header>
+
+<script>
+  const pulse=document.querySelector('[data-wizard-pulse]');
+  if(pulse){
+    try{
+      const character=JSON.parse(localStorage.getItem('dragon:wizard:character')||'null');
+      const alertState=JSON.parse(localStorage.getItem('dragon:wizard:alert')||'null');
+
+      if(character){
+        pulse.hidden=false;
+        const title=pulse.querySelector('[data-wizard-pulse-title]');
+        const status=pulse.querySelector('[data-wizard-pulse-status]');
+        if(title) title.textContent=(character.name||'WIZARD').toUpperCase();
+        if(status) status.textContent=alertState?.label||`LV ${character.level||1}`;
+
+        if(alertState?.active){
+          pulse.classList.add('has-activity');
+        }
+      }
+    }catch(_){}
+  }
+
+  window.addEventListener('storage',e=>{
+    if(e.key==='dragon:wizard:alert') location.reload();
+  });
+</script>

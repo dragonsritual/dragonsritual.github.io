@@ -1,0 +1,47 @@
+---
+const { embedded = false } = Astro.props;
+---
+<aside class:list={["realm-wire",{"realm-wire--embedded":embedded}]} data-realm-wire data-wire-state="normal" aria-label="Dragon Realm Wire">
+  <div class="realm-wire__dock-tag">DRAGON GAMING · LIVE WIRE</div>
+  <header class="realm-wire__head">
+    <div class="realm-wire__brand">
+      <i class="realm-wire__live"></i>
+      <div><span>DRAGON GAMING NETWORK</span><strong>REALM WIRE</strong></div>
+      <b>GLOBAL</b>
+    </div>
+    <div class="realm-wire__window">
+      <button type="button" data-wire-minus data-wire-state-btn="minus" title="Collapse Realm Wire" aria-label="Collapse Realm Wire">−</button>
+      <button type="button" data-wire-plus data-wire-state-btn="plus" title="Expand Realm Wire" aria-label="Expand Realm Wire">＋</button>
+    </div>
+  </header>
+
+  <div class="realm-wire__ticker" data-wire-ticker>
+    <span>LIVE REALM FEED</span><b data-wire-ticker-text>Awaiting activity from the Realm…</b>
+  </div>
+
+  <div class="realm-wire__body">
+    <nav class="realm-wire__filters" aria-label="Realm Wire filters">
+      <button class="is-active" data-wire-filter="all">ALL</button>
+      <button data-wire-filter="character"><i class="dot dot--violet"></i>WIZARDS</button>
+      <button data-wire-filter="combat"><i class="dot dot--crimson"></i>COMBAT</button>
+      <button data-wire-filter="discovery"><i class="dot dot--gold"></i>DISCOVERY</button>
+      <button data-wire-filter="realm"><i class="dot dot--blue"></i>REALM</button>
+      <button data-wire-filter="system"><i class="dot dot--green"></i>SYSTEM</button>
+    </nav>
+
+    <section class="realm-wire__stream" data-wire-stream aria-live="polite"></section>
+
+    <form class="realm-wire__composer" data-wire-form>
+      <div class="realm-wire__channel"><span>CHANNEL</span><b>GLOBAL</b></div>
+      <input data-wire-input maxlength="220" placeholder="Send a message to the Realm…" autocomplete="off" />
+      <button type="submit">TRANSMIT</button>
+    </form>
+    <p class="realm-wire__prototype">LOCAL LOUNGE PROTOTYPE · MEMBER CHAT BECOMES SERVER-MODERATED WITH THE LIVE BACKEND</p>
+  </div>
+
+  <button class="realm-wire__collapsed" type="button" data-wire-restore aria-label="Open Realm Wire">
+    <i class="realm-wire__live"></i><strong>REALM WIRE</strong><span data-wire-collapsed-text>GLOBAL FEED ACTIVE</span><b>＋</b>
+  </button>
+</aside>
+
+

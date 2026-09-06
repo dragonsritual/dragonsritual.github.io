@@ -1,0 +1,169 @@
+---
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import LaunchHeader from '../../../components/LaunchHeader.astro';
+import GamingRealmWire from '../../../components/GamingRealmWire.astro';
+import '../../../styles/gaming.css';
+import '../../../styles/ninth-spire-site.css';
+import GamingActiveWizard from '../../../components/GamingActiveWizard.astro';
+import GamingRealmStatus from '../../../components/GamingRealmStatus.astro';
+---
+
+<SiteLayout
+  title="The Ninth Spire — Dragon Gaming"
+  description="Build the character who represents you inside Dragon Underground."
+>
+  <LaunchHeader />
+
+  <main class="spire-site" data-spire-site>
+  <GamingRealmStatus />
+  <aside class="spire-game-rail" data-spire-game-rail>
+    <GamingActiveWizard />
+    <GamingRealmWire />
+  </aside>
+    <header class="spire-site__bar">
+      <div class="spire-site__identity">
+        <span>DRAGON GAMING / REALM 001</span>
+        <div>
+          <h1>The Ninth Spire</h1>
+          <small>BUILD YOUR CHARACTER / ENTER THE REALM</small>
+        </div>
+      </div>
+
+      <div class="spire-site__character" data-spire-character>
+        <span data-spire-element>UNBOUND</span>
+        <strong data-spire-name>NO WIZARD YET</strong>
+        <small>
+          LV <b data-spire-level>—</b>
+          · FLOOR <b data-spire-floor>—</b>
+          · LEGACY <b data-spire-legacy>—</b>
+        </small>
+      </div>
+
+      <div class="spire-site__controls">
+        <span class="spire-site__realm-state"><i></i> LOCAL REALM</span>
+        <button type="button" data-spire-fullscreen>FULL SCREEN</button>
+      </div>
+    </header>
+
+    <section class="spire-site__stage">
+      <div class="spire-site__loading" data-spire-loading>
+        <span>THE NINTH SPIRE</span>
+        <h2>Opening the Realm Gate…</h2>
+        <p>Your DragonsRitual character is loading.</p>
+      </div>
+
+      <iframe
+        data-spire-frame
+        title="The Ninth Spire"
+        src="/games/ninth-spire/index.html"
+        allow="fullscreen"
+      ></iframe>
+    </section>
+
+    <footer class="spire-site__footer">
+      <div>
+        <span>CHARACTER LINK</span>
+        <strong data-spire-status>WAITING FOR CHARACTER</strong>
+      </div>
+      <p>
+        The Ninth Spire is your optional playable character-builder inside DragonsRitual.
+        Your wizard identity can later follow you into profiles, forums, Book Club, groups,
+        events, trading and future Dragon worlds.
+      </p>
+      <a href="/gaming/">BACK TO DRAGON GAMING</a>
+    </footer>
+  </main>
+
+  <script>
+    const frame = document.querySelector('[data-spire-frame]');
+    const loading = document.querySelector('[data-spire-loading]');
+    const nameEl = document.querySelector('[data-spire-name]');
+    const levelEl = document.querySelector('[data-spire-level]');
+    const floorEl = document.querySelector('[data-spire-floor]');
+    const legacyEl = document.querySelector('[data-spire-legacy]');
+    const elementEl = document.querySelector('[data-spire-element]');
+    const statusEl = document.querySelector('[data-spire-status]');
+    const fullscreenBtn = document.querySelector('[data-spire-fullscreen]');
+
+    const KEY = 'dragon:ninth-spire:character';
+
+    function render(c){
+      if(!c) return;
+      nameEl.textContent = c.name || 'WIZARD';
+      levelEl.textContent = String(c.level || 1);
+      floorEl.textContent = String(c.highestFloor || 1);
+      legacyEl.textContent = String(c.legacy || 0);
+      elementEl.textContent = String(c.element || 'UNBOUND').toUpperCase();
+      document.documentElement.dataset.wizardElement =
+        String(c.element || 'unbound').toLowerCase().replace(/[^a-z0-9_-]/g,'');
+      statusEl.textContent = `${c.title || 'WIZARD'} · ${c.room || 'TOWER'}`;
+    }
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if(saved) render(saved);
+    } catch {}
+
+    frame?.addEventListener('load', ()=>{
+      loading?.setAttribute('hidden','');
+      try {
+        frame.contentWindow?.postMessage({
+          type:'DRAGON_SITE_CONTEXT',
+          member:{
+            // Server-authenticated member identity will replace this local shell later.
+            displayName:'',
+            memberId:''
+          }
+        }, location.origin);
+      } catch {}
+    });
+
+    window.addEventListener('message', event=>{
+      if(event.origin !== location.origin) return;
+      const data = event.data;
+      if(!data || typeof data!=='object') return;
+
+      if(data.type==='DRAGON_NINTH_SPIRE_READY'){
+        loading?.setAttribute('hidden','');
+      }
+
+      if(data.type==='DRAGON_NINTH_SPIRE_STATE' && data.character){
+        const c = {
+          name:String(data.character.name || 'Wizard').slice(0,40),
+          level:Math.max(1, Number(data.character.level)||1),
+          title:String(data.character.title || 'Wizard').slice(0,80),
+          element:String(data.character.element || 'UNBOUND').slice(0,24),
+          room:String(data.character.room || 'Tower').slice(0,40),
+          highestFloor:Math.max(1, Number(data.character.highestFloor)||1),
+          legacy:Math.max(0, Number(data.character.legacy)||0),
+          health:Math.max(0, Number(data.character.health)||0),
+          hunger:Math.max(0, Number(data.character.hunger)||0),
+          energy:Math.max(0, Number(data.character.energy)||0),
+          power:Number(data.character.power)||0,
+          insight:Number(data.character.insight)||0,
+          vitality:Number(data.character.vitality)||0,
+          corruption:Number(data.character.corruption)||0,
+          playTimeMs:Math.max(0, Number(data.character.playTimeMs)||0),
+          equipment:data.character.equipment || {},
+          updatedAt:String(data.character.updatedAt || new Date().toISOString())
+        };
+        localStorage.setItem(KEY, JSON.stringify(c));
+        render(c);
+        window.dispatchEvent(new CustomEvent('dragon:ninth-spire:update',{detail:c}));
+        window.dispatchEvent(new CustomEvent('dragon:wizard:update',{detail:c}));
+      }
+
+      if(data.type==='DRAGON_NINTH_SPIRE_EVENT' && data.event){
+        window.dispatchEvent(new CustomEvent('dragon:ninth-spire:event',{detail:data.event}));
+      }
+    });
+
+    fullscreenBtn?.addEventListener('click', async ()=>{
+      const stage = document.querySelector('.spire-site__stage');
+      try {
+        if(document.fullscreenElement) await document.exitFullscreen();
+        else await stage?.requestFullscreen();
+      } catch {}
+    });
+  </script>
+</SiteLayout>

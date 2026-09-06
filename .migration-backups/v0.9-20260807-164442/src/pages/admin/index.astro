@@ -1,0 +1,242 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import { getGamingDashboard } from "../../services/gamingDashboardService";
+import { activeDataProvider } from "../../services/dataService";
+
+const data = await getGamingDashboard();
+
+const totalGames = data.games.length;
+const totalSessions = data.games.reduce((sum, game) => sum + game.sessions, 0);
+const totalHours = data.games
+  .reduce((sum, game) => sum + Number(game.hours || 0), 0)
+  .toFixed(1);
+
+const activeGames = data.games.filter((game) => game.status === "Active").length;
+---
+
+<AdminLayout title="DragonsRitual Control Room">
+  <div class="admin-shell">
+    <aside class="admin-rail">
+      <a class="admin-brand" href="/admin">
+        <span class="admin-brand__mark">DR</span>
+        <span>
+          <strong>CONTROL ROOM</strong>
+          <small>DRAGONSRITUAL</small>
+        </span>
+      </a>
+
+      <div class="admin-rail__label">ADMIN</div>
+
+      <nav class="admin-nav" aria-label="Admin navigation">
+        <a class="is-active" href="/admin">
+          <span>01</span>
+          <strong>Overview</strong>
+        </a>
+
+        <button type="button" disabled>
+          <span>02</span>
+          <strong>Games</strong>
+          <em>AUTH NEXT</em>
+        </button>
+
+        <button type="button" disabled>
+          <span>03</span>
+          <strong>Sessions</strong>
+          <em>AUTH NEXT</em>
+        </button>
+
+        <button type="button" disabled>
+          <span>04</span>
+          <strong>Schedule</strong>
+          <em>AUTH NEXT</em>
+        </button>
+
+        <button type="button" disabled>
+          <span>05</span>
+          <strong>Media</strong>
+          <em>LATER</em>
+        </button>
+
+        <button type="button" disabled>
+          <span>06</span>
+          <strong>Newsroom</strong>
+          <em>LATER</em>
+        </button>
+      </nav>
+
+      <div class="admin-rail__bottom">
+        <a href="/">← Public Gaming</a>
+        <small>READ-ONLY v0.8</small>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div>
+          <span>DRAGONSRITUAL / SYSTEM</span>
+          <h1>Control Room</h1>
+        </div>
+
+        <div class="admin-status">
+          <span class:list={[
+            "admin-status__dot",
+            activeDataProvider === "supabase" && "is-live"
+          ]}></span>
+
+          <div>
+            <strong>{activeDataProvider.toUpperCase()}</strong>
+            <small>DATA PROVIDER</small>
+          </div>
+        </div>
+      </header>
+
+      <section class="admin-warning">
+        <strong>READ-ONLY FOUNDATION</strong>
+        <p>
+          This page can inspect the live database, but it cannot create,
+          edit, or delete records yet. Authentication and owner-only
+          authorization come next.
+        </p>
+      </section>
+
+      <section class="admin-metrics" aria-label="System metrics">
+        <article>
+          <span>DATABASE</span>
+          <strong>{activeDataProvider === "supabase" ? "ONLINE" : "LOCAL"}</strong>
+          <small>Active provider</small>
+        </article>
+
+        <article>
+          <span>GAMES</span>
+          <strong>{totalGames}</strong>
+          <small>{activeGames} active</small>
+        </article>
+
+        <article>
+          <span>SESSIONS</span>
+          <strong>{totalSessions}</strong>
+          <small>Season total</small>
+        </article>
+
+        <article>
+          <span>HOURS</span>
+          <strong>{totalHours}</strong>
+          <small>Logged play time</small>
+        </article>
+      </section>
+
+      <section class="admin-grid">
+        <article class="admin-panel admin-panel--wide">
+          <header class="admin-panel__header">
+            <div>
+              <span>LIVE DATABASE</span>
+              <h2>Game Records</h2>
+            </div>
+
+            <span class="admin-readonly">READ ONLY</span>
+          </header>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Game</th>
+                  <th>Status</th>
+                  <th>Sessions</th>
+                  <th>Hours</th>
+                  <th>Progress</th>
+                  <th>Last Played</th>
+                  <th>Current Result</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {data.games.map((game) => (
+                  <tr>
+                    <td>
+                      <strong>{game.title}</strong>
+                      <small>{game.platform}</small>
+                    </td>
+                    <td>
+                      <span class="admin-pill">{game.status}</span>
+                    </td>
+                    <td>{game.sessions}</td>
+                    <td>{game.hours}</td>
+                    <td>{game.progress}%</td>
+                    <td>{game.lastPlayed}</td>
+                    <td>{game.result}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="admin-panel">
+          <header class="admin-panel__header">
+            <div>
+              <span>SYSTEM</span>
+              <h2>Backend</h2>
+            </div>
+          </header>
+
+          <dl class="admin-system-list">
+            <div>
+              <dt>Frontend</dt>
+              <dd>Astro</dd>
+            </div>
+
+            <div>
+              <dt>Database</dt>
+              <dd>Supabase / PostgreSQL</dd>
+            </div>
+
+            <div>
+              <dt>Publishing</dt>
+              <dd>Sanity — pending</dd>
+            </div>
+
+            <div>
+              <dt>Desktop</dt>
+              <dd>Planned</dd>
+            </div>
+
+            <div>
+              <dt>Mobile</dt>
+              <dd>PWA foundation</dd>
+            </div>
+
+            <div>
+              <dt>3D World</dt>
+              <dd>Reserved</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="admin-panel">
+          <header class="admin-panel__header">
+            <div>
+              <span>NEXT SYSTEM</span>
+              <h2>Owner Access</h2>
+            </div>
+          </header>
+
+          <div class="admin-next">
+            <span class="admin-next__number">v0.9</span>
+            <h3>Supabase Auth</h3>
+            <p>
+              Owner login, protected admin access, session handling,
+              authorization checks, and a secure path toward real edit controls.
+            </p>
+
+            <div class="admin-next__tags">
+              <span>LOGIN</span>
+              <span>OWNER ROLE</span>
+              <span>PROTECTED ADMIN</span>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+</AdminLayout>

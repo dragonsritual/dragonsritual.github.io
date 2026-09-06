@@ -1,0 +1,209 @@
+---
+---
+<script>
+  import { getSupabaseBrowserClient } from '../lib/supabaseBrowser';
+
+  const supabase=getSupabaseBrowserClient();
+
+  const SESSION_KEY='dr_analytics_session';
+  const START_KEY='dr_analytics_page_started';
+  const LANDING_KEY='dr_analytics_landing';
+  const SOURCE_KEY='dr_analytics_source';
+
+  const now=()=>Date.now();
+
+  function uuid(){
+    return crypto.randomUUID();
+  }
+
+  function isLocal(){
+    return location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  }
+
+  function cleanPath(urlLike){
+    try{
+      const u=new URL(urlLike,location.href);
+      if(u.origin!==location.origin)return null;
+      return u.pathname;
+    }catch{return null}
+  }
+
+  function referrerInfo(){
+    if(!document.referrer)return {domain:null,path:null};
+    try{
+      const u=new URL(document.referrer);
+      return {
+        domain:u.hostname.replace(/^www\./,'').toLowerCase(),
+        path:u.origin===location.origin?u.pathname:null
+      };
+    }catch{return {domain:null,path:null}}
+  }
+
+  function campaignInfo(){
+    const u=new URL(location.href);
+    const get=k=>(u.searchParams.get(k)||'').trim().slice(0,120)||null;
+    return {
+      utm_source:get('utm_source'),
+      utm_medium:get('utm_medium'),
+      utm_campaign:get('utm_campaign'),
+      utm_content:get('utm_content'),
+      utm_term:get('utm_term'),
+      ref:get('ref')||get('source')
+    };
+  }
+
+  function classifySource(refDomain,c){
+    const source=(c.utm_source||c.ref||'').toLowerCase();
+    const medium=(c.utm_medium||'').toLowerCase();
+    const domain=(refDomain||'').toLowerCase();
+
+    if(medium.includes('email')||/newsletter|mailchimp|convertkit/.test(source))return 'Email';
+    if(/cpc|ppc|paidsearch/.test(medium))return 'Paid Search';
+    if(/paid_social|paidsocial|social-paid/.test(medium))return 'Paid Social';
+    if(/instagram|facebook|fb\.com|pinterest|tiktok|twitter|x\.com|reddit|linkedin|threads/.test(`${source} ${domain}`))return 'Organic Social';
+    if(/google|bing|duckduckgo|yahoo|brave/.test(`${source} ${domain}`))return 'Organic Search';
+    if(c.utm_source||c.ref)return medium||'Campaign';
+    if(refDomain&&refDomain!==location.hostname.replace(/^www\./,''))return 'Referral';
+    return 'Direct / None';
+  }
+
+  function deviceInfo(){
+    const w=Math.max(screen.width||0,window.innerWidth||0);
+    const h=Math.max(screen.height||0,window.innerHeight||0);
+    const ua=navigator.userAgent||'';
+    const device=/iPad|Tablet|Android(?!.*Mobile)/i.test(ua)?'Tablet':/Mobi|Android|iPhone/i.test(ua)?'Mobile':'Desktop';
+    const browser=/Edg\//.test(ua)?'Edge':/Firefox\//.test(ua)?'Firefox':/Chrome\//.test(ua)?'Chrome':/Safari\//.test(ua)?'Safari':'Other';
+    return {
+      device_type:device,
+      browser_family:browser,
+      viewport_bucket:w<600?'xs':w<900?'sm':w<1280?'md':w<1600?'lg':'xl',
+      screen_width:w,
+      screen_height:h,
+      language:(navigator.language||'').slice(0,20)||null
+    };
+  }
+
+  async function ensureSession(){
+    let sessionId=sessionStorage.getItem(SESSION_KEY);
+    let source=null;
+    try{source=JSON.parse(sessionStorage.getItem(SOURCE_KEY)||'null')}catch{}
+    if(sessionId&&source)return {sessionId,source};
+
+    sessionId=uuid();
+    const ref=referrerInfo();
+    const campaign=campaignInfo();
+    source={
+      referrer_domain:ref.domain,
+      channel:classifySource(ref.domain,campaign),
+      ...campaign
+    };
+
+    sessionStorage.setItem(SESSION_KEY,sessionId);
+    sessionStorage.setItem(SOURCE_KEY,JSON.stringify(source));
+    sessionStorage.setItem(LANDING_KEY,location.pathname);
+
+    const di=deviceInfo();
+    await supabase.from('dr_analytics_sessions').insert({
+      session_id:sessionId,
+      started_at:new Date().toISOString(),
+      landing_path:location.pathname,
+      referrer_domain:source.referrer_domain,
+      channel:source.channel,
+      utm_source:source.utm_source,
+      utm_medium:source.utm_medium,
+      utm_campaign:source.utm_campaign,
+      utm_content:source.utm_content,
+      utm_term:source.utm_term,
+      campaign_ref:source.ref,
+      host:location.hostname,
+      is_local:isLocal(),
+      ...di
+    });
+
+    return {sessionId,source};
+  }
+
+  async function pageView(){
+    const {sessionId}=await ensureSession();
+    sessionStorage.setItem(START_KEY,String(now()));
+
+    await supabase.from('dr_analytics_events').insert({
+      session_id:sessionId,
+      event_type:'page_view',
+      path:location.pathname,
+      page_title:document.title,
+      host:location.hostname,
+      is_local:isLocal(),
+      created_at:new Date().toISOString()
+    });
+  }
+
+  async function trackClick(el){
+    const {sessionId}=await ensureSession();
+    let targetPath=null;
+    let outboundDomain=null;
+    if(el instanceof HTMLAnchorElement&&el.href){
+      try{
+        const u=new URL(el.href,location.href);
+        if(u.origin===location.origin)targetPath=u.pathname;
+        else outboundDomain=u.hostname.replace(/^www\./,'').toLowerCase();
+      }catch{}
+    }
+    const label=(el.getAttribute('aria-label')||el.textContent||'').trim().replace(/\s+/g,' ').slice(0,80)||null;
+
+    await supabase.from('dr_analytics_events').insert({
+      session_id:sessionId,
+      event_type:outboundDomain?'outbound_click':'click',
+      path:location.pathname,
+      target_path:targetPath,
+      outbound_domain:outboundDomain,
+      element_label:label,
+      host:location.hostname,
+      is_local:isLocal(),
+      created_at:new Date().toISOString()
+    });
+  }
+
+  function leavePage(){
+    const sessionId=sessionStorage.getItem(SESSION_KEY);
+    const started=Number(sessionStorage.getItem(START_KEY)||now());
+    if(!sessionId)return;
+
+    const payload={
+      session_id:sessionId,
+      event_type:'page_leave',
+      path:location.pathname,
+      duration_ms:Math.max(0,now()-started),
+      host:location.hostname,
+      is_local:isLocal(),
+      created_at:new Date().toISOString()
+    };
+
+    const url=import.meta.env.PUBLIC_SUPABASE_URL;
+    const key=import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+    if(!url||!key)return;
+
+    fetch(`${url}/rest/v1/dr_analytics_events`,{
+      method:'POST',
+      keepalive:true,
+      headers:{
+        'apikey':key,
+        'Authorization':`Bearer ${key}`,
+        'Content-Type':'application/json',
+        'Prefer':'return=minimal'
+      },
+      body:JSON.stringify(payload)
+    }).catch(()=>{});
+  }
+
+  if(!window.__dragonAnalyticsBound){
+    window.__dragonAnalyticsBound=true;
+    document.addEventListener('click',e=>{
+      const el=e.target instanceof Element?e.target.closest('a,button'):null;
+      if(el)trackClick(el);
+    },{capture:true});
+    window.addEventListener('pagehide',leavePage);
+    document.addEventListener('astro:page-load',pageView);
+  }
+  pageView();
+</script>

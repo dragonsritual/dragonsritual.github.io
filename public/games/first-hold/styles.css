@@ -1,0 +1,321 @@
+
+:root{
+  --ink:#080708;
+  --panel:rgba(12,9,11,.94);
+  --line:#3a2930;
+  --gold:#b59155;
+  --red:#9c343d;
+  --red2:#5e171e;
+  --violet:#81618b;
+  --green:#668568;
+  --cream:#e7d8c6;
+  --muted:#8b7c82;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050505;color:var(--cream);font-family:Inter,Arial,sans-serif}
+body{user-select:none}
+button{font:inherit}
+#game-shell{position:relative;width:100%;height:100%;overflow:hidden;background:#10130f}
+#game{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair}
+.hud-top{position:absolute;z-index:20;left:14px;right:14px;top:12px;min-height:70px;display:grid;grid-template-columns:1fr auto minmax(280px,.8fr);gap:18px;align-items:center;padding:10px 14px;border:1px solid rgba(70,50,56,.7);background:linear-gradient(180deg,rgba(9,7,8,.94),rgba(12,8,10,.88));box-shadow:0 20px 50px rgba(0,0,0,.24);backdrop-filter:blur(8px)}
+.brand span,.realm-clock span,.hall-health span,.wizard-card small,.carried-card>small,.bank-card small,.build-card small,.upgrade-card small,.end-panel>small,.intro-panel>small{display:block;color:#79616b;font:800 7px/1 Cinzel,serif;letter-spacing:.12em}
+.brand strong{display:block;margin-top:3px;color:#eadbca;font:700 20px/1 Cinzel,serif;letter-spacing:.04em}
+.realm-clock{text-align:center}.realm-clock strong{display:block;margin-top:3px;color:#c7aa78;font:700 12px Cinzel,serif}.realm-clock b{display:block;margin-top:2px;color:#f0dfca;font:700 21px/1 Cinzel,serif}
+.hall-health>div:first-child{display:flex;justify-content:space-between;align-items:center}.hall-health b{color:#cf9a94;font:700 9px Cinzel,serif}.meter{margin-top:6px;height:12px;border:1px solid #55252b;background:#17090c;box-shadow:inset 0 2px 5px #000}.meter i{display:block;height:100%;width:100%;background:linear-gradient(180deg,#c3474d,#861f29 55%,#4d1017);box-shadow:inset 0 1px rgba(255,210,190,.15);transition:width .25s}
+.hud-left{position:absolute;z-index:20;left:14px;top:96px;width:238px;display:grid;gap:8px}
+.wizard-card,.carried-card,.bank-card,.build-card,.upgrade-card{border:1px solid rgba(66,49,59,.78);background:linear-gradient(150deg,rgba(16,12,17,.94),rgba(8,7,9,.92));box-shadow:0 16px 40px rgba(0,0,0,.22);backdrop-filter:blur(8px)}
+.wizard-card{padding:12px}.wizard-card h2{margin:4px 0 5px;color:#eadcec;font:700 18px Cinzel,serif}.wizard-meta{display:flex;gap:7px;align-items:center;color:#846f89;font:700 7px Cinzel,serif}.wizard-meta span{border:1px solid #34273a;padding:4px 6px}
+.mini-meter{display:grid;grid-template-columns:24px 1fr 32px;gap:6px;align-items:center;margin-top:8px}.mini-meter>span,.mini-meter>em{color:#716573;font:700 6px Cinzel,serif;font-style:normal}.mini-meter>em{text-align:right}.mini-meter>b{height:5px;background:#19141a;border:1px solid #2a222d;overflow:hidden}.mini-meter i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#79242d,#b0434d)}.mini-meter.xp i{background:linear-gradient(90deg,#574668,#89679a)}
+.carried-card{padding:10px 12px}.carried-card>div{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.035);font:700 8px Cinzel,serif;color:#9b8b91}.carried-card>div b{color:#d0b895}.carried-card p{margin:7px 0 0;color:#6f6368;font:10px/1.4 Inter,sans-serif}
+.hud-right{position:absolute;z-index:20;right:14px;top:96px;width:270px;display:grid;gap:8px}
+.bank-card,.build-card,.upgrade-card{padding:10px}.bank-card header,.build-card header,.upgrade-card header{margin-bottom:7px}.bank-card header strong,.build-card header strong,.upgrade-card header strong{display:block;margin-top:3px;color:#d8c7c9;font:700 10px Cinzel,serif}
+.bank-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.bank-grid span{min-width:0;padding:7px 5px;border:1px solid #2f252d;background:#09080a;text-align:center}.bank-grid i{display:block;color:#745d63;font:700 7px Cinzel,serif;font-style:normal}.bank-grid b{display:block;margin:3px 0;color:#d1baa0;font:700 14px Cinzel,serif}.bank-grid small{font-size:5px;letter-spacing:.05em}
+.build-card button,.upgrade-card button{width:100%;display:grid;align-items:center;border:1px solid #322732;background:#0a080b;color:#a997a1;cursor:pointer;margin-top:5px;text-align:left;transition:.12s}.build-card button{grid-template-columns:26px 1fr;padding:7px}.build-card button>b{color:#b58d57;font:700 10px Cinzel,serif}.build-card button>span,.upgrade-card button>span{font:700 8px Cinzel,serif;letter-spacing:.05em}.build-card button small,.upgrade-card button small{display:block;margin-top:2px;color:#655a60;font:600 7px Inter,sans-serif;letter-spacing:0}.build-card button:hover,.build-card button.is-active,.upgrade-card button:hover{border-color:#614353;background:#151016;color:#d4c3ca}.build-hint{margin-top:7px;padding-top:7px;border-top:1px solid #2b222a;color:#6d6268;font:9px/1.4 Inter,sans-serif}
+.upgrade-card button{grid-template-columns:1fr 25px;padding:7px}.upgrade-card button>b{color:#a88aaf;font:700 9px Cinzel,serif}.upgrade-card button small{grid-column:1/-1}
+.event-feed{position:absolute;z-index:21;left:268px;bottom:54px;width:min(480px,40vw);display:grid;gap:5px;pointer-events:none}.feed-item{padding:7px 9px;border-left:2px solid #6f556d;background:rgba(8,7,9,.82);backdrop-filter:blur(5px);box-shadow:0 10px 24px rgba(0,0,0,.18);animation:feedIn .2s ease}.feed-item b{display:block;color:#9d7ba2;font:700 6px Cinzel,serif;letter-spacing:.09em}.feed-item span{display:block;margin-top:2px;color:#b7a9ad;font:10px/1.35 Inter,sans-serif}.feed-item.combat{border-color:#a13c45}.feed-item.combat b{color:#b65e64}.feed-item.build{border-color:#b29157}.feed-item.build b{color:#c0a26a}.feed-item.realm{border-color:#56758c}.feed-item.realm b{color:#6d8fa6}.feed-item.growth{border-color:#795a8b}.feed-item.growth b{color:#9a78aa}
+@keyframes feedIn{from{opacity:0;transform:translateX(-8px)}}
+.hud-bottom{position:absolute;z-index:20;left:14px;right:14px;bottom:10px;min-height:34px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 10px;border:1px solid #2e262b;background:rgba(8,7,9,.9);backdrop-filter:blur(7px)}.controls,.run-stats{display:flex;gap:12px;flex-wrap:wrap}.controls span,.run-stats span{color:#6f656a;font:700 6px Cinzel,serif;letter-spacing:.06em}.controls b,.run-stats b{color:#a9949d}
+.interaction{position:absolute;z-index:25;left:50%;bottom:84px;transform:translateX(-50%);padding:8px 12px;border:1px solid #50404b;background:rgba(9,7,10,.94);color:#c7b8bd;font:700 8px Cinzel,serif;letter-spacing:.05em}
+.overlay{position:absolute;z-index:50;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,rgba(78,38,52,.24),transparent 30%),rgba(4,4,5,.86);backdrop-filter:blur(7px)}.overlay[hidden]{display:none}.panel{width:min(640px,calc(100% - 32px));border:1px solid #4b333c;background:linear-gradient(150deg,#120d11,#080709);box-shadow:0 40px 100px rgba(0,0,0,.55),inset 0 1px rgba(255,255,255,.025);padding:28px;text-align:center}.panel h1{margin:8px 0;color:#f0dfca;font:800 clamp(42px,7vw,76px)/.9 Cinzel,serif;letter-spacing:.02em}.panel p{max-width:520px;margin:12px auto;color:#9f9093;font:14px/1.6 Inter,sans-serif}.panel .muted{font-size:11px;color:#796c70}.premise{display:flex;justify-content:center;gap:10px;align-items:center;margin:19px 0;color:#b7965d;font:700 9px Cinzel,serif;letter-spacing:.1em}.premise i{color:#52444a;font-style:normal}.panel button{margin-top:14px;border:1px solid #6b3d48;background:linear-gradient(#2b1118,#150a0e);color:#deb8b1;padding:12px 18px;font:800 9px Cinzel,serif;letter-spacing:.1em;cursor:pointer}.panel button:hover{border-color:#9d5963;background:linear-gradient(#3a151f,#190b10)}.panel>em{display:block;margin-top:12px;color:#5f555a;font:700 6px Cinzel,serif;font-style:normal;letter-spacing:.07em}
+.end-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:18px 0}.end-stats span{border:1px solid #31262d;background:#09080a;padding:10px}.end-stats small{display:block;color:#6f5c64;font:700 6px Cinzel,serif}.end-stats b{display:block;margin-top:4px;color:#d3b891;font:700 18px Cinzel,serif}
+*{scrollbar-width:thin;scrollbar-color:#4a3446 #09080b}
+*::-webkit-scrollbar{width:8px;height:8px}*::-webkit-scrollbar-track{background:#09080b}*::-webkit-scrollbar-thumb{background:linear-gradient(#59405a,#2e2430);border:2px solid #09080b}
+@media(max-width:1050px){.hud-left{width:205px}.hud-right{width:230px}.event-feed{left:232px}.hud-top{grid-template-columns:1fr auto 260px}}
+
+
+/* ==========================================================
+   PASS 41B — LAPTOP FIT / HUD SAFETY / PROGRESSION CLARITY
+   ========================================================== */
+
+:root{
+  --safe-bottom: 52px;
+}
+
+/* Reserve game space so right panels never disappear behind the bottom controls. */
+.hud-right{
+  bottom: var(--safe-bottom) !important;
+  overflow-y:auto;
+  overflow-x:hidden;
+  max-height:calc(100vh - 148px);
+  padding-right:2px;
+}
+
+/* The bottom instructions are now a compact command strip, not a large blocker. */
+.hud-bottom{
+  min-height:28px !important;
+  height:28px !important;
+  padding:4px 8px !important;
+}
+.controls{
+  gap:8px !important;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.controls span{
+  font-size:5.5px !important;
+}
+.run-stats span{
+  font-size:5.5px !important;
+}
+
+/* Important HUD panels slightly tighter on common 1366/1536/1600px laptop widths. */
+@media (max-width:1650px){
+  .hud-left{width:218px}
+  .hud-right{width:252px}
+  .event-feed{left:246px;width:min(440px,36vw)}
+  .bank-card,.build-card,.upgrade-card{padding:8px}
+  .build-card button,.upgrade-card button{margin-top:4px}
+  .hud-top{min-height:64px}
+}
+
+/* Laptop-height pass: fit the full right-side progression stack on one screen. */
+@media (max-height:900px){
+  .hud-top{
+    top:8px;
+    left:10px;
+    right:10px;
+    min-height:58px;
+    padding:7px 10px;
+  }
+  .brand strong{font-size:17px}
+  .realm-clock b{font-size:18px}
+  .hud-left{
+    top:76px;
+    left:10px;
+    width:205px;
+    gap:6px;
+  }
+  .hud-right{
+    top:76px;
+    right:10px;
+    width:236px;
+    bottom:40px !important;
+    max-height:calc(100vh - 116px);
+    gap:6px;
+  }
+  .wizard-card{padding:9px}
+  .wizard-card h2{font-size:15px}
+  .carried-card{padding:8px 9px}
+  .bank-card,.build-card,.upgrade-card{padding:7px}
+  .bank-grid span{padding:5px 3px}
+  .bank-grid b{font-size:12px}
+  .build-card button{padding:5px 6px}
+  .upgrade-card button{padding:5px 6px}
+  .build-hint{margin-top:5px;padding-top:5px;font-size:8px}
+  .hud-bottom{
+    left:10px;
+    right:10px;
+    bottom:6px;
+    height:24px !important;
+    min-height:24px !important;
+  }
+  .event-feed{bottom:38px}
+}
+
+/* Very short laptop screens: hide redundant prose, retain all actual controls. */
+@media (max-height:760px){
+  .carried-card p{display:none}
+  .upgrade-card header small,
+  .build-card header small,
+  .bank-card header small{display:none}
+  .upgrade-card header,
+  .build-card header,
+  .bank-card header{margin-bottom:4px}
+  .controls span:nth-child(5),
+  .controls span:nth-child(6){display:none}
+  .hud-right{
+    width:226px;
+    max-height:calc(100vh - 104px);
+  }
+}
+
+/* Custom scrollbars inside the HUD too. */
+.hud-right::-webkit-scrollbar{width:7px}
+.hud-right::-webkit-scrollbar-track{background:#09080b}
+.hud-right::-webkit-scrollbar-thumb{background:linear-gradient(#50384f,#2d222f);border:1px solid #09080b}
+
+.progress-card{padding:9px;border:1px solid rgba(66,49,59,.78);background:linear-gradient(150deg,rgba(16,12,17,.94),rgba(8,7,9,.92));box-shadow:0 16px 40px rgba(0,0,0,.22);backdrop-filter:blur(8px)}
+.progress-card header{margin-bottom:6px}.progress-card header small{display:block;color:#79616b;font:800 6px/1 Cinzel,serif;letter-spacing:.12em}.progress-card header strong{display:block;margin-top:3px;color:#d8c7c9;font:700 10px Cinzel,serif}
+.progress-step{display:grid;grid-template-columns:24px 1fr;gap:6px;align-items:start;padding:6px;border:1px solid #2b2329;background:#09080a;margin-top:4px;opacity:.5}
+.progress-step>b{color:#765e6a;font:700 8px Cinzel,serif}.progress-step>span{color:#97878e;font:700 7px Cinzel,serif}.progress-step small{display:block;margin-top:2px;color:#62575c;font:600 6.5px/1.35 Inter,sans-serif;letter-spacing:0}
+.progress-step.is-active{opacity:1;border-color:#5f414d;background:#120d11}.progress-step.is-done{opacity:.8;border-color:#425342}.progress-step.is-done>b{color:#6d8d70}
+.progress-summary{margin-top:6px;padding-top:6px;border-top:1px solid #2a2228;color:#9d8e93;font:8px/1.4 Inter,sans-serif}
+@media(max-height:820px){.progress-step small{display:none}.progress-step{padding:4px 5px}.progress-summary{font-size:7px}}
+
+/* PASS 42A — production asset foundation */
+#game{image-rendering:pixelated}
+.build-card button small{color:#7b6d72}
+.progress-card{border-color:rgba(91,64,75,.82)}
+
+
+/* PASS 43A — run-build choice UI */
+.levelup-overlay{z-index:70;background:rgba(4,4,5,.72)}
+.levelup-panel{width:min(760px,calc(100% - 32px));text-align:left}
+.levelup-panel h1{font-size:clamp(28px,4vw,48px)}
+.levelup-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+.levelup-grid button{margin:0;min-height:108px;text-align:left;padding:16px}
+.levelup-grid button b,.levelup-grid button span{display:block}
+.levelup-grid button b{font:800 11px Cinzel,serif;color:#ead7c5;margin-bottom:9px}
+.levelup-grid button span{font:11px/1.45 Inter,sans-serif;color:#9e8d93}
+@media(max-width:720px){.levelup-grid{grid-template-columns:1fr}}
+
+/* PASS 44A — RTS construction command */
+.build-menu{position:absolute;z-index:62;inset:0;display:grid;place-items:center;background:rgba(3,3,4,.60);backdrop-filter:blur(4px)}
+.build-menu[hidden]{display:none}
+.build-menu-panel{width:min(880px,calc(100% - 36px));border:1px solid #5b4148;background:linear-gradient(145deg,rgba(18,13,16,.98),rgba(7,7,8,.98));box-shadow:0 34px 100px rgba(0,0,0,.68);padding:18px}
+.build-menu-panel>header{display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid #30242a;padding-bottom:12px}
+.build-menu-panel>header small{color:#856774;font:800 7px Cinzel;letter-spacing:.13em}
+.build-menu-panel h2{margin:5px 0 0;color:#ead9c6;font:800 22px Cinzel;letter-spacing:.04em}
+.build-menu-panel>header button{width:34px;height:34px;border:1px solid #4b3440;background:#0b090b;color:#b69aaa;font:20px Cinzel;cursor:pointer}
+.build-menu-help{margin:12px 0;color:#887a7f;font:11px/1.5 Inter}
+.build-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.build-grid button{position:relative;min-height:118px;border:1px solid #352831;background:linear-gradient(155deg,#100c0f,#09080a);color:#b7a6aa;text-align:left;padding:14px;cursor:pointer}
+.build-grid button:hover{border-color:#87624e;background:linear-gradient(155deg,#1a1112,#0c090b);transform:translateY(-1px)}
+.build-grid button>b{position:absolute;right:10px;top:9px;color:#a9844f;font:800 12px Cinzel}
+.build-grid strong,.build-grid small,.build-grid em{display:block}
+.build-grid strong{color:#e1d0c0;font:800 11px Cinzel;margin:14px 0 8px}
+.build-grid small{color:#b39261;font:700 8px Inter}
+.build-grid em{margin-top:10px;color:#6f6268;font:9px/1.35 Inter;font-style:normal}
+.build-menu-panel>footer{display:flex;gap:18px;margin-top:12px;padding-top:10px;border-top:1px solid #30242a;color:#706369;font:700 7px Cinzel;letter-spacing:.07em}
+.build-menu-panel>footer b{color:#b5945c}
+@media(max-width:760px){.build-grid{grid-template-columns:repeat(2,1fr)}.build-menu-panel{max-height:90vh;overflow:auto}}
+@media(max-height:700px){.build-grid button{min-height:92px;padding:10px}.build-grid em{display:none}.build-menu-panel{max-height:92vh;overflow:auto}}
+
+.forge-status{margin-top:9px;border-top:1px solid #2e2429;padding:9px 8px 2px;display:grid;gap:4px}
+.forge-status b{font:800 8px Cinzel;color:#c09a5d;letter-spacing:.08em}
+.forge-status span{font:9px/1.35 Inter;color:#84767b}
+
+/* PASS 44C — settlement provisioning command */
+.feed-hold{width:100%;margin-top:8px;padding:10px 11px;text-align:left;border:1px solid rgba(181,145,85,.32);background:linear-gradient(180deg,rgba(181,145,85,.08),rgba(12,9,11,.88));color:#d9c7b6;font-family:inherit;cursor:pointer}
+.feed-hold b,.feed-hold small{display:block}.feed-hold b{font:700 10px Cinzel,serif;color:#d6b978;letter-spacing:.06em}.feed-hold small{margin-top:4px;font-size:8px;line-height:1.35;color:#8f8088}.feed-hold:hover{border-color:rgba(214,185,120,.7);background:linear-gradient(180deg,rgba(181,145,85,.14),rgba(12,9,11,.9))}
+
+/* PASS 45A — Living Settlement / asset-library integration */
+.build-grid button{display:grid;grid-template-columns:86px 1fr;grid-template-rows:auto auto auto;column-gap:12px;align-items:center;min-height:132px}
+.build-grid button>b{right:9px;top:8px}
+.build-grid .build-preview{grid-row:1/4;grid-column:1;width:78px;height:78px;object-fit:contain;image-rendering:pixelated;border:1px solid #2e2529;background:radial-gradient(circle,#171118,#080709 70%)}
+.build-grid button strong,.build-grid button small,.build-grid button em{grid-column:2}
+.build-grid button strong{margin:10px 0 5px}
+.wall-preview,.shrine-preview{display:grid!important;place-items:center;color:#b59155;font:800 25px Cinzel;background:linear-gradient(135deg,#23170f,#0a0908)!important}
+.shrine-preview{color:#9d76ae;background:radial-gradient(circle,rgba(115,74,137,.25),#09070b 66%)!important}
+@media(max-height:760px){.build-grid button{min-height:100px;grid-template-columns:62px 1fr}.build-grid .build-preview{width:56px;height:56px}}
+
+/* PASS 46A — Arcane Warworld */
+.build-grid{grid-template-columns:repeat(3,1fr)}
+.build-grid button[data-build="tower"]{border-color:#514333;background:radial-gradient(circle at 28% 50%,rgba(175,135,70,.09),transparent 40%),linear-gradient(155deg,#100c0f,#09080a)}
+.build-grid button[data-build="academy"]{border-color:#493653;background:radial-gradient(circle at 28% 50%,rgba(132,80,160,.12),transparent 42%),linear-gradient(155deg,#100c12,#09080a)}
+@media(max-width:980px){.build-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ==========================================================
+   PASS 46B — WORLD DEPTH / RTS COMMAND SHELF / ELITE READABILITY
+   ========================================================== */
+.special-bank{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:6px;padding-top:6px;border-top:1px solid #2b2328}
+.special-bank span{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;align-items:center;padding:4px 5px;border:1px solid #282127;background:#09080a}
+.special-bank i{grid-row:1/3;color:#8f717c;font:700 6px Cinzel;font-style:normal}
+.special-bank b{color:#d8c3b1;font:700 10px Cinzel;text-align:right}
+.special-bank small{color:#62565c;font:600 5.5px Inter;text-align:right}
+
+/* B is no longer a full-screen modal. It is a right-side RTS command shelf. */
+.build-menu{position:absolute;z-index:62;inset:70px 10px 34px auto;width:min(570px,46vw);display:block;background:transparent;backdrop-filter:none;pointer-events:none}
+.build-menu[hidden]{display:none}
+.build-menu-panel{pointer-events:auto;width:100%;height:100%;box-sizing:border-box;display:flex;flex-direction:column;border:1px solid #5b4148;background:linear-gradient(145deg,rgba(18,13,16,.985),rgba(7,7,8,.975));box-shadow:-20px 18px 65px rgba(0,0,0,.62);padding:12px}
+.build-menu-panel>header{flex:0 0 auto}
+.build-menu-panel h2{font-size:16px}
+.build-menu-help{flex:0 0 auto;margin:7px 0 8px;font-size:9px}
+.build-tabs{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0 2px}
+.build-tabs button{border:1px solid #30252c;background:#0a090b;color:#75676d;padding:6px 8px;font:800 6px Cinzel;letter-spacing:.08em;cursor:pointer}
+.build-tabs button.is-active,.build-tabs button:hover{border-color:#73505e;color:#e0cbd1;background:#171015}
+.build-grid{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;padding-right:4px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;gap:7px}
+.build-grid button{min-height:104px;grid-template-columns:64px 1fr;padding:9px}
+.build-grid .build-preview{width:58px;height:58px}
+.build-grid button strong{font-size:9px;margin:7px 0 4px}
+.build-grid button small{font-size:7px}
+.build-grid button em{font-size:7.5px}
+.build-menu-panel>footer{flex:0 0 auto;font-size:6px}
+
+/* Quick structure inspection never blocks the center of combat. */
+.structure-panel{position:absolute;z-index:48;right:286px;bottom:44px;width:300px;box-sizing:border-box;padding:11px 12px;border:1px solid #543d49;background:linear-gradient(145deg,rgba(17,12,16,.96),rgba(7,7,8,.95));box-shadow:0 18px 50px rgba(0,0,0,.46);pointer-events:none}
+.structure-panel small{display:block;color:#8e6878;font:800 6px Cinzel;letter-spacing:.11em}
+.structure-panel h3{margin:4px 0 7px;color:#e5d4c7;font:800 13px Cinzel}
+.structure-panel p{margin:7px 0;color:#9a8b90;font:9px/1.4 Inter}
+.structure-panel>b{display:block;color:#8b746b;font:700 6px Cinzel;letter-spacing:.07em}
+.structure-meter{height:5px;border:1px solid #33252c;background:#0a0709}
+.structure-meter i{display:block;height:100%;background:linear-gradient(90deg,#823039,#c14a53)}
+
+@media(max-width:1200px){
+  .build-menu{width:min(520px,54vw)}
+  .structure-panel{right:250px;width:270px}
+}
+@media(max-width:850px){
+  .build-menu{inset:65px 8px 34px 8px;width:auto}
+  .structure-panel{right:12px;width:260px}
+}
+@media(max-height:720px){
+  .build-menu{top:58px}
+  .build-grid button{min-height:86px;grid-template-columns:52px 1fr}
+  .build-grid .build-preview{width:46px;height:46px}
+  .build-grid button em{display:none}
+}
+
+
+/* ==========================================================
+   PASS 46L — LARGE DISPLAY READABILITY / RESPONSIVE HUD
+   ========================================================== */
+.hud-left{width:clamp(218px,14vw,286px)}
+.hud-right{width:clamp(250px,15.2vw,310px)}
+.brand strong{font-size:clamp(17px,1.18vw,23px)}
+.wizard-card h2{font-size:clamp(17px,1.05vw,22px)}
+.carried-card p,.build-hint{font-size:clamp(9px,.58vw,12px)}
+.bank-card header strong,.build-card header strong,.upgrade-card header strong,.progress-card header strong{font-size:clamp(10px,.66vw,13px)}
+.bank-grid b{font-size:clamp(14px,.9vw,18px)}
+.build-card button>span,.upgrade-card button>span{font-size:clamp(8px,.52vw,10px)}
+.progress-step>span{font-size:clamp(7px,.47vw,9px)}
+.progress-summary{font-size:clamp(8px,.5vw,10px)}
+.controls span,.run-stats span{font-size:clamp(5.5px,.38vw,7.5px)!important}
+
+@media (min-width:2200px){
+  .hud-top{left:22px;right:22px;top:16px;min-height:84px;padding:13px 18px;gap:24px}
+  .hud-left{left:22px;top:116px;width:300px;gap:11px}
+  .hud-right{right:22px;top:116px;width:330px;gap:11px;max-height:calc(100vh - 180px)}
+  .wizard-card{padding:16px}.wizard-card h2{font-size:24px}.wizard-meta{font-size:9px}
+  .mini-meter{grid-template-columns:31px 1fr 42px;margin-top:10px}.mini-meter>span,.mini-meter>em{font-size:8px}.mini-meter>b{height:7px}
+  .carried-card,.bank-card,.build-card,.upgrade-card,.progress-card{padding:13px 14px}
+  .carried-card>div{font-size:10px;padding:7px 0}
+  .bank-grid{gap:7px}.bank-grid span{padding:9px 6px}.bank-grid b{font-size:19px}.bank-grid small{font-size:7px}
+  .special-bank b{font-size:13px}.special-bank small{font-size:7px}
+  .build-card button{padding:9px;grid-template-columns:34px 1fr}.build-card button>b{font-size:12px}
+  .build-card button>span,.upgrade-card button>span{font-size:10px}.build-card button small,.upgrade-card button small{font-size:9px}
+  .progress-step{padding:8px;grid-template-columns:30px 1fr}.progress-step>b{font-size:10px}.progress-step>span{font-size:9px}.progress-step small{font-size:8px}
+  .hud-bottom{left:22px;right:22px;bottom:14px;height:36px!important;min-height:36px!important;padding:7px 11px!important}
+  .event-feed{left:342px;bottom:64px;width:min(560px,34vw)}
+  .feed-item span{font-size:12px}.feed-item b{font-size:8px}
+}
+@media (min-width:3000px){
+  .hud-left{width:330px}.hud-right{width:360px}.brand strong{font-size:25px}
+  .realm-clock strong{font-size:15px}.realm-clock b{font-size:26px}.hall-health b{font-size:11px}
+}
+@media (max-width:1500px){
+  .hud-left{width:210px}.hud-right{width:238px}
+}
+
+.settlement-pop{margin:7px 0 9px;padding:6px 8px;border:1px solid rgba(133,88,111,.34);font:700 9px Cinzel;color:#cdb8c1;letter-spacing:.08em}
+.house-preview{display:grid!important;place-items:center;background:linear-gradient(180deg,#33211f,#181111)!important;color:#d7bc7b;font:800 30px Cinzel}

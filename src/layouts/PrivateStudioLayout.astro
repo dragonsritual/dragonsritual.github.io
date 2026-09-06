@@ -1,0 +1,77 @@
+---
+import "../styles/core.css";
+import "../styles/launch.css";
+import MemberDock from "../components/MemberDock.astro";
+import MemberTracker from "../components/MemberTracker.astro";
+import "../styles/member-system.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Private Studio — DragonsRitual",
+  description = "Private DragonsRitual studio access."
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#070708" />
+    <title>{title}</title>
+  </head>
+  <body class="private-studio-body">
+    <slot />
+    <MemberDock />
+    <MemberTracker />
+  </body>
+</html>
+
+<style is:global>
+  .private-studio-body{
+    margin:0;
+    min-height:100vh;
+    background:#070708;
+    color:#d9d0c8;
+  }
+  .private-studio-boot{
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+    padding:30px;
+    background:
+      radial-gradient(circle at 50% 25%,rgba(88,35,42,.16),transparent 34%),
+      #070708;
+  }
+  .private-studio-boot__card{
+    width:min(560px,100%);
+    padding:34px;
+    border:1px solid rgba(142,69,76,.28);
+    background:rgba(14,10,11,.88);
+    box-shadow:0 40px 120px rgba(0,0,0,.42);
+    text-align:center;
+  }
+  .private-studio-boot__card span{
+    color:#9c6463;
+    font:800 8px/1 Arial,sans-serif;
+    letter-spacing:.14em;
+  }
+  .private-studio-boot__card strong{
+    display:block;
+    margin-top:12px;
+    color:#e7dbd1;
+    font:500 28px/1.1 Georgia,serif;
+  }
+  .private-studio-boot__card p{
+    margin:10px auto 0;
+    max-width:420px;
+    color:#716a67;
+    font:11px/1.55 Arial,sans-serif;
+  }
+</style>

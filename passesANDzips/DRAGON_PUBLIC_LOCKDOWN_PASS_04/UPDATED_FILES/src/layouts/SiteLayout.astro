@@ -1,0 +1,92 @@
+---
+import "../styles/core.css";
+import "../styles/gaming.css";
+import "../styles/journal.css";
+import "../styles/public.css";
+import "../styles/launch.css";
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  noIndex?: boolean;
+  ogImage?: string | null;
+  ogType?: "website" | "article";
+}
+
+const {
+  title = "DragonsRitual Gaming",
+  description = "DragonsRitual gaming broadcasts, schedules, sessions and statistics.",
+  canonical,
+  noIndex = false,
+  ogImage,
+  ogType = "website"
+} = Astro.props;
+
+const isPublicLaunchRoute = Astro.url.pathname === "/" || Astro.url.pathname.startsWith("/radio");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (() => {
+        const local = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+        const radio = location.pathname === "/" || location.pathname.startsWith("/radio");
+        if (!local && !radio) location.replace("/");
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#08090c" />
+
+    <meta name="application-name" content="DragonsRitual" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="DragonsRitual" />
+
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icons/dr-192.png" />
+    <link rel="apple-touch-icon" href="/icons/dr-192.png" />
+    <link rel="canonical" href={canonical ?? Astro.url} />
+    {noIndex && <meta name="robots" content="noindex,nofollow" />}
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical ?? Astro.url} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <title>{title}</title>
+    <ClientRouter fallback="animate" />
+  </head>
+
+  <body>
+    <div id="dragon-media-dock" class="dragon-media-dock" hidden><button type="button" data-dock-return>RETURN TO MEDIA</button><button type="button" data-dock-close aria-label="Close player">×</button><div data-dock-label>MEDIA CONTINUES HERE</div></div>
+    <slot />
+
+    {!isPublicLaunchRoute && <script is:inline src="/dragon-rail.js"></script>}
+    <script is:inline>
+      (() => {
+        const isLocal =
+          location.hostname === "localhost" ||
+          location.hostname === "127.0.0.1";
+
+        if (!isLocal && "serviceWorker" in navigator) {
+          window.addEventListener("load", () => {
+            navigator.serviceWorker.register("/sw.js").catch((error) => {
+              console.warn("DragonsRitual service worker registration failed.", error);
+            });
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

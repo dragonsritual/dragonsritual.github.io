@@ -1,0 +1,60 @@
+{
+  "id": "dragons",
+  "label": "Dragons",
+  "subject": "dragons",
+
+  "kind": "blog",
+  "title": "On Dragons and the Price of Years",
+  "subtitle": "Some dragons hoard gold. Others hoard years.",
+
+  "text": [
+    "Some dragons hoard gold. Others hoard years.",
+    "",
+    "The tower keeps a ledger of the ones that traded their fire for wisdom.",
+    "",
+    "If he ever earns an audience, your wizard will learn that every scale is a promise left unpaid."
+  ],
+
+  "sections": [
+    {
+      "heading": "The First Lesson",
+      "body": [
+        "Some dragons hoard gold. Others hoard years. The tower insists you learn the difference before you ever send a wizard beyond its stones.",
+        "Gold-hoarders are the kind bards sing about: bright, terrible, and stupid in the way a storm is stupid. They burn towns, sleep on treasure, and die to spears, blades, and the occasional clever prince.",
+        "Year-hoarders are quieter. They coil not around coins, but around moments stolen from those who stray too close. You will not always see them. You will only notice that a village grows old too quickly, that a forest forgets how to bloom, that a wizard’s hair whitens long before his first real spell."
+      ]
+    },
+    {
+      "heading": "The Ledger in the Tower",
+      "body": [
+        "The tower keeps a ledger of the dragons that traded their fire for wisdom. It is not a book of names; dragons have too many of those. It is a book of bargains.",
+        "Here are written the agreements where a dragon dimmed its own blaze to think more clearly, to listen more closely, to taste the threads of time instead of merely burning through them.",
+        "Such creatures do not raid villages. They do not sleep on gold. They sleep on questions: What is left when a world forgets its heroes? How many kingdoms fit in a single stolen century? What happens to a promise when the one who made it has been dust for a thousand years?"
+      ]
+    },
+    {
+      "heading": "What Dragons Truly Hoard",
+      "list": [
+        "Breath – not the fire itself, but the moments before it. That trembling second when a life realizes it might end. Dragons remember every one.",
+        "Oaths – the whispered vows made in their shadow: \"I will never come here again.\" \"If I live, I will love differently.\" They keep such oaths like coins.",
+        "Regrets – the things unsaid as riders fall, as towers crack, as wizards turn away from a door they were too afraid to open. Regret is a dragon’s favorite flavor of year."
+      ]
+    },
+    {
+      "heading": "On Meeting a Dragon",
+      "body": [
+        "If your wizard ever earns an audience, he will learn that every scale in a dragon’s hoard is a promise left unpaid. Every gleam is a task abandoned, a love postponed, a life that ran out of courage halfway through a sentence.",
+        "A wizard who walks away from such a meeting unchanged has not truly met a dragon. He has only seen a large lizard with a convenient reputation.",
+        "The tower will watch closely when that day comes. It wants to know which kind of hoard your wizard envies more: the simple shine of gold, or the heavy, aching weight of stolen years."
+      ]
+    },
+    {
+      "heading": "Advice to the Caretaker",
+      "body": [
+        "Do not fill his head with stories of easy glory. If he must face a dragon, let him understand that he is walking into a conversation about time, not just a fight about treasure.",
+        "Feed him well. Teach him patience. Let him feel the small weight of promised things: a meal shared, a worry heard, a night of rest when he expected none. Only then will he recognize, in a dragon’s eyes, the monstrous version of that same hunger.",
+        "You raise him in a lonely tower now, but the ledger is already judging both of you. It will remember whether you sent him out chasing gold… or sent him out ready to bargain for something far more dangerous."
+      ]
+    }
+  ]
+}

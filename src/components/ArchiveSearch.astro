@@ -1,0 +1,233 @@
+---
+import { archiveEntries, archiveCategoryOrder } from "../data/siteArchive.js";
+const payload = JSON.stringify({entries:archiveEntries,order:archiveCategoryOrder});
+---
+<div class="archive-search archive-search--discovery" id="archive-search" aria-hidden="true">
+  <button class="archive-search__backdrop" type="button" data-search-close aria-label="Close search"></button>
+
+  <section class="archive-search__panel" role="dialog" aria-modal="true" aria-label="Search the Dragon Archive">
+    <header class="archive-search__head">
+      <div>
+        <span>DRAGONSRITUAL / PUBLIC ARCHIVE</span>
+        <strong>Discovery Chamber</strong>
+      </div>
+      <div class="archive-search__head-actions">
+        <span class="archive-search__shortcut">PRESS / TO SEARCH</span>
+        <button type="button" data-search-close>ESC</button>
+      </div>
+    </header>
+
+    <div class="archive-search__hero">
+      <span class="archive-search__kicker">SEARCH THE DRAGON ARCHIVE</span>
+      <h2>Find the work. Follow the connections.</h2>
+      <p>Search creators, stories, music, broadcasts, games, characters, worlds, publications and the history growing between them.</p>
+    </div>
+
+    <div class="archive-search__query-shell">
+      <div class="archive-search__threads" id="archive-search-threads" aria-label="Active search threads"></div>
+      <label class="archive-search__input-wrap">
+        <span>SEARCH</span>
+        <input id="archive-search-input" type="search" placeholder="Creator, title, world, medium, subject..." autocomplete="off">
+        <button type="button" class="archive-search__add-thread" data-search-add-thread title="Add this as another search thread">+ THREAD</button>
+      </label>
+      <div class="archive-search__query-help">
+        <span>ENTER searches</span>
+        <span>+ THREAD combines subjects</span>
+        <span>× removes a thread</span>
+      </div>
+    </div>
+
+    <nav class="archive-search__filters" id="archive-search-filters" aria-label="Archive categories">
+      <button type="button" class="is-active" data-search-filter="ALL">ALL</button>
+      <button type="button" data-search-filter="PEOPLE">PEOPLE</button>
+      <button type="button" data-search-filter="ART">ART</button>
+      <button type="button" data-search-filter="FICTION">WRITING</button>
+      <button type="button" data-search-filter="RADIO">MUSIC / RADIO</button>
+      <button type="button" data-search-filter="DRAGON TV">VIDEO</button>
+      <button type="button" data-search-filter="GAMES">GAMES</button>
+      <button type="button" data-search-filter="COMICS">COMICS</button>
+      <button type="button" data-search-filter="ARCHIVE">ARCHIVE</button>
+    </nav>
+
+    <div class="archive-search__discovery-grid">
+      <main class="archive-search__main">
+        <div class="archive-search__status-row">
+          <div class="archive-search__status" id="archive-search-status">Browse the archive.</div>
+          <button type="button" class="archive-search__explore" data-search-explore>EXPLORE RESULTS →</button>
+        </div>
+        <div class="archive-search__results" id="archive-search-results"></div>
+      </main>
+
+      <aside class="archive-search__preview" id="archive-search-preview">
+        <span class="archive-search__preview-label">DISCOVERY WINDOW</span>
+        <div class="archive-search__preview-stage">
+          <div class="archive-search__preview-mark">DR</div>
+          <strong>Choose something from the archive.</strong>
+          <p>Stories, broadcasts, videos and creator records can eventually preview here without breaking your search.</p>
+        </div>
+        <div class="archive-search__preview-meta">
+          <span>QUICK PREVIEW</span>
+          <span>RELATIONSHIPS</span>
+          <span>ARCHIVE HISTORY</span>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="archive-search__future">
+      <span>THE ARCHIVE IS STILL YOUNG.</span>
+      <p>This chamber is designed to grow with DragonsRitual: multi-creator searches, dates, publications, characters, worlds, collaborations, playable media previews and deep archive relationships can all live here as the collection expands.</p>
+    </footer>
+  </section>
+
+  <script type="application/json" id="archive-search-data" set:html={payload}></script>
+</div>
+
+<script>
+const norm=v=>(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+const esc=v=>(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const state={threads:[],filter:'ALL'};
+
+function parts(){
+  const root=document.querySelector('#archive-search');
+  return {
+    root,
+    input:root?.querySelector('#archive-search-input')||null,
+    results:root?.querySelector('#archive-search-results')||null,
+    status:root?.querySelector('#archive-search-status')||null,
+    dataNode:root?.querySelector('#archive-search-data')||null,
+    threads:root?.querySelector('#archive-search-threads')||null,
+    preview:root?.querySelector('#archive-search-preview')||null
+  };
+}
+function data(){
+  try{return JSON.parse(parts().dataNode?.textContent||'{"entries":[],"order":[]}')}catch{return {entries:[],order:[]}}
+}
+function searchable(e){return norm([e.title,e.category,e.type,e.description,...(e.keywords||[])].join(' '))}
+function categoryMatch(e){
+  if(state.filter==='ALL'||state.filter==='ARCHIVE')return true;
+  if(state.filter==='PEOPLE')return norm(e.type).includes('creator')||norm(e.category).includes('people');
+  return norm(e.category)===norm(state.filter);
+}
+function renderThreads(){
+  const {threads}=parts(); if(!threads)return;
+  threads.innerHTML=state.threads.map((t,i)=>`<button type="button" class="archive-search__thread" data-remove-thread="${i}"><span>${esc(t)}</span><b>×</b></button>`).join('');
+  threads.classList.toggle('has-threads',state.threads.length>0);
+}
+function renderPreview(e){
+  const {preview}=parts(); if(!preview||!e)return;
+  const media=/video|live video|broadcast/i.test(`${e.type} ${e.category}`);
+  preview.innerHTML=`
+    <span class="archive-search__preview-label">DISCOVERY WINDOW</span>
+    <div class="archive-search__preview-stage ${media?'is-media':''}">
+      <div class="archive-search__preview-mark">${esc((e.category||'DR').slice(0,2))}</div>
+      <span>${esc(e.category||'ARCHIVE')} / ${esc(e.type||'ENTRY')}</span>
+      <strong>${esc(e.title)}</strong>
+      <p>${esc(e.description||'Archive entry')}</p>
+      ${media?'<div class="archive-search__preview-timeline"><i></i><span>MEDIA PREVIEW FOUNDATION</span></div>':''}
+      <a href="${esc(e.href)}">OPEN ${media?'MEDIA':'ARCHIVE ENTRY'} →</a>
+    </div>
+    <div class="archive-search__preview-meta"><span>RELATED WORK</span><span>CREATOR HISTORY</span><span>CONNECTIONS</span></div>`;
+}
+function currentQuery(){
+  const {input}=parts();
+  return input?.value.trim()||'';
+}
+function filteredEntries(){
+  const q=currentQuery();
+  const terms=[...state.threads, ...(q?[q]:[])].map(norm);
+  return (data().entries||[]).filter(e=>{
+    if(!categoryMatch(e))return false;
+    const hay=searchable(e);
+    return terms.every(t=>hay.includes(t));
+  });
+}
+function render(){
+  const {results,status}=parts(); if(!results||!status)return;
+  renderThreads();
+  const filtered=filteredEntries();
+  const d=data();
+  const cats=[...(d.order||[]),...filtered.map(e=>e.category)].filter((v,i,a)=>a.indexOf(v)===i);
+  const groups=cats.map(c=>({c,items:filtered.filter(e=>e.category===c)})).filter(g=>g.items.length);
+  const hasTerms=state.threads.length||currentQuery();
+  status.textContent=hasTerms
+    ? `${filtered.length} connection${filtered.length===1?'':'s'} found · ${state.threads.length?state.threads.length+' active thread'+(state.threads.length===1?'':'s'):'live search'}`
+    : 'Browse the archive or begin a search thread.';
+  results.innerHTML=groups.length
+    ? groups.map(g=>`<section class="archive-search__group"><h2>${esc(g.c)}</h2><div>${g.items.map((e,i)=>`<a class="archive-search__item" href="${esc(e.href)}" data-preview-title="${esc(e.title)}"><strong>${esc(e.title)}</strong><span>${esc(e.type)}</span><small>${esc(e.description||'')}</small><b>VIEW →</b></a>`).join('')}</div></section>`).join('')
+    : `<div class="archive-search__empty"><strong>No connections yet.</strong><span>Remove a thread, change a filter, or try another creator, title, medium or subject.</span></div>`;
+}
+function addThread(){
+  const {input}=parts(); const q=input?.value.trim(); if(!q)return;
+  if(!state.threads.some(t=>norm(t)===norm(q)))state.threads.push(q);
+  input.value=''; render();
+}
+function openSearch(){
+  const {root,input}=parts(); if(!root)return;
+  root.classList.add('is-open'); root.setAttribute('aria-hidden','false');
+  document.documentElement.classList.add('search-open');
+  state.threads=[];state.filter='ALL';
+  root.querySelectorAll('[data-search-filter]').forEach(b=>b.classList.toggle('is-active',b.dataset.searchFilter==='ALL'));
+  render(); requestAnimationFrame(()=>input?.focus());
+}
+function closeSearch(){
+  const {root,input}=parts();
+  root?.classList.remove('is-open'); root?.setAttribute('aria-hidden','true');
+  document.documentElement.classList.remove('search-open');
+  if(input)input.value='';
+  state.threads=[];state.filter='ALL';
+}
+function reset(){
+  document.documentElement.classList.remove('search-open');
+  const {root,input}=parts();root?.classList.remove('is-open');root?.setAttribute('aria-hidden','true');if(input)input.value='';
+  state.threads=[];state.filter='ALL';
+}
+if(!window.__dragonArchiveDiscoveryBound){
+  window.__dragonArchiveDiscoveryBound=true;
+  document.addEventListener('click',e=>{
+    const t=e.target instanceof Element?e.target:null;
+    if(t?.closest('[data-search-open]')){e.preventDefault();openSearch();return}
+    if(t?.closest('[data-search-close]')){e.preventDefault();closeSearch();return}
+    if(t?.closest('[data-search-add-thread]')){e.preventDefault();addThread();return}
+    const remove=t?.closest('[data-remove-thread]');
+    if(remove){state.threads.splice(Number(remove.dataset.removeThread),1);render();return}
+    const filter=t?.closest('[data-search-filter]');
+    if(filter){
+      state.filter=filter.dataset.searchFilter||'ALL';
+      parts().root?.querySelectorAll('[data-search-filter]').forEach(b=>b.classList.toggle('is-active',b===filter));
+      render();return;
+    }
+    if(t?.closest('[data-search-explore]')){
+      const terms=[...state.threads,currentQuery()].filter(Boolean);
+      if(terms.length)sessionStorage.setItem('dragonArchiveSearch',JSON.stringify({terms,filter:state.filter}));
+      // Full dedicated results page is intentionally a later archive-data pass.
+      parts().status.textContent=terms.length?'Your discovery room is being assembled from the active threads. Dedicated results-page routing comes with the full Archive index.':'Add a search first.';
+      return;
+    }
+  });
+  document.addEventListener('input',e=>{
+    if(e.target instanceof HTMLInputElement&&e.target.id==='archive-search-input')render();
+  });
+  document.addEventListener('mouseover',e=>{
+    const item=e.target instanceof Element?e.target.closest('.archive-search__item'):null;
+    if(!item)return;
+    const title=item.getAttribute('data-preview-title');
+    const entry=(data().entries||[]).find(e=>e.title===title);
+    if(entry)renderPreview(entry);
+  });
+  document.addEventListener('focusin',e=>{
+    const item=e.target instanceof Element?e.target.closest('.archive-search__item'):null;
+    if(!item)return;
+    const entry=(data().entries||[]).find(e=>e.title===item.getAttribute('data-preview-title'));
+    if(entry)renderPreview(entry);
+  });
+  document.addEventListener('keydown',e=>{
+    const {root}=parts();const open=!!root?.classList.contains('is-open');
+    if(e.key==='Escape'&&open){closeSearch();return}
+    if(e.key==='Enter'&&open&&document.activeElement?.id==='archive-search-input'&&currentQuery()){e.preventDefault();addThread();return}
+    if(e.key==='/'&&!open&&!['INPUT','TEXTAREA'].includes(document.activeElement?.tagName||'')){e.preventDefault();openSearch()}
+  });
+  document.addEventListener('astro:before-swap',()=>document.documentElement.classList.remove('search-open'));
+  document.addEventListener('astro:page-load',reset);
+}
+reset();
+</script>

@@ -1,0 +1,50 @@
+---
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import LaunchHeader from '../../../components/LaunchHeader.astro';
+import GamingWorldBossBar from '../../../components/GamingWorldBossBar.astro';
+import '../../../styles/gaming.css';
+import '../../../styles/first-hold.css';
+---
+<SiteLayout title="First Hold — Dragon Gaming" description="A fast top-down survival game inside Dragon Gaming. Gather, build, defend and see how long the Hold survives.">
+  <LaunchHeader />
+  <main class="first-hold-site">
+    <GamingWorldBossBar />
+    <nav class="first-hold-nav">
+      <a href="/gaming/">← LOUNGE</a>
+      <div><span>DRAGON GAMING / PLAYABLE REALM</span><strong>FIRST HOLD</strong></div>
+      <div class="first-hold-nav__status"><i></i> LOCAL SURVIVAL REALM</div>
+    </nav>
+
+    <section class="first-hold-frame">
+      <iframe
+        title="First Hold"
+        src="/games/first-hold/index.html?v=46S"
+        allow="fullscreen"
+        data-first-hold-frame
+      ></iframe>
+    </section>
+
+    <footer class="first-hold-footer">
+      <span>FIRST HOLD · V1 PLAYABLE PROTOTYPE</span>
+      <p>Gather shared resources. Build a settlement. Spend danger-earned Gold. Survive increasingly difficult incursions.</p>
+      <button type="button" data-first-hold-fullscreen>FULL SCREEN</button>
+    </footer>
+  </main>
+
+  <script>
+    const frame=document.querySelector('[data-first-hold-frame]');
+    document.querySelector('[data-first-hold-fullscreen]')?.addEventListener('click',async()=>{
+      try{
+        if(document.fullscreenElement)await document.exitFullscreen();
+        else await frame?.requestFullscreen();
+      }catch{}
+    });
+
+    window.addEventListener('message',e=>{
+      if(e.origin!==location.origin)return;
+      if(e.data?.type==='DRAGON_REALM_EVENT'&&e.data.event){
+        window.dispatchEvent(new CustomEvent('dragon:realm:event',{detail:e.data.event}));
+      }
+    });
+  </script>
+</SiteLayout>

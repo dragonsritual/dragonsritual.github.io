@@ -1,0 +1,58 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import LaunchHeader from '../../components/LaunchHeader.astro';
+import '../../styles/tv.css';
+---
+<SiteLayout title="Dragon TV Studio — DragonsRitual">
+<LaunchHeader />
+<main class="tv-studio" data-tv-studio hidden>
+  <header><span>DRAGON TV / CREATOR SIDE</span><h1>Broadcast Studio</h1><p>The business and production side stays separate from the public channel.</p></header>
+  <section class="studio-status"><div><small>CHANNEL</small><b>NOT CONFIGURED</b></div><div><small>LIVE STATUS</small><b>OFF AIR</b></div><div><small>SUBSCRIBERS</small><b>—</b></div><div><small>THIS MONTH</small><b>—</b></div></section>
+  <section class="studio-grid">
+    <article><span>01</span><h2>Go Live</h2><p>Stream title, description, category, tags, destinations and broadcast controls.</p><button disabled>SETUP REQUIRED</button></article>
+    <article><span>02</span><h2>Programming</h2><p>Schedule shows, premieres, recurring broadcasts and channel programming.</p><button disabled>COMING NEXT</button></article>
+    <article><span>03</span><h2>Audience</h2><p>Followers, members, future paid subscribers and community access.</p><button disabled>COMING NEXT</button></article>
+    <article><span>04</span><h2>Analytics</h2><p>Views, watch time, retention, traffic sources, follows and channel growth.</p><button disabled>COMING NEXT</button></article>
+    <article><span>05</span><h2>Library</h2><p>Past streams, clips, drafts, premieres and reusable media.</p><button disabled>COMING NEXT</button></article>
+    <article><span>06</span><h2>Business</h2><p>Future subscription tiers, supporter access, payouts and offers.</p><button disabled>COMING LATER</button></article>
+  </section>
+  <aside class="studio-principle"><b>PUBLIC TV IS FOR WATCHING.</b><span>This room is for running the channel. No creator dashboard clutter leaks into the viewer experience.</span></aside>
+</main>
+
+<script>
+  import { getSupabaseBrowserClient } from '../../lib/supabaseBrowser';
+
+  const supabase=getSupabaseBrowserClient();
+  const {data:{session}}=await supabase.auth.getSession();
+
+  if(!session){
+    location.replace('/join/?next=/creator/tv/');
+    throw new Error('Sign in required');
+  }
+
+  const [rolesResult,statusResult,adminResult]=await Promise.all([
+    supabase.rpc('dr_my_roles'),
+    supabase.rpc('dr_my_account_status'),
+    supabase.rpc('is_admin')
+  ]);
+
+  const roles=Array.isArray(rolesResult.data)
+    ? rolesResult.data.map(v=>String(v).toLowerCase())
+    : [];
+
+  const status=statusResult.data||'active';
+  const isAdmin=adminResult.data===true;
+  const allowed=status==='active' && (
+    isAdmin ||
+    roles.some(r=>['creator','streaming','radio','editor'].includes(r))
+  );
+
+  if(!allowed){
+    location.replace('/member/?notice=tv_creator_access');
+    throw new Error('Dragon TV creator access required');
+  }
+
+  document.querySelector('[data-tv-studio]').hidden=false;
+</script>
+
+</SiteLayout>

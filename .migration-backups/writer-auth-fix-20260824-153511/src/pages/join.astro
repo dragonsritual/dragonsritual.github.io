@@ -1,0 +1,32 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import LaunchHeader from "../components/LaunchHeader.astro";
+---
+<SiteLayout title="Enter DRAGON — DragonsRitual" description="Creator access to DragonsRitual.">
+  <LaunchHeader />
+  <main class="wr-auth">
+    <section class="wr-auth__card">
+      <span class="wr-kicker">DRAGON / CREATOR ACCESS</span>
+      <h1>Enter the room.</h1>
+      <p class="wr-lede">A private desk for writers and invited creators.</p>
+      <div class="wr-auth__tabs"><button class="is-active" type="button" data-mode="signin">SIGN IN</button><button type="button" data-mode="join">CREATE ACCOUNT</button></div>
+      <form class="wr-form" data-auth-form>
+        <label data-name-row hidden><span>DISPLAY NAME</span><input name="display_name" autocomplete="name" placeholder="How your name should appear" /></label>
+        <label><span>EMAIL</span><input name="email" type="email" autocomplete="email" required placeholder="you@example.com" /></label>
+        <label><span>PASSWORD</span><input name="password" type="password" minlength="8" autocomplete="current-password" required placeholder="8+ characters" /></label>
+        <button class="wr-primary" type="submit" data-submit>ENTER WRITER ROOM</button>
+      </form>
+      <p class="wr-message" data-message aria-live="polite"></p>
+      <a class="wr-back" href="/">← RETURN TO TODAY</a>
+    </section>
+  </main>
+  <script>
+    import { getSupabaseBrowserClient } from '../lib/supabaseBrowser';
+    const supabase=getSupabaseBrowserClient();
+    const form=document.querySelector('[data-auth-form]'); const msg=document.querySelector('[data-message]'); const nameRow=document.querySelector('[data-name-row]'); const submit=document.querySelector('[data-submit]');
+    let mode='signin'; const say=(t,b=false)=>{msg.textContent=t;msg.classList.toggle('is-error',b)};
+    const {data:{session}}=await supabase.auth.getSession(); if(session) location.href='/writer-room/';
+    document.querySelectorAll('[data-mode]').forEach(btn=>btn.addEventListener('click',()=>{mode=btn.dataset.mode;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('is-active',b===btn));nameRow.hidden=mode!=='join';submit.textContent=mode==='join'?'CREATE MY DESK':'ENTER WRITER ROOM';say('')}));
+    form.addEventListener('submit',async e=>{e.preventDefault();submit.disabled=true;say('WORKING…');const email=form.email.value.trim(),password=form.password.value,display_name=form.display_name?.value.trim();try{if(mode==='join'){const {data,error}=await supabase.auth.signUp({email,password,options:{data:{display_name:display_name||email.split('@')[0],creator_type:'writer'}}});if(error)throw error;if(data.session)location.href='/writer-room/';else say('ACCOUNT CREATED — CHECK YOUR EMAIL TO CONFIRM, THEN SIGN IN.')}else{const {error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;location.href='/writer-room/'}}catch(err){say(err?.message||'Could not enter the room.',true)}finally{submit.disabled=false}});
+  </script>
+</SiteLayout>

@@ -1,0 +1,279 @@
+@top Query { (FunctionDef ";")* expression }
+
+@skip { whitespace | LineComment }
+
+@precedence {
+  exp @right,
+  unary @right,
+  mul @left,
+  add @left,
+  range @left,
+  compare @left,
+  not @left,
+  and @left,
+  or @left,
+  arrow @right,
+  pipe @left
+}
+
+// Function definition prelude: `fn name(...) = body;` (any number of
+// them) before the main query. Matches Sanity's custom-function
+// syntax used throughout the test suite.
+FunctionDef {
+  Fn (Namespace { Identifier } NamespaceSep)? FunctionName { Identifier }
+    "(" commaSep<Parameter>? ")" "=" expression
+}
+
+expression { assignExpression (!pipe Pipe assignExpression)* }
+
+assignExpression { orExpression (!arrow Arrow orExpression)* }
+
+orExpression { andExpression (!or Or andExpression)* }
+
+andExpression { notExpression (!and And notExpression)* }
+
+notExpression { Not notExpression | compareExpression }
+
+compareExpression {
+  rangeExpression |
+  rangeExpression EqualityOp rangeExpression |
+  rangeExpression CompareOp rangeExpression |
+  rangeExpression In rangeExpression |
+  rangeExpression Match rangeExpression
+}
+
+// Range as a general expression — `a..b` (inclusive) or `a...b`
+// (exclusive). Per spec §4, ranges sit between additive operators
+// and `in`/`match`, so `1 in 2..4` parses as `1 in (2..4)`.
+rangeExpression { addExpression (!range rangeOp addExpression)? }
+
+rangeOp { InclusiveRange | Ellipsis }
+
+addExpression { mulExpression (!add AddOp mulExpression)* }
+
+mulExpression { expExpression (!mul (MulOp | MulOp { "*" }) expExpression)* }
+
+expExpression { unaryExpression (!exp Exp unaryExpression)* }
+
+// Unary `+` / `-` lives just below `**` in the precedence chain, so
+// `+true == true` parses as `(+true) == true` and `-3 ** 2` as
+// `-(3 ** 2)` (right-assoc).
+unaryExpression { !unary AddOp unaryExpression | postfixExpression }
+
+postfixExpression { primaryExpression postfixOp* }
+
+postfixOp {
+  ArrayTraversal |
+  Filter |
+  Projection |
+  DotAccess |
+  ParentAccess |
+  SelectorAccess |
+  Dereference |
+  DerefAccess |
+  Asc |
+  Desc
+}
+
+// Selector group / tuple access: `.( expr, expr, ... )`. Used as
+// argument syntax by `diff::changedAny()`, `path()`, and similar —
+// the parenthesised list is a "selector" that names multiple
+// attributes / sub-selectors at once. Disambiguated from DotAccess
+// (`.Identifier`) and ParentAccess (`.^`) on the token after `.`.
+SelectorAccess { "." "(" commaSep<expression> ")" }
+
+// Parent chain step: a `.` followed by `^` denotes "the next scope
+// up" from whatever's on the left. This is how `^.^` (grandparent)
+// and longer chains are written. The Rust groq-parser treats `.` as
+// a generic binary operator with any primary on the right; we model
+// it more narrowly so the highlighter can still treat plain
+// attribute access (`.name`) specially while admitting the parent
+// case.
+ParentAccess { "." Parent }
+
+// Empty brackets — the array-traversal postfix that flattens / iterates
+// an array. Matches Rust groq-parser's ArrayTraversal: distinct from
+// Filter (which has a predicate) and Element (which has an integer
+// subscript). The parser disambiguates on a single token of lookahead:
+// `[` followed immediately by `]` is ArrayTraversal; anything else
+// continues to a Filter.
+//
+// The optional leading dot accepts legacy syntax (`obj.[]`,
+// `obj.[pred]`); modern queries omit it.
+ArrayTraversal { "."? "[" "]" }
+
+// Filter holds any expression — ranges now live at the expression
+// level (see rangeExpression above), so `[1..5]` naturally parses
+// as a Filter containing a range expression.
+Filter { "."? "[" expression "]" }
+
+Projection { "{" projectionBody? "}" }
+
+projectionBody { projectionEntry ("," projectionEntry)* ","? }
+
+projectionEntry {
+  Spread |
+  PropertyPair |
+  expression
+}
+
+// Spread inside projections / object literals / array literals: an
+// `...` optionally followed by an expression whose value is merged
+// into the parent. The spec's ObjectAttr writes `'...' Expression?`
+// — bare `...` is shorthand for spreading the current scope's
+// `this`.
+Spread { Ellipsis expression? }
+
+PropertyPair { String ":" expression | Identifier ":" expression }
+
+DotAccess { "." Identifier }
+
+Dereference { Deref }
+
+DerefAccess { Deref Identifier }
+
+primaryExpression {
+  Everything { "*" } |
+  This |
+  Parent |
+  Parameter |
+  String |
+  Number |
+  kw<"true", True> |
+  kw<"false", False> |
+  kw<"null", Null> |
+  In |
+  Match |
+  Asc |
+  Desc |
+  NamespacedCall |
+  FunctionCall |
+  Identifier |
+  ArrayLiteral |
+  ObjectLiteral |
+  ParenExpression
+}
+
+FunctionCall { FunctionName { Identifier } !exp "(" commaSep<expression>? ")" }
+
+NamespacedCall { Namespace { Identifier } NamespaceSep FunctionName { Identifier } "(" commaSep<expression>? ")" }
+
+ArrayLiteral { "[" commaSep<arrayElement>? "]" }
+
+arrayElement { Spread | expression }
+
+// Object literals share their body shape with Projection. The spec's
+// ObjectAttr is `String ':' Expression | Identifier | '...' Expression?`,
+// and real-world GROQ also uses arrow expressions (`cond => { ... }`)
+// inside braces in projection-style usage. Matching the Rust
+// reference parser, we accept any expression list here and let
+// downstream tooling (e.g. type-checker / linter) decide whether a
+// given entry is meaningful in the surrounding context.
+ObjectLiteral { "{" projectionBody? "}" }
+
+// Parens act as grouping for a single expression and as a "selector
+// tuple" when there are multiple comma-separated expressions. The
+// distinction is purely structural — semantics decide which usage
+// applies in a given position.
+ParenExpression { "(" expression ("," expression)* ")" }
+
+commaSep<x> { x ("," x)* ","? }
+
+kw<term, name> { @specialize[@name={name}]<Identifier, term> }
+
+@skip {} {
+  DoubleString { doubleQuote (doubleStringContent | StringEscape)* doubleStringEnd }
+  SingleString { singleQuote (singleStringContent | SingleStringEscape)* singleStringEnd }
+}
+
+String { DoubleString | SingleString }
+
+@local tokens {
+  doubleStringEnd[@name='"'] { '"' }
+  StringEscape { "\\" ("u{" $[0-9a-fA-F]+ "}" | "u" $[0-9a-fA-F] $[0-9a-fA-F] $[0-9a-fA-F] $[0-9a-fA-F] | _) }
+  @else doubleStringContent
+}
+
+@local tokens {
+  singleStringEnd[@name="'"] { "'" }
+  SingleStringEscape[@name=StringEscape] { "\\" ("u{" $[0-9a-fA-F]+ "}" | "u" $[0-9a-fA-F] $[0-9a-fA-F] $[0-9a-fA-F] $[0-9a-fA-F] | _) }
+  @else singleStringContent
+}
+
+@tokens {
+  whitespace { @whitespace+ }
+
+  LineComment { "//" ![\n]* }
+
+  identifierChar { @asciiLetter | "_" }
+  Identifier { identifierChar (identifierChar | @digit)* }
+
+  NamespaceSep { "::" }
+
+  Parameter { "$" identifierChar (identifierChar | @digit)* }
+
+  doubleQuote { '"' }
+  singleQuote { "'" }
+
+  digit { @digit }
+  Number {
+    digit+ ("." digit+)? ($[eE] $[+\-]? digit+)?
+  }
+
+  @precedence { Number, "." }
+
+  This { "@" }
+
+  Parent { "^"+ }
+
+  EqualityOp { "==" | "!=" }
+
+  CompareOp { "<=" | ">=" | "<" | ">" }
+
+  AddOp { "+" | "-" }
+
+  MulOp { "/" | "%" }
+
+  @precedence { LineComment, MulOp }
+
+  Exp { "**" }
+
+  @precedence { Exp, "*" }
+
+  And { "&&" }
+
+  Or { "||" }
+
+  Not { "!" }
+
+  @precedence { EqualityOp, Not }
+
+  Pipe { "|" }
+
+  @precedence { Or, Pipe }
+
+  Arrow { "=>" }
+
+  @precedence { Arrow, EqualityOp }
+
+  Deref { "->" }
+
+  Ellipsis { "..." }
+
+  InclusiveRange { ".." }
+
+  @precedence { Ellipsis, InclusiveRange, "." }
+  @precedence { NamespaceSep, ":" }
+
+  "(" ")" "[" "]" "{" "}" "," ":" "." ";" "="
+}
+
+In { @specialize[@name=In]<Identifier, "in"> }
+Match { @specialize[@name=Match]<Identifier, "match"> }
+Asc { @specialize[@name=Asc]<Identifier, "asc"> }
+Desc { @specialize[@name=Desc]<Identifier, "desc"> }
+Fn { @specialize[@name=Fn]<Identifier, "fn"> }
+
+@external propSource groqHighlighting from "./highlight"
+
+@detectDelim

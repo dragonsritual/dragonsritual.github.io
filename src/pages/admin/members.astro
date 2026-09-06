@@ -1,0 +1,407 @@
+---
+import PrivateStudioLayout from "../../layouts/PrivateStudioLayout.astro";
+import "../../styles/member-admin.css";
+---
+<PrivateStudioLayout
+  title="Member Administration — DragonsRitual"
+  description="Private DragonsRitual member administration."
+>
+  <main class="dr-admin" data-admin-shell hidden>
+    <div class="dr-admin__shell">
+      <header class="dr-admin__header">
+        <div>
+          <span class="dr-admin__kicker">DRAGON / DIRECTOR CONTROL</span>
+          <h1>Member Administration.</h1>
+          <p>Manage the people inside Dragon: membership, creator access, workstations, badges, page permissions and account standing.</p>
+        </div>
+        <div class="dr-admin__summary">
+          <div><span>MEMBERS</span><strong data-count-members>0</strong></div>
+          <div><span>CREATORS</span><strong data-count-creators>0</strong></div>
+          <div><span>ACTIVE</span><strong data-count-active>0</strong></div>
+        </div>
+      </header>
+
+      <section class="dr-admin__toolbar">
+        <div class="dr-admin__search">
+          <span>SEARCH</span>
+          <input type="search" data-member-search placeholder="Name, email, handle, role..." />
+        </div>
+
+        <label>
+          <span>STATUS</span>
+          <select data-filter-status>
+            <option value="all">ALL</option>
+            <option value="active">ACTIVE</option>
+            <option value="paused">PAUSED</option>
+            <option value="suspended">SUSPENDED</option>
+            <option value="removed">REMOVED</option>
+          </select>
+        </label>
+
+        <label>
+          <span>TYPE</span>
+          <select data-filter-type>
+            <option value="all">ALL</option>
+            <option value="member">MEMBERS</option>
+            <option value="creator">CREATORS</option>
+            <option value="editor">EDITORS</option>
+          </select>
+        </label>
+
+        <button type="button" class="dr-admin__refresh" data-refresh-members>REFRESH</button>
+      </section>
+
+      <section class="dr-admin__table-wrap">
+        <div class="dr-admin__table-head">
+          <span>MEMBER</span>
+          <span>STATUS</span>
+          <span>ROLES</span>
+          <span>BADGES</span>
+          <span>JOINED</span>
+          <span>LAST ACTIVE</span>
+        </div>
+        <div class="dr-admin__rows" data-member-rows></div>
+      </section>
+    </div>
+
+    <aside class="dr-admin-drawer" data-member-drawer hidden>
+      <header class="dr-admin-drawer__header">
+        <button type="button" data-close-drawer>×</button>
+        <span>MEMBER RECORD</span>
+        <h2 data-drawer-name>Member</h2>
+        <p data-drawer-email></p>
+      </header>
+
+      <div class="dr-admin-drawer__body">
+        <section class="dr-admin-panel">
+          <header><span>ACCOUNT</span><h3>Membership status</h3></header>
+          <div class="dr-admin-status-grid">
+            <button type="button" data-set-status="active">ACTIVE</button>
+            <button type="button" data-set-status="paused">PAUSED</button>
+            <button type="button" data-set-status="suspended">SUSPEND</button>
+            <button type="button" data-set-status="removed" class="is-danger">REMOVE MEMBER</button>
+          </div>
+          <p>Removed/suspended accounts lose Dragon role access immediately. This does not delete the Supabase Auth identity.</p>
+        </section>
+
+        <section class="dr-admin-panel">
+          <header><span>ACCESS</span><h3>Roles & workstations</h3></header>
+          <div class="dr-role-grid" data-role-grid>
+            <label><input type="checkbox" value="member" disabled checked /> MEMBER</label>
+            <label><input type="checkbox" value="creator" /> CREATOR</label>
+            <label><input type="checkbox" value="writer" /> WRITER</label>
+            <label><input type="checkbox" value="illustrator" /> ILLUSTRATOR</label>
+            <label><input type="checkbox" value="radio" /> RADIO</label>
+            <label><input type="checkbox" value="comics" /> COMICS</label>
+            <label><input type="checkbox" value="streaming" /> STREAMING</label>
+            <label><input type="checkbox" value="3d" /> 3D</label>
+            <label><input type="checkbox" value="editor" /> EDITOR</label>
+          </div>
+          <button type="button" class="dr-admin-primary" data-save-roles>SAVE ROLE ACCESS</button>
+        </section>
+
+        <section class="dr-admin-panel">
+          <header><span>BADGES</span><h3>Recognition</h3></header>
+          <div class="dr-badge-picker" data-badge-picker></div>
+          <button type="button" class="dr-admin-primary" data-save-badges>SAVE BADGES</button>
+        </section>
+
+        <section class="dr-admin-panel">
+          <header><span>PAGE ALLOWANCE</span><h3>Special page access</h3></header>
+          <div class="dr-permission-grid" data-permission-grid></div>
+          <div class="dr-admin-custom-permission">
+            <input type="text" data-custom-permission placeholder="/special-room/" />
+            <button type="button" data-add-permission>ADD PAGE</button>
+          </div>
+          <button type="button" class="dr-admin-primary" data-save-permissions>SAVE PAGE ACCESS</button>
+        </section>
+
+        <section class="dr-admin-panel">
+          <header><span>DIRECTOR NOTE</span><h3>Private notes</h3></header>
+          <textarea data-director-note placeholder="Private note about this member, creator relationship, project status, etc."></textarea>
+          <button type="button" class="dr-admin-primary" data-save-note>SAVE NOTE</button>
+        </section>
+
+        <section class="dr-admin-panel">
+          <header><span>HISTORY</span><h3>Recent account events</h3></header>
+          <div class="dr-admin-history" data-member-history></div>
+        </section>
+
+        <p class="dr-admin-message" data-admin-message></p>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    import { getSupabaseBrowserClient } from '../../lib/supabaseBrowser';
+
+    const supabase=getSupabaseBrowserClient();
+    const $=s=>document.querySelector(s);
+
+    const {data:{session}}=await supabase.auth.getSession();
+    if(!session){
+      location.replace('/');
+      throw new Error('Director session required');
+    }
+
+    const adminResult=await supabase.rpc('is_admin');
+    if(adminResult.data!==true){
+      location.replace('/member/');
+      throw new Error('Admin access required');
+    }
+
+    let members=[];
+    let roleRows=[];
+    let badgeDefs=[];
+    let memberBadges=[];
+    let permissionRows=[];
+    let adminRows=[];
+    let selectedId=null;
+
+    function safe(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+    function fmtDate(v){
+      if(!v)return '—';
+      const d=new Date(v);
+      return Number.isNaN(d.getTime())?'—':d.toLocaleDateString();
+    }
+    function rolesFor(id){return roleRows.filter(r=>r.user_id===id).map(r=>String(r.role).toLowerCase())}
+    function badgesFor(id){return memberBadges.filter(r=>r.user_id===id).map(r=>r.badge_id)}
+    function permissionsFor(id){return permissionRows.filter(r=>r.user_id===id).map(r=>r.path)}
+    function isAdminUser(id){return adminRows.some(r=>r.user_id===id)}
+
+    function typeFor(m){
+      const roles=rolesFor(m.user_id);
+      if(roles.includes('editor'))return 'editor';
+      if(roles.some(r=>['creator','writer','illustrator','radio','comics','streaming','3d'].includes(r)))return 'creator';
+      return 'member';
+    }
+
+    async function loadAll(){
+      const [mr,rr,bd,mb,pr,ar]=await Promise.all([
+        supabase.from('dr_member_profiles').select('*').order('created_at',{ascending:false}),
+        supabase.from('dr_member_roles').select('*').order('assigned_at',{ascending:true}),
+        supabase.from('dr_badge_definitions').select('*').eq('active',true).order('sort_order',{ascending:true}),
+        supabase.from('dr_member_badges_admin').select('*'),
+        supabase.from('dr_member_page_permissions').select('*'),
+        supabase.from('admin_users').select('user_id')
+      ]);
+
+      members=mr.data||[];
+      roleRows=rr.data||[];
+      badgeDefs=bd.data||[];
+      memberBadges=mb.data||[];
+      permissionRows=pr.data||[];
+      adminRows=ar.data||[];
+
+      renderTable();
+      renderSummary();
+
+      if(selectedId)openMember(selectedId,false);
+      $('[data-admin-shell]').hidden=false;
+    }
+
+    function renderSummary(){
+      $('[data-count-members]').textContent=members.length;
+      $('[data-count-creators]').textContent=members.filter(m=>['creator','editor'].includes(typeFor(m))).length;
+      $('[data-count-active]').textContent=members.filter(m=>(m.account_status||'active')==='active').length;
+    }
+
+    function renderTable(){
+      const q=$('[data-member-search]').value.trim().toLowerCase();
+      const status=$('[data-filter-status]').value;
+      const type=$('[data-filter-type]').value;
+
+      const filtered=members.filter(m=>{
+        const roles=rolesFor(m.user_id);
+        const text=[m.display_name,m.email,m.handle,...roles].filter(Boolean).join(' ').toLowerCase();
+        const ms=m.account_status||'active';
+        const mt=typeFor(m);
+        return (!q||text.includes(q)) &&
+               (status==='all'||ms===status) &&
+               (type==='all'||mt===type);
+      });
+
+      $('[data-member-rows]').innerHTML=filtered.map(m=>{
+        const roles=rolesFor(m.user_id).filter(r=>r!=='member');
+        const badges=badgesFor(m.user_id);
+        const status=m.account_status||'active';
+        const display=m.display_name||m.email||'Member';
+
+        return `<button type="button" class="dr-admin-row" data-member-id="${m.user_id}">
+          <span class="dr-admin-row__member">
+            <b>${safe(display)}</b>
+            <small>${safe(m.email||'')}${m.handle?` · @${safe(m.handle)}`:''}</small>
+          </span>
+          <span><em class="dr-status is-${safe(status)}">${safe(status.toUpperCase())}</em></span>
+          <span class="dr-admin-row__tokens">${roles.length?roles.slice(0,4).map(r=>`<i>${safe(r)}</i>`).join(''):'<small>MEMBER</small>'}</span>
+          <span>${badges.length}</span>
+          <span>${fmtDate(m.created_at)}</span>
+          <span>${fmtDate(m.last_active_at)}</span>
+        </button>`;
+      }).join('')||'<div class="dr-admin-empty">No matching members.</div>';
+    }
+
+    function renderBadges(id){
+      const owned=new Set(badgesFor(id));
+      $('[data-badge-picker]').innerHTML=badgeDefs.map(b=>`
+        <label class="dr-badge-option">
+          <input type="checkbox" value="${safe(b.id)}" ${owned.has(b.id)?'checked':''}/>
+          <span><strong>${safe(b.name)}</strong><small>${safe(b.description||'')}</small></span>
+        </label>
+      `).join('')||'<p>No badge definitions yet.</p>';
+    }
+
+    function renderPermissions(id){
+      const paths=permissionsFor(id);
+      $('[data-permission-grid]').innerHTML=paths.map(path=>`
+        <label class="dr-permission-row">
+          <input type="checkbox" value="${safe(path)}" checked />
+          <span>${safe(path)}</span>
+        </label>
+      `).join('')||'<p>No special page permissions assigned.</p>';
+    }
+
+    async function openMember(id,openDrawer=true){
+      selectedId=id;
+      const m=members.find(x=>x.user_id===id);
+      if(!m)return;
+
+      $('[data-drawer-name]').textContent=m.display_name||m.email||'Member';
+      $('[data-drawer-email]').textContent=m.email||'';
+
+      const roles=new Set(rolesFor(id));
+      document.querySelectorAll('[data-role-grid] input').forEach(input=>{
+        if(input.value==='member')input.checked=true;
+        else input.checked=roles.has(input.value);
+      });
+
+      renderBadges(id);
+      renderPermissions(id);
+      $('[data-director-note]').value=m.director_note||'';
+
+      document.querySelectorAll('[data-set-status]').forEach(btn=>{
+        btn.classList.toggle('is-selected',(m.account_status||'active')===btn.dataset.setStatus);
+      });
+
+      const audit=await supabase.from('dr_member_admin_audit')
+        .select('*')
+        .eq('target_user_id',id)
+        .order('created_at',{ascending:false})
+        .limit(20);
+
+      $('[data-member-history]').innerHTML=(audit.data||[]).map(a=>`
+        <div><strong>${safe(a.action)}</strong><span>${new Date(a.created_at).toLocaleString()}</span></div>
+      `).join('')||'<p>No administrative history yet.</p>';
+
+      if(openDrawer)$('[data-member-drawer]').hidden=false;
+    }
+
+    async function callAdmin(fn,args){
+      const r=await supabase.rpc(fn,args);
+      if(r.error)throw r.error;
+      return r.data;
+    }
+
+    function message(text,error=false){
+      const el=$('[data-admin-message]');
+      el.textContent=text;
+      el.classList.toggle('is-error',error);
+    }
+
+    document.addEventListener('click',async e=>{
+      const t=e.target instanceof Element?e.target:null;
+      if(!t)return;
+
+      const row=t.closest('[data-member-id]');
+      if(row){openMember(row.dataset.memberId);return}
+
+      if(t.closest('[data-close-drawer]')){
+        $('[data-member-drawer]').hidden=true;
+        return;
+      }
+
+      const statusBtn=t.closest('[data-set-status]');
+      if(statusBtn&&selectedId){
+        try{
+          await callAdmin('dr_admin_set_member_status',{
+            target_user:selectedId,
+            new_status:statusBtn.dataset.setStatus
+          });
+          message(`STATUS SET TO ${statusBtn.dataset.setStatus.toUpperCase()}.`);
+          await loadAll();
+        }catch(err){message(err.message||'Could not update status.',true)}
+        return;
+      }
+
+      if(t.closest('[data-save-roles]')&&selectedId){
+        const roles=[...document.querySelectorAll('[data-role-grid] input:checked')]
+          .map(i=>i.value)
+          .filter(v=>v!=='member');
+        try{
+          await callAdmin('dr_admin_replace_member_roles',{target_user:selectedId,new_roles:roles});
+          message('ROLE ACCESS SAVED.');
+          await loadAll();
+        }catch(err){message(err.message||'Could not save roles.',true)}
+        return;
+      }
+
+      if(t.closest('[data-save-badges]')&&selectedId){
+        const badges=[...document.querySelectorAll('[data-badge-picker] input:checked')].map(i=>i.value);
+        try{
+          await callAdmin('dr_admin_replace_member_badges',{target_user:selectedId,new_badges:badges});
+          message('BADGES SAVED.');
+          await loadAll();
+        }catch(err){message(err.message||'Could not save badges.',true)}
+        return;
+      }
+
+      if(t.closest('[data-add-permission]')){
+        const input=$('[data-custom-permission]');
+        const raw=input.value.trim();
+        if(!raw)return;
+        const path=raw.startsWith('/')?raw:`/${raw}`;
+        const root=$('[data-permission-grid]');
+        const existing=[...root.querySelectorAll('input')].map(i=>i.value);
+        if(!existing.includes(path)){
+          root.insertAdjacentHTML('beforeend',`
+            <label class="dr-permission-row">
+              <input type="checkbox" value="${safe(path)}" checked />
+              <span>${safe(path)}</span>
+            </label>`);
+        }
+        input.value='';
+        return;
+      }
+
+      if(t.closest('[data-save-permissions]')&&selectedId){
+        const paths=[...document.querySelectorAll('[data-permission-grid] input:checked')].map(i=>i.value);
+        try{
+          await callAdmin('dr_admin_replace_member_page_permissions',{target_user:selectedId,new_paths:paths});
+          message('PAGE ACCESS SAVED.');
+          await loadAll();
+        }catch(err){message(err.message||'Could not save page access.',true)}
+        return;
+      }
+
+      if(t.closest('[data-save-note]')&&selectedId){
+        try{
+          await callAdmin('dr_admin_set_member_note',{
+            target_user:selectedId,
+            new_note:$('[data-director-note]').value
+          });
+          message('DIRECTOR NOTE SAVED.');
+          await loadAll();
+        }catch(err){message(err.message||'Could not save note.',true)}
+        return;
+      }
+
+      if(t.closest('[data-refresh-members]')){loadAll();return}
+    });
+
+    $('[data-member-search]').addEventListener('input',renderTable);
+    $('[data-filter-status]').addEventListener('change',renderTable);
+    $('[data-filter-type]').addEventListener('change',renderTable);
+
+    loadAll();
+  </script>
+</PrivateStudioLayout>

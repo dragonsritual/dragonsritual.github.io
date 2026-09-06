@@ -1,0 +1,120 @@
+---
+import "../styles/member-system.css";
+---
+<div class="dr-member-dock" data-member-dock>
+  <button class="dr-member-dock__trigger" type="button" data-member-trigger>
+    <span class="dr-member-dock__avatar" data-member-avatar>DR</span>
+    <span>
+      <strong data-member-label>MEMBER SIGN IN</strong>
+      <small data-member-role>DRAGONSRITUAL</small>
+    </span>
+  </button>
+
+  <div class="dr-member-dock__menu" data-member-menu hidden>
+    <div class="dr-member-dock__identity">
+      <span>DRAGON MEMBER</span>
+      <strong data-member-name>Not signed in</strong>
+      <small data-member-email>Member access</small>
+    </div>
+    <div class="dr-member-dock__links">
+      <a href="/join/" data-member-signin>SIGN IN / JOIN</a>
+      <a href="/member/" data-member-home hidden>MY MEMBER HOME</a>
+      <a href="/creator/" data-member-creator hidden>CREATOR BASE STATION</a>
+      <a href="/admin/analytics/" class="dr-member-dock__director" data-member-analytics hidden>ANALYTICS</a>
+      <a href="/admin/members/" class="dr-member-dock__director" data-member-director hidden>MEMBER CONTROL</a>
+      <button type="button" data-member-signout hidden>SIGN OUT</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { getSupabaseBrowserClient } from '../lib/supabaseBrowser';
+
+  const supabase=getSupabaseBrowserClient();
+
+  async function hydrateMemberDock(){
+    const dock=document.querySelector('[data-member-dock]');
+    if(!dock)return;
+    const {data:{session}}=await supabase.auth.getSession();
+    const label=dock.querySelector('[data-member-label]');
+    const roleLabel=dock.querySelector('[data-member-role]');
+    const avatar=dock.querySelector('[data-member-avatar]');
+    const name=dock.querySelector('[data-member-name]');
+    const email=dock.querySelector('[data-member-email]');
+    const signin=dock.querySelector('[data-member-signin]');
+    const home=dock.querySelector('[data-member-home]');
+    const creator=dock.querySelector('[data-member-creator]');
+    const director=dock.querySelector('[data-member-director]');
+    const analytics=dock.querySelector('[data-member-analytics]');
+    const signout=dock.querySelector('[data-member-signout]');
+
+    if(!session){
+      dock.classList.remove('is-authenticated');
+      label.textContent='MEMBER SIGN IN'; roleLabel.textContent='DRAGONSRITUAL';
+      avatar.textContent='DR'; name.textContent='Not signed in';email.textContent='Member access';
+      signin.hidden=false;home.hidden=true;creator.hidden=true;director.hidden=true;if(analytics)analytics.hidden=true;signout.hidden=true;
+      return;
+    }
+
+    dock.classList.add('is-authenticated');
+    let profile=null;
+    try{
+      const r=await supabase.from('dr_member_profiles').select('*').eq('user_id',session.user.id).maybeSingle();
+      if(!r.error)profile=r.data;
+    }catch(_){}
+
+    const display=profile?.display_name||session.user.user_metadata?.display_name||session.user.email?.split('@')[0]||'Member';
+
+    const roleResult=await supabase.rpc('dr_my_roles');
+    const secureRoles=Array.isArray(roleResult.data)?roleResult.data.map(v=>String(v).toLowerCase()):[];
+    const statusResult=await supabase.rpc('dr_my_account_status');
+    const accountStatus=statusResult.data||'active';
+
+    const adminResult=await supabase.rpc('is_admin');
+    const isDirector=adminResult.data===true;
+    const isCreator=accountStatus==='active'&&(isDirector||secureRoles.some(r=>['creator','writer','illustrator','radio','comics','streaming','3d','editor'].includes(r)));
+
+    label.textContent=display.toUpperCase();
+    roleLabel.textContent=accountStatus!=='active'?accountStatus.toUpperCase():isDirector?'DIRECTOR':isCreator?'CREATOR':'MEMBER';
+    avatar.textContent=display.slice(0,2).toUpperCase();
+    name.textContent=display;
+    email.textContent=isDirector?'Director access':isCreator?'Creator access':'Member access';
+    signin.hidden=true;
+    signin.setAttribute('aria-hidden','true');
+    home.hidden=false;
+    creator.hidden=!isCreator;
+    director.hidden=!isDirector;
+    if(analytics)analytics.hidden=!isDirector;
+    signout.hidden=false;
+  }
+
+  if(!window.__dragonMemberDockBound){
+    window.__dragonMemberDockBound=true;
+    document.addEventListener('click',async e=>{
+      const t=e.target instanceof Element?e.target:null;
+      const trigger=t?.closest('[data-member-trigger]');
+      if(trigger){
+        const menu=document.querySelector('[data-member-menu]');
+        if(menu)menu.hidden=!menu.hidden;
+        return;
+      }
+      const memberLink=t?.closest('[data-member-home],[data-member-creator],[data-member-director],[data-member-analytics],[data-member-signin]');
+      if(memberLink){
+        const menu=document.querySelector('[data-member-menu]');
+        if(menu)menu.hidden=true;
+      }
+      if(t?.closest('[data-member-signout]')){
+        await supabase.auth.signOut();
+        location.href='/';
+        return;
+      }
+      const dock=document.querySelector('[data-member-dock]');
+      if(dock&&!t?.closest('[data-member-dock]')){
+        const menu=dock.querySelector('[data-member-menu]');
+        if(menu)menu.hidden=true;
+      }
+    });
+    document.addEventListener('astro:page-load',hydrateMemberDock);
+  }
+  hydrateMemberDock();
+</script>

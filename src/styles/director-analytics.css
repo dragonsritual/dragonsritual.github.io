@@ -1,0 +1,85 @@
+
+/* =========================================================
+   PASS 24 — DIRECTOR ANALYTICS
+   ========================================================= */
+.dr-analytics{
+  --a-bg:#070809;--a-panel:#0d0e10;--a-panel2:#141014;--a-line:rgba(255,255,255,.08);
+  --a-paper:#eadfd5;--a-muted:#817975;--a-red:#9e5b5e;--a-gold:#d6b85b;
+  min-height:100vh;padding:46px clamp(16px,4vw,56px) 80px;background:
+  radial-gradient(circle at 12% 0,rgba(92,37,44,.18),transparent 28%),#070809;color:#d8cdc4;
+}
+.dr-analytics__shell{width:min(1550px,100%);margin:auto}
+.dr-analytics__head{display:flex;justify-content:space-between;gap:24px;align-items:end;padding-bottom:22px;border-bottom:1px solid var(--a-line)}
+.dr-analytics__head span{color:#9f6263;font:800 8px/1 Arial,sans-serif;letter-spacing:.14em}
+.dr-analytics__head h1{margin:8px 0 0;color:var(--a-paper);font:500 clamp(42px,5vw,64px)/.95 Georgia,serif;letter-spacing:-.04em}
+.dr-analytics__head p{max-width:660px;margin:0;color:var(--a-muted);font:12px/1.6 Arial,sans-serif}
+.dr-analytics__controls{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.dr-analytics__controls button,.dr-analytics__controls select{
+  min-height:38px;padding:0 12px;border:1px solid var(--a-line);background:#0b0c0e;color:#aaa09b;
+  font:800 8px/1 Arial,sans-serif;letter-spacing:.08em;cursor:pointer
+}
+.dr-analytics__controls button.is-active{color:#f1e4d9;border-color:rgba(178,99,100,.42);background:rgba(83,34,41,.27)}
+.dr-analytics__kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.dr-kpi{padding:16px;border:1px solid var(--a-line);background:linear-gradient(145deg,rgba(74,31,37,.26),rgba(10,11,12,.92))}
+.dr-kpi span{display:block;color:#68615f;font:800 7px/1 Arial,sans-serif;letter-spacing:.1em}
+.dr-kpi strong{display:block;margin-top:8px;color:#e4d7ce;font:500 28px/1 Georgia,serif}
+.dr-kpi small{display:block;margin-top:5px;color:#655f5d;font:9px/1.3 Arial,sans-serif}
+.dr-analytics__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;margin-top:10px}
+.dr-analytics-card{grid-column:span 4;min-height:260px;padding:18px;border:1px solid var(--a-line);background:var(--a-panel)}
+.dr-analytics-card.is-wide{grid-column:span 8}
+.dr-analytics-card.is-full{grid-column:1/-1}
+.dr-analytics-card__head{display:flex;align-items:end;justify-content:space-between;gap:14px;padding-bottom:12px;border-bottom:1px solid var(--a-line)}
+.dr-analytics-card__head span{color:#8d5c5e;font:800 7px/1 Arial,sans-serif;letter-spacing:.1em}
+.dr-analytics-card__head h2{margin:5px 0 0;color:#ded1c8;font:500 23px/1 Georgia,serif}
+.dr-list{display:grid;margin-top:8px}
+.dr-list__row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.dr-list__row strong{font:500 13px/1.2 Georgia,serif;color:#cfc3bb;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dr-list__row span{color:#766e6a;font:9px/1.2 Arial,sans-serif}
+.dr-list__bar{grid-column:1/-1;height:2px;background:#151517}
+.dr-list__bar i{display:block;height:100%;background:#875055}
+.dr-live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#65d596;box-shadow:0 0 12px rgba(101,213,150,.4);margin-right:6px}
+.dr-paths{display:grid;gap:10px;margin-top:12px}
+.dr-path{padding:12px;border:1px solid rgba(255,255,255,.06);background:#090a0c}
+.dr-path__top{display:flex;justify-content:space-between;gap:12px}
+.dr-path__top strong{color:#d8ccc4;font:500 14px/1 Georgia,serif}
+.dr-path__top span{color:#6f6865;font:8px/1 Arial,sans-serif}
+.dr-path__nodes{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:9px}
+.dr-path__nodes b{font:700 8px/1 Arial,sans-serif;color:#968985;border:1px solid rgba(255,255,255,.07);padding:6px 7px;background:#0d0e10}
+.dr-path__nodes i{color:#74484b;font-style:normal}
+.dr-campaign-builder{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+.dr-campaign-builder label{display:grid;gap:5px}
+.dr-campaign-builder label span{color:#6a6360;font:800 7px/1 Arial,sans-serif;letter-spacing:.08em}
+.dr-campaign-builder input{min-height:38px;padding:0 10px;border:1px solid var(--a-line);background:#090a0c;color:#d7cbc3;font-size:10px}
+.dr-campaign-output{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.dr-campaign-output input{width:100%}
+.dr-campaign-output button{min-height:38px;padding:0 13px;border:1px solid rgba(183,99,100,.36);background:rgba(88,36,42,.25);color:#d9c9c0;font:800 8px/1 Arial,sans-serif;letter-spacing:.08em;cursor:pointer}
+.dr-session-drawer{
+  position:fixed;z-index:2147482800;inset:0 0 0 auto;width:min(650px,100%);overflow:auto;
+  border-left:1px solid rgba(164,83,87,.34);background:#090a0c;box-shadow:-30px 0 90px rgba(0,0,0,.5)
+}
+.dr-session-drawer[hidden]{display:none}
+.dr-session-drawer__head{position:sticky;top:0;z-index:2;padding:18px 20px;border-bottom:1px solid var(--a-line);background:rgba(9,10,12,.97)}
+.dr-session-drawer__head button{float:right;border:0;background:none;color:#938884;font-size:22px;cursor:pointer}
+.dr-session-drawer__head span{color:#8f5a5c;font:800 7px/1 Arial,sans-serif;letter-spacing:.1em}
+.dr-session-drawer__head h2{margin:7px 0 0;color:#e0d4cc;font:500 27px/1 Georgia,serif}
+.dr-session-drawer__body{padding:18px 20px}
+.dr-event-line{display:grid;grid-template-columns:90px 18px minmax(0,1fr);gap:9px;min-height:62px}
+.dr-event-line__time{color:#665f5d;font:700 8px/1.4 Arial,sans-serif}
+.dr-event-line__rail{position:relative}
+.dr-event-line__rail:before{content:"";position:absolute;left:8px;top:0;bottom:0;width:1px;background:rgba(149,74,78,.25)}
+.dr-event-line__rail:after{content:"";position:absolute;left:5px;top:3px;width:7px;height:7px;border-radius:50%;background:#8f5155}
+.dr-event-line__body strong{display:block;color:#d0c4bc;font:500 14px/1.1 Georgia,serif}
+.dr-event-line__body span{display:block;margin-top:5px;color:#756d69;font:9px/1.45 Arial,sans-serif}
+@media(max-width:1100px){
+  .dr-analytics__kpis{grid-template-columns:repeat(3,1fr)}
+  .dr-analytics-card,.dr-analytics-card.is-wide{grid-column:span 6}
+}
+@media(max-width:700px){
+  .dr-analytics{padding:28px 12px 90px}
+  .dr-analytics__head{display:block}
+  .dr-analytics__head p{margin-top:14px}
+  .dr-analytics__kpis{grid-template-columns:repeat(2,1fr)}
+  .dr-analytics-card,.dr-analytics-card.is-wide{grid-column:1/-1}
+  .dr-campaign-builder{grid-template-columns:1fr}
+  .dr-campaign-output{grid-template-columns:1fr}
+}

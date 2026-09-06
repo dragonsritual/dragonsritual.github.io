@@ -1,0 +1,15 @@
+﻿---
+const { feature }=Astro.props;
+---
+{feature.enabled && <section class="writer-feature">
+ <div class="writer-feature__top"><span>{feature.eyebrow}</span><span>{feature.genre}</span></div>
+ <div class="writer-feature__body">
+  <a class="writer-feature__portrait" href={`/writer/${feature.slug}/`}>{feature.photo ? <img src={feature.photo} alt="" /> : <span>{feature.author.slice(0,1)}</span>}</a>
+  <div>
+   <h2><a href={`/read/${feature.slug}/`}>{feature.title}</a></h2>
+   <a class="writer-feature__author" href={`/writer/${feature.slug}/`}>{feature.author}</a>
+   <p>{feature.excerpt}</p>
+   <div class="writer-feature__actions"><a href={`/read/${feature.slug}/`}>READ STORY â†’</a><a href={`/writer/${feature.slug}/`}>WRITER â†’</a></div>
+  </div>
+ </div>
+</section>}

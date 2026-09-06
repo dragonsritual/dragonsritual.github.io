@@ -1,0 +1,425 @@
+---
+const words = [
+  {
+    word: "numinous",
+    pronunciation: "NOO-muh-nus",
+    part: "adjective",
+    definition: "Having a mysterious, spiritual, or awe-inspiring quality.",
+    example: "The old observatory had a numinous stillness after midnight.",
+    origin: "Latin numen, meaning divine will or spiritual presence.",
+    related: ["mystical", "sacred", "uncanny"],
+    note: "Useful for places, experiences, art, or moments that feel charged with a presence beyond ordinary explanation."
+  },
+  {
+    word: "palimpsest",
+    pronunciation: "PAL-imp-sest",
+    part: "noun",
+    definition: "Something altered or reused while still bearing traces of its earlier form.",
+    example: "The city felt like a palimpsest of vanished streets and forgotten names.",
+    origin: "Greek palimpsēstos, 'scraped again.'",
+    related: ["layered", "overwritten", "trace"],
+    note: "Especially good for cities, memories, manuscripts, architecture, and identities that retain earlier layers."
+  },
+  {
+    word: "liminal",
+    pronunciation: "LIM-uh-nul",
+    part: "adjective",
+    definition: "Relating to a threshold, transition, or in-between state.",
+    example: "The hallway had the liminal feeling of a place between waking and sleep.",
+    origin: "Latin limen, 'threshold.'",
+    related: ["threshold", "transitional", "in-between"],
+    note: "Often used for spaces or experiences that feel suspended between two defined states."
+  },
+  {
+    word: "eldritch",
+    pronunciation: "EL-dritch",
+    part: "adjective",
+    definition: "Strange, eerie, or otherworldly in a way that inspires unease.",
+    example: "An eldritch glow leaked from beneath the locked archive door.",
+    origin: "Scots; exact origin uncertain.",
+    related: ["uncanny", "weird", "otherworldly"],
+    note: "A strong fantasy and horror word; best used sparingly so it keeps its force."
+  },
+  {
+    word: "susurrus",
+    pronunciation: "soo-SUR-us",
+    part: "noun",
+    definition: "A whispering, murmuring, or rustling sound.",
+    example: "A susurrus moved through the leaves before the storm arrived.",
+    origin: "Latin susurrus, 'a whisper or murmur.'",
+    related: ["murmur", "rustle", "whisper"],
+    note: "Excellent for subtle ambient sound in prose."
+  },
+  {
+    word: "penumbra",
+    pronunciation: "puh-NUM-bruh",
+    part: "noun",
+    definition: "A partial shadow, or the less-dark outer region of a shadow.",
+    example: "The statue disappeared into the penumbra beyond the torchlight.",
+    origin: "Latin paene, 'almost,' + umbra, 'shadow.'",
+    related: ["shadow", "shade", "half-light"],
+    note: "Can be used literally for light or figuratively for an area of uncertainty."
+  },
+  {
+    word: "chthonic",
+    pronunciation: "THON-ik",
+    part: "adjective",
+    definition: "Of or relating to the underworld or the earth beneath the surface.",
+    example: "The temple's chthonic imagery grew stranger the farther below ground they went.",
+    origin: "Greek khthōn, 'earth or ground.'",
+    related: ["underworld", "subterranean", "earthbound"],
+    note: "Common in mythology, religion, and dark fantasy when referring to underworld powers."
+  },
+  {
+    word: "apocryphal",
+    pronunciation: "uh-POK-ruh-ful",
+    part: "adjective",
+    definition: "Of doubtful authenticity, though widely circulated as true.",
+    example: "The apocryphal story had been repeated so often that nobody remembered its source.",
+    origin: "Greek apokryphos, 'hidden or obscure.'",
+    related: ["dubious", "legendary", "unverified"],
+    note: "Useful for rumors, disputed histories, old stories, and supposedly true anecdotes."
+  },
+  {
+    word: "recondite",
+    pronunciation: "REK-un-dyte",
+    part: "adjective",
+    definition: "Little known and difficult to understand; obscure.",
+    example: "She spent the evening deciphering a recondite passage in the old manuscript.",
+    origin: "Latin reconditus, 'hidden away.'",
+    related: ["obscure", "esoteric", "arcane"],
+    note: "Often describes specialized knowledge that requires unusual study."
+  },
+  {
+    word: "threnody",
+    pronunciation: "THREN-uh-dee",
+    part: "noun",
+    definition: "A song, poem, or speech of lamentation.",
+    example: "The final track was a quiet threnody for a town that no longer existed.",
+    origin: "Greek thrēnōidia, 'lament song.'",
+    related: ["lament", "dirge", "elegy"],
+    note: "Particularly useful for music, poetry, ritual, and memorial writing."
+  },
+  {
+    word: "eidolon",
+    pronunciation: "eye-DOH-lon",
+    part: "noun",
+    definition: "An idealized image, apparition, or phantom-like representation.",
+    example: "An eidolon of the old king appeared in the polished black glass.",
+    origin: "Greek eidōlon, 'image, phantom, apparition.'",
+    related: ["apparition", "image", "phantom"],
+    note: "Can mean either a ghostly image or an idealized representation."
+  },
+  {
+    word: "noctivagant",
+    pronunciation: "nok-TIV-uh-gunt",
+    part: "adjective",
+    definition: "Wandering or active at night.",
+    example: "The noctivagant travelers knew every lamp-lit road outside the city.",
+    origin: "Latin nox, 'night,' + vagari, 'to wander.'",
+    related: ["night-roaming", "wandering", "nocturnal"],
+    note: "Rare, vivid, and especially suited to gothic or atmospheric writing."
+  },
+  {
+    word: "vespertine",
+    pronunciation: "VES-per-tyne",
+    part: "adjective",
+    definition: "Occurring, appearing, or active in the evening.",
+    example: "A vespertine mist gathered over the river as the shops began to close.",
+    origin: "Latin vesper, 'evening.'",
+    related: ["evening", "twilight", "dusk"],
+    note: "Useful for animals, rituals, moods, light, and events associated with evening."
+  },
+  {
+    word: "oneiric",
+    pronunciation: "oh-NY-rik",
+    part: "adjective",
+    definition: "Relating to dreams or having the quality of a dream.",
+    example: "The film slips into an oneiric sequence without announcing the transition.",
+    origin: "Greek oneiros, 'dream.'",
+    related: ["dreamlike", "surreal", "visionary"],
+    note: "A precise word for dream logic, visual surrealism, and altered states."
+  },
+  {
+    word: "atavistic",
+    pronunciation: "at-uh-VIS-tik",
+    part: "adjective",
+    definition: "Relating to the return of an ancestral or earlier characteristic.",
+    example: "The ritual awakened something atavistic in the old family tradition.",
+    origin: "Latin atavus, 'ancestor.'",
+    related: ["ancestral", "primitive", "inherited"],
+    note: "Useful for instincts, traits, customs, or symbols that seem to re-emerge from the distant past."
+  },
+  {
+    word: "effulgent",
+    pronunciation: "ih-FUL-junt",
+    part: "adjective",
+    definition: "Shining brilliantly; radiant.",
+    example: "The effulgent crown turned the dark chamber briefly gold.",
+    origin: "Latin effulgere, 'to shine forth.'",
+    related: ["radiant", "brilliant", "luminous"],
+    note: "A heightened literary word for intense light or splendor."
+  },
+  {
+    word: "lacuna",
+    pronunciation: "luh-KYOO-nuh",
+    part: "noun",
+    definition: "A missing part, gap, or blank space in a text, record, or sequence.",
+    example: "A lacuna in the archive left three years of the expedition unexplained.",
+    origin: "Latin lacuna, 'pool, cavity, gap.'",
+    related: ["gap", "omission", "absence"],
+    note: "Excellent for archives, lost histories, manuscripts, and incomplete knowledge."
+  },
+  {
+    word: "sepulchral",
+    pronunciation: "suh-PUL-krul",
+    part: "adjective",
+    definition: "Gloomy, hollow, or suggestive of a tomb.",
+    example: "His sepulchral voice seemed too large for the narrow room.",
+    origin: "Latin sepulcrum, 'tomb.'",
+    related: ["funereal", "hollow", "tomb-like"],
+    note: "Often used for voices, rooms, atmospheres, and spaces with a grave-like quality."
+  },
+  {
+    word: "thaumaturgy",
+    pronunciation: "THAW-muh-tur-jee",
+    part: "noun",
+    definition: "The working of wonders or miracles; magic.",
+    example: "The scholar treated thaumaturgy as a discipline rather than a superstition.",
+    origin: "Greek thauma, 'wonder,' + ergon, 'work.'",
+    related: ["magic", "wonder-working", "miracle"],
+    note: "A strong bridge between historical religious language and fantasy magical systems."
+  },
+  {
+    word: "provenance",
+    pronunciation: "PROV-uh-nuns",
+    part: "noun",
+    definition: "The documented origin and history of an object, artwork, or artifact.",
+    example: "The relic's provenance made it more interesting than its monetary value.",
+    origin: "French provenir, 'to come forth or originate.'",
+    related: ["origin", "history", "lineage"],
+    note: "Especially useful for art, antiques, relics, collections, and tradable game items."
+  },
+  {
+    word: "interstice",
+    pronunciation: "in-TER-stis",
+    part: "noun",
+    definition: "A small intervening space or gap between things.",
+    example: "A scrap of parchment had been hidden in an interstice between two stones.",
+    origin: "Latin interstitium, 'interval.'",
+    related: ["gap", "interval", "crevice"],
+    note: "A precise word for literal or conceptual spaces between larger things."
+  },
+  {
+    word: "crepuscular",
+    pronunciation: "krih-PUS-kyuh-lur",
+    part: "adjective",
+    definition: "Relating to twilight or becoming active at dusk.",
+    example: "The crepuscular animals emerged just as the last orange light disappeared.",
+    origin: "Latin crepusculum, 'twilight.'",
+    related: ["twilight", "dusk", "evening-active"],
+    note: "Useful in nature writing as well as atmospheric fantasy."
+  },
+  {
+    word: "arcana",
+    pronunciation: "ar-KAY-nuh",
+    part: "noun",
+    definition: "Secrets or specialized knowledge understood by only a few.",
+    example: "The workshop was full of mechanical arcana collected over decades.",
+    origin: "Latin arcanum, 'secret.'",
+    related: ["secrets", "mysteries", "esoterica"],
+    note: "Broader than magic; it can describe specialized secrets in any discipline."
+  },
+  {
+    word: "sibilant",
+    pronunciation: "SIB-uh-lunt",
+    part: "adjective",
+    definition: "Characterized by a hissing sound.",
+    example: "A sibilant whisper traveled through the old ventilation shaft.",
+    origin: "Latin sibilare, 'to hiss or whistle.'",
+    related: ["hissing", "whispering", "sharp"],
+    note: "Useful for sound design, voices, snakes, wind, and unsettling ambience."
+  },
+  {
+    word: "incunabulum",
+    pronunciation: "in-kyoo-NAB-yuh-lum",
+    part: "noun",
+    definition: "An early printed book, especially one produced before 1501.",
+    example: "The museum displayed an incunabulum beside the illuminated manuscript.",
+    origin: "Latin incunabula, 'swaddling clothes, birthplace, beginnings.'",
+    related: ["early printing", "rare book", "antiquarian"],
+    note: "A real historical book term that fits naturally into a deep library or archive system."
+  },
+  {
+    word: "argent",
+    pronunciation: "AR-junt",
+    part: "adjective",
+    definition: "Silvery or silver-colored.",
+    example: "An argent line appeared across the horizon before dawn.",
+    origin: "Latin argentum, 'silver.'",
+    related: ["silver", "pale", "metallic"],
+    note: "Common in heraldry and elevated descriptive prose."
+  },
+  {
+    word: "mellifluous",
+    pronunciation: "muh-LIF-loo-us",
+    part: "adjective",
+    definition: "Pleasantly smooth and musical to hear.",
+    example: "The singer's mellifluous voice made the small room go quiet.",
+    origin: "Latin mel, 'honey,' + fluere, 'to flow.'",
+    related: ["musical", "smooth", "honeyed"],
+    note: "Useful for music, speech, voices, and flowing sound."
+  },
+  {
+    word: "phantasmagoria",
+    pronunciation: "fan-taz-muh-GOR-ee-uh",
+    part: "noun",
+    definition: "A shifting sequence of fantastic, dreamlike, or strange images.",
+    example: "The exhibition became a phantasmagoria of projected faces and painted creatures.",
+    origin: "French phantasmagorie, associated with early illusion and lantern shows.",
+    related: ["spectacle", "dreamscape", "apparition"],
+    note: "A perfect word for surreal visual sequences and overwhelming fantastical imagery."
+  },
+  {
+    word: "anfractuous",
+    pronunciation: "an-FRAK-choo-us",
+    part: "adjective",
+    definition: "Full of twists, turns, or winding passages.",
+    example: "The anfractuous tunnels made the old map almost useless.",
+    origin: "Latin anfractus, 'a winding or turning.'",
+    related: ["winding", "labyrinthine", "tortuous"],
+    note: "Excellent for caves, roads, architecture, plots, and arguments that twist repeatedly."
+  },
+  {
+    word: "bibliomancy",
+    pronunciation: "BIB-lee-oh-man-see",
+    part: "noun",
+    definition: "Divination by interpreting a passage selected from a book.",
+    example: "The character treats bibliomancy as a private ritual before every journey.",
+    origin: "Greek biblion, 'book,' + manteia, 'divination.'",
+    related: ["divination", "books", "oracle"],
+    note: "Historically grounded and especially useful for book-club / occult crossover flavor."
+  },
+  {
+    word: "hierophant",
+    pronunciation: "HY-er-uh-fant",
+    part: "noun",
+    definition: "A person who reveals or interprets sacred mysteries.",
+    example: "The hierophant spoke in symbols that only the initiated understood.",
+    origin: "Greek hierophantēs, 'one who shows sacred things.'",
+    related: ["initiator", "mystagogue", "interpreter"],
+    note: "A historical religious title with strong ritual and fantasy resonance."
+  }
+];
+
+const epoch = Date.UTC(2026, 0, 1);
+const today = new Date();
+const utcDay = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+const dayNumber = Math.floor((utcDay - epoch) / 86400000);
+const selected = words[((dayNumber % words.length) + words.length) % words.length];
+---
+
+<aside class="dragon-word-mini" data-word-card aria-labelledby="dragon-word-title">
+  <div class="dragon-word-mini__core">
+    <span class="dragon-word-mini__label">WORD OF THE DAY</span>
+
+    <div class="dragon-word-mini__word">
+      <h2 id="dragon-word-title">{selected.word}</h2>
+      <span>{selected.part}</span>
+      <button type="button" data-word-speak data-word={selected.word} aria-label={`Hear ${selected.word}`}>◖)))</button>
+    </div>
+
+    <p>{selected.definition}</p>
+
+    <button class="dragon-word-mini__open" type="button" data-word-toggle aria-expanded="false">
+      OPEN WORD
+    </button>
+  </div>
+
+  <div class="dragon-word-mini__details" data-word-details hidden>
+    <div class="dragon-word-mini__detail-grid">
+      <div>
+        <small>PRONUNCIATION</small>
+        <strong>/{selected.pronunciation}/</strong>
+      </div>
+      <div>
+        <small>ORIGIN</small>
+        <span>{selected.origin}</span>
+      </div>
+      <div>
+        <small>RELATED</small>
+        <span>{selected.related.join(" · ")}</span>
+      </div>
+    </div>
+
+    <blockquote>“{selected.example}”</blockquote>
+    <p class="dragon-word-mini__note">{selected.note}</p>
+
+    <div class="dragon-word-mini__actions">
+      <button type="button" data-word-save data-word={selected.word}>☆ SAVE WORD</button>
+      <button type="button" data-word-copy data-word={selected.word}>COPY</button>
+    </div>
+  </div>
+</aside>
+
+<script>
+  const root = document.querySelector('[data-word-card]');
+  const details = root?.querySelector('[data-word-details]');
+  const toggle = root?.querySelector('[data-word-toggle]');
+
+  toggle?.addEventListener('click', () => {
+    if (!details) return;
+    const willOpen = details.hasAttribute('hidden');
+    details.toggleAttribute('hidden', !willOpen);
+    toggle.setAttribute('aria-expanded', String(willOpen));
+    toggle.textContent = willOpen ? 'CLOSE WORD' : 'OPEN WORD';
+  });
+
+  const speakBtn = root?.querySelector('[data-word-speak]');
+  speakBtn?.addEventListener('click', () => {
+    const word = speakBtn.getAttribute('data-word') || '';
+    if (!word || !('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.rate = 0.82;
+    window.speechSynthesis.speak(utterance);
+  });
+
+  const copyBtn = root?.querySelector('[data-word-copy]');
+  copyBtn?.addEventListener('click', async () => {
+    const word = copyBtn.getAttribute('data-word') || '';
+    if (!word) return;
+    try {
+      await navigator.clipboard.writeText(word);
+      const before = copyBtn.textContent;
+      copyBtn.textContent = 'COPIED';
+      setTimeout(() => copyBtn.textContent = before || 'COPY', 900);
+    } catch {}
+  });
+
+  const saveBtn = root?.querySelector('[data-word-save]');
+  const savedKey = 'dragon:lexicon:saved';
+  const word = saveBtn?.getAttribute('data-word') || '';
+
+  function savedWords() {
+    try { return JSON.parse(localStorage.getItem(savedKey) || '[]'); }
+    catch { return []; }
+  }
+
+  function syncSave() {
+    if (!saveBtn || !word) return;
+    const saved = savedWords().includes(word);
+    saveBtn.textContent = saved ? '★ SAVED' : '☆ SAVE WORD';
+    saveBtn.classList.toggle('is-saved', saved);
+  }
+
+  saveBtn?.addEventListener('click', () => {
+    if (!word) return;
+    const set = new Set(savedWords());
+    set.has(word) ? set.delete(word) : set.add(word);
+    localStorage.setItem(savedKey, JSON.stringify([...set]));
+    syncSave();
+  });
+
+  syncSave();
+</script>

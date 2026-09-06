@@ -1,0 +1,1137 @@
+:root{
+  --dr-poison:#9dbb66;
+  --dr-poison-hi:#eff6d8;
+  --dr-poison-mid:#6f8d49;
+  --dr-poison-deep:#26361d;
+  --dr-red:#761f2a;
+  --dr-red-hot:#9b3039;
+  --dr-red-deep:#2b0a10;
+  --dr-ink:#080908;
+  --dr-well:#0e100e;
+  --dr-well-2:#141511;
+  --dr-paper:#d0c5a4;
+  --dr-muted:#8f896f;
+  --dr-rail:28px;
+}
+
+body{
+  margin:0;
+  color:var(--dr-paper);
+  background:
+    radial-gradient(circle at 50% -10%,rgba(153,46,56,.34),transparent 40%),
+    radial-gradient(circle at 16% 42%,rgba(111,24,34,.42),transparent 36%),
+    radial-gradient(circle at 88% 74%,rgba(75,13,22,.46),transparent 33%),
+    linear-gradient(145deg,#6d1f29 0%,#4c131d 48%,#280a10 100%);
+  background-attachment:fixed;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.32;
+  background:
+    repeating-linear-gradient(14deg,rgba(236,219,182,.018) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(103deg,rgba(0,0,0,.07) 0 1px,transparent 1px 9px),
+    radial-gradient(circle at 30% 30%,transparent 0 30%,rgba(0,0,0,.2) 95%);
+}
+
+.launch-header{
+  border-bottom:1px solid rgba(206,220,202,.16)!important;
+  background:rgba(15,12,11,.88)!important;
+  box-shadow:0 10px 30px rgba(0,0,0,.45)!important;
+  backdrop-filter:blur(10px);
+}
+.launch-mark{border-color:#657363!important;color:#c4d0c0!important;background:#10120f!important}
+.launch-nav-link.active{border-bottom-color:#93a58f!important}
+.launch-live-dot{background:#a8bca4!important;box-shadow:0 0 14px rgba(190,214,187,.32)!important}
+
+.dr-front{
+  position:relative;
+  z-index:1;
+  width:min(1100px,calc(100% - 34px));
+  margin:26px auto 72px;
+}
+
+.dr-frame{
+  position:relative;
+  padding:38px;
+  isolation:isolate;
+  background:transparent;
+  filter:drop-shadow(0 34px 26px rgba(0,0,0,.62));
+}
+
+.dr-frame:before{
+  content:"";
+  position:absolute;
+  inset:20px;
+  z-index:-3;
+  background:rgba(10,8,8,.35);
+  box-shadow:0 20px 80px rgba(0,0,0,.55);
+}
+
+.dr-frame__bevel{
+  position:absolute;
+  inset:0;
+  z-index:50;
+  pointer-events:none;
+  background:url('/frame/dragon-spine.svg') center/100% 100% no-repeat;
+  filter:saturate(.9) contrast(1.08);
+}
+
+.dr-cell{
+  position:relative;
+  min-width:0;
+  overflow:hidden;
+  color:var(--dr-paper);
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.018),transparent 28%),
+    radial-gradient(circle at 30% 20%,rgba(95,108,86,.06),transparent 42%),
+    linear-gradient(145deg,var(--dr-well-2),var(--dr-well) 58%,#090a08);
+  box-shadow:
+    inset 0 0 0 1px rgba(190,204,184,.08),
+    inset 0 14px 30px rgba(0,0,0,.66),
+    inset 12px 0 28px rgba(0,0,0,.34),
+    0 7px 16px rgba(0,0,0,.58);
+}
+
+.dr-cell:before{
+  content:"";
+  position:absolute;
+  inset:7px;
+  z-index:1;
+  pointer-events:none;
+  border:1px solid rgba(157,175,153,.075);
+  box-shadow:inset 0 0 24px rgba(0,0,0,.24);
+}
+
+.dr-header{
+  margin-bottom:var(--dr-rail);
+  min-height:132px;
+  background:
+    radial-gradient(circle at 50% 0,rgba(122,38,45,.18),transparent 42%),
+    linear-gradient(145deg,#11130f,#090b09 75%);
+}
+.dr-header__issue{padding:7px 12px;border-bottom:1px solid rgba(174,188,171,.11);color:#748271;font:900 6px/1 system-ui,sans-serif;letter-spacing:.2em}
+.dr-header__main{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;padding:14px 22px 16px}
+.dr-header__mark{width:56px;aspect-ratio:1;display:grid;place-items:center;border:1px solid #6f7c69;background:radial-gradient(circle,#5b1c24,#260b0f 72%);color:#c9d5c6;font:900 17px Georgia,serif;box-shadow:0 7px 0 #050605,inset 0 0 0 4px rgba(174,188,171,.06)}
+.dr-header h1{margin:0;font:900 clamp(34px,5vw,62px)/.82 Georgia,serif;letter-spacing:-.055em;color:#cbd5c7;text-shadow:0 3px 0 #283028,3px 6px 0 rgba(0,0,0,.58)}
+.dr-header__copy p{margin:8px 0 0;font:900 6px/1.2 system-ui,sans-serif;letter-spacing:.17em;color:#798574}
+.dr-header__status{padding:9px 11px;border:1px solid #6f252d;background:#351117;color:#c7bd9f;box-shadow:0 6px 0 #060706}.dr-header__status span,.dr-header__status strong{display:block}.dr-header__status span{font:900 6px system-ui;letter-spacing:.15em}.dr-header__status strong{margin-top:3px;font:900 13px Georgia,serif}
+
+.dr-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.58fr) minmax(285px,.92fr);
+  grid-template-areas:"feature right" "game radio" "wire note";
+  gap:var(--dr-rail);
+}
+.dr-feature{grid-area:feature;min-height:470px}.dr-right-stack{grid-area:right;display:grid;grid-template-rows:1.08fr .92fr;gap:var(--dr-rail);min-width:0}.dr-game{grid-area:game}.dr-radio{grid-area:radio}.dr-wire{grid-area:wire}.dr-note{grid-area:note}
+
+.dr-cell__bar{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 10px;border-bottom:1px solid rgba(128,42,49,.65);background:linear-gradient(90deg,#2a0c11,#4e151c 48%,#260b10);color:#b4aa8c;font:900 6px/1 system-ui,sans-serif;letter-spacing:.14em}.dr-cell__bar strong{color:#9dab98}
+.dr-eyebrow{margin:0 0 8px!important;color:#82917f!important;font:900 6px/1 system-ui!important;letter-spacing:.16em!important}
+.dr-button{display:inline-flex;margin-top:13px;padding:7px 9px;border:1px solid #586555;background:#111510;color:#c6bda1!important;text-decoration:none;font:900 6px/1 system-ui,sans-serif;letter-spacing:.11em;box-shadow:0 4px 0 #030403}.dr-button:hover{transform:translateY(-1px);box-shadow:0 6px 0 #030403}.dr-button--small{margin-top:8px}
+
+.dr-feature__body{padding:30px 28px}.dr-feature h2{max-width:630px;margin:0;font:900 clamp(38px,4.7vw,64px)/.88 Georgia,serif;letter-spacing:-.052em;color:#d0c6a8}.dr-deck{max-width:620px;margin:15px 0 0;color:#999178;font:700 12px/1.5 Georgia,serif}.dr-feature__lower{display:grid;grid-template-columns:minmax(150px,.68fr) 1.32fr;gap:18px;align-items:end;margin-top:27px;padding-top:16px;border-top:1px solid rgba(158,174,144,.11)}.dr-meta{display:block;color:#9a484f;font:900 6px system-ui;letter-spacing:.13em}.dr-pullquote{padding:12px 14px;border-left:4px solid #74816f;background:#0b0d0b;font:900 clamp(13px,1.5vw,19px)/1.06 Georgia,serif;color:#b8af92;box-shadow:inset 0 0 0 1px rgba(158,174,144,.05)}
+
+.dr-video__body{padding:13px}.dr-video__frame{position:relative;aspect-ratio:16/9;border:1px solid #536050;background:#050605;box-shadow:0 8px 16px rgba(0,0,0,.62),inset 0 0 0 4px #080a08;overflow:hidden}.dr-video__frame iframe{display:block;width:100%;height:100%;border:0}.dr-video__loading{display:grid;place-items:center;width:100%;height:100%;color:#9cad98;font:900 6px system-ui;letter-spacing:.14em}.dr-video__caption{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-top:10px}.dr-video__caption span,.dr-video__caption strong{display:block}.dr-video__caption span{color:#7f8d7a;font:900 6px system-ui;letter-spacing:.16em}.dr-video__caption strong{margin-top:3px;font:900 clamp(14px,1.55vw,21px)/1 Georgia,serif;color:#c7bd9f}.dr-video__caption a{color:#8f9a89;text-decoration:none;font:900 6px system-ui;letter-spacing:.11em}
+
+.dr-forum__body{padding:15px 16px 18px}.dr-forum__thread{padding:11px 12px 11px 14px;border-left:4px solid #6e252d;background:#0a0c0a;box-shadow:inset 0 0 0 1px rgba(151,166,138,.08)}.dr-forum__thread span,.dr-forum__thread small{display:block;font:900 6px/1.25 system-ui;letter-spacing:.13em;color:#7e8b79}.dr-forum__thread strong{display:block;margin:5px 0;font:900 clamp(14px,1.65vw,21px)/1.02 Georgia,serif;color:#c4b99a}
+
+.dr-game__body{display:grid;grid-template-columns:118px 1fr;gap:17px;align-items:center;padding:19px}.dr-game__stamp{height:118px;display:grid;place-items:center;border:1px solid #5f6d5a;background:radial-gradient(circle at 50% 40%,#651d26,#260b10 73%);color:#b8c4b4;font:900 17px Georgia,serif;box-shadow:0 8px 0 #040504,inset 0 0 0 5px rgba(198,205,186,.04)}.dr-game h2,.dr-radio h2{margin:0;color:#cabf9f;font:900 clamp(22px,2.3vw,33px)/.94 Georgia,serif;letter-spacing:-.04em}.dr-game p:not(.dr-eyebrow),.dr-radio p:not(.dr-eyebrow){color:#948c73;font:700 10px/1.48 Georgia,serif}
+.dr-radio__body{padding:18px}.dr-radio__dial{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:14px;padding:7px 9px;border:1px solid #4f5b4b;background:#080908;color:#acb9a7;box-shadow:0 5px 0 #040504,inset 0 0 12px #050604}.dr-radio__dial i{height:1px;background:repeating-linear-gradient(90deg,#6d7b68 0 2px,transparent 2px 8px)}.dr-radio__dial b{font:900 9px Georgia,serif}
+.dr-wire__grid{display:grid;grid-template-columns:repeat(4,1fr);min-height:110px}.dr-wire__grid a{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:13px;border-right:1px solid #31382f;color:#bbb08f;text-decoration:none}.dr-wire__grid a:last-child{border-right:0}.dr-wire__grid a:nth-child(even){background:rgba(103,31,39,.13)}.dr-wire__grid span{font:900 6px system-ui;letter-spacing:.15em;color:#84907f}.dr-wire__grid strong{font:900 clamp(12px,1.4vw,18px) Georgia,serif}
+.dr-note{background:linear-gradient(145deg,#241014,#11110e)}.dr-note .dr-cell__bar{background:linear-gradient(90deg,#10140f,#1b221a)}.dr-note__body{padding:18px}.dr-note blockquote{margin:0;color:#b4c0b0;font:900 clamp(16px,1.8vw,24px)/1 Georgia,serif}.dr-note p{max-width:390px;margin:11px 0 0;color:#9e967e;font:700 9px/1.5 Georgia,serif}
+
+.dr-frame-footer{margin-top:var(--dr-rail);display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;padding:9px 12px;background:#0d0f0c;color:#7b8676;font:900 6px/1 system-ui;letter-spacing:.13em}.dr-frame-footer strong{text-align:center;color:#aab7a6}.dr-frame-footer span:last-child{text-align:right}
+
+@media(max-width:900px){
+  :root{--dr-rail:20px}
+  .dr-front{width:min(100% - 18px,820px);margin-top:18px}.dr-frame{padding:28px}.dr-grid{grid-template-columns:1fr;grid-template-areas:"feature" "right" "game" "radio" "wire" "note"}.dr-feature{min-height:0}.dr-right-stack{grid-template-rows:auto auto}.dr-feature__lower{grid-template-columns:1fr}.dr-game__body{grid-template-columns:105px 1fr}.dr-game__stamp{height:105px}.dr-wire__grid{grid-template-columns:1fr 1fr}.dr-wire__grid a:nth-child(2){border-right:0}.dr-wire__grid a:nth-child(-n+2){border-bottom:1px solid #31382f}
+}
+
+@media(max-width:620px){
+  :root{--dr-rail:14px}
+  .dr-front{width:calc(100% - 8px);margin-top:8px}.dr-frame{padding:18px}.dr-header__main{display:block}.dr-header__mark{width:44px;margin-bottom:12px}.dr-header h1{font-size:clamp(34px,12vw,54px)}.dr-header__status{display:none}.dr-feature__body{padding:21px 16px}.dr-feature h2{font-size:clamp(32px,10.8vw,52px)}.dr-game__body{display:block;padding:17px}.dr-game__stamp{width:92px;height:92px;margin-bottom:16px}.dr-video__caption{display:block}.dr-video__caption a{display:inline-block;margin-top:8px}.dr-frame-footer{grid-template-columns:1fr}.dr-frame-footer strong,.dr-frame-footer span:last-child{text-align:left}
+}
+
+/* PASS 05 — the homepage is a physical fantasy console, not a flat layout. */
+html,
+body{
+  background:
+    radial-gradient(circle at 50% -8%,rgba(173,52,63,.28),transparent 33%),
+    radial-gradient(circle at 15% 32%,rgba(123,27,38,.34),transparent 28%),
+    radial-gradient(circle at 84% 68%,rgba(80,15,25,.42),transparent 34%),
+    linear-gradient(145deg,#7a2330 0%,#5c1824 39%,#3b0f18 72%,#25090f 100%)!important;
+}
+
+body:has(.dr-front){
+  background:
+    radial-gradient(ellipse at 50% 12%,rgba(176,58,67,.3),transparent 42%),
+    repeating-linear-gradient(17deg,rgba(238,193,146,.018) 0 1px,transparent 1px 7px),
+    repeating-linear-gradient(101deg,rgba(0,0,0,.07) 0 1px,transparent 1px 11px),
+    linear-gradient(145deg,#79222f 0%,#551521 46%,#320c14 100%)!important;
+}
+
+.dr-front{
+  width:min(1040px,calc(100% - 34px));
+  margin-top:22px;
+}
+
+.dr-frame{
+  padding:42px;
+  filter:drop-shadow(0 50px 32px rgba(0,0,0,.78));
+}
+
+.dr-frame:after{
+  content:"";
+  position:absolute;
+  inset:25px 24px 21px;
+  z-index:-2;
+  pointer-events:none;
+  border-radius:28px;
+  box-shadow:
+    0 35px 65px rgba(0,0,0,.72),
+    0 12px 0 rgba(21,34,24,.8),
+    0 -3px 0 rgba(210,224,205,.08);
+}
+
+.dr-frame__bevel{
+  filter:saturate(1.22) contrast(1.18) brightness(1.04) drop-shadow(0 16px 7px rgba(0,0,0,.74)) drop-shadow(0 3px 1px rgba(4,10,3,.9));
+}
+
+.dr-cell{
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.012),transparent 25%),
+    radial-gradient(circle at 34% 18%,rgba(119,137,105,.055),transparent 39%),
+    linear-gradient(145deg,#10120f,#090b09 58%,#050605);
+  box-shadow:
+    inset 0 0 0 1px rgba(202,214,197,.055),
+    inset 0 18px 38px rgba(0,0,0,.8),
+    inset 12px 0 28px rgba(0,0,0,.38),
+    0 9px 20px rgba(0,0,0,.62);
+}
+
+.dr-header{
+  background:
+    radial-gradient(circle at 45% -10%,rgba(103,123,93,.085),transparent 42%),
+    linear-gradient(145deg,#11140f,#090a08 65%,#10090a);
+}
+
+.dr-header__main{
+  grid-template-columns:auto minmax(0,1fr) auto;
+  gap:18px;
+  padding-right:16px;
+}
+
+.dr-header__curio{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.dr-gem-tray{
+  position:relative;
+  display:flex;
+  align-items:flex-end;
+  gap:4px;
+  min-height:48px;
+  padding:8px 10px 7px;
+  border:1px solid #263025;
+  border-bottom-color:#151d16;
+  background:
+    linear-gradient(180deg,rgba(206,218,199,.035),transparent 30%),
+    linear-gradient(180deg,#121811,#090c09 68%,#040504);
+  box-shadow:
+    inset 0 1px 0 rgba(208,221,202,.07),
+    inset 0 -8px 14px rgba(0,0,0,.72),
+    0 8px 0 #030403,
+    0 12px 18px rgba(0,0,0,.44);
+}
+
+.dr-gem-tray:before,
+.dr-gem-tray:after{
+  content:"";
+  position:absolute;
+  left:7px;
+  right:7px;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#52644f 18%,#9dad96 50%,#52644f 82%,transparent);
+  opacity:.6;
+}
+.dr-gem-tray:before{top:5px}
+.dr-gem-tray:after{bottom:4px;opacity:.28}
+
+.dr-gem{
+  position:relative;
+  width:25px;
+  height:31px;
+  display:grid;
+  place-items:end center;
+  filter:drop-shadow(0 5px 2px rgba(0,0,0,.78));
+}
+.dr-gem img{
+  display:block;
+  width:auto;
+  max-width:100%;
+  max-height:100%;
+  image-rendering:auto;
+  transform-origin:50% 100%;
+}
+.dr-gem--amethyst img{transform:rotate(-3deg) translateY(1px) scale(1.02)}
+.dr-gem--emerald img{transform:rotate(2deg) translateY(-1px) scale(.95)}
+.dr-gem--ruby img{transform:rotate(-1deg) scale(1.06)}
+.dr-gem--sapphire img{transform:rotate(3deg) translateY(1px) scale(.98)}
+
+.dr-header__status{
+  padding:7px 9px;
+  border-color:#4b1a21;
+  background:linear-gradient(#351017,#210a0f);
+  box-shadow:0 6px 0 #040504,inset 0 1px rgba(255,255,255,.025);
+}
+.dr-header__status strong{font-size:11px}
+
+.dr-cell__bar{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.025),transparent 35%),
+    linear-gradient(90deg,#21090e,#4b141c 48%,#21090e);
+}
+
+.dr-feature__body,
+.dr-game__body,
+.dr-radio__body,
+.dr-note__body{
+  position:relative;
+  z-index:2;
+}
+
+.dr-feature__body:after,
+.dr-game__body:after,
+.dr-radio__body:after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  inset:auto 12px 9px 12px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(135,155,124,.2),transparent);
+}
+
+@media(max-width:900px){
+  .dr-header__curio{gap:8px}
+  .dr-gem-tray{padding-left:8px;padding-right:8px}
+  .dr-gem{width:22px;height:28px}
+}
+
+@media(max-width:620px){
+  .dr-frame{padding:20px}
+  .dr-header__curio{margin-top:14px;justify-content:space-between}
+  .dr-header__status{display:block}
+  .dr-gem-tray{width:max-content}
+}
+
+/* =========================================================
+   PASS 08 — STRAIGHT CSS FRAME
+   Same content/layout. No SVG chassis. No waves. No bone tubes.
+   ========================================================= */
+:root{
+  --dr-rail:18px;
+  --dr-frame-hi:#d8ead7;
+  --dr-frame-face:#9fbd9d;
+  --dr-frame-mid:#6f8f70;
+  --dr-frame-edge:#405a46;
+  --dr-frame-dark:#17261c;
+  --dr-frame-red:#7d1f2b;
+}
+
+/* Turn off the illustrated/wavy overlay completely. */
+.dr-frame__bevel{
+  display:none !important;
+}
+
+.dr-front{
+  width:min(1040px,calc(100% - 34px));
+  margin:22px auto 72px;
+}
+
+.dr-frame{
+  position:relative;
+  padding:18px;
+  isolation:isolate;
+  filter:
+    drop-shadow(0 22px 16px rgba(0,0,0,.58))
+    drop-shadow(0 5px 2px rgba(0,0,0,.55));
+  background:
+    linear-gradient(180deg,
+      var(--dr-frame-hi) 0 2px,
+      #bcd3b9 2px 5px,
+      var(--dr-frame-face) 5px 11px,
+      var(--dr-frame-mid) 11px 15px,
+      var(--dr-frame-edge) 15px 17px,
+      var(--dr-frame-dark) 17px 18px);
+  box-shadow:
+    inset 2px 0 0 rgba(232,244,229,.72),
+    inset -4px 0 0 rgba(25,43,30,.72),
+    inset 0 -5px 0 rgba(17,29,21,.88),
+    0 0 0 2px #0a100c,
+    0 10px 0 rgba(7,12,9,.75);
+}
+
+/* Remove the old soft/wavy under-plate. */
+.dr-frame:before,
+.dr-frame:after{
+  content:none !important;
+}
+
+/* Header and footer are simply cavities inside the same chassis. */
+.dr-header{
+  min-height:118px;
+  margin-bottom:var(--dr-rail);
+}
+.dr-header__main{
+  padding:12px 18px 14px;
+}
+.dr-header h1{
+  position:relative;
+  z-index:3;
+}
+
+/* Every gap between cells exposes the straight frame color.
+   This is the "spine": one continuous CSS chassis, not borders on boxes. */
+.dr-grid{
+  gap:var(--dr-rail);
+  background:
+    linear-gradient(90deg,
+      var(--dr-frame-dark) 0 2px,
+      var(--dr-frame-edge) 2px 4px,
+      var(--dr-frame-mid) 4px 8px,
+      var(--dr-frame-face) 8px 13px,
+      #c7dcc4 13px 16px,
+      var(--dr-frame-hi) 16px 18px);
+}
+
+/* The right stack needs the same horizontal rail material. */
+.dr-right-stack{
+  gap:var(--dr-rail);
+  background:
+    linear-gradient(180deg,
+      var(--dr-frame-hi) 0 2px,
+      #c7dcc4 2px 5px,
+      var(--dr-frame-face) 5px 11px,
+      var(--dr-frame-mid) 11px 15px,
+      var(--dr-frame-edge) 15px 17px,
+      var(--dr-frame-dark) 17px 18px);
+}
+
+/* Dark, deep wells. Keep the content cleanly below the chassis. */
+.dr-cell{
+  z-index:1;
+  border:0;
+  border-radius:0;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.012),transparent 24%),
+    radial-gradient(circle at 34% 18%,rgba(119,137,105,.045),transparent 39%),
+    linear-gradient(145deg,#10120f,#090b09 58%,#050605);
+  box-shadow:
+    inset 0 1px 0 rgba(224,235,219,.05),
+    inset 0 10px 20px rgba(0,0,0,.48),
+    inset 7px 0 16px rgba(0,0,0,.22),
+    0 2px 5px rgba(0,0,0,.42);
+}
+
+/* A restrained red seam gives us Dragon red without turning the frame into piping. */
+.dr-grid:after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  z-index:0;
+  top:0;
+  bottom:0;
+  left:calc((100% - var(--dr-rail)) * .632 + 4px);
+  width:2px;
+  background:linear-gradient(180deg,transparent 2%,var(--dr-frame-red) 10%,#451019 90%,transparent 98%);
+  opacity:.65;
+}
+.dr-grid{position:relative}
+
+/* Keep the gem collection exactly as a curio in the header. */
+.dr-gem-tray{
+  border-color:#344636;
+  border-radius:0;
+}
+
+/* Straight footer rail/cavity relationship. */
+.dr-frame-footer{
+  margin-top:var(--dr-rail);
+}
+
+@media(max-width:900px){
+  :root{--dr-rail:14px}
+  .dr-frame{padding:14px}
+  .dr-grid:after{display:none}
+}
+
+@media(max-width:620px){
+  :root{--dr-rail:10px}
+  .dr-frame{padding:10px}
+}
+
+
+/* =========================================================
+   PASS 10 — FLAT LAYERED FANTASY TRIM
+   Straight CSS. Same layout. No SVG, no waves, no tubes.
+   The frame is present everywhere but stays visually thin.
+   ========================================================= */
+
+:root{
+  --dr-rail:14px;
+
+  --dr-poison-white:#dfe8dc;
+  --dr-poison-light:#b9cab5;
+  --dr-poison-mid:#789178;
+  --dr-poison-deep:#405942;
+  --dr-poison-black:#101812;
+
+  --dr-red-seam:#711d29;
+}
+
+/* Whole page object: thin authored trim, not a slab. */
+.dr-frame{
+  position:relative;
+  padding:14px;
+  overflow:visible;
+  background:
+    linear-gradient(180deg,
+      var(--dr-poison-white) 0 1px,
+      var(--dr-poison-light) 1px 4px,
+      var(--dr-poison-mid) 4px 8px,
+      var(--dr-poison-deep) 8px 11px,
+      var(--dr-poison-black) 11px 14px);
+  box-shadow:
+    0 0 0 1px #0a0f0b,
+    0 3px 0 rgba(9,15,10,.96),
+    0 10px 16px rgba(0,0,0,.46);
+}
+
+/* Fine inner etched line around the whole console. */
+.dr-frame:before{
+  content:"";
+  position:absolute;
+  inset:7px;
+  pointer-events:none;
+  z-index:12;
+  border:1px solid rgba(221,235,216,.32);
+  box-shadow:0 0 0 1px rgba(34,52,37,.76);
+}
+
+/* Header is one of the recessed wells.
+   The horizontal rail BELOW it is explicit and continuous. */
+.dr-header{
+  position:relative;
+  margin:0 0 var(--dr-rail) 0 !important;
+  min-height:110px;
+  z-index:1;
+}
+
+.dr-header:after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  height:var(--dr-rail);
+  bottom:calc(-1 * var(--dr-rail));
+  pointer-events:none;
+  z-index:9;
+  background:
+    linear-gradient(180deg,
+      var(--dr-poison-white) 0 1px,
+      var(--dr-poison-light) 1px 4px,
+      var(--dr-poison-mid) 4px 8px,
+      var(--dr-poison-deep) 8px 11px,
+      var(--dr-poison-black) 11px 14px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.24),
+    0 3px 5px rgba(0,0,0,.48);
+}
+
+/* Structural rails between the major page bays.
+   Flat planes, not rounded objects. */
+.dr-grid{
+  position:relative;
+  gap:var(--dr-rail) !important;
+  background:
+    linear-gradient(90deg,
+      var(--dr-poison-black) 0 2px,
+      var(--dr-poison-deep) 2px 5px,
+      var(--dr-poison-mid) 5px 9px,
+      var(--dr-poison-light) 9px 12px,
+      var(--dr-poison-white) 12px 14px);
+}
+
+/* Horizontal separators inside the right column. */
+.dr-right-stack{
+  gap:var(--dr-rail) !important;
+  background:
+    linear-gradient(180deg,
+      var(--dr-poison-white) 0 1px,
+      var(--dr-poison-light) 1px 4px,
+      var(--dr-poison-mid) 4px 8px,
+      var(--dr-poison-deep) 8px 11px,
+      var(--dr-poison-black) 11px 14px);
+}
+
+/* The dark areas sit BEHIND the trim.
+   Depth comes from narrow nested lines and a tight inner shadow,
+   not from making the green rails thick. */
+.dr-cell{
+  position:relative;
+  z-index:1;
+  border:0 !important;
+  border-radius:0 !important;
+  background:
+    linear-gradient(145deg,#0d100d 0%,#090b09 58%,#050605 100%) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(164,190,160,.24),
+    inset 0 0 0 2px rgba(25,39,28,.82),
+    inset 0 0 0 4px rgba(3,7,4,.96),
+    inset 6px 7px 11px rgba(0,0,0,.56),
+    0 1px 0 rgba(224,239,219,.12) !important;
+}
+
+/* One very thin "cut edge" immediately inside each well. */
+.dr-cell:before{
+  content:"";
+  position:absolute;
+  inset:4px;
+  pointer-events:none;
+  z-index:0;
+  border-top:1px solid rgba(213,229,208,.12);
+  border-left:1px solid rgba(145,170,142,.08);
+}
+
+.dr-cell > *{
+  position:relative;
+  z-index:1;
+}
+
+/* A restrained red incision down the central divider.
+   It adds old-fantasy color without becoming a glowing tech line. */
+.dr-grid:after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  z-index:3;
+  top:8px;
+  bottom:8px;
+  left:calc((100% - var(--dr-rail)) * .632 + 5px);
+  width:1px;
+  background:linear-gradient(
+    180deg,
+    transparent,
+    rgba(113,29,41,.72) 10%,
+    rgba(113,29,41,.92) 50%,
+    rgba(65,13,22,.72) 90%,
+    transparent
+  );
+}
+
+/* Bottom/footer lives in the same system. */
+.dr-frame-footer{
+  margin-top:var(--dr-rail) !important;
+}
+
+/* Keep the gemstone tray as a small physical curio, not a button group. */
+.dr-gem-tray{
+  border-radius:0 !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(154,181,150,.18),
+    inset 0 4px 8px rgba(0,0,0,.42) !important;
+}
+
+/* Remove anything from older passes that tries to reintroduce the SVG art. */
+.dr-frame__bevel{
+  display:none !important;
+}
+
+/* Tighten the whole object a little so the frame feels intentional,
+   not like a large blank border around the layout. */
+.dr-front{
+  width:min(1010px,calc(100% - 34px));
+  margin:18px auto 64px;
+}
+
+@media(max-width:900px){
+  :root{--dr-rail:11px}
+  .dr-frame{padding:11px}
+  .dr-header:after{height:var(--dr-rail);bottom:calc(-1 * var(--dr-rail))}
+  .dr-grid:after{display:none}
+}
+
+@media(max-width:620px){
+  :root{--dr-rail:8px}
+  .dr-frame{padding:8px}
+}
+
+
+/* =========================================================
+   PASS 11 — DRAGON TV LIVE WINDOW
+   Keep the fantasy-console layout; make Twitch a first-class bay.
+   ========================================================= */
+
+.dr-video__body{
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+}
+
+.dr-video__frame{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  min-height:0 !important;
+  overflow:hidden;
+  background:#030403;
+  box-shadow:
+    inset 0 0 0 1px rgba(195,218,188,.22),
+    inset 0 0 0 4px #020302,
+    0 5px 10px rgba(0,0,0,.5);
+}
+
+.dr-video__frame iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+
+.dr-video__caption--featured{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:12px;
+  align-items:end;
+  padding-top:9px;
+}
+
+.dr-video__program{
+  min-width:0;
+}
+
+.dr-video__program span{
+  display:block;
+  margin-bottom:3px;
+  color:#8fa48b;
+  font:800 6px/1 Arial,sans-serif;
+  letter-spacing:.14em;
+}
+
+.dr-video__program strong{
+  display:block;
+  color:#d8d0b6;
+  font:700 18px/.9 Georgia,serif;
+  letter-spacing:-.025em;
+}
+
+.dr-video__program small{
+  display:block;
+  margin-top:5px;
+  color:#687067;
+  font:700 5px/1.35 Arial,sans-serif;
+  letter-spacing:.09em;
+}
+
+.dr-video__expand{
+  align-self:end;
+  white-space:nowrap;
+  padding:7px 9px;
+  border:1px solid #536653;
+  background:#0a0e0a;
+  color:#cbd9c7 !important;
+  text-decoration:none;
+  font:800 6px/1 Arial,sans-serif;
+  letter-spacing:.11em;
+  box-shadow:inset 0 0 0 1px #101a12;
+}
+
+.dr-video__expand:hover{
+  background:#172018;
+  border-color:#94ad91;
+}
+
+@media(max-width:700px){
+  .dr-video__caption--featured{
+    grid-template-columns:1fr;
+  }
+  .dr-video__expand{
+    justify-self:start;
+  }
+}
+
+
+/* =========================================================
+   PASS 12 — ARTIST SPOTLIGHT FEATURE
+   ========================================================= */
+
+.dr-feature__body--interview{
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(190px,.82fr);
+  gap:22px;
+  min-height:420px;
+  align-items:stretch;
+}
+
+.dr-interview-copy{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+.dr-feature--interview h2{
+  max-width:620px;
+  font-size:clamp(34px,4.25vw,60px);
+}
+
+.dr-feature__lower--interview{
+  margin-top:auto;
+}
+
+.dr-interview-art{
+  position:relative;
+  display:block;
+  min-height:330px;
+  overflow:hidden;
+  border:1px solid #4a5948;
+  background:#050605;
+  box-shadow:
+    inset 0 0 0 4px #080a08,
+    0 9px 15px rgba(0,0,0,.58);
+}
+
+.dr-interview-art:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  box-shadow:
+    inset 0 0 0 1px rgba(221,235,216,.09),
+    inset 0 -70px 70px rgba(0,0,0,.76);
+}
+
+.dr-interview-art img{
+  width:100%;
+  height:100%;
+  min-height:330px;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+  filter:saturate(.82) contrast(1.06) brightness(.78);
+  transition:transform .35s ease,filter .35s ease;
+}
+
+.dr-interview-art:hover img{
+  transform:scale(1.025);
+  filter:saturate(.96) contrast(1.08) brightness(.87);
+}
+
+.dr-interview-art span{
+  position:absolute;
+  z-index:2;
+  left:12px;
+  right:12px;
+  bottom:10px;
+  color:#c5cdbf;
+  font:900 6px/1 system-ui,sans-serif;
+  letter-spacing:.14em;
+  text-shadow:0 2px 4px #000;
+}
+
+@media(max-width:900px){
+  .dr-feature__body--interview{
+    grid-template-columns:1fr;
+  }
+  .dr-interview-art{
+    min-height:280px;
+  }
+  .dr-interview-art img{
+    min-height:280px;
+    max-height:420px;
+  }
+}
+
+
+/* =========================================================
+   PASS 13 — GRIM SAGAS + TERRORFOXES TITLE FIT
+   ========================================================= */
+
+.dr-feature--interview h2{
+  font-size:clamp(31px,3.65vw,53px) !important;
+  line-height:.88 !important;
+  letter-spacing:-.045em !important;
+  max-width:100% !important;
+}
+
+.dr-feature__body--interview{
+  grid-template-columns:minmax(0,1.12fr) minmax(205px,.88fr) !important;
+}
+
+/* Full-width writing-world gate between the masthead and the main content grid. */
+.dr-grim-gate{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:70px minmax(0,1fr) auto;
+  gap:18px;
+  align-items:center;
+  min-height:118px;
+  margin:0 0 var(--dr-rail) 0;
+  padding:15px 18px;
+  text-decoration:none;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(103,123,255,.17),transparent 28%),
+    linear-gradient(105deg,#151a41 0%,#1d2f82 45%,#263fb5 76%,#17245f 100%) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(205,220,255,.16),
+    inset 0 0 0 4px rgba(7,10,22,.75),
+    inset 0 10px 18px rgba(0,0,0,.34),
+    0 1px 0 rgba(220,235,215,.10) !important;
+  color:#fff8c7;
+}
+
+.dr-grim-gate:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(115deg,transparent 0 18px,rgba(255,255,255,.018) 18px 19px),
+    radial-gradient(circle at 18% 140%,rgba(0,0,0,.36),transparent 42%);
+}
+
+.dr-grim-gate > *{
+  position:relative;
+  z-index:1;
+}
+
+.dr-grim-gate__mark{
+  width:56px;
+  height:70px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(237,244,228,.32);
+  background:
+    linear-gradient(145deg,rgba(5,8,18,.86),rgba(35,47,115,.7));
+  color:#fff15a;
+  font:900 24px/1 Georgia,serif;
+  box-shadow:
+    inset 0 0 0 3px rgba(5,8,18,.72),
+    0 5px 10px rgba(0,0,0,.35);
+}
+
+.dr-grim-gate__copy span,
+.dr-grim-gate__action span{
+  display:block;
+  color:#aeb9e8;
+  font:900 6px/1 system-ui,sans-serif;
+  letter-spacing:.15em;
+}
+
+.dr-grim-gate__copy strong{
+  display:block;
+  margin-top:4px;
+  color:#fff24d;
+  font:900 clamp(28px,3.6vw,48px)/.9 Georgia,serif;
+  letter-spacing:-.035em;
+  text-shadow:0 3px 0 rgba(0,0,0,.35);
+}
+
+.dr-grim-gate__copy small{
+  display:block;
+  margin-top:7px;
+  color:#f3f1e7;
+  font:800 7px/1.2 system-ui,sans-serif;
+  letter-spacing:.12em;
+}
+
+.dr-grim-gate__action{
+  min-width:150px;
+  padding-left:18px;
+  border-left:1px solid rgba(214,224,255,.20);
+  text-align:right;
+}
+
+.dr-grim-gate__action b{
+  display:block;
+  margin-top:8px;
+  color:#fff8cb;
+  font:900 9px/1.15 Georgia,serif;
+  letter-spacing:.04em;
+}
+
+.dr-grim-gate:hover{
+  filter:brightness(1.08) saturate(1.06);
+}
+
+@media(max-width:720px){
+  .dr-grim-gate{
+    grid-template-columns:52px 1fr;
+  }
+  .dr-grim-gate__mark{
+    width:46px;height:58px;font-size:19px;
+  }
+  .dr-grim-gate__action{
+    grid-column:2;
+    border-left:0;
+    padding-left:0;
+    text-align:left;
+  }
+}
+
+
+/* =========================================================
+   PASS 15 — GRIM SAGAS AS A MAGAZINE HOUSE AD
+   Not a second masthead. It interrupts the page like an ad.
+   ========================================================= */
+
+.dr-grim-gate{display:none!important}
+
+.dr-grim-ad{
+  grid-column:1 / -1;
+  position:relative;
+  display:grid;
+  grid-template-columns:190px minmax(0,1fr) 210px;
+  min-height:154px;
+  padding:0 !important;
+  overflow:hidden;
+  text-decoration:none;
+  color:#fff;
+  background:
+    radial-gradient(circle at 76% 0%,rgba(122,255,72,.16),transparent 32%),
+    repeating-linear-gradient(112deg,transparent 0 24px,rgba(255,255,255,.018) 24px 25px),
+    linear-gradient(103deg,#07120a 0%,#102a16 52%,#1b4a23 100%) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(194,235,173,.18),
+    inset 0 0 0 4px rgba(6,9,22,.72),
+    0 8px 16px rgba(0,0,0,.42) !important;
+}
+
+.dr-grim-ad:before{
+  content:"ADVERTISEMENT // DRAGON BOOKS";
+  position:absolute;
+  z-index:4;
+  top:7px;
+  right:10px;
+  color:rgba(238,241,255,.48);
+  font:900 5px/1 system-ui,sans-serif;
+  letter-spacing:.15em;
+}
+
+.dr-grim-ad__art{
+  position:relative;
+  overflow:hidden;
+  border-right:1px solid rgba(207,239,190,.16);
+  background:#05060b;
+}
+
+.dr-grim-ad__art:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  box-shadow:
+    inset -24px 0 34px rgba(7,28,12,.72),
+    inset 0 0 0 1px rgba(255,255,255,.08);
+}
+
+.dr-grim-ad__art img{
+  width:100%;
+  height:100%;
+  min-height:154px;
+  object-fit:cover;
+  display:block;
+  filter:saturate(.9) contrast(1.04) brightness(.72);
+}
+
+.dr-grim-ad__copy{
+  align-self:center;
+  min-width:0;
+  padding:20px 24px 18px;
+}
+
+.dr-grim-ad__copy>span,
+.dr-grim-ad__cta>span{
+  display:block;
+  color:#a9c99c;
+  font:900 6px/1 system-ui,sans-serif;
+  letter-spacing:.15em;
+}
+
+.dr-grim-ad__copy>strong{
+  display:block;
+  margin-top:4px;
+  color:#d7ff52;
+  font:900 clamp(34px,4vw,54px)/.88 Georgia,serif;
+  letter-spacing:-.045em;
+  text-shadow:0 3px 0 rgba(0,0,0,.32);
+}
+
+.dr-grim-ad__copy p{
+  max-width:560px;
+  margin:8px 0 0;
+  color:#ece9dd;
+  font:700 12px/1.42 Georgia,serif;
+}
+
+.dr-grim-ad__copy small{
+  display:block;
+  margin-top:9px;
+  color:#c9d6c3;
+  font:900 6px/1 system-ui,sans-serif;
+  letter-spacing:.1em;
+}
+
+.dr-grim-ad__cta{
+  align-self:stretch;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:22px;
+  border-left:1px solid rgba(207,239,190,.18);
+  background:linear-gradient(90deg,rgba(4,18,7,.12),rgba(3,20,7,.48));
+}
+
+.dr-grim-ad__cta b{
+  display:block;
+  margin-top:9px;
+  color:#e9ffc1;
+  font:900 14px/1.05 Georgia,serif;
+  letter-spacing:.02em;
+}
+
+.dr-grim-ad:hover{
+  filter:brightness(1.07) saturate(1.04);
+}
+
+@media(max-width:780px){
+  .dr-grim-ad{
+    grid-template-columns:120px minmax(0,1fr);
+  }
+  .dr-grim-ad__cta{
+    grid-column:1 / -1;
+    border-left:0;
+    border-top:1px solid rgba(226,233,255,.18);
+    padding:12px 18px;
+  }
+}
+
+@media(max-width:520px){
+  .dr-grim-ad{
+    grid-template-columns:1fr;
+  }
+  .dr-grim-ad__art{
+    min-height:180px;
+    border-right:0;
+    border-bottom:1px solid rgba(226,233,255,.18);
+  }
+  .dr-grim-ad__art img{min-height:180px}
+}

@@ -1,0 +1,36 @@
+﻿---
+const { feature } = Astro.props;
+---
+{feature?.enabled && (
+  <article class="story-artifact">
+    <a class="story-artifact__visual" href={`/read/${feature.slug}/`} aria-label={`Read ${feature.title}`}>
+      {feature.image ? (
+        <img src={feature.image} alt="" loading="lazy" />
+      ) : (
+        <div class="story-artifact__placeholder" aria-hidden="true">
+          <span>FICTION</span>
+        </div>
+      )}
+    </a>
+
+    <div class="story-artifact__content">
+      <div class="story-artifact__meta">
+        <span>{feature.eyebrow}</span>
+        <span>{feature.genre}</span>
+      </div>
+
+      <h2><a href={`/read/${feature.slug}/`}>{feature.title}</a></h2>
+      <a class="story-artifact__author" href={`/writer/${feature.slug}/`}>
+        {feature.author}
+      </a>
+
+      <p>{feature.excerpt}</p>
+
+      <div class="story-artifact__actions">
+        <a href={`/read/${feature.slug}/`}>READ â†’</a>
+        <a href={`/writer/${feature.slug}/`}>WRITER â†’</a>
+      </div>
+    </div>
+  </article>
+)}
+

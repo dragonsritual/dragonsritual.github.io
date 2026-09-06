@@ -1,81 +1,252 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
 import LaunchHeader from '../components/LaunchHeader.astro';
+import '../styles/home-frame.css';
+
+const featuredStream = {
+  // Change ONLY this when the guest gives you his Twitch username.
+  channel: 'dragonsritual',
+  game: 'Deathtrap Dungeon',
+  title: 'DEATHTRAP DUNGEON',
+  label: 'GUEST TWITCH STREAM',
+};
+
+const featuredStreamHref =
+  `/tv/?channel=${encodeURIComponent(featuredStream.channel)}` +
+  `&title=${encodeURIComponent(featuredStream.title)}` +
+  `&game=${encodeURIComponent(featuredStream.game)}`;
 ---
+
 <SiteLayout
-  title="Today — DragonsRitual"
-  description="Dragon Radio is live. Independent music, podcasts and interviews."
+  title="Daily — DragonsRitual"
+  description="DragonsRitual — games, broadcasts, fiction, artists and the live Dragon Underground signal."
 >
   <LaunchHeader />
 
-  <main class="today-shell">
-    <section class="today-hero">
-      <div class="today-hero-copy">
-        <p class="launch-eyebrow">DRAGONSRITUAL / TODAY</p>
-        <h1>Dragon Radio<br />is live.</h1>
-        <p class="today-deck">Independent music, podcasts and interviews.</p>
+  <main class="dr-front">
+    <section class="dr-frame" aria-label="DragonsRitual front page">
+      <div class="dr-frame__bevel" aria-hidden="true"></div>
 
-        <div class="today-actions">
-          <a class="primary-action" href="/radio/">
-            <span class="launch-live-dot"></span>
-            TUNE IN TO DRAGON RADIO
-          </a>
-        </div>
-      </div>
-
-      <a class="on-air-card" href="/radio/" aria-label="Tune in to Dragon Radio">
-        <div class="on-air-top">
-          <span>ON AIR NOW</span>
-          <b>● LIVE</b>
-        </div>
-
-        <div class="on-air-center">
-          <small>DRAGON RADIO</small>
-          <strong id="today-track">LIVE SIGNAL</strong>
-          <span id="today-artist">Independent music</span>
-        </div>
-
-        <div class="on-air-bottom">
-          <span>ALL SIGNAL</span>
-          <b>TUNE IN →</b>
-        </div>
-      </a>
-    </section>
-
-    <section class="today-section" id="today">
-      <header class="section-head">
-        <div>
-          <p class="launch-eyebrow">TODAY</p>
-          <h2>On Dragon.</h2>
+      <header class="dr-cell dr-header" aria-labelledby="dr-front-title">
+        <div class="dr-header__issue">DAILY DRAGON // ISSUE 001 // LIVE NETWORK</div>
+        <div class="dr-header__main">
+          <div class="dr-header__mark" aria-hidden="true">DR</div>
+          <div class="dr-header__copy">
+            <h1 id="dr-front-title">DRAGONSRITUAL</h1>
+            <p>GAMES // ART // FICTION // BROADCAST // UNDERGROUND</p>
+          </div>
+          <div class="dr-header__curio" aria-label="Gemstone collection">
+            <div class="dr-gem-tray" aria-hidden="true">
+              <span class="dr-gem dr-gem--amethyst"><img src="/frame/gems/Amethyst%20Smoothed.png" alt="" /></span>
+              <span class="dr-gem dr-gem--emerald"><img src="/frame/gems/Emerald%20Smoothed.png" alt="" /></span>
+              <span class="dr-gem dr-gem--ruby"><img src="/frame/gems/Ruby%20Smoothed.png" alt="" /></span>
+              <span class="dr-gem dr-gem--sapphire"><img src="/frame/gems/Sapphire%20Smoothed.png" alt="" /></span>
+            </div>
+            <div class="dr-header__status">
+              <span>THE SIGNAL</span>
+              <strong>IS ALIVE</strong>
+            </div>
+          </div>
         </div>
       </header>
 
-      <div class="discovery-grid today-content-grid">
-        <a class="feature-card today-radio-card" href="/radio/">
-          <p class="launch-eyebrow">LIVE / RADIO</p>
-          <h3>Dragon Radio</h3>
-          <p>All Signal</p>
-          <span class="quiet-label">TUNE IN →</span>
+      <div class="dr-grid">
+        <article class="dr-cell dr-feature dr-feature--interview">
+          <div class="dr-cell__bar">
+            <span>01 // ARTIST SPOTLIGHT</span>
+            <strong>INTERVIEW</strong>
+          </div>
+
+          <div class="dr-feature__body dr-feature__body--interview">
+            <div class="dr-interview-copy">
+              <p class="dr-eyebrow">FROM THE DRAGONSRITUAL ARCHIVE</p>
+              <h2>ARTIST SPOTLIGHT:<br />TERRORFOXES</h2>
+              <p class="dr-deck">
+                Fantasy, horror, comics, Fighting Fantasy gamebooks, Simon Bisley,
+                Frazetta, Bernie Wrightson and the long work of becoming the artist
+                you want to be.
+              </p>
+
+              <div class="dr-feature__lower dr-feature__lower--interview">
+                <div>
+                  <span class="dr-meta">INTERVIEW BY DRAGON // FEB 4, 2024</span>
+                  <a class="dr-button" href="/interviews/terrorfoxes/">READ INTERVIEW →</a>
+                </div>
+
+                <div class="dr-pullquote">
+                  “I OFTEN JUST PUT THE PEN TO PAPER, MAKE A SHAPE, AND SEE WHERE IT GOES.”
+                </div>
+              </div>
+            </div>
+
+            <a class="dr-interview-art" href="/interviews/terrorfoxes/" aria-label="Open the TerrorFoxes interview">
+              <img
+                src="https://static.wixstatic.com/media/799cff_a80ba2d281d5485686186599e22cce6b~mv2.png/v1/fill/w_980%2Ch_1082%2Cal_c%2Cq_90%2Cusm_0.66_1.00_0.01%2Cenc_avif%2Cquality_auto/Screen%20Shot%202024-03-03%20at%204_24_49%20PM.png"
+                alt="TerrorFoxes artist spotlight"
+                loading="eager"
+              />
+              <span>FEATURED ARTIST // OPEN ARCHIVE</span>
+            </a>
+          </div>
+        </article>
+
+        <section class="dr-right-stack" aria-label="Live media and community">
+          <article class="dr-cell dr-video">
+            <div class="dr-cell__bar">
+              <span>02 // LIVE TWITCH WINDOW</span>
+              <strong>DRAGON TV</strong>
+            </div>
+            <div class="dr-video__body">
+              <div
+                class="dr-video__frame"
+                data-dragon-live
+                data-twitch-channel={featuredStream.channel}
+              >
+                <div class="dr-video__loading">CONNECTING TO TWITCH SIGNAL</div>
+              </div>
+
+              <div class="dr-video__caption dr-video__caption--featured">
+                <div class="dr-video__program">
+                  <span>{featuredStream.label}</span>
+                  <strong>{featuredStream.title}</strong>
+                  <small>WATCH HERE, OR OPEN THE FULL DRAGON TV ROOM.</small>
+                </div>
+                <a class="dr-video__expand" href={featuredStreamHref}>
+                  OPEN IN DRAGON TV →
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="dr-cell dr-forum">
+            <div class="dr-cell__bar">
+              <span>03 // COMMUNITY WIRE</span>
+              <strong>FORUM</strong>
+            </div>
+            <div class="dr-forum__body">
+              <div class="dr-forum__thread">
+                <span>OPEN THREAD</span>
+                <strong>WHAT ARE YOU BUILDING RIGHT NOW?</strong>
+                <small>WORK-IN-PROGRESS // DISCUSSION // SHOW YOUR WORK</small>
+              </div>
+              <a class="dr-button dr-button--small" href="/join/">ENTER NETWORK →</a>
+            </div>
+          </article>
+        </section>
+
+        <article class="dr-cell dr-game">
+          <div class="dr-cell__bar">
+            <span>04 // CURRENT BUILD</span>
+            <strong>PLAY</strong>
+          </div>
+          <div class="dr-game__body">
+            <div class="dr-game__stamp">ARCADE</div>
+            <div>
+              <p class="dr-eyebrow">DRAGONSRITUAL GAMING</p>
+              <h2>THE GAME IS PART OF THE PAGE.</h2>
+              <p>Playable builds, experiments, match reports and things still being shaped in public.</p>
+              <a class="dr-button" href="/gaming/">ENTER GAMING →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="dr-cell dr-radio">
+          <div class="dr-cell__bar">
+            <span>05 // AUDIO SIGNAL</span>
+            <strong>RADIO</strong>
+          </div>
+          <div class="dr-radio__body">
+            <div class="dr-radio__dial" aria-hidden="true"><i></i><b>DR</b><i></i></div>
+            <p class="dr-eyebrow">DRAGON RADIO</p>
+            <h2 id="home-radio-title">TUNE THE UNDERGROUND.</h2>
+            <p id="home-radio-artist">Independent music, interviews and strange transmissions.</p>
+            <a class="dr-button dr-button--small" href="/radio/">LISTEN →</a>
+          </div>
+        </article>
+
+
+        <a class="dr-cell dr-grim-ad" href="/books/grim-sagas/" aria-label="Enter the Grim Sagas archive">
+          <div class="dr-grim-ad__art">
+            <img
+              src="https://static.wixstatic.com/media/799cff_cc36ecfe9eba44469cff16066b1beec8~mv2.jpeg/v1/fill/w_980%2Ch_980%2Cal_c%2Cq_85%2Cusm_0.66_1.00_0.01%2Cenc_avif%2Cquality_auto/799cff_cc36ecfe9eba44469cff16066b1beec8~mv2.jpeg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+
+          <div class="dr-grim-ad__copy">
+            <span>DRAGON BOOKS PRESENTS // A HOUSE AD</span>
+            <strong>GRIM SAGAS</strong>
+            <p>Dark stories, serial worlds, archive records and lore from the Realms.</p>
+            <small>CREATIVE WRITING • SHORT FICTION • WORLD LORE</small>
+          </div>
+
+          <div class="dr-grim-ad__cta">
+            <span>THE ARCHIVE IS OPEN</span>
+            <b>ENTER GRIM SAGAS →</b>
+          </div>
         </a>
+
+
+        <article class="dr-cell dr-wire">
+          <div class="dr-cell__bar">
+            <span>06 // QUICK WIRE</span>
+            <strong>CHAOS FEED</strong>
+          </div>
+          <div class="dr-wire__grid">
+            <a href="/books/"><span>BOOKS</span><strong>READ</strong></a>
+            <a href="/radio/"><span>RADIO</span><strong>LISTEN</strong></a>
+            <a href="/tv/"><span>TV</span><strong>WATCH</strong></a>
+            <a href="/gaming/"><span>GAMES</span><strong>PLAY</strong></a>
+          </div>
+        </article>
+
+        <article class="dr-cell dr-note">
+          <div class="dr-cell__bar">
+            <span>07 // FIELD NOTE</span>
+            <strong>UNDERGROUND</strong>
+          </div>
+          <div class="dr-note__body">
+            <blockquote>THE FRONT PAGE SHOULD FEEL BUILT, NOT PLACED.</blockquote>
+            <p>Every piece lives inside the same structure: one frame, one system, many signals.</p>
+          </div>
+        </article>
       </div>
+
+      <footer class="dr-cell dr-frame-footer">
+        <span>DRAGONSRITUAL // DAILY</span>
+        <strong>ART • GAMES • STORIES • PEOPLE • SIGNAL</strong>
+        <span>© 2026</span>
+      </footer>
     </section>
   </main>
 
-  <footer class="launch-footer">
-    <strong>DRAGONSRITUAL</strong>
-    <span>© 2026</span>
-  </footer>
-
   <script>
+    const liveHost = document.querySelector('[data-dragon-live]');
+    if (liveHost) {
+      const channel = liveHost.dataset.twitchChannel || 'dragonsritual';
+      const frame = document.createElement('iframe');
+      const parent = location.hostname || 'localhost';
+
+      frame.src =
+        `https://player.twitch.tv/?channel=${encodeURIComponent(channel)}` +
+        `&parent=${encodeURIComponent(parent)}` +
+        `&autoplay=false&muted=true`;
+
+      frame.title = `${channel} live on Dragon TV`;
+      frame.allow = 'autoplay; fullscreen; picture-in-picture';
+      frame.allowFullscreen = true;
+      frame.loading = 'eager';
+      liveHost.replaceChildren(frame);
+    }
+
     fetch('/radio/library.json?' + Date.now())
       .then((response) => response.ok ? response.json() : Promise.reject())
       .then((data) => {
         const track = (data.tracks || []).find((item) => item.src);
         if (!track) return;
-
-        const title = document.querySelector('#today-track');
-        const artist = document.querySelector('#today-artist');
-
+        const title = document.querySelector('#home-radio-title');
+        const artist = document.querySelector('#home-radio-artist');
         if (title) title.textContent = track.title || 'DRAGON RADIO';
         if (artist) artist.textContent = track.artist || 'Independent music';
       })

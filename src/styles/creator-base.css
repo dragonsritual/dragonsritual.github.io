@@ -1,0 +1,288 @@
+
+/* =========================================================
+   PASS 21A — CREATOR BASE STATION / DRAGON NETWORK
+   ========================================================= */
+
+.dragon-network-bar{
+  --dn-red:#5b292f;
+  --dn-red2:#7b3b43;
+  --dn-paper:#e8ddd0;
+  position:relative;
+  z-index:60;
+  min-height:38px;
+  display:grid;
+  grid-template-columns:auto minmax(240px,1fr) auto;
+  align-items:center;
+  gap:18px;
+  padding:0 clamp(14px,2vw,28px);
+  border-bottom:1px solid rgba(132,62,70,.38);
+  background:linear-gradient(180deg,rgba(29,12,15,.98),rgba(13,8,10,.99));
+  box-shadow:0 8px 26px rgba(0,0,0,.18);
+  color:#9b8d88;
+  font-family:Arial,Helvetica,sans-serif;
+}
+.dragon-network-bar__brand,
+.dragon-network-bar__actions,
+.dragon-network-bar__radio{display:flex;align-items:center}
+.dragon-network-bar__brand{gap:8px;white-space:nowrap}
+.dragon-network-bar__pulse{
+  width:7px;height:7px;border-radius:50%;
+  background:#9d575b;
+  box-shadow:0 0 0 3px rgba(157,87,91,.10),0 0 12px rgba(157,87,91,.32)
+}
+.dragon-network-bar__brand strong{
+  color:#d8cbc1;font-size:8px;letter-spacing:.15em
+}
+.dragon-network-bar__brand small{
+  padding-left:8px;border-left:1px solid rgba(255,255,255,.09);
+  color:#655e5d;font-size:7px;letter-spacing:.12em
+}
+.dragon-network-bar__wire{
+  min-width:0;display:flex;align-items:center;gap:12px;
+  padding-left:16px;border-left:1px solid rgba(255,255,255,.07)
+}
+.dragon-network-bar__label{
+  flex:0 0 auto;color:#775c5d;font-size:7px;font-weight:800;letter-spacing:.12em
+}
+.dragon-network-bar__message{
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:#8e8582;font-size:9px;letter-spacing:.045em;transition:opacity .18s ease
+}
+.dragon-network-bar__message.is-changing{opacity:.2}
+.dragon-network-bar__actions{gap:5px}
+.dragon-network-bar__actions a{
+  min-height:27px;display:flex;align-items:center;padding:0 10px;
+  border:1px solid transparent;color:#988c87;text-decoration:none;
+  font-size:7px;font-weight:800;letter-spacing:.11em
+}
+.dragon-network-bar__actions a:hover{
+  color:#e3d7cd;border-color:rgba(133,65,72,.34);background:rgba(92,38,45,.18)
+}
+.dragon-network-bar__radio{gap:6px!important}
+.dragon-network-bar__radio-icon{color:#a65e62;font-size:9px}
+
+.creator-base{
+  --cb-oxblood:#36181d;
+  --cb-oxblood2:#54252c;
+  --cb-paper:#e8ddd0;
+  --cb-muted:#817873;
+  min-height:calc(100vh - 112px);
+  padding:0 0 90px;
+  color:#d7ccc3;
+  background:
+    radial-gradient(ellipse at 15% 0,rgba(105,43,51,.20),transparent 30%),
+    radial-gradient(ellipse at 85% 20%,rgba(87,35,43,.13),transparent 28%),
+    linear-gradient(180deg,#241014 0%,#100a0c 42%,#070809 100%);
+}
+.creator-base__hero{
+  min-height:320px;
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.6fr);
+  gap:70px;align-items:end;
+  padding:58px clamp(24px,6vw,96px) 42px;
+  border-bottom:1px solid rgba(133,63,71,.32);
+  background:
+    linear-gradient(90deg,rgba(8,7,8,.80),rgba(37,15,19,.68),rgba(50,21,26,.38)),
+    radial-gradient(circle at 70% 10%,rgba(139,65,72,.13),transparent 32%);
+}
+.creator-base__hero h1{
+  margin:10px 0 12px;
+  max-width:900px;
+  color:var(--cb-paper);
+  font:500 clamp(48px,6vw,78px)/.92 Georgia,serif;
+  letter-spacing:-.045em;
+}
+.creator-base__hero h1 span{color:#bd7775}
+.creator-base__eyebrow{
+  color:#aa6a69;font:800 8px/1 Arial,sans-serif;letter-spacing:.16em
+}
+.creator-base__hero p{
+  max-width:720px;margin:0;color:#998b84;font:15px/1.65 Georgia,serif
+}
+.creator-base__identity{
+  justify-self:end;width:min(100%,360px);
+  padding:22px 24px;border:1px solid rgba(151,74,81,.35);
+  background:rgba(13,9,10,.66);box-shadow:0 24px 60px rgba(0,0,0,.22)
+}
+.creator-base__identity small{
+  display:block;color:#7e5556;font:800 7px/1 Arial,sans-serif;letter-spacing:.13em
+}
+.creator-base__identity strong{
+  display:block;margin-top:8px;color:#e6d9ce;font:500 23px/1.15 Georgia,serif
+}
+.creator-base__identity span{
+  display:block;margin-top:7px;color:#7d7471;font:9px/1.4 Arial,sans-serif;letter-spacing:.07em
+}
+
+.creator-base__body{
+  width:min(1480px,calc(100% - 48px));margin:0 auto
+}
+.creator-base__status{
+  display:grid;grid-template-columns:minmax(280px,1.5fr) repeat(3,minmax(125px,.45fr));
+  margin-top:24px;border:1px solid rgba(255,255,255,.075);
+  background:linear-gradient(100deg,rgba(82,33,40,.26),rgba(9,10,11,.87) 35%)
+}
+.creator-base__status > div{padding:20px 22px}
+.creator-base__status > div+div{border-left:1px solid rgba(255,255,255,.07)}
+.creator-base__status span{
+  display:block;color:#625d5c;font:800 7px/1 Arial,sans-serif;letter-spacing:.12em
+}
+.creator-base__status strong{
+  display:block;margin-top:8px;color:#d6cac0;font:500 17px/1.2 Georgia,serif
+}
+.creator-base__status .creator-base__brief strong{font-size:20px}
+.creator-base__status p{margin:6px 0 0;color:#696363;font:10px/1.5 Arial,sans-serif}
+
+.creator-base__section{margin-top:42px}
+.creator-base__section-head{
+  display:flex;align-items:end;justify-content:space-between;gap:20px;
+  padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.075)
+}
+.creator-base__section-head h2{
+  margin:6px 0 0;color:#e4d8ce;font:500 34px/1 Georgia,serif;letter-spacing:-.025em
+}
+.creator-base__section-head p{
+  max-width:580px;margin:0;color:#6f6866;font:11px/1.5 Arial,sans-serif
+}
+
+.creator-workstations{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:18px
+}
+.creator-station{
+  position:relative;overflow:hidden;min-height:245px;
+  grid-column:span 4;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:28px;border:1px solid rgba(151,74,81,.30);
+  background:
+    radial-gradient(circle at 100% 0,rgba(150,67,75,.13),transparent 35%),
+    linear-gradient(145deg,#34171c,#140c0f 62%,#0b0a0b);
+  box-shadow:0 24px 60px rgba(0,0,0,.14)
+}
+.creator-station.is-primary{grid-column:span 7;min-height:315px}
+.creator-station.is-locked{opacity:.54;filter:saturate(.7)}
+.creator-station__top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.creator-station__number{
+  color:#72484b;font:500 31px/1 Georgia,serif
+}
+.creator-station__state{
+  padding:6px 8px;border:1px solid rgba(158,80,84,.28);
+  color:#a96a68;font:800 7px/1 Arial,sans-serif;letter-spacing:.11em
+}
+.creator-station h3{
+  margin:28px 0 8px;color:#eaded3;
+  font:500 30px/1.05 Georgia,serif;letter-spacing:-.03em
+}
+.creator-station.is-primary h3{font-size:44px}
+.creator-station p{
+  max-width:590px;margin:0;color:#7f7470;font:11px/1.55 Arial,sans-serif
+}
+.creator-station__foot{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:26px
+}
+.creator-station__role{
+  color:#79595a;font:800 7px/1 Arial,sans-serif;letter-spacing:.12em
+}
+.creator-station__enter{
+  min-height:38px;display:inline-flex;align-items:center;padding:0 15px;
+  border:1px solid #9e5d60;background:linear-gradient(180deg,#8e4b51,#71363e);
+  color:#fff0e5;text-decoration:none;font:800 8px/1 Arial,sans-serif;letter-spacing:.12em
+}
+.creator-station__enter:hover{background:linear-gradient(180deg,#a15a5d,#804149)}
+.creator-station__locked{
+  color:#686261;font:800 7px/1 Arial,sans-serif;letter-spacing:.1em
+}
+
+.creator-tools{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:18px
+}
+.creator-tool{
+  grid-column:span 2;min-height:120px;padding:20px;
+  border:1px solid rgba(255,255,255,.075);background:rgba(9,10,11,.58)
+}
+.creator-tool strong{display:block;color:#cfc3b9;font:500 18px/1.1 Georgia,serif}
+.creator-tool span{display:block;margin-top:8px;color:#65605e;font:10px/1.45 Arial,sans-serif}
+.creator-tool em{
+  display:inline-block;margin-top:14px;color:#8b5558;font:800 7px/1 Arial,sans-serif;
+  font-style:normal;letter-spacing:.11em
+}
+
+.creator-base__signout{
+  margin-top:34px;padding-top:18px;border-top:1px solid rgba(255,255,255,.065);
+  display:flex;align-items:center;justify-content:space-between;gap:16px
+}
+.creator-base__signout p{margin:0;color:#615c5b;font:9px/1.4 Arial,sans-serif}
+.creator-base__signout button{
+  border:0;background:none;color:#776d69;font:800 7px/1 Arial,sans-serif;letter-spacing:.12em;cursor:pointer
+}
+.creator-base__signout button:hover{color:#d8cbc1}
+
+@media(max-width:980px){
+  .creator-base__hero{grid-template-columns:1fr;gap:26px}
+  .creator-base__identity{justify-self:start}
+  .creator-base__status{grid-template-columns:1fr 1fr}
+  .creator-base__status > div+div{border-left:0;border-top:1px solid rgba(255,255,255,.07)}
+  .creator-station,.creator-station.is-primary{grid-column:span 6}
+  .creator-tool{grid-column:span 3}
+}
+@media(max-width:720px){
+  .dragon-network-bar{grid-template-columns:1fr auto}
+  .dragon-network-bar__wire{grid-column:1/-1;grid-row:2;padding:6px 0 8px;border-left:0}
+  .creator-base__body{width:calc(100% - 24px)}
+  .creator-base__hero{padding:38px 18px 30px;min-height:270px}
+  .creator-base__hero h1{font-size:48px}
+  .creator-base__status{grid-template-columns:1fr}
+  .creator-station,.creator-station.is-primary{grid-column:1/-1;min-height:230px}
+  .creator-station.is-primary h3{font-size:36px}
+  .creator-tool{grid-column:1/-1}
+}
+
+
+/* =========================================================
+   PASS 22B — CREATOR BASE STATION LEGIBILITY / SESSION UX
+   ========================================================= */
+.creator-base{font-size:16px}
+.creator-base__eyebrow{font-size:10px!important;letter-spacing:.14em!important}
+.creator-base__hero p{font-size:17px!important;line-height:1.7!important}
+.creator-base__identity small{font-size:9px!important}
+.creator-base__identity strong{font-size:28px!important}
+.creator-base__identity span{font-size:11px!important}
+.creator-base__status span{font-size:9px!important}
+.creator-base__status strong{font-size:20px!important}
+.creator-base__status .creator-base__brief strong{font-size:24px!important}
+.creator-base__status p{font-size:12px!important;line-height:1.55!important}
+.creator-base__section-head h2{font-size:40px!important}
+.creator-base__section-head p{font-size:13px!important;line-height:1.6!important}
+.creator-station__state{font-size:9px!important}
+.creator-station h3{font-size:34px!important}
+.creator-station.is-primary h3{font-size:48px!important}
+.creator-station p{font-size:13px!important;line-height:1.65!important}
+.creator-station__role,.creator-station__locked{font-size:9px!important}
+.creator-station__enter{min-height:44px!important;padding:0 18px!important;font-size:9px!important}
+.creator-tool strong{font-size:21px!important}
+.creator-tool span{font-size:12px!important;line-height:1.55!important}
+.creator-tool em{font-size:8px!important}
+.creator-base__hero{position:relative}
+.creator-base__sessionbar{
+  position:absolute;top:18px;right:clamp(18px,4vw,58px);
+  display:flex;align-items:center;gap:10px;z-index:4
+}
+.creator-base__sessionbar span{color:#8a7d78;font:800 9px/1 Arial,sans-serif;letter-spacing:.1em}
+.creator-base__sessionbar button{
+  min-height:38px;padding:0 14px;border:1px solid rgba(160,79,84,.42);
+  background:rgba(37,16,20,.72);color:#d7c7bd;
+  font:800 9px/1 Arial,sans-serif;letter-spacing:.1em;cursor:pointer
+}
+.creator-base__sessionbar button:hover{background:rgba(91,38,45,.42);color:#fff1e6}
+.creator-base__signout p{font-size:11px!important}
+.creator-base__signout button{
+  min-height:36px;padding:0 12px;border:1px solid rgba(255,255,255,.07);
+  font-size:9px!important
+}
+.dragon-network-bar__brand strong{font-size:9px!important}
+.dragon-network-bar__brand small{font-size:8px!important}
+.dragon-network-bar__label{font-size:8px!important}
+.dragon-network-bar__message{font-size:10px!important}
+.dragon-network-bar__actions a{min-height:31px!important;font-size:8px!important}
+@media(max-width:720px){
+  .creator-base__sessionbar{position:static;margin-top:18px}
+  .creator-base__hero{padding-top:32px}
+}

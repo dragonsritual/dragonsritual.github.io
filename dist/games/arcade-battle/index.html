@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+
+  <title>DragonsRitual Arcade Battle</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div id="startScreen" class="start-screen">
+    <div class="start-screen-backdrop"></div>
+
+    <div class="start-screen-content">
+      <div class="start-kicker">DRAGONSRITUAL ARCADE PRESENTS</div>
+      <h1>ARCADE BATTLE</h1>
+      <div class="start-rule"></div>
+
+      <div class="start-party" aria-hidden="true">
+        <img src="assets/characters/Archer/Anim_char2_idle_01.png" alt="" draggable="false" />
+        <img class="start-hero" src="assets/characters/Knight/Anim_char1_idle_01.png" alt="" draggable="false" />
+        <img src="assets/characters/Mage/Anim_char3_idle_01.png" alt="" draggable="false" />
+      </div>
+
+      <p class="start-tagline">PLAN YOUR PARTY. READ THE ENEMY. SURVIVE THE WAVE.</p>
+
+      <button type="button" id="startGameButton" class="start-game-button">
+        START GAME
+      </button>
+
+      <div class="start-hint">TAP START &nbsp;•&nbsp; ENTER / SPACE</div>
+      <div class="start-build">PUBLIC DEVELOPMENT BUILD</div>
+    </div>
+  </div>
+
+  <div id="game" class="game-before-start">
+    <header class="game-header compact-header">
+  <div class="studio-name">
+    DRAGONSRITUAL ARCADE
+  </div>
+
+  <div class="wave-display">
+    WAVE <span id="waveText">1</span>
+  </div>
+  <div id="runSigils" class="run-sigils" aria-label="Party affinities"></div>
+  <div class="run-stats">
+    <span>SCORE <b id="scoreText">0</b></span>
+    <span>CHAIN <b id="chainText">x1</b></span>
+    <button type="button" id="collectionButton" class="collection-button">COLLECTION</button>
+  </div>
+</header>
+
+    <main class="battle-screen">
+  <section class="turn-strip-panel">
+  <div class="turn-strip-left">
+    <span class="turn-label">ROUND</span>
+    <strong id="roundText">1</strong>
+  </div>
+
+  <div id="timelineBar" class="turn-strip">
+    Turn order will appear here.
+  </div>
+
+  <div
+    id="planningStatusText"
+    class="planning-status"
+  >
+    Planning
+  </div>
+</section>
+
+  <section id="battlefield" class="battlefield">
+        <div class="battle-background"></div>
+
+        <div id="enemyFormation" class="formation enemy-formation"></div>
+
+        <div id="fighterFormation" class="formation fighter-formation"></div>
+
+        <div id="effectsLayer" class="effects-layer"></div>
+
+<div
+  id="actionPhaseBanner"
+  class="action-phase-banner hidden"
+>
+  ACTION PHASE
+</div>
+
+<div
+  id="actionResolutionPanel"
+  class="action-resolution-panel hidden"
+>
+  <div class="action-resolution-top">
+    <strong id="actionActorText">Knight</strong>
+    <span id="actionNameText">Attack</span>
+  </div>
+
+  <div class="action-progress-track">
+    <div
+      id="actionProgressFill"
+      class="action-progress-fill"
+    ></div>
+
+    <div class="action-impact-marker"></div>
+  </div>
+
+  <div class="action-progress-labels">
+    <span>READY</span>
+    <span>IMPACT</span>
+    <span>RECOVER</span>
+  </div>
+</div>
+
+<div id="battleMessage" class="battle-message">
+  Prepare for battle.
+</div>
+
+<div id="upgradeOverlay" class="upgrade-overlay hidden" aria-hidden="true">
+  <div class="upgrade-card-shell ritual-reward-shell">
+    <div class="upgrade-kicker">THE RITUAL REVEALS ONE CARD</div>
+    <h2 id="rewardTitle">THE DRAW</h2>
+    <div id="upgradeChoices" class="upgrade-choices ritual-single-draw"></div>
+    <div class="upgrade-hint">NO REROLL · USE WHAT THE RUN GIVES YOU</div>
+  </div>
+</div>
+
+<div id="runRevealOverlay" class="upgrade-overlay hidden" aria-hidden="true">
+  <div class="upgrade-card-shell run-reveal-shell">
+    <div class="upgrade-kicker">NEW RUN // BOOSTER BROKEN OPEN</div>
+    <h2>THIS IS YOUR LINEUP</h2>
+    <div id="resonanceText" class="resonance-text"></div>
+    <div id="runRevealCards" class="run-reveal-cards"></div>
+    <button type="button" id="acceptRunButton" class="start-game-button reveal-start">PLAY THIS RUN</button>
+    <div class="upgrade-hint">COMMONS CAN WIN · MYTHICS CAN DIE · THE NEXT RUN WILL BE DIFFERENT</div>
+  </div>
+</div>
+
+<div id="inspectOverlay" class="inspect-overlay hidden" aria-hidden="true">
+  <div class="inspect-card">
+    <button type="button" id="inspectCloseButton" class="inspect-close">×</button>
+    <div id="inspectBody"></div>
+  </div>
+</div>
+
+<div id="collectionOverlay" class="inspect-overlay hidden" aria-hidden="true">
+  <div class="inspect-card collection-shell">
+    <button type="button" id="collectionCloseButton" class="inspect-close">×</button>
+    <div class="upgrade-kicker">DRAGONSRITUAL ARCADE ARCHIVE</div>
+    <h2>CARDS ENCOUNTERED</h2>
+    <div id="collectionMeta" class="collection-meta"></div>
+    <div id="collectionBody" class="collection-grid"></div>
+  </div>
+</div>
+      </section>
+
+      <section class="battle-interface">
+        <div id="turnOrder" class="turn-order">
+          Turn order will appear here.
+        </div>
+
+        <div id="commandPanel" class="command-panel">
+  <button
+    type="button"
+    id="attackButton"
+    data-action="attack"
+  >
+    ATTACK
+  </button>
+
+  <button
+    type="button"
+    id="skillButton"
+    data-action="skill"
+  >
+    SKILL
+  </button>
+
+  <button
+    type="button"
+    id="guardButton"
+    data-action="guard"
+  >
+    GUARD
+  </button>
+
+  <button
+    type="button"
+    id="executeTurnButton"
+    disabled
+  >
+    EXECUTE
+  </button>
+
+  <button
+    type="button"
+    id="restartButton"
+    class="hidden-control"
+  >
+    RESTART
+  </button>
+</div>
+
+        <div id="battleLog" class="battle-log">
+          Battle ready.
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="src/data/fighters.js"></script>
+  <script src="src/data/enemies.js"></script>
+  <script src="src/data/upgrades.js"></script>
+  <script src="src/data/pull_roster.js"></script>
+  <script src="src/data/ritual_draw.js"></script>
+
+  <script src="src/combatant.js"></script>
+  <script src="src/effects.js"></script>
+  <script src="src/input.js"></script>
+  <script src="src/battle.js"></script>
+  <script src="src/renderer.js"></script>
+
+  <script src="main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,47 @@
+---
+interface Props {
+  context?: string;
+  showBaseStation?: boolean;
+}
+const { context = "STUDIO", showBaseStation = true } = Astro.props;
+---
+<div class="dragon-network-bar" data-dragon-network>
+  <div class="dragon-network-bar__brand">
+    <span class="dragon-network-bar__pulse"></span>
+    <strong>DRAGON NETWORK</strong>
+    <small>{context}</small>
+  </div>
+
+  <div class="dragon-network-bar__wire" aria-label="Studio network updates">
+    <span class="dragon-network-bar__label">ON THE WIRE</span>
+    <div class="dragon-network-bar__message" data-network-message>
+      BASE STATION ONLINE · CREATOR WORKSTATIONS CONNECTED
+    </div>
+  </div>
+
+  <nav class="dragon-network-bar__actions" aria-label="Creator network">
+    {showBaseStation && <a href="/creator/" class="dragon-network-bar__base">BASE STATION</a>}
+    <a href="/radio/" class="dragon-network-bar__radio" title="Open Dragon Radio">
+      <span class="dragon-network-bar__radio-icon" aria-hidden="true">◉</span>
+      <span>RADIO</span>
+    </a>
+  </nav>
+</div>
+
+<script>
+  const wire=document.querySelector('[data-network-message]');
+  if(wire){
+    const messages=[
+      'BASE STATION ONLINE · CREATOR WORKSTATIONS CONNECTED',
+      'DRAGON RADIO · STATION AVAILABLE',
+      'STUDIO WIRE · PROJECT CALLS AND EVENTS WILL APPEAR HERE',
+      'CREATOR NETWORK · BUILD SOMETHING WORTH RETURNING TO'
+    ];
+    let i=0;
+    window.setInterval(()=>{
+      i=(i+1)%messages.length;
+      wire.classList.add('is-changing');
+      window.setTimeout(()=>{ wire.textContent=messages[i]; wire.classList.remove('is-changing'); },180);
+    },9000);
+  }
+</script>

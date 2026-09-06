@@ -1,0 +1,298 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import LaunchHeader from "../../../components/LaunchHeader.astro";
+import "../../../styles/interview.css";
+
+const heroImage = "https://static.wixstatic.com/media/799cff_a80ba2d281d5485686186599e22cce6b~mv2.png/v1/fill/w_980%2Ch_1082%2Cal_c%2Cq_90%2Cusm_0.66_1.00_0.01%2Cenc_avif%2Cquality_auto/Screen%20Shot%202024-03-03%20at%204_24_49%20PM.png";
+const processImage = "https://static.wixstatic.com/media/799cff_d1963d2ed30241c7930e816c02285912~mv2.jpg/v1/fill/w_980%2Ch_1322%2Cal_c%2Cq_85%2Cusm_0.66_1.00_0.01%2Cenc_avif%2Cquality_auto/799cff_d1963d2ed30241c7930e816c02285912~mv2.jpg";
+---
+
+<SiteLayout
+  title="Artist Spotlight: Interview with TerrorFoxes — DragonsRitual"
+  description="DragonsRitual Artist Spotlight interview with TerrorFoxes on fantasy illustration, comics, creative process, influences and persistence."
+>
+  <LaunchHeader />
+
+  <main class="interview-page">
+    <article class="interview-shell">
+      <header class="interview-hero">
+        <div class="interview-kicker">
+          <span>DRAGONSRITUAL ARCHIVE</span>
+          <strong>ARTIST SPOTLIGHT // INTERVIEW</strong>
+        </div>
+
+        <div class="interview-hero__grid">
+          <div class="interview-hero__copy">
+            <p class="interview-overline">FEATURED ARTIST</p>
+            <h1>Artist Spotlight:<br /><em>TerrorFoxes</em></h1>
+            <p class="interview-deck">
+              A conversation about fantasy illustration, old Fighting Fantasy gamebooks,
+              comics, instinct, discipline, and the long road toward making art your life.
+            </p>
+
+            <div class="interview-meta">
+              <span>INTERVIEW BY DRAGON</span>
+              <span>FEBRUARY 4, 2024</span>
+              <span>ARCHIVED SEPTEMBER 26, 2024</span>
+            </div>
+
+            <div class="interview-actions">
+              <a href="https://www.instagram.com/terrorfoxes/" target="_blank" rel="noreferrer">FOLLOW TERRORFOXES ↗</a>
+              <a href="https://www.webtoons.com/en/canvas/simeon-grigzy-for-hire/list?title_no=751650" target="_blank" rel="noreferrer">READ ON WEBTOON ↗</a>
+            </div>
+          </div>
+
+          <figure class="interview-hero__art">
+            <img src={heroImage} alt="Artwork featured in the TerrorFoxes artist spotlight" />
+            <figcaption>TERRORFOXES // ARTIST SPOTLIGHT</figcaption>
+          </figure>
+        </div>
+      </header>
+
+      <div class="interview-body">
+        <aside class="interview-index" aria-label="Interview sections">
+          <span>FIELD INDEX</span>
+          <a href="#introduction">INTRODUCTION</a>
+          <a href="#early-days">EARLY DAYS</a>
+          <a href="#influences">INFLUENCES</a>
+          <a href="#process">PROCESS</a>
+          <a href="#practice">PRACTICE</a>
+          <a href="#comics">COMICS</a>
+          <a href="#design">CHARACTER DESIGN</a>
+          <a href="#goals">GOALS</a>
+        </aside>
+
+        <div class="interview-copy">
+          <section id="introduction" class="interview-section interview-intro">
+            <p class="interview-section__label">INTRODUCTION</p>
+            <p class="interview-lead">
+              In the vibrant world of art and illustration, few creators manage to capture
+              the imagination like TerrorFoxes. Known for a blend of fantasy, horror and
+              science fiction, he has built his work around comics, illustration and a
+              persistent need to keep drawing.
+            </p>
+            <p>
+              In this interview, DragonsRitual looks at the process, influences and
+              ambitions behind that work — from childhood gamebooks and 2000AD to
+              Webtoon Canvas and the dream of holding a self-published comic in hand.
+            </p>
+          </section>
+
+          <section id="early-days" class="interview-section">
+            <p class="interview-section__label">THE EARLY DAYS // FINDING PASSION IN ILLUSTRATION</p>
+            <h2>How did you begin your career in the field of art, and how did you find your passion in illustration?</h2>
+            <div class="interview-answer">
+              <p>
+                I've drawn for as long as I can remember. I was that archetypal kid who
+                zoned out in class, preferring to doodle in the back of my schoolbooks!
+                Unfortunately, it was never encouraged—in fact, quite the opposite—so I
+                simply stopped drawing in my mid-teens and didn’t pick it back up until
+                years later.
+              </p>
+            </div>
+          </section>
+
+          <section id="influences" class="interview-section">
+            <p class="interview-section__label">INSPIRATION AND INFLUENCES</p>
+            <h2>Do you have favorite artists who helped shape or motivate your work?</h2>
+            <div class="interview-answer">
+              <p>
+                As a kid, the art I was most attracted to were the illustrations in the
+                old Fighting Fantasy gamebooks.
+              </p>
+              <p>
+                I didn't know the artists' names at the time, but I've since learned that
+                most of my favourite pics were drawn by Iain McCaig! The only time I
+                remember actually learning an artist's name because I was so impressed
+                with their work was when my friend at school lent me some 2000AD comics,
+                and I was exposed to Simon Bisley’s ABC Warriors art. I remember just
+                being stunned by how cool his designs were, and he remains a favourite.
+              </p>
+              <p>
+                Since then, I’ve gravitated toward some classics like Frank Frazetta and
+                Bernie Wrightson. I’m always picking up new inspirations!
+              </p>
+            </div>
+          </section>
+
+          <figure class="interview-break-art">
+            <img src={processImage} alt="TerrorFoxes artwork from the original DragonsRitual interview" loading="lazy" />
+            <figcaption>FROM THE ORIGINAL DRAGONSRITUAL ARTIST SPOTLIGHT</figcaption>
+          </figure>
+
+          <section id="process" class="interview-section">
+            <p class="interview-section__label">CREATIVE PROCESS // INTUITION VS. PLANNING</p>
+            <h2>What do you feel when you put the pencil to paper? Is it intuitive, or do you have to really think?</h2>
+            <div class="interview-answer">
+              <p>
+                Most of my ballpoint work is done intuitively. I often just put the pen to
+                paper, make a shape, and see where it goes from there. I enjoy the
+                challenge of creating something aesthetically pleasing from an initially
+                random design.
+              </p>
+              <p>
+                Occasionally, I do have a specific motivation for a drawing when I get an
+                idea I just have to put down. In both cases, I feel freedom and joy—
+                especially during the first few strokes as the drawing comes together.
+              </p>
+            </div>
+          </section>
+
+          <aside class="interview-pull">
+            <span>FROM THE INTERVIEW</span>
+            <blockquote>
+              “I often just put the pen to paper, make a shape, and see where it goes from there.”
+            </blockquote>
+          </aside>
+
+          <section id="practice" class="interview-section">
+            <p class="interview-section__label">ADVICE FOR ARTISTS // PRACTICE AND PERSISTENCE</p>
+            <h2>What advice would you give to artists, new and veteran?</h2>
+            <div class="interview-answer">
+              <p>
+                I don't feel comfortable giving out advice, as I'm still a beginner.
+                However, I can share what has worked for me: I had little improvement
+                until I bought a pocket-sized sketchbook and resolved to draw every day.
+                I started filling the pages whenever I could, even in short ten-minute
+                bursts.
+              </p>
+              <p>
+                I then posted the results on Instagram, which helped me maintain a routine
+                and provided motivation. So, I’d say: put the time in, draw, and practise
+                as much as you can—while not being too disheartened by slow progress.
+              </p>
+              <p>
+                That said, while social media is useful and fun, I've recently found
+                myself spending more time on it than I'd like. Checking up on Instagram,
+                TikTok, Threads, X, and DeviantArt takes more time than I want, so I plan
+                to step back and focus more on my comics and practice.
+              </p>
+            </div>
+
+            <h2>Do you have any dream jobs?</h2>
+            <div class="interview-answer">
+              <p>Any job where I can be paid to draw fantasy/horror/sci-fi ideas would be a dream!</p>
+            </div>
+          </section>
+
+          <section id="comics" class="interview-section">
+            <p class="interview-section__label">COMICS // WEBTOON // LEARNING IN PUBLIC</p>
+            <h2>You have two fantasy-themed comics on the web. How is the experience?</h2>
+            <div class="interview-answer">
+              <p>
+                Yes, I have two fantasy-themed comics on Webtoon Canvas: Simeon & Grigzy
+                For Hire! and Dunjun Gremz. I'm enjoying both, and I find Webtoons very
+                user-friendly for uploading episodes. The experience has been positive
+                overall. My main issue is not being able to release issues faster!
+              </p>
+              <p>
+                Comics take ages to draw, letter, and edit, especially with my detailed
+                art style, which is why Simeon & Grigzy has transitioned from full colour
+                to just black and white.
+              </p>
+              <p>
+                I also need to practise colouring, so I created Dunjun Gremz as a smaller
+                comic to keep me on track with that.
+              </p>
+            </div>
+
+            <h2>Were the stories pre-planned, or are you making them up as you go?</h2>
+            <div class="interview-answer">
+              <p>
+                My comics are pre-planned but only as a loose skeleton. I have the story
+                mapped out, but I’m fleshing out a lot of the details as I go. Dunjun
+                Gremz is usually a one-joke strip though that I make up as I go.
+              </p>
+            </div>
+          </section>
+
+          <section id="design" class="interview-section">
+            <p class="interview-section__label">CHARACTER DESIGN AND ADAPTABILITY</p>
+            <div class="interview-answer">
+              <p>
+                Both characters in Simeon & Grigzy were created with adaptability in
+                mind. They are quite standard-looking—one’s basically a ninja, and the
+                other a generic ogre/orc. This allows me to tinker with their designs over
+                time. I expect their appearances to change significantly from their
+                original looks in a couple of years while still maintaining the
+                ninja/ogre template.
+              </p>
+            </div>
+
+            <h2>What has comic creation taught you?</h2>
+            <div class="interview-answer">
+              <p>
+                What I’ve learned is that comics are incredibly time-consuming, and each
+                aspect—pencilling, inking, colouring, and lettering—is a discipline in
+                itself that could take a lifetime to master. Writing, too! Managing all
+                these tasks while trying to learn is far more challenging than anyone who
+                hasn’t drawn their own comic might appreciate.
+              </p>
+              <p>
+                One frustrating limitation has been needing to tone down the violence for
+                Simeon & Grigzy. Originally, it was meant to be hyper-violent, but
+                Webtoons has guidelines against that, so I’ve had to get creative and hide
+                some content or imply violence happening off-camera. There are plenty of
+                panels on the cutting room floor!
+              </p>
+            </div>
+
+            <h2>What would you like readers to know about you?</h2>
+            <div class="interview-answer">
+              <p>
+                I've had no formal art training, so all my bad habits are mine alone! I do
+                try to watch the occasional YouTube art tutorial video, but only in small
+                doses as I'd much rather be spending my time drawing instead!
+              </p>
+            </div>
+          </section>
+
+          <section id="goals" class="interview-section">
+            <p class="interview-section__label">OTHER PASSIONS AND LIFE GOALS</p>
+            <h2>Do you have other passions or life goals that flow with your creative side?</h2>
+            <div class="interview-answer">
+              <p>
+                I find now that almost all of my free time is taken up with drawing, which
+                is fine with me, as it’s something I stopped doing while still at school
+                and wish I’d stuck with. Instead, I wasted a lot of years not doing
+                something that gives me a lot of pleasure and satisfaction.
+              </p>
+            </div>
+
+            <h2>Where do you see yourself in the years to come?</h2>
+            <div class="interview-answer">
+              <p>
+                I hope to be a lot more polished and professional in years to come. My
+                only goal for now is to keep drawing and improving while continuing my
+                comics. Although, I’d like to self-publish my own printed comic book one
+                day, just for the thrill of seeing it and holding it in my hand!
+              </p>
+            </div>
+
+            <h2>Is illustration your professional career of choice or more of a hobby?</h2>
+            <div class="interview-answer">
+              <p>
+                It's a hobby for now. But it'd be nice to be professional enough to
+                support myself with my art one day.
+              </p>
+            </div>
+          </section>
+
+          <footer class="interview-end">
+            <span>END OF INTERVIEW // ARCHIVE SIGNAL REMAINS OPEN</span>
+            <h2>Keep drawing. Keep building.</h2>
+            <p>
+              TerrorFoxes continues to develop his comics and illustration work. Visit
+              his current pages below, or return to the DragonsRitual front page.
+            </p>
+            <div>
+              <a href="https://www.instagram.com/terrorfoxes/" target="_blank" rel="noreferrer">INSTAGRAM ↗</a>
+              <a href="https://www.webtoons.com/en/canvas/simeon-grigzy-for-hire/list?title_no=751650" target="_blank" rel="noreferrer">WEBTOON ↗</a>
+              <a href="/">RETURN TO DAILY →</a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </article>
+  </main>
+</SiteLayout>

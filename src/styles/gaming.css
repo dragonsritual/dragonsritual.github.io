@@ -1,183 +1,2165 @@
-﻿.page-intro {
-  padding: 64px 0 28px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: end;
-  border-bottom: 1px solid var(--line);
+
+/* PASS 36 — DRAGON GAMING / WIZARD FEEDER */
+.gaming-hub,.wizard-site{min-height:100vh;background:#070809;color:#d8ccc4}
+.gaming-hero{min-height:520px;padding:72px max(6vw,24px);display:grid;grid-template-columns:1fr 240px;gap:50px;align-items:center;border-bottom:1px solid rgba(255,255,255,.07);background:radial-gradient(circle at 20% 25%,rgba(57,36,93,.25),transparent 30%),radial-gradient(circle at 78% 60%,rgba(90,35,42,.20),transparent 32%),#070809}
+.gaming-hero>div>span,.gaming-shelf header>span,.wizard-site__head span,.wizard-site__future article>span,.wizard-integration>span{font:800 8px Arial;letter-spacing:.14em;color:#886ee1}
+.gaming-hero h1{margin:10px 0 16px;font:500 clamp(58px,8vw,105px)/.84 Georgia,serif;letter-spacing:-.05em;color:#eadfd5}.gaming-hero p{max-width:760px;color:#877d77;font:12px/1.7 Arial}.gaming-hero__badge{width:190px;height:190px;border:1px solid rgba(133,104,227,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(3deg);box-shadow:inset 0 0 30px rgba(111,84,213,.07)}.gaming-hero__badge strong{font:500 58px Georgia}.gaming-hero__badge span{font:800 8px Arial;letter-spacing:.18em;text-align:center;color:#8c78d4}
+.gaming-shelf{padding:65px max(6vw,24px)}.gaming-shelf header h2{margin:7px 0 28px;font:500 44px Georgia,serif}.gaming-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.gaming-card{display:block;padding:12px 12px 22px;border:1px solid rgba(255,255,255,.07);background:#0b0c0e;color:inherit;text-decoration:none}.gaming-card__screen{aspect-ratio:16/10;padding:16px;display:flex;justify-content:space-between;align-items:flex-end;background:radial-gradient(circle at 65% 28%,rgba(100,62,190,.35),transparent 28%),linear-gradient(145deg,#18141e,#090a0c);border:1px solid rgba(135,104,223,.16)}.gaming-card__screen span{align-self:flex-start;color:#665c6f;font:700 8px Arial}.gaming-card__screen strong{font:500 28px/.9 Georgia,serif;color:#c9bee0}.gaming-card small{display:block;margin-top:16px;color:#806ac7;font:800 7px Arial;letter-spacing:.09em}.gaming-card h3{margin:7px 0;font:500 22px Georgia,serif}.gaming-card p{min-height:65px;color:#756d69;font:10px/1.6 Arial}.gaming-card>b{font:800 7px Arial;letter-spacing:.08em;color:#a68edc}.gaming-card--wizard:hover{border-color:rgba(133,104,227,.42);transform:translateY(-2px)}
+.wizard-site{padding:40px max(5vw,18px) 80px}.wizard-site__head{display:flex;justify-content:space-between;align-items:end;gap:24px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.07)}.wizard-site__head h1{margin:7px 0 4px;font:500 50px Georgia,serif}.wizard-site__head p{margin:0;color:#736c68;font:10px Arial}.wizard-site__member-state{padding:12px 16px;border:1px solid rgba(127,97,215,.25);background:#0d0b10}.wizard-site__member-state small,.wizard-site__member-state strong{display:block}.wizard-site__member-state small{color:#71617d;font:700 7px Arial}.wizard-site__member-state strong{margin-top:5px;font:500 13px Georgia}
+.wizard-frame-shell{position:relative;margin:22px auto 0;width:min(1180px,100%);min-height:680px;border:1px solid rgba(130,99,218,.28);background:#09080d;box-shadow:0 30px 80px rgba(0,0,0,.4)}.wizard-frame-shell iframe{width:100%;height:760px;border:0;background:#0a0811}.wizard-frame-shell__loading,.wizard-frame-shell__missing{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}.wizard-frame-shell__loading span,.wizard-frame-shell__missing span{color:#846fd0;font:800 7px Arial;letter-spacing:.12em}.wizard-frame-shell__loading h2,.wizard-frame-shell__missing h2{margin:8px 0;font:500 36px Georgia}.wizard-frame-shell__loading p,.wizard-frame-shell__missing p{max-width:650px;color:#766e69;font:10px/1.6 Arial}.wizard-frame-shell__missing code{margin-top:15px;padding:9px 12px;background:#050506;color:#9c8abb;border:1px solid #211c28}
+.wizard-site__future{width:min(1180px,100%);margin:18px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.wizard-site__future article{padding:18px;border:1px solid rgba(255,255,255,.06);background:#0a0b0d}.wizard-site__future h3{margin:7px 0;font:500 18px Georgia}.wizard-site__future p{color:#706965;font:9px/1.6 Arial}.wizard-integration{width:min(1180px,100%);margin:40px auto 0;padding:24px;border-left:2px solid #745ac5;background:#0b0910}.wizard-integration h2{font:500 30px Georgia;margin:7px 0}.wizard-integration p{color:#766e70;font:10px/1.6 Arial}.wizard-integration pre{overflow:auto;padding:14px;background:#060608;border:1px solid #211c29;color:#a596bf;font:9px/1.5 monospace}
+
+/* Site-wide wizard notifier. Hidden until a character exists. */
+.launch-wizard-pulse{position:relative;display:flex;align-items:center;gap:7px;min-height:40px;padding:5px 9px;border:1px solid rgba(124,94,211,.26);background:#0c0a10;color:#c8bdd9;text-decoration:none}
+.launch-wizard-pulse[hidden]{display:none}
+.launch-wizard-pulse__orb{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#8067d6,#241733 70%);font:700 11px Georgia}
+.launch-wizard-pulse__copy strong,.launch-wizard-pulse__copy small{display:block}.launch-wizard-pulse__copy strong{font:800 7px Arial;letter-spacing:.07em}.launch-wizard-pulse__copy small{margin-top:2px;color:#736b7d;font:6px Arial;letter-spacing:.05em}.launch-wizard-pulse>i{width:5px;height:5px;border-radius:50%;background:#5a4b67}
+.launch-wizard-pulse.has-activity{animation:wizard-nudge 1.7s ease-in-out infinite}.launch-wizard-pulse.has-activity>i{background:#9d7cf0;box-shadow:0 0 10px #8d6fe0}
+@keyframes wizard-nudge{0%,80%,100%{transform:translateX(0) rotate(0)}84%{transform:translateX(-2px) rotate(-1deg)}88%{transform:translateX(3px) rotate(1deg)}92%{transform:translateX(-2px) rotate(-1deg)}96%{transform:translateX(1px) rotate(0)}}
+@media(prefers-reduced-motion:reduce){.launch-wizard-pulse.has-activity{animation:none}}
+@media(max-width:900px){.gaming-grid{grid-template-columns:1fr}.wizard-site__future{grid-template-columns:repeat(2,1fr)}.launch-wizard-pulse__copy{display:none}}
+@media(max-width:600px){.gaming-hero{grid-template-columns:1fr;min-height:auto;padding:50px 16px}.gaming-hero__badge{display:none}.gaming-shelf{padding:45px 16px}.wizard-site{padding:28px 10px 70px}.wizard-site__head{display:block}.wizard-site__member-state{margin-top:15px}.wizard-frame-shell{min-height:560px}.wizard-frame-shell iframe{height:680px}.wizard-site__future{grid-template-columns:1fr}.wizard-integration{padding:18px}.launch-wizard-pulse{padding:5px}}
+
+
+/* PASS 39 — FEATURED GAME / GAME OF THE DAY */
+.gaming-featured{
+  padding:58px max(6vw,24px) 18px;
+  border-bottom:1px solid rgba(255,255,255,.055);
 }
-.page-intro > span { grid-column: 1 / -1; color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .24em; }
-.page-intro h1 { margin: 10px 0 0; font: 700 clamp(38px, 6vw, 82px)/.9 Georgia, serif; letter-spacing: -.04em; }
-.page-intro p { margin: 0 0 5px; max-width: 520px; color: var(--muted); line-height: 1.6; text-align: right; }
-
-.broadcast-layout {
-  margin-top: 24px;
-  display: grid;
-  grid-template-columns: minmax(230px, .72fr) minmax(500px, 2.2fr) minmax(230px, .72fr);
-  gap: 12px;
+.gaming-featured>header{
+  display:grid;
+  grid-template-columns:1fr minmax(260px,460px);
+  gap:24px;
+  align-items:end;
+  margin-bottom:18px;
 }
-.panel, .broadcast-main { border: 1px solid var(--line); background: rgba(17,19,25,.92); }
-.broadcast-side { min-height: 430px; padding: 20px; }
-.panel-label { color: var(--accent); font-size: 10px; font-weight: 900; letter-spacing: .2em; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
+.gaming-featured>header span{
+  color:#886ee1;
+  font:800 8px Arial;
+  letter-spacing:.14em;
+}
+.gaming-featured>header h2{
+  margin:7px 0 0;
+  color:#e1d6cf;
+  font:500 clamp(34px,4vw,48px)/1 Georgia,serif;
+}
+.gaming-featured>header p{
+  margin:0;
+  color:#756d69;
+  font:10px/1.6 Arial;
+}
 
-.queue-list { display: grid; margin-top: 10px; }
-.queue-item { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; padding: 17px 0; border-bottom: 1px solid var(--line); }
-.queue-item:hover strong { color: var(--accent); }
-.queue-rank { color: #555d6b; font: 700 11px/1 ui-monospace, monospace; }
-.queue-item strong, .queue-item small { display: block; }
-.queue-item strong { font-size: 13px; line-height: 1.25; }
-.queue-item small { color: var(--muted); margin-top: 4px; font-size: 10px; }
-.queue-item em { font-style: normal; color: var(--accent); font-size: 8px; font-weight: 900; letter-spacing: .13em; }
-
-.broadcast-main { padding: 10px; }
-.broadcast-screen {
-  height: 370px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
+.featured-game-card{
+  display:grid;
+  grid-template-columns:minmax(320px,.95fr) minmax(0,1.05fr);
+  min-height:330px;
+  overflow:hidden;
+  border:1px solid rgba(129,99,219,.28);
+  background:linear-gradient(145deg,#0c0a10,#090a0c);
+  color:inherit;
+  text-decoration:none;
+  box-shadow:0 24px 60px rgba(0,0,0,.28);
+}
+.featured-game-card:hover{
+  border-color:rgba(137,107,229,.48);
+}
+.featured-game-card__screen{
+  position:relative;
+  min-height:330px;
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
   background:
-    radial-gradient(circle at 70% 20%, rgba(103,65,171,.42), transparent 32%),
-    linear-gradient(135deg, #181521, #0b0c10 55%, #171016);
+    radial-gradient(circle at 66% 28%,rgba(115,72,207,.42),transparent 29%),
+    radial-gradient(circle at 24% 74%,rgba(83,38,95,.30),transparent 32%),
+    linear-gradient(145deg,#1b1524,#090a0c 70%);
+  border-right:1px solid rgba(126,94,212,.16);
 }
-.screen-grid {
-  position: absolute; inset: 0; opacity: .2;
-  background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
-  background-size: 42px 42px;
+.featured-game-card__screen:after{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border:1px solid rgba(139,110,222,.10);
+  pointer-events:none;
 }
-.broadcast-status {
-  position: absolute; top: 18px; left: 18px; padding: 7px 10px;
-  background: var(--danger); font-size: 9px; font-weight: 900; letter-spacing: .16em;
+.featured-game-card__flag{
+  position:absolute;
+  top:20px;
+  left:20px;
+  padding:6px 8px;
+  border:1px solid rgba(137,107,226,.28);
+  background:rgba(14,10,20,.72);
+  color:#9b84e4;
+  font:800 7px Arial;
+  letter-spacing:.10em;
 }
-.broadcast-copy { position: relative; padding: 28px; max-width: 720px; }
-.broadcast-copy span { color: var(--accent); font-size: 10px; font-weight: 900; letter-spacing: .2em; }
-.broadcast-copy h1 { margin: 9px 0 10px; font: 700 clamp(34px, 5vw, 70px)/.92 Georgia, serif; letter-spacing: -.04em; }
-.broadcast-copy p { margin: 0; color: #bec2cb; max-width: 580px; }
-.broadcast-meta { height: 40px; display: flex; justify-content: space-between; align-items: center; padding: 0 8px; font-size: 9px; letter-spacing: .14em; color: var(--muted); }
-.broadcast-meta strong { color: var(--text); }
-
-.season-stats { margin: 10px 0 24px; }
-.season-stats div { display: flex; justify-content: space-between; align-items: end; padding: 17px 0; border-bottom: 1px solid var(--line); gap: 10px; }
-.season-stats dt { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
-.season-stats dd { margin: 0; font: 700 20px/1 Georgia, serif; }
-.text-link { color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: .08em; }
-
-.schedule-strip { margin-top: 12px; border: 1px solid var(--line); background: var(--panel); display: grid; grid-template-columns: 170px repeat(3, 1fr); min-height: 100px; }
-.schedule-title { padding: 20px; background: #e7bd4f; color: #0a0b0d; display: flex; flex-direction: column; justify-content: center; }
-.schedule-title span { font-size: 9px; font-weight: 900; letter-spacing: .18em; }
-.schedule-title strong { margin-top: 5px; font: 800 18px/1 Georgia, serif; }
-.schedule-game { display: grid; grid-template-columns: 60px 1fr auto; gap: 14px; align-items: center; padding: 18px; border-left: 1px solid var(--line); }
-.schedule-game:hover { background: rgba(255,255,255,.025); }
-.schedule-game time { color: var(--accent); font: 800 10px/1 ui-monospace, monospace; }
-.schedule-game strong, .schedule-game small { display: block; }
-.schedule-game strong { font-size: 13px; }
-.schedule-game small { color: var(--muted); margin-top: 4px; font-size: 10px; }
-.schedule-game em { color: var(--muted); font-size: 8px; font-style: normal; text-transform: uppercase; letter-spacing: .1em; }
-
-.league-section { margin-top: 70px; }
-.section-heading { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 30px; margin-bottom: 22px; }
-.section-heading span, .eyebrow { color: var(--accent); font-size: 10px; font-weight: 900; letter-spacing: .2em; }
-.section-heading h2, .journal-preview h2 { margin: 8px 0 0; font: 700 clamp(32px, 4vw, 56px)/1 Georgia, serif; letter-spacing: -.03em; }
-.section-heading p { color: var(--muted); line-height: 1.7; margin: 0; max-width: 650px; justify-self: end; }
-
-.table-wrap { overflow-x: auto; border: 1px solid var(--line); }
-.stats-table { width: 100%; border-collapse: collapse; min-width: 1050px; background: var(--panel); }
-.stats-table th { color: #777f8c; font-size: 9px; text-transform: uppercase; letter-spacing: .16em; text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line); }
-.stats-table td { padding: 20px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; font-size: 12px; }
-.stats-table tbody tr:hover { background: rgba(255,255,255,.024); }
-.game-title { font-size: 14px; font-weight: 800; }
-.stats-table td small { display: block; color: var(--muted); margin-top: 4px; }
-.stats-table td a:hover { color: var(--accent); }
-.status-pill { display: inline-block; border: 1px solid var(--line); padding: 5px 8px; font-size: 9px; text-transform: uppercase; letter-spacing: .08em; }
-.progress-cell { min-width: 130px; }
-.progress-cell > span { color: var(--muted); font-size: 9px; }
-.progress-track { height: 3px; margin-top: 7px; background: #292d36; }
-.progress-track i { display: block; height: 100%; background: var(--accent); }
-.recap-link { color: var(--accent); font-size: 9px; font-weight: 900; letter-spacing: .1em; }
-
-.journal-preview { margin-top: 70px; min-height: 250px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 44px 0; display: grid; grid-template-columns: 1fr 1fr auto; gap: 40px; align-items: center; }
-.journal-preview p { color: var(--muted); line-height: 1.7; }
-.journal-preview > a { color: var(--accent); font-size: 10px; font-weight: 900; letter-spacing: .1em; white-space: nowrap; }
-
-@media (max-width: 1120px) {
-  .broadcast-layout { grid-template-columns: 1fr 2fr; }
-  .season-panel { grid-column: 1 / -1; min-height: auto; }
-  .season-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
-  .season-stats div { padding-right: 20px; }
-  .schedule-strip { grid-template-columns: 140px 1fr; }
-  .schedule-game:nth-of-type(n+3) { border-top: 1px solid var(--line); }
+.featured-game-card__screen strong{
+  position:relative;
+  z-index:1;
+  color:#d7ccec;
+  font:500 clamp(42px,5vw,66px)/.82 Georgia,serif;
+  letter-spacing:-.04em;
 }
-
-@media (max-width: 760px) {
-  .page-intro { grid-template-columns: 1fr; }
-  .page-intro p { margin-top: 18px; text-align: left; }
-  .broadcast-layout { grid-template-columns: 1fr; }
-  .broadcast-side { min-height: auto; }
-  .broadcast-screen { height: 320px; }
-  .season-stats { grid-template-columns: 1fr 1fr; }
-  .schedule-strip { grid-template-columns: 1fr; }
-  .schedule-game { border-left: 0; border-top: 1px solid var(--line); }
-  .section-heading, .journal-preview { grid-template-columns: 1fr; }
-  .section-heading p { justify-self: start; }
+.featured-game-card__screen small{
+  position:relative;
+  z-index:1;
+  margin-top:10px;
+  color:#7d6a95;
+  font:800 7px Arial;
+  letter-spacing:.10em;
+}
+.featured-game-card__info{
+  padding:34px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.featured-game-card__info>span{
+  color:#846ccb;
+  font:800 7px Arial;
+  letter-spacing:.11em;
+}
+.featured-game-card__info h3{
+  margin:8px 0 12px;
+  color:#dfd3cb;
+  font:500 clamp(28px,3vw,40px)/1 Georgia,serif;
+}
+.featured-game-card__info p{
+  max-width:600px;
+  margin:0;
+  color:#7b726d;
+  font:10px/1.7 Arial;
+}
+.featured-game-card__meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:20px 0;
+}
+.featured-game-card__meta span{
+  padding:5px 7px;
+  border:1px solid rgba(255,255,255,.07);
+  color:#7c727e;
+  font:800 6px Arial;
+  letter-spacing:.08em;
+}
+.featured-game-card__info>b{
+  color:#a98fe0;
+  font:800 8px Arial;
+  letter-spacing:.09em;
 }
 
-/* v0.3 Twitch broadcast */
-.twitch-screen {
-  height: auto;
-  min-height: 0;
-  aspect-ratio: 16 / 9;
-  display: block;
-  background: #000;
+@media(max-width:800px){
+  .gaming-featured>header{grid-template-columns:1fr}
+  .featured-game-card{grid-template-columns:1fr}
+  .featured-game-card__screen{min-height:270px;border-right:0;border-bottom:1px solid rgba(126,94,212,.16)}
+}
+@media(max-width:600px){
+  .gaming-featured{padding:42px 16px 12px}
+  .featured-game-card__screen{min-height:240px;padding:20px}
+  .featured-game-card__info{padding:24px 20px}
 }
 
-.twitch-player {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 300px;
-  border: 0;
-  background: #000;
+
+/* PASS 40B — DRAGON GAMING ULTRA LOUNGE / DESKTOP-FIRST */
+.gaming-lounge{--g-accent:#8d647e;--g-gold:#aa8750;min-height:100vh;background:radial-gradient(circle at 70% 10%,rgba(99,25,42,.13),transparent 28%),radial-gradient(circle at 15% 35%,rgba(65,39,85,.14),transparent 24%),linear-gradient(180deg,#080708,#040405 62%,#070607);color:#d9ced3}
+.gaming-command{position:sticky;top:0;z-index:20;height:42px;display:flex;align-items:center;gap:2px;padding:0 max(4vw,18px);border-bottom:1px solid #2a2025;background:rgba(8,7,9,.96);backdrop-filter:blur(14px)}.gaming-command a{height:100%;display:flex;align-items:center;padding:0 12px;color:#71666d;text-decoration:none;font:800 6px Arial;letter-spacing:.11em;border-bottom:1px solid transparent}.gaming-command a:hover,.gaming-command a.is-active{color:#d1bec7;border-color:#9b6b80;background:#0e0b0e}.gaming-command__state{margin-left:auto;color:#665d62;font:800 6px Arial;letter-spacing:.09em;display:flex;align-items:center;gap:6px}.gaming-command__state i,.gaming-live-pill i,.gaming-wire__live i{width:5px;height:5px;border-radius:50%;background:#8a7555;box-shadow:0 0 8px rgba(177,135,77,.45)}
+.gaming-lobby-hero{position:relative;min-height:430px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);align-items:center;gap:50px;padding:55px max(6vw,28px);overflow:hidden;border-bottom:1px solid #211a1e;background:linear-gradient(90deg,rgba(5,5,6,.97),rgba(12,8,11,.88) 52%,rgba(20,8,12,.8)),repeating-linear-gradient(115deg,transparent 0 54px,rgba(255,255,255,.008) 55px 56px)}.gaming-lobby-hero:after{content:"";position:absolute;inset:12px;pointer-events:none;border:1px solid rgba(164,117,91,.055)}.gaming-kicker{color:#9b6d82;font:800 7px Arial;letter-spacing:.16em}.gaming-lobby-hero h1{margin:10px 0 16px;color:#e7d9d7;font:500 clamp(64px,8vw,116px)/.72 Georgia,serif;letter-spacing:-.055em}.gaming-lobby-hero h1 em{font-style:normal;color:#7e3d51;text-shadow:0 0 40px rgba(116,30,54,.18)}.gaming-lobby-hero__copy>p{max-width:690px;margin:0;color:#8b7d80;font:11px/1.75 Arial}.gaming-lobby-actions{display:flex;gap:7px;margin-top:23px}.gaming-btn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 13px;border:1px solid #3a2d34;background:#0b090b;color:#a28e97;text-decoration:none;font:800 6px Arial;letter-spacing:.1em}.gaming-btn:hover{border-color:#775165;color:#e2d1d8}.gaming-btn--primary{border-color:#6b394d;background:linear-gradient(#3b1722,#1c0c12);color:#d9bdc7;box-shadow:inset 0 1px rgba(255,255,255,.04),0 7px 25px rgba(68,15,30,.18)}
+.gaming-character-slab{position:relative;z-index:2;min-height:270px;padding:22px;border:1px solid #39272f;background:radial-gradient(circle at 70% 15%,rgba(123,50,74,.16),transparent 31%),linear-gradient(145deg,#120d10,#080708);box-shadow:inset 0 0 35px rgba(0,0,0,.35),0 25px 60px rgba(0,0,0,.3)}.gaming-character-slab:before{content:"";position:absolute;inset:7px;border:1px solid rgba(181,134,89,.08);pointer-events:none}.gaming-character-slab small{color:#755866;font:800 6px Arial;letter-spacing:.13em}.gaming-character-slab__sigil{position:absolute;right:20px;top:17px;color:#5f3545;font:500 42px Georgia}.gaming-character-slab h2{margin:48px 0 4px;color:#e1d1d8;font:500 31px Georgia}.gaming-character-slab p{min-height:36px;margin:0;color:#776b70;font:9px/1.5 Arial}.gaming-stat-row{display:flex;gap:5px;margin:14px 0}.gaming-stat-row span{padding:6px 7px;border:1px solid #2c2227;color:#75686e;font:800 6px Arial;letter-spacing:.07em}.gaming-stat-row b{color:#c3aeb7}.gaming-affinity{display:inline-block;color:#a77b8f;font:800 7px Arial;letter-spacing:.12em;margin-bottom:15px}.gaming-character-slab>a{display:block;color:#b18c9d;text-decoration:none;font:800 7px Arial;letter-spacing:.08em}.gaming-lobby-hero__ribs{position:absolute;right:-35px;bottom:-120px;width:390px;height:330px;opacity:.18;transform:rotate(-10deg)}.gaming-lobby-hero__ribs i{position:absolute;right:0;width:280px;height:80px;border:2px solid #6f3349;border-left:0;border-radius:0 80% 80% 0;transform-origin:right center}.gaming-lobby-hero__ribs i:nth-child(1){top:0;transform:rotate(-15deg)}.gaming-lobby-hero__ribs i:nth-child(2){top:50px;transform:rotate(-7deg)}.gaming-lobby-hero__ribs i:nth-child(3){top:100px}.gaming-lobby-hero__ribs i:nth-child(4){top:150px;transform:rotate(7deg)}.gaming-lobby-hero__ribs i:nth-child(5){top:200px;transform:rotate(15deg)}
+.gaming-dashboard{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px;padding:16px max(4vw,18px) 80px;align-items:start}.gaming-dashboard__main{min-width:0}.gaming-realm-card,.gaming-events,.gaming-records,.gaming-collections{border:1px solid #241d21;background:#090809;margin-bottom:14px}.gaming-realm-card>header,.gaming-events>header,.gaming-records>header,.gaming-collections>header{min-height:58px;display:flex;align-items:center;justify-content:space-between;padding:11px 15px;border-bottom:1px solid #241d21;background:#0b090b}.gaming-realm-card h2,.gaming-events h2,.gaming-records h2,.gaming-collections h2{margin:3px 0 0;color:#d9ccd1;font:500 22px Georgia}.gaming-live-pill{display:flex;align-items:center;gap:6px;color:#8d7665;font:800 6px Arial;letter-spacing:.09em}.gaming-realm-card__body{display:grid;grid-template-columns:minmax(280px,.72fr) 1fr;min-height:285px}.gaming-realm-art{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;border-right:1px solid #241d21;background:radial-gradient(circle,#41182a 0,#160c12 27%,#070708 70%)}.gaming-realm-art:after{content:"";position:absolute;width:230px;height:230px;border:1px solid rgba(170,126,86,.14);transform:rotate(45deg)}.gaming-realm-art b{font:500 120px Georgia;color:#6d3048;text-shadow:0 0 55px rgba(124,38,67,.3)}.gaming-realm-art span{position:absolute;bottom:18px;color:#765c68;font:800 6px Arial;letter-spacing:.17em}.gaming-realm-copy{padding:28px}.gaming-realm-copy>p{max-width:650px;margin:0;color:#817579;font:10px/1.7 Arial}.gaming-mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:20px 0}.gaming-mini-grid span{min-height:54px;padding:9px;border:1px solid #2b2226;background:#080708;color:#6f6469;font:700 6px Arial;letter-spacing:.06em}.gaming-mini-grid small,.gaming-mini-grid b{display:block}.gaming-mini-grid small{color:#584d52;margin-bottom:7px}.gaming-mini-grid b{color:#bba6ae;font-size:9px;margin-bottom:2px}
+.gaming-event-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:10px}.gaming-event{min-height:150px;padding:15px;border:1px solid #292126;background:linear-gradient(145deg,#0d0a0c,#070708)}.gaming-event small{color:#775767;font:800 6px Arial;letter-spacing:.12em}.gaming-event h3{margin:20px 0 6px;color:#cdbdc4;font:500 18px Georgia}.gaming-event p{min-height:40px;margin:0;color:#70666a;font:8px/1.55 Arial}.gaming-event a{display:inline-block;margin-top:13px;color:#9c7789;text-decoration:none;font:800 6px Arial;letter-spacing:.08em}.gaming-event--lunar{box-shadow:inset 0 2px rgba(119,93,140,.12)}.gaming-event--world{box-shadow:inset 0 2px rgba(153,83,103,.15)}.gaming-event--archive{box-shadow:inset 0 2px rgba(131,106,67,.14)}
+.gaming-record-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#211a1e}.gaming-record-grid article{min-height:120px;padding:15px;background:#090809}.gaming-record-grid small,.gaming-record-grid span{display:block;color:#5e5559;font:800 6px Arial;letter-spacing:.09em}.gaming-record-grid strong{display:block;margin:18px 0 4px;color:#c8b6bd;font:500 26px Georgia}.gaming-collection-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:10px}.gaming-collection-grid article{padding:14px;border:1px solid #292126;background:#080708}.gaming-collection-grid b{color:#6b4354;font:500 22px Georgia}.gaming-collection-grid h3{margin:14px 0 5px;color:#c4b5bb;font:500 16px Georgia}.gaming-collection-grid p{margin:0;color:#665d61;font:8px/1.5 Arial}
+.gaming-wire{position:sticky;top:58px;max-height:calc(100vh - 76px);border:1px solid #2b2126;background:#080708;overflow:hidden}.gaming-wire>header{height:58px;display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #261e22;background:linear-gradient(#0d0a0c,#090809)}.gaming-wire>header span:first-child{color:#845e70;font:800 6px Arial;letter-spacing:.13em}.gaming-wire h2{margin:2px 0 0;color:#d1c1c7;font:500 19px Georgia}.gaming-wire__live{display:flex;align-items:center;gap:5px;color:#6f6469!important;font:800 5.5px Arial!important;letter-spacing:.08em!important}.gaming-wire__filters{display:flex;padding:6px;border-bottom:1px solid #211a1e;gap:3px}.gaming-wire__filters button{border:1px solid transparent;background:transparent;color:#5f555a;padding:5px 6px;font:800 5.5px Arial;letter-spacing:.07em;cursor:pointer}.gaming-wire__filters button.is-active,.gaming-wire__filters button:hover{border-color:#352830;color:#a98c99;background:#0d0a0c}.gaming-wire__feed{max-height:calc(100vh - 190px);overflow:auto}.gaming-wire__item{display:grid;grid-template-columns:35px 7px 1fr;gap:7px;padding:10px 11px;border-bottom:1px solid #1c1719;align-items:start}.gaming-wire__item time{color:#50494c;font:700 6px Arial}.gaming-wire__glyph{width:5px;height:5px;margin-top:2px;border-radius:50%;background:#775266;box-shadow:0 0 7px rgba(121,71,94,.25)}.gaming-wire__item--gold .gaming-wire__glyph{background:#a17e48}.gaming-wire__item--blue .gaming-wire__glyph{background:#556f89}.gaming-wire__item--ember .gaming-wire__glyph{background:#a75b43}.gaming-wire__item p{margin:0;color:#8b7d83;font:8px/1.45 Arial}.gaming-wire footer{padding:8px 11px;border-top:1px solid #211a1e;color:#50474b;font:800 5px Arial;letter-spacing:.08em}
+html[data-wizard-element="fire"] .gaming-lounge{--g-accent:#a44d3b}html[data-wizard-element="water"] .gaming-lounge{--g-accent:#547993}html[data-wizard-element="storm"] .gaming-lounge{--g-accent:#7663a0}html[data-wizard-element="stone"] .gaming-lounge{--g-accent:#84705c}html[data-wizard-element="frost"] .gaming-lounge{--g-accent:#7694a4}.gaming-affinity{color:var(--g-accent)}
+@media(max-width:1050px){.gaming-dashboard{grid-template-columns:minmax(0,1fr) 290px}.gaming-mini-grid,.gaming-record-grid,.gaming-collection-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){.gaming-command{overflow-x:auto}.gaming-command__state{display:none}.gaming-lobby-hero{grid-template-columns:1fr;padding:38px 18px}.gaming-lobby-hero h1{font-size:72px}.gaming-dashboard{grid-template-columns:1fr;padding:10px}.gaming-wire{position:relative;top:auto;max-height:none}.gaming-wire__feed{max-height:360px}.gaming-realm-card__body{grid-template-columns:1fr}.gaming-realm-art{min-height:220px;border-right:0;border-bottom:1px solid #241d21}.gaming-event-grid{grid-template-columns:1fr}.gaming-record-grid,.gaming-collection-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* PASS 40C — persistent public-event strip */
+.dragon-world-boss{display:grid;grid-template-columns:auto minmax(250px,.9fr) minmax(340px,1.5fr) auto auto;align-items:center;gap:14px;padding:8px 13px;border-bottom:1px solid #482126;background:radial-gradient(circle at 58% 0,rgba(126,23,32,.2),transparent 36%),linear-gradient(90deg,#12090b,#090708 70%);box-shadow:inset 0 -1px rgba(190,59,55,.12);position:relative;z-index:5}
+.dragon-world-boss__alarm{display:flex;align-items:center;gap:6px;color:#b75b57;font:900 6px Arial;letter-spacing:.13em}.dragon-world-boss__alarm i{width:7px;height:7px;border-radius:50%;background:#a52d32;box-shadow:0 0 12px #8d252b;animation:bosspulse 1.7s infinite}
+@keyframes bosspulse{50%{opacity:.35;transform:scale(.75)}}
+.dragon-world-boss__identity small{display:block;color:#76545a;font:800 5.5px Arial;letter-spacing:.1em}.dragon-world-boss__identity strong{display:block;color:#ead7d4;font:500 12px Georgia;margin:2px 0}.dragon-world-boss__identity>span{color:#75666a;font:700 5.5px Arial;letter-spacing:.05em}
+.dragon-world-boss__health>div:first-child{display:flex;justify-content:space-between;color:#8b7072;font:800 5.5px Arial;letter-spacing:.08em}.dragon-world-boss__health>div:first-child b{color:#c68a84}.dragon-world-boss__track{height:8px!important;margin:4px 0;background:#1b0d10;border:1px solid #3b1b20;overflow:hidden}.dragon-world-boss__track i{display:block;height:100%;background:linear-gradient(90deg,#6e171f,#b33b3e,#7c1d24);box-shadow:0 0 16px rgba(180,45,48,.35);transition:width .5s}.dragon-world-boss__health>small{display:block;text-align:right;color:#65575a;font:6px Arial}
+.dragon-world-boss__meta{display:flex;gap:9px}.dragon-world-boss__meta span{padding-left:8px;border-left:1px solid #352025}.dragon-world-boss__meta small{display:block;color:#644e53;font:800 5px Arial}.dragon-world-boss__meta b{color:#a88786;font:700 8px Arial}
+.dragon-world-boss__enter{border:1px solid #56262c;background:#160a0d;color:#c68d88;text-decoration:none;padding:8px 9px;font:900 6px Arial;letter-spacing:.08em;white-space:nowrap}
+.gaming-stat-row{flex-wrap:wrap}.gaming-stat-row span{min-width:55px}
+@media(max-width:900px){.dragon-world-boss{grid-template-columns:auto 1fr auto}.dragon-world-boss__health{grid-column:1/-1}.dragon-world-boss__meta{display:none}}
+
+
+/* =========================================================
+   PASS 40D — GAMING LEGIBILITY / TYPOGRAPHY SCALE
+   Keep dense luxury; increase actual readable copy.
+   ========================================================= */
+
+:root{
+  --dragon-readable-xs: 8px;
+  --dragon-readable-sm: 9px;
+  --dragon-readable-md: 11px;
+  --dragon-readable-body: 12px;
+  --dragon-readable-label: 7px;
 }
 
-.broadcast-meta {
-  min-height: 48px;
-  height: auto;
-  gap: 16px;
+/* Preserve tiny decorative metadata, but not important information */
+.gaming-lounge p,
+.gaming-lounge li,
+.gaming-lounge dd,
+.gaming-lounge .realm-wire-entry,
+.gaming-lounge .gaming-copy,
+.gaming-lounge .gaming-description,
+.gaming-lounge .gaming-card p,
+.gaming-lounge .gaming-panel p{
+  font-size: var(--dragon-readable-body) !important;
+  line-height: 1.55 !important;
 }
 
-.broadcast-meta > div {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+.gaming-lounge small,
+.gaming-lounge .meta,
+.gaming-lounge .eyebrow,
+.gaming-lounge [class*="label"],
+.gaming-lounge [class*="kicker"]{
+  font-size: var(--dragon-readable-label) !important;
+  line-height: 1.35 !important;
 }
 
-.broadcast-meta > div span {
-  color: var(--muted);
-  font-size: 8px;
-  letter-spacing: .12em;
+/* Important labels/numbers get a stronger floor */
+.gaming-lounge strong,
+.gaming-lounge b,
+.gaming-lounge .gaming-stat-row span,
+.gaming-lounge .dragon-world-boss__identity strong,
+.gaming-lounge .dragon-world-boss__health,
+.gaming-lounge .dragon-world-boss__meta{
+  font-size: max(var(--dragon-readable-sm), 0.72vw) !important;
 }
 
-.broadcast-twitch-link {
-  color: var(--accent);
-  font-size: 9px;
-  font-weight: 900;
-  letter-spacing: .1em;
-  white-space: nowrap;
+/* Navigation must be readable at a glance */
+.gaming-command-bar a,
+.gaming-command-bar button,
+.gaming-lounge nav a,
+.gaming-lounge nav button{
+  font-size: 8px !important;
+  letter-spacing: .075em !important;
 }
 
-.broadcast-twitch-link:hover {
-  color: var(--text);
+/* Buttons should never be decorative-only tiny text */
+.gaming-lounge button,
+.gaming-lounge .button,
+.gaming-lounge a[class*="btn"],
+.gaming-lounge a[class*="enter"]{
+  font-size: 8px !important;
+  line-height: 1.2 !important;
 }
 
-/* v1.2 live schedule */
-.schedule-empty {
-  min-height: 100%;
-  padding: 18px 22px;
-  display: flex;
-  align-items: center;
-  color: #747b87;
-  font-size: 9px;
-  letter-spacing: .04em;
+/* Realm Wire / activity log */
+.realm-wire-entry,
+.realm-wire-list article p,
+.gaming-realm-wire p{
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+}
+.realm-wire-entry time,
+.realm-wire-list article time{
+  font-size: 7px !important;
 }
 
-/* PROJECT TITAN weekend web test */
-.titan-page{width:min(1960px,calc(100% - 20px));margin:0 auto;padding:14px 0 54px}.titan-topbar{display:flex;justify-content:space-between;align-items:end;padding:18px 0 14px;border-bottom:1px solid var(--line)}.titan-kicker{color:var(--accent);font-size:9px;font-weight:900;letter-spacing:.2em}.titan-topbar h1{margin:5px 0 0;font:700 clamp(24px,3vw,42px)/1 Georgia,serif}.titan-room{display:flex;align-items:center;gap:10px;font:800 9px/1 ui-monospace,monospace;letter-spacing:.1em}.titan-room span{color:var(--muted)}.titan-room button,.titan-action{border:1px solid var(--line);background:#15171d;color:var(--text);padding:9px 11px;font:800 8px/1 inherit;letter-spacing:.1em;cursor:pointer}.titan-room button:hover,.titan-action:hover{border-color:var(--accent);color:var(--accent)}.titan-frame{display:grid;grid-template-columns:minmax(150px,210px) minmax(760px,1fr) minmax(165px,230px);gap:8px;margin-top:10px;min-height:clamp(690px,78vh,980px)}.titan-panel,.titan-stage{border:1px solid var(--line);background:rgba(12,13,17,.97)}.titan-panel{padding:16px}.titan-identity{display:flex;gap:10px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)}.titan-identity i,.titan-roster-row i{width:8px;height:8px;border-radius:50%;background:#62d58b;box-shadow:0 0 12px rgba(98,213,139,.5)}.titan-identity strong,.titan-identity small{display:block}.titan-identity small{margin-top:4px;color:var(--muted);font-size:8px;letter-spacing:.12em}.titan-panel dl{margin:10px 0 16px}.titan-panel dl div{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}.titan-panel dt{color:var(--muted);font-size:8px}.titan-panel dd{margin:0;font:800 9px/1 ui-monospace,monospace}.titan-note,.titan-copy{color:var(--muted);font-size:10px;line-height:1.65}.titan-stage{display:grid;grid-template-rows:38px 1fr 34px;padding:7px}.titan-stage-head,.titan-stage-foot{display:flex;align-items:center;justify-content:space-between;padding:0 9px;font-size:8px;letter-spacing:.12em;color:var(--muted)}.titan-stage-head strong{color:var(--text)}.titan-game-shell{background:#000;min-height:0;overflow:hidden;border:1px solid #242731}.titan-game-shell iframe{display:block;width:100%;height:100%;min-height:clamp(620px,72vh,900px);border:0;background:#050506}.titan-roster{display:grid;margin-top:10px}.titan-roster>p{color:var(--muted);font-size:10px}.titan-roster-row{display:grid;grid-template-columns:12px 1fr auto;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}.titan-roster-row small{color:#62d58b;font-size:7px;letter-spacing:.12em}.titan-divider{height:24px;border-bottom:1px solid var(--line);margin-bottom:16px}.titan-subnav{display:flex;overflow:auto;border:1px solid var(--line);border-top:0;background:#0d0e12}.titan-subnav a{padding:14px 18px;border-right:1px solid var(--line);font-size:8px;font-weight:900;letter-spacing:.12em;color:var(--muted);white-space:nowrap}.titan-subnav a:hover,.titan-subnav a.is-active{color:var(--accent);background:rgba(255,255,255,.02)}.titan-lower-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.titan-lower-grid article{border:1px solid var(--line);background:var(--panel);padding:20px}.titan-lower-grid small{color:var(--accent);font-weight:900;letter-spacing:.14em}.titan-lower-grid h2{font:700 22px/1.1 Georgia,serif;margin:8px 0}.titan-lower-grid p{color:var(--muted);font-size:11px;line-height:1.65}.titan-lower-grid code{color:#d8c47c}@media(max-width:1180px){.titan-frame{grid-template-columns:160px 1fr}.titan-match-panel{grid-column:1/-1;min-height:150px}.titan-lower-grid{grid-template-columns:1fr}}@media(max-width:720px){.titan-page{width:min(100% - 16px,1680px)}.titan-topbar{align-items:start;gap:12px;flex-direction:column}.titan-frame{grid-template-columns:1fr}.titan-player-panel,.titan-match-panel{min-height:0}.titan-game-shell iframe{min-height:56vw}.titan-room{flex-wrap:wrap}}
+/* World boss strip */
+.dragon-world-boss__alarm{
+  font-size: 7px !important;
+}
+.dragon-world-boss__identity small{
+  font-size: 7px !important;
+}
+.dragon-world-boss__identity strong{
+  font-size: 14px !important;
+}
+.dragon-world-boss__identity>span{
+  font-size: 7px !important;
+}
+.dragon-world-boss__health>div:first-child,
+.dragon-world-boss__health>small{
+  font-size: 7px !important;
+}
+.dragon-world-boss__meta small{
+  font-size: 6.5px !important;
+}
+.dragon-world-boss__meta b{
+  font-size: 9px !important;
+}
+.dragon-world-boss__enter{
+  font-size: 7px !important;
+  padding: 9px 11px !important;
+}
+
+/* Laptop-readable scaling */
+@media (min-width: 1000px){
+  .gaming-lounge{
+    font-size: 12px;
+  }
+}
+
+/* Slightly larger again on 1440+ displays */
+@media (min-width: 1400px){
+  :root{
+    --dragon-readable-body: 13px;
+    --dragon-readable-sm: 10px;
+    --dragon-readable-label: 7.5px;
+  }
+}
+
+/* Mobile: readable, not microscopic */
+@media (max-width: 760px){
+  :root{
+    --dragon-readable-body: 13px;
+    --dragon-readable-sm: 10px;
+    --dragon-readable-label: 8px;
+  }
+  .gaming-command-bar a,
+  .gaming-command-bar button,
+  .gaming-lounge nav a,
+  .gaming-lounge nav button{
+    font-size: 9px !important;
+  }
+}
+
+
+/* ==========================================================
+   PASS 40E — REALM WIRE / GLOBAL LOG
+   Three persistent states: collapsed / normal / expanded.
+   ========================================================== */
+.realm-wire{
+  --wire-bg:#09080b;
+  --wire-line:#302638;
+  --wire-violet:#9a6fb0;
+  position:relative;
+  display:grid;
+  grid-template-rows:auto auto minmax(0,1fr);
+  min-height:420px;
+  border:1px solid var(--wire-line);
+  background:
+    radial-gradient(circle at 90% 0,rgba(111,64,132,.13),transparent 27%),
+    linear-gradient(160deg,#0e0a11,#070709 65%);
+  box-shadow:inset 0 1px rgba(255,255,255,.025),0 20px 50px rgba(0,0,0,.22);
+  overflow:hidden;
+}
+.realm-wire__head{
+  min-height:48px;display:flex;align-items:center;justify-content:space-between;
+  padding:7px 8px 7px 12px;border-bottom:1px solid #2c2231;background:rgba(7,6,9,.72)
+}
+.realm-wire__brand{display:flex;align-items:center;gap:9px}
+.realm-wire__brand>div{display:flex;flex-direction:column}
+.realm-wire__brand span{color:#665a6a;font:800 7px Arial;letter-spacing:.1em}
+.realm-wire__brand strong{color:#e2d6e4;font:500 17px Georgia;letter-spacing:.02em}
+.realm-wire__brand>b{border:1px solid #513d59;color:#a98ab0;background:#120e16;padding:4px 6px;font:900 6px Arial;letter-spacing:.09em}
+.realm-wire__live{display:block;width:7px;height:7px;border-radius:50%;background:#58a56f;box-shadow:0 0 10px rgba(88,165,111,.65);animation:wireLive 2s infinite}
+@keyframes wireLive{50%{opacity:.4}}
+.realm-wire__window{display:flex;gap:4px}
+.realm-wire__window button{
+  width:28px;height:27px;border:1px solid #332839;background:#0b090d;color:#8e7b94;
+  font:400 16px/1 Arial;cursor:pointer
+}
+.realm-wire__window button:hover{border-color:#664c70;color:#d8c7dc;background:#151019}
+.realm-wire__ticker{display:flex;gap:9px;align-items:center;min-height:28px;padding:5px 11px;border-bottom:1px solid #241d29;background:#08070a;overflow:hidden}
+.realm-wire__ticker span{flex:0 0 auto;color:#75587e;font:900 6px Arial;letter-spacing:.11em}
+.realm-wire__ticker b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#887c8b;font:500 8px Arial}
+.realm-wire__body{min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto auto}
+.realm-wire__filters{display:flex;gap:3px;padding:7px 8px;border-bottom:1px solid #251e2a;overflow-x:auto}
+.realm-wire__filters button{display:flex;align-items:center;gap:4px;border:1px solid transparent;background:transparent;color:#716676;padding:5px 6px;font:900 6.5px Arial;letter-spacing:.06em;cursor:pointer;white-space:nowrap}
+.realm-wire__filters button.is-active,.realm-wire__filters button:hover{border-color:#392c40;background:#100c13;color:#c0afc4}
+.dot{width:5px;height:5px;border-radius:50%;display:inline-block}.dot--violet{background:#9c70b0}.dot--crimson{background:#b34b55}.dot--gold{background:#b4944f}.dot--blue{background:#527f9c}.dot--green{background:#59916a}
+.realm-wire__stream{min-height:0;max-height:380px;overflow:auto;padding:4px 7px 8px;scrollbar-color:#392c40 #09070a}
+.realm-wire__entry{display:grid;grid-template-columns:42px 58px minmax(0,1fr);gap:7px;align-items:start;padding:8px 6px;border-bottom:1px solid rgba(255,255,255,.035);position:relative}
+.realm-wire__entry:before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:2px;background:#706775}
+.realm-wire__entry time{color:#5f5962;font:700 7px Arial}
+.realm-wire__type{font:900 6.5px Arial;letter-spacing:.07em}
+.realm-wire__entry p{margin:0!important;color:#aca1ae!important;font:10.5px/1.45 Arial!important}
+.realm-wire__entry.tone--violet:before{background:#9c70b0}.tone--violet .realm-wire__type{color:#aa82b9}
+.realm-wire__entry.tone--crimson:before{background:#b34b55}.tone--crimson .realm-wire__type{color:#c36169}
+.realm-wire__entry.tone--gold:before{background:#b4944f}.tone--gold .realm-wire__type{color:#c2a25d}
+.realm-wire__entry.tone--blue:before{background:#527f9c}.tone--blue .realm-wire__type{color:#6d9bb7}
+.realm-wire__entry.tone--green:before{background:#59916a}.tone--green .realm-wire__type{color:#6fa57e}
+.realm-wire__entry.tone--cyan:before{background:#5d9fa1}.tone--cyan .realm-wire__type{color:#72b5b7}
+.realm-wire__composer{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px;padding:8px;border-top:1px solid #302538;background:#0b090d}
+.realm-wire__channel{min-width:54px;padding:4px 7px;border-right:1px solid #322639}.realm-wire__channel span{display:block;color:#5e5362;font:800 5px Arial;letter-spacing:.08em}.realm-wire__channel b{display:block;margin-top:2px;color:#a184aa;font:900 7px Arial}
+.realm-wire__composer input{min-width:0;border:1px solid #34283b;background:#060608;color:#d1c3d4;padding:8px 9px;outline:none;font:10px Arial}.realm-wire__composer input:focus{border-color:#6b4d76;box-shadow:0 0 0 1px rgba(123,83,137,.16)}
+.realm-wire__composer button{border:1px solid #493550;background:#120d16;color:#ad91b3;padding:7px 10px;font:900 7px Arial;letter-spacing:.07em;cursor:pointer}
+.realm-wire__prototype{margin:0!important;padding:4px 8px!important;color:#514a53!important;background:#070608;font:700 5.5px/1.3 Arial!important;letter-spacing:.05em}
+.realm-wire__collapsed{display:none}
+
+/* CLOSED: still visible, like a minimized Steam-style utility */
+.realm-wire[data-wire-state="collapsed"]{min-height:38px;height:38px;border-color:#34293a}
+.realm-wire[data-wire-state="collapsed"]>.realm-wire__head,
+.realm-wire[data-wire-state="collapsed"]>.realm-wire__ticker,
+.realm-wire[data-wire-state="collapsed"]>.realm-wire__body{display:none}
+.realm-wire[data-wire-state="collapsed"]>.realm-wire__collapsed{
+  width:100%;height:100%;display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:center;gap:8px;
+  border:0;background:linear-gradient(90deg,#100c13,#09070b);color:#a28da7;padding:0 10px;cursor:pointer;text-align:left
+}
+.realm-wire__collapsed strong{font:500 12px Georgia;color:#d3c4d6}.realm-wire__collapsed span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#6f6572;font:7px Arial}.realm-wire__collapsed b{font:400 15px Arial;color:#8e7495}
+
+/* EXPANDED: large interaction window, not fullscreen */
+.realm-wire[data-wire-state="expanded"]{
+  position:fixed;z-index:8500;right:24px;bottom:24px;
+  width:min(820px,calc(100vw - 48px));height:min(720px,calc(100vh - 86px));
+  min-height:0;border-color:#594160;
+  box-shadow:0 35px 100px rgba(0,0,0,.68),0 0 0 1px rgba(133,91,148,.12);
+}
+.realm-wire[data-wire-state="expanded"] .realm-wire__stream{max-height:none}
+.realm-wire[data-wire-state="expanded"] .realm-wire__head{min-height:58px;padding-inline:15px}
+.realm-wire[data-wire-state="expanded"] .realm-wire__brand strong{font-size:22px}
+.realm-wire[data-wire-state="expanded"] .realm-wire__entry{grid-template-columns:55px 72px minmax(0,1fr);padding:10px 9px}
+.realm-wire[data-wire-state="expanded"] .realm-wire__entry p{font-size:12px!important}
+.realm-wire[data-wire-state="expanded"] .realm-wire__composer input{font-size:12px;padding:11px}
+.realm-wire[data-wire-state="expanded"] .realm-wire__composer button{font-size:8px;padding-inline:15px}
+
+@media(max-width:700px){
+ .realm-wire[data-wire-state="expanded"]{right:9px;bottom:9px;width:calc(100vw - 18px);height:calc(100svh - 72px)}
+ .realm-wire__entry{grid-template-columns:36px 50px minmax(0,1fr)}
+ .realm-wire__filters button{font-size:7px}
+}
+
+
+/* ==========================================================
+   PASS 40F — REALM WIRE BECOMES A PERSISTENT GAMING DOCK
+   Fixed like the Member button; always available while gaming.
+   ========================================================== */
+
+.realm-wire{
+  position:fixed !important;
+  z-index:8300 !important;
+  right:18px !important;
+  bottom:104px !important; /* intentionally above the Member Dock */
+  width:390px !important;
+  height:430px !important;
+  min-height:0 !important;
+  max-height:calc(100svh - 150px) !important;
+  border-color:#3a2d41 !important;
+  box-shadow:
+    0 28px 80px rgba(0,0,0,.48),
+    0 0 0 1px rgba(116,79,130,.06),
+    inset 0 1px rgba(255,255,255,.025) !important;
+  backdrop-filter:blur(10px);
+}
+
+/* Make the normal dock feel more like a gaming utility than a page card */
+.realm-wire__head{
+  cursor:default;
+  min-height:45px !important;
+}
+.realm-wire__brand strong{
+  font-size:15px !important;
+}
+.realm-wire__stream{
+  max-height:none !important;
+}
+.realm-wire__entry{
+  grid-template-columns:39px 54px minmax(0,1fr) !important;
+  padding:7px 5px !important;
+}
+.realm-wire__entry p{
+  font-size:9.5px !important;
+}
+.realm-wire__composer input{
+  font-size:10px !important;
+}
+
+/* Collapsed mode becomes a permanent slim dock above the Member button */
+.realm-wire[data-wire-state="collapsed"]{
+  position:fixed !important;
+  right:18px !important;
+  bottom:104px !important;
+  width:390px !important;
+  height:38px !important;
+  min-height:38px !important;
+  max-height:38px !important;
+  border-color:#3a2e40 !important;
+}
+.realm-wire[data-wire-state="collapsed"]>.realm-wire__collapsed{
+  border:1px solid rgba(116,81,128,.12);
+}
+
+/* Expanded = Steam/launcher style communication panel */
+.realm-wire[data-wire-state="expanded"]{
+  position:fixed !important;
+  z-index:8500 !important;
+  right:18px !important;
+  bottom:104px !important;
+  width:min(820px,calc(100vw - 36px)) !important;
+  height:min(720px,calc(100svh - 145px)) !important;
+  max-height:calc(100svh - 145px) !important;
+  border-color:#63486c !important;
+  box-shadow:
+    0 40px 120px rgba(0,0,0,.7),
+    0 0 0 1px rgba(133,91,148,.14) !important;
+}
+.realm-wire[data-wire-state="expanded"] .realm-wire__stream{
+  max-height:none !important;
+}
+
+/* Avoid covering the gaming page's important right-hand controls too aggressively */
+@media (max-width:1100px){
+  .realm-wire,
+  .realm-wire[data-wire-state="collapsed"]{
+    width:350px !important;
+  }
+}
+
+/* On phones the dock becomes almost full width but still stays above Member Dock */
+@media (max-width:700px){
+  .realm-wire,
+  .realm-wire[data-wire-state="collapsed"]{
+    right:9px !important;
+    bottom:88px !important;
+    width:calc(100vw - 18px) !important;
+  }
+  .realm-wire{
+    height:390px !important;
+    max-height:calc(100svh - 132px) !important;
+  }
+  .realm-wire[data-wire-state="expanded"]{
+    right:9px !important;
+    bottom:88px !important;
+    width:calc(100vw - 18px) !important;
+    height:calc(100svh - 108px) !important;
+    max-height:calc(100svh - 108px) !important;
+  }
+}
+
+.realm-wire__dock-tag{
+  position:absolute;
+  right:10px;
+  top:-17px;
+  height:17px;
+  display:flex;
+  align-items:center;
+  padding:0 7px;
+  border:1px solid #35283a;
+  border-bottom:0;
+  background:#0b090d;
+  color:#645669;
+  font:800 5.5px Arial,sans-serif;
+  letter-spacing:.09em;
+}
+.realm-wire[data-wire-state="collapsed"] .realm-wire__dock-tag{
+  display:none;
+}
+
+
+/* ==========================================================
+   PASS 40G — WORLD BOSS MASTER HUD
+   Inspired by MMO readability patterns:
+   boss identity -> phase/readout -> long segmented HP -> secondary state.
+   ========================================================== */
+
+.dragon-world-boss{
+  position:relative !important;
+  z-index:8100 !important;
+  display:grid !important;
+  grid-template-columns:150px 48px minmax(520px,1fr) 230px !important;
+  align-items:center !important;
+  gap:12px !important;
+  min-height:88px !important;
+  padding:9px 18px !important;
+  overflow:hidden !important;
+  border:0 !important;
+  border-bottom:1px solid #4b1c22 !important;
+  background:
+    linear-gradient(180deg,rgba(8,6,7,.98),rgba(14,5,7,.97)),
+    #090607 !important;
+  box-shadow:
+    inset 0 -1px rgba(164,40,47,.12),
+    inset 0 1px rgba(255,255,255,.018),
+    0 9px 28px rgba(0,0,0,.22) !important;
+}
+.dragon-world-boss::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 50% -18%,rgba(137,31,39,.26),transparent 50%),
+    linear-gradient(90deg,transparent,rgba(118,27,34,.045) 35%,rgba(177,48,53,.07) 50%,rgba(118,27,34,.045) 65%,transparent);
+}
+.dragon-world-boss::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:0;
+  width:38%;
+  height:1px;
+  transform:translateX(-50%);
+  background:linear-gradient(90deg,transparent,#8f2931,transparent);
+  opacity:.65;
+}
+
+.dragon-world-boss__event{
+  position:relative;
+  display:flex;align-items:center;gap:9px;
+  min-width:0;
+}
+.dragon-world-boss__event>i{
+  width:8px;height:8px;border-radius:50%;
+  background:#a82d35;
+  box-shadow:0 0 0 4px rgba(168,45,53,.08),0 0 16px rgba(188,48,55,.52);
+  animation:worldBossPulse 1.8s ease-in-out infinite;
+}
+@keyframes worldBossPulse{50%{opacity:.38;transform:scale(.8)}}
+.dragon-world-boss__event div{display:flex;flex-direction:column;gap:2px}
+.dragon-world-boss__event span{
+  color:#7e484d !important;
+  font:900 7px/1 Arial,sans-serif !important;
+  letter-spacing:.14em !important;
+}
+.dragon-world-boss__event b{
+  color:#c87775 !important;
+  font:800 9px/1 Arial,sans-serif !important;
+  letter-spacing:.09em !important;
+}
+
+.dragon-world-boss__crest{
+  position:relative;
+  width:42px;height:42px;
+  display:grid;place-items:center;
+  transform:rotate(45deg);
+  border:1px solid #482027;
+  background:linear-gradient(145deg,#16090c,#090607);
+  box-shadow:inset 0 0 18px rgba(113,23,30,.18),0 5px 15px rgba(0,0,0,.3);
+}
+.dragon-world-boss__crest::before{
+  content:"";
+  position:absolute;inset:5px;
+  border:1px solid rgba(142,43,51,.28);
+}
+.dragon-world-boss__crest span{
+  transform:rotate(-45deg);
+  color:#8f4b4e;
+  font:500 15px Georgia,serif;
+}
+
+.dragon-world-boss__center{
+  position:relative;
+  min-width:0;
+  display:grid;
+  gap:4px;
+}
+.dragon-world-boss__title{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:16px;
+  min-width:0;
+}
+.dragon-world-boss__title>div:first-child{min-width:0}
+.dragon-world-boss__title small{
+  display:block;
+  color:#75565a !important;
+  font:800 7px/1 Arial,sans-serif !important;
+  letter-spacing:.105em !important;
+}
+.dragon-world-boss__title strong{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  margin-top:2px !important;
+  color:#f0dedb !important;
+  text-shadow:0 1px #000,0 0 16px rgba(153,55,58,.10);
+  font:500 clamp(14px,1.15vw,19px)/1.05 Georgia,serif !important;
+  letter-spacing:.015em;
+}
+.dragon-world-boss__location{
+  flex:0 0 auto;
+  text-align:right;
+  padding-bottom:1px;
+}
+.dragon-world-boss__location small{
+  color:#5d4a4d !important;
+  font-size:6px !important;
+}
+.dragon-world-boss__location b{
+  display:block;margin-top:2px;
+  color:#9e7b7a !important;
+  font:800 7px/1 Arial,sans-serif !important;
+  letter-spacing:.08em;
+}
+
+.dragon-world-boss__barrow{
+  display:grid;
+  grid-template-columns:62px minmax(0,1fr) 135px;
+  align-items:center;
+  gap:8px;
+}
+.dragon-world-boss__phase{
+  color:#a45c5c;
+  font:900 7px/1 Arial,sans-serif;
+  letter-spacing:.08em;
+  text-align:right;
+}
+.dragon-world-boss__track{
+  position:relative;
+  height:14px !important;
+  margin:0 !important;
+  overflow:visible !important;
+  border:1px solid #502127 !important;
+  background:
+    linear-gradient(#16090c,#0b0607) !important;
+  box-shadow:
+    inset 0 2px 5px rgba(0,0,0,.85),
+    0 0 0 1px rgba(0,0,0,.8),
+    0 1px rgba(255,255,255,.02) !important;
+}
+.dragon-world-boss__fill{
+  position:absolute;left:0;top:0;bottom:0;
+  display:block;
+  width:100%;
+  background:
+    linear-gradient(180deg,#cf4a4e 0%,#9f292f 48%,#67151d 100%) !important;
+  box-shadow:
+    inset 0 1px rgba(255,182,170,.22),
+    inset 0 -2px rgba(55,0,6,.35),
+    0 0 13px rgba(166,43,49,.25) !important;
+  transition:width .65s cubic-bezier(.22,.7,.22,1) !important;
+}
+.dragon-world-boss__track::after{
+  content:"";
+  position:absolute;inset:1px;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(255,255,255,.035),transparent 30%,rgba(255,255,255,.035) 55%,transparent);
+  mix-blend-mode:screen;
+}
+.boss-breakpoint{
+  position:absolute;
+  z-index:3;
+  top:-5px;
+  width:8px;height:8px;
+  transform:translateX(-50%) rotate(45deg);
+  border:1px solid #81404a;
+  background:#16090c;
+  box-shadow:0 0 0 2px rgba(5,3,4,.72);
+  transition:.3s;
+}
+.boss-breakpoint.is-broken{
+  border-color:#4a3c3f;
+  background:#282326;
+  opacity:.52;
+}
+.dragon-world-boss__percent{
+  position:absolute;
+  z-index:4;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  color:#f0dddd;
+  text-shadow:0 1px 2px #000,0 0 8px #000;
+  font:900 7px/1 Arial,sans-serif !important;
+  letter-spacing:.05em;
+  pointer-events:none;
+}
+.dragon-world-boss__numbers{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:2px;
+}
+.dragon-world-boss__numbers>span{
+  color:#604e51;
+  font:800 5.5px/1 Arial,sans-serif;
+  letter-spacing:.08em;
+}
+.dragon-world-boss__numbers>b{
+  color:#b49695 !important;
+  font:800 7.5px/1 Arial,sans-serif !important;
+  white-space:nowrap;
+}
+.dragon-world-boss__numbers i{
+  color:#59474b;font-style:normal;font-weight:400;
+}
+
+.dragon-world-boss__subbar{
+  display:grid;
+  grid-template-columns:62px minmax(0,1fr) 55px;
+  align-items:center;
+  gap:8px;
+  margin-top:1px;
+}
+.dragon-world-boss__subbar>span,
+.dragon-world-boss__subbar>b{
+  color:#5e5053;
+  font:800 5.5px/1 Arial,sans-serif;
+  letter-spacing:.07em;
+}
+.dragon-world-boss__subbar>b{text-align:right;color:#766468}
+.dragon-world-boss__subbar>div{
+  height:3px;
+  background:#151114;
+  border:1px solid #2b2427;
+  overflow:hidden;
+}
+.dragon-world-boss__subbar i{
+  display:block;height:100%;width:0;
+  background:linear-gradient(90deg,#536b79,#8199a4);
+  box-shadow:0 0 8px rgba(89,126,142,.25);
+  transition:width .5s;
+}
+
+.dragon-world-boss__right{
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:10px;
+}
+.dragon-world-boss__personal{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-left:1px solid #332025;
+}
+.dragon-world-boss__personal>span{
+  display:block;
+  padding:4px 9px !important;
+  border-right:1px solid #332025;
+}
+.dragon-world-boss__personal small{
+  display:block;
+  color:#604b50 !important;
+  font:800 5.5px/1 Arial,sans-serif !important;
+  letter-spacing:.07em;
+}
+.dragon-world-boss__personal b{
+  display:block;margin-top:4px;
+  color:#b18f8f !important;
+  font:800 9px/1 Arial,sans-serif !important;
+}
+.dragon-world-boss__enter{
+  min-width:88px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px 11px !important;
+  border:1px solid #67292f !important;
+  background:
+    linear-gradient(180deg,#251014,#13090b) !important;
+  color:#d18d89 !important;
+  box-shadow:inset 0 1px rgba(255,255,255,.03),0 5px 14px rgba(0,0,0,.25);
+  font:900 7px/1 Arial,sans-serif !important;
+  letter-spacing:.08em !important;
+  transition:.15s;
+}
+.dragon-world-boss__enter:hover{
+  transform:translateY(-1px);
+  border-color:#9b4147 !important;
+  color:#f0beb8 !important;
+  background:linear-gradient(180deg,#311217,#18090c) !important;
+}
+.dragon-world-boss__enter>b{
+  color:#a84c50 !important;font-size:12px !important;
+}
+
+.dragon-world-boss.is-critical{
+  border-bottom-color:#72262d !important;
+}
+.dragon-world-boss.is-critical .dragon-world-boss__fill{
+  animation:bossCritical 1.5s ease-in-out infinite;
+}
+@keyframes bossCritical{50%{filter:brightness(1.25)}}
+.dragon-world-boss.is-defeated .dragon-world-boss__fill{width:0!important}
+.dragon-world-boss.is-defeated .dragon-world-boss__event b{color:#8f817f!important}
+.dragon-world-boss.is-defeated .dragon-world-boss__event>i{background:#766b69;box-shadow:none;animation:none}
+
+@media(max-width:1180px){
+  .dragon-world-boss{
+    grid-template-columns:120px 42px minmax(420px,1fr) 165px !important;
+    padding-inline:12px !important;
+  }
+  .dragon-world-boss__personal span:nth-child(2){display:none}
+  .dragon-world-boss__barrow{grid-template-columns:54px minmax(0,1fr) 110px}
+  .dragon-world-boss__subbar{grid-template-columns:54px minmax(0,1fr) 45px}
+}
+@media(max-width:900px){
+  .dragon-world-boss{
+    grid-template-columns:42px minmax(0,1fr) auto !important;
+    min-height:82px !important;
+  }
+  .dragon-world-boss__event{display:none}
+  .dragon-world-boss__right{grid-column:3}
+  .dragon-world-boss__personal{display:none}
+  .dragon-world-boss__location{display:none}
+}
+
+/* PASS 40H — ACTIVE WORLD */
+.gaming-realm-status{position:fixed;z-index:8200;right:18px;top:84px;height:24px;display:flex;align-items:center;gap:7px;padding:0 9px;border:1px solid #302733;background:rgba(8,7,9,.94);backdrop-filter:blur(8px);box-shadow:0 8px 24px rgba(0,0,0,.28);color:#716777;font:800 5.5px Arial;letter-spacing:.09em}
+.gaming-realm-status i{width:5px;height:5px;border-radius:50%;background:#5b9b70;box-shadow:0 0 8px rgba(91,155,112,.5)}.gaming-realm-status span{color:#a28ca8}.gaming-realm-status b{color:#6e9a7a}.gaming-realm-status em{font-style:normal;color:#8d565c;border-left:1px solid #32282f;padding-left:7px}
+.gaming-active-wizard{position:fixed;z-index:8250;right:18px;bottom:552px;width:390px;border:1px solid #382d3d;background:linear-gradient(150deg,rgba(15,11,17,.97),rgba(7,7,9,.97));box-shadow:0 18px 50px rgba(0,0,0,.38);backdrop-filter:blur(10px)}
+.gaming-active-wizard__core{width:100%;display:grid;grid-template-columns:34px 1fr 42px;gap:8px;align-items:center;border:0;background:transparent;padding:8px;color:inherit;text-align:left;cursor:pointer}.gaming-active-wizard__sigil{width:31px;height:31px;display:grid;place-items:center;border:1px solid #65404d;background:#211016;color:#cf9b9d;font:700 8px Georgia}.gaming-active-wizard__identity{display:flex;flex-direction:column;min-width:0}.gaming-active-wizard__identity small{color:#675c6a;font:800 5.5px Arial;letter-spacing:.1em}.gaming-active-wizard__identity strong{color:#d9cadc;font:500 13px Georgia}.gaming-active-wizard__identity i{color:#776c7b;font:700 5.5px Arial;font-style:normal;letter-spacing:.05em}.gaming-active-wizard__level{border-left:1px solid #302633;padding-left:8px}.gaming-active-wizard__level small{color:#625765;font:700 5px Arial}.gaming-active-wizard__level b{display:block;color:#c5aec9;font:500 14px Georgia}
+.gaming-active-wizard__meters{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 8px 7px}.gaming-active-wizard__meters>span{display:grid;grid-template-columns:20px 1fr 22px;gap:5px;align-items:center}.gaming-active-wizard__meters i,.gaming-active-wizard__meters small{font:800 5px Arial;color:#675c69}.gaming-active-wizard__meters b{height:3px;background:#1c171d;overflow:hidden}.gaming-active-wizard__meters em{display:block;height:100%;background:linear-gradient(90deg,#6e2730,#a64650)}.gaming-active-wizard__meters span:nth-child(2) em{background:linear-gradient(90deg,#4f587f,#777fa4)}
+.gaming-active-wizard__detail{display:none;justify-content:space-between;align-items:center;padding:7px 9px;border-top:1px solid #2a222d;background:#09080b}.gaming-active-wizard.is-open .gaming-active-wizard__detail{display:flex}.gaming-active-wizard__detail span,.gaming-active-wizard__detail a{color:#8f7695;font:800 5.5px Arial;letter-spacing:.07em}
+.realm-wire.has-attention[data-wire-state="collapsed"]>.realm-wire__collapsed{border-color:#704151;box-shadow:0 0 18px rgba(143,53,72,.25)}
+@media(max-height:820px){.gaming-active-wizard{display:none}}
+@media(max-width:700px){.gaming-realm-status{right:9px;top:72px}.gaming-active-wizard{right:9px;bottom:496px;width:calc(100vw - 18px)}}
+
+
+/* ==========================================================
+   PASS 40I — GAMING DOCK STACK POSITION FIX
+   Goal:
+   Active Wizard sits directly ABOVE Realm Wire.
+   Realm Wire sits lower, above Member/Director dock.
+   The pair moves as one visual stack.
+   ========================================================== */
+
+:root{
+  --dragon-member-dock-clearance: 92px;
+  --dragon-wire-gap: 10px;
+  --dragon-wizard-gap: 10px;
+  --dragon-wire-normal-height: 430px;
+  --dragon-wire-collapsed-height: 38px;
+  --dragon-wizard-height: 92px;
+}
+
+/* Realm Wire: slightly lower and locked above Member/Director */
+.realm-wire{
+  right:18px !important;
+  bottom:var(--dragon-member-dock-clearance) !important;
+}
+
+/* Active Wizard: always calculated from the current Realm Wire height */
+.gaming-active-wizard{
+  right:18px !important;
+  bottom:calc(
+    var(--dragon-member-dock-clearance)
+    + var(--dragon-wire-normal-height)
+    + var(--dragon-wizard-gap)
+  ) !important;
+  transition:bottom .18s ease, transform .18s ease, opacity .18s ease;
+}
+
+/* When the Realm Wire is minimized, bring the Active Wizard down with it */
+html:has(.realm-wire[data-wire-state="collapsed"]) .gaming-active-wizard,
+body:has(.realm-wire[data-wire-state="collapsed"]) .gaming-active-wizard{
+  bottom:calc(
+    var(--dragon-member-dock-clearance)
+    + var(--dragon-wire-collapsed-height)
+    + var(--dragon-wizard-gap)
+  ) !important;
+}
+
+/* Expanded Wire: Active Wizard remains directly above expanded window when space allows */
+html:has(.realm-wire[data-wire-state="expanded"]) .gaming-active-wizard,
+body:has(.realm-wire[data-wire-state="expanded"]) .gaming-active-wizard{
+  bottom:calc(
+    var(--dragon-member-dock-clearance)
+    + min(720px, calc(100svh - 145px))
+    + var(--dragon-wizard-gap)
+  ) !important;
+}
+
+/* If expanded mode gets too tall, temporarily tuck Active Wizard away instead of overlapping */
+@media (max-height: 900px){
+  html:has(.realm-wire[data-wire-state="expanded"]) .gaming-active-wizard,
+  body:has(.realm-wire[data-wire-state="expanded"]) .gaming-active-wizard{
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(8px);
+  }
+}
+
+/* Make the stack feel visually intentional */
+.gaming-active-wizard{
+  width:390px !important;
+  box-shadow:
+    0 16px 42px rgba(0,0,0,.34),
+    0 0 0 1px rgba(123,87,135,.045) !important;
+}
+.realm-wire{
+  width:390px !important;
+}
+
+/* Mobile stack */
+@media(max-width:700px){
+  :root{
+    --dragon-member-dock-clearance: 82px;
+    --dragon-wire-normal-height: 390px;
+    --dragon-wire-collapsed-height: 38px;
+    --dragon-wizard-gap: 8px;
+  }
+
+  .realm-wire{
+    right:9px !important;
+  }
+
+  .gaming-active-wizard{
+    right:9px !important;
+    width:calc(100vw - 18px) !important;
+  }
+}
+
+
+/* ==========================================================
+   PASS 40J — NINTH SPIRE GAME RAIL
+   On the actual game page, reserve a right-hand dock rail so
+   Realm Wire + Active Wizard never cover the game.
+   ========================================================== */
+
+:root{
+  --spire-dock-rail: 420px;
+  --spire-dock-gap: 14px;
+}
+
+/* Detect the actual Ninth Spire embedded game page */
+html:has(.spire-site),
+body:has(.spire-site){
+  overflow-x:hidden;
+}
+
+/* The game itself owns the left side. The dock rail owns the right side. */
+body:has(.spire-site) .spire-site{
+  width:calc(100vw - var(--spire-dock-rail) - var(--spire-dock-gap)) !important;
+  max-width:none !important;
+  margin-left:0 !important;
+  margin-right:auto !important;
+  padding-right:0 !important;
+}
+
+/* Make the embedded game stage use all available left-side width */
+body:has(.spire-site) .spire-site__stage,
+body:has(.spire-site) .spire-site__stage iframe{
+  width:100% !important;
+  max-width:none !important;
+}
+
+/* Dedicated fixed right rail */
+body:has(.spire-site) .realm-wire,
+body:has(.spire-site) .realm-wire[data-wire-state="collapsed"],
+body:has(.spire-site) .realm-wire[data-wire-state="expanded"]{
+  right:14px !important;
+  width:390px !important;
+  z-index:12000 !important;
+  pointer-events:auto !important;
+}
+
+body:has(.spire-site) .gaming-active-wizard{
+  right:14px !important;
+  width:390px !important;
+  z-index:12100 !important;
+  pointer-events:auto !important;
+}
+
+/* Ensure wire controls stay interactive above the iframe */
+body:has(.spire-site) .realm-wire button,
+body:has(.spire-site) .realm-wire input,
+body:has(.spire-site) .gaming-active-wizard button,
+body:has(.spire-site) .gaming-active-wizard a{
+  pointer-events:auto !important;
+  position:relative;
+  z-index:2;
+}
+
+/* Normal state rail positioning */
+body:has(.spire-site) .realm-wire{
+  bottom:92px !important;
+  height:430px !important;
+  max-height:calc(100svh - 150px) !important;
+}
+
+body:has(.spire-site) .gaming-active-wizard{
+  bottom:532px !important;
+}
+
+/* Minimized wire: wizard follows downward */
+body:has(.spire-site):has(.realm-wire[data-wire-state="collapsed"]) .gaming-active-wizard{
+  bottom:140px !important;
+}
+
+/* Expanded wire gets a larger rail window without covering the game */
+body:has(.spire-site) .realm-wire[data-wire-state="expanded"]{
+  width:min(760px, calc(100vw - 48px)) !important;
+  right:14px !important;
+  bottom:92px !important;
+  height:min(720px, calc(100svh - 145px)) !important;
+  max-height:calc(100svh - 145px) !important;
+}
+
+body:has(.spire-site):has(.realm-wire[data-wire-state="expanded"]) .gaming-active-wizard{
+  opacity:0 !important;
+  pointer-events:none !important;
+}
+
+/* The game's own wrapper/footer should never slip beneath the right dock rail */
+body:has(.spire-site) .spire-site__bar,
+body:has(.spire-site) .spire-site__footer{
+  width:100% !important;
+}
+
+/* At narrower desktop widths, shrink the rail a little */
+@media (max-width: 1280px){
+  :root{
+    --spire-dock-rail: 360px;
+  }
+  body:has(.spire-site) .realm-wire,
+  body:has(.spire-site) .realm-wire[data-wire-state="collapsed"],
+  body:has(.spire-site) .gaming-active-wizard{
+    width:332px !important;
+    right:10px !important;
+  }
+}
+
+/* Tablet/mobile: dock becomes overlay again because there is no safe side rail */
+@media (max-width: 980px){
+  body:has(.spire-site) .spire-site{
+    width:100vw !important;
+  }
+
+  body:has(.spire-site) .realm-wire,
+  body:has(.spire-site) .realm-wire[data-wire-state="collapsed"],
+  body:has(.spire-site) .realm-wire[data-wire-state="expanded"]{
+    right:9px !important;
+    width:calc(100vw - 18px) !important;
+  }
+
+  body:has(.spire-site) .gaming-active-wizard{
+    right:9px !important;
+    width:calc(100vw - 18px) !important;
+  }
+}
+
+
+/* ==========================================================
+   PASS 40L — NINTH SPIRE SIDE RAIL REPAIR
+   Dedicated rail container; widgets no longer free-float.
+   ========================================================== */
+
+:root{
+  --spire-rail-width: 390px;
+  --spire-rail-gap: 16px;
+  --spire-rail-right: 14px;
+}
+
+/* GAME PAGE LAYOUT */
+body:has(.spire-site){
+  overflow-x:hidden;
+}
+
+body:has(.spire-site) .spire-site{
+  width:calc(100vw - var(--spire-rail-width) - var(--spire-rail-gap) - var(--spire-rail-right)) !important;
+  max-width:none !important;
+  margin:0 !important;
+  min-width:0 !important;
+}
+
+/* The dedicated rail occupies the right side of the viewport. */
+body:has(.spire-site) .spire-game-rail{
+  position:fixed;
+  z-index:11900;
+  right:var(--spire-rail-right);
+  top:174px;
+  bottom:92px;
+  width:var(--spire-rail-width);
+  min-height:0;
+  display:grid;
+  grid-template-rows:auto minmax(0,1fr);
+  gap:10px;
+  pointer-events:none;
+}
+
+/* Inside this rail, widgets are no longer fixed-position objects. */
+body:has(.spire-site) .spire-game-rail .gaming-active-wizard,
+body:has(.spire-site) .spire-game-rail .realm-wire,
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="collapsed"],
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="expanded"]{
+  position:relative !important;
+  inset:auto !important;
+  right:auto !important;
+  bottom:auto !important;
+  top:auto !important;
+  width:100% !important;
+  max-width:none !important;
+  pointer-events:auto !important;
+  opacity:1 !important;
+  transform:none !important;
+}
+
+/* Active Wizard always stays at the TOP of the rail. */
+body:has(.spire-site) .spire-game-rail .gaming-active-wizard{
+  display:block !important;
+  min-height:0 !important;
+  z-index:2 !important;
+}
+
+/* Realm Wire fills the rest of the rail. */
+body:has(.spire-site) .spire-game-rail .realm-wire{
+  height:100% !important;
+  min-height:260px !important;
+  max-height:none !important;
+  z-index:1 !important;
+}
+
+/* Normal Wire needs its stream/composer visible and usable. */
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="normal"]{
+  display:grid !important;
+  grid-template-rows:auto auto minmax(0,1fr) !important;
+}
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="normal"] .realm-wire__body{
+  min-height:0 !important;
+  display:grid !important;
+  grid-template-rows:auto minmax(0,1fr) auto auto !important;
+}
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="normal"] .realm-wire__stream{
+  display:block !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:auto !important;
+}
+
+/* Collapsed Wire becomes a compact bar directly beneath Active Wizard. */
+body:has(.spire-site) .spire-game-rail:has(.realm-wire[data-wire-state="collapsed"]){
+  grid-template-rows:auto 38px;
+  align-content:start;
+}
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="collapsed"]{
+  height:38px !important;
+  min-height:38px !important;
+}
+
+/* Expanded Wire grows LEFTWARD from the rail rather than covering the game controls. */
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="expanded"]{
+  position:absolute !important;
+  right:0 !important;
+  top:0 !important;
+  width:min(760px,calc(100vw - 48px)) !important;
+  height:100% !important;
+  max-height:none !important;
+  z-index:5 !important;
+  box-shadow:0 34px 110px rgba(0,0,0,.72),0 0 0 1px rgba(133,91,148,.12) !important;
+}
+body:has(.spire-site) .spire-game-rail:has(.realm-wire[data-wire-state="expanded"]) .gaming-active-wizard{
+  visibility:hidden !important;
+}
+
+/* Keep controls above the iframe. */
+body:has(.spire-site) .spire-game-rail button,
+body:has(.spire-site) .spire-game-rail input,
+body:has(.spire-site) .spire-game-rail a{
+  pointer-events:auto !important;
+  position:relative;
+  z-index:10;
+}
+
+/* Realm status remains a tiny independent status pill. */
+body:has(.spire-site) .gaming-realm-status{
+  top:90px !important;
+  right:14px !important;
+}
+
+/* The game frame itself gets the full left-side canvas. */
+body:has(.spire-site) .spire-site__stage,
+body:has(.spire-site) .spire-site__stage iframe{
+  width:100% !important;
+  max-width:none !important;
+}
+
+/* Hide old free-floating positioning side effects while inside the Spire rail. */
+body:has(.spire-site) .spire-game-rail .realm-wire__dock-tag{
+  top:-16px;
+}
+
+@media(max-width:1280px){
+  :root{
+    --spire-rail-width:340px;
+    --spire-rail-gap:12px;
+    --spire-rail-right:10px;
+  }
+  body:has(.spire-site) .spire-game-rail{
+    top:170px;
+  }
+}
+
+@media(max-width:980px){
+  body:has(.spire-site) .spire-site{
+    width:100% !important;
+  }
+  body:has(.spire-site) .spire-game-rail{
+    position:fixed;
+    left:9px;
+    right:9px;
+    top:auto;
+    bottom:82px;
+    width:auto;
+    height:auto;
+    display:block;
+    pointer-events:none;
+  }
+  body:has(.spire-site) .spire-game-rail .gaming-active-wizard{
+    display:none !important;
+  }
+  body:has(.spire-site) .spire-game-rail .realm-wire{
+    width:100% !important;
+    height:390px !important;
+    pointer-events:auto !important;
+  }
+  body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="collapsed"]{
+    height:38px !important;
+  }
+  body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="expanded"]{
+    position:relative !important;
+    width:100% !important;
+    height:calc(100svh - 110px) !important;
+  }
+}
+
+
+/* ==========================================================
+   PASS 40M — DEFINITIVE REALM WIRE STATE CONTROLS
+   Final overrides to eliminate old-state CSS conflicts.
+   ========================================================== */
+
+/* NORMAL */
+.realm-wire.is-normal{
+  display:grid !important;
+}
+.realm-wire.is-normal > .realm-wire__head,
+.realm-wire.is-normal > .realm-wire__ticker,
+.realm-wire.is-normal > .realm-wire__body{
+  display:flex;
+}
+.realm-wire.is-normal > .realm-wire__body{
+  display:grid !important;
+}
+.realm-wire.is-normal > .realm-wire__collapsed{
+  display:none !important;
+}
+
+/* COLLAPSED */
+.realm-wire.is-collapsed{
+  height:38px !important;
+  min-height:38px !important;
+  max-height:38px !important;
+  overflow:hidden !important;
+}
+.realm-wire.is-collapsed > .realm-wire__head,
+.realm-wire.is-collapsed > .realm-wire__ticker,
+.realm-wire.is-collapsed > .realm-wire__body,
+.realm-wire.is-collapsed > .realm-wire__dock-tag{
+  display:none !important;
+}
+.realm-wire.is-collapsed > .realm-wire__collapsed{
+  display:grid !important;
+  width:100% !important;
+  height:38px !important;
+}
+
+/* EXPANDED */
+.realm-wire.is-expanded{
+  display:grid !important;
+}
+.realm-wire.is-expanded > .realm-wire__head,
+.realm-wire.is-expanded > .realm-wire__ticker{
+  display:flex !important;
+}
+.realm-wire.is-expanded > .realm-wire__body{
+  display:grid !important;
+}
+.realm-wire.is-expanded > .realm-wire__collapsed{
+  display:none !important;
+}
+
+/* Dedicated Ninth Spire rail state, driven directly by JS data attribute */
+.spire-game-rail[data-wire-mode="normal"]{
+  grid-template-rows:auto minmax(0,1fr) !important;
+}
+.spire-game-rail[data-wire-mode="normal"] .realm-wire{
+  position:relative !important;
+  width:100% !important;
+  height:100% !important;
+  inset:auto !important;
+}
+
+.spire-game-rail[data-wire-mode="collapsed"]{
+  grid-template-rows:auto 38px !important;
+  align-content:start !important;
+}
+.spire-game-rail[data-wire-mode="collapsed"] .realm-wire{
+  position:relative !important;
+  inset:auto !important;
+  width:100% !important;
+  height:38px !important;
+}
+
+.spire-game-rail[data-wire-mode="expanded"]{
+  grid-template-rows:1fr !important;
+}
+.spire-game-rail[data-wire-mode="expanded"] .gaming-active-wizard{
+  display:none !important;
+}
+.spire-game-rail[data-wire-mode="expanded"] .realm-wire{
+  position:absolute !important;
+  top:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  left:auto !important;
+  width:min(760px,calc(100vw - 48px)) !important;
+  height:100% !important;
+  min-height:0 !important;
+  max-height:none !important;
+  z-index:20 !important;
+}
+
+/* Buttons explicitly remain clickable */
+.realm-wire [data-wire-minus],
+.realm-wire [data-wire-plus],
+.realm-wire [data-wire-restore]{
+  pointer-events:auto !important;
+  cursor:pointer !important;
+  user-select:none !important;
+  touch-action:manipulation !important;
+}
+
+/* PASS 40N — persistent controller interaction */
+.spire-game-rail .gaming-active-wizard.is-open .gaming-active-wizard__detail{display:flex!important}
+.spire-game-rail .gaming-active-wizard__core,
+.spire-game-rail .realm-wire__window button,
+.spire-game-rail .realm-wire__collapsed,
+.spire-game-rail .realm-wire__composer,
+.spire-game-rail .realm-wire__filters button{pointer-events:auto!important;cursor:pointer!important}
+
+
+/* ==========================================================
+   PASS 40O — NINTH SPIRE RIGHT-RAIL BOTTOM STACK
+   Final positioning override:
+   ACTIVE WIZARD
+   REALM WIRE
+   MEMBER / DIRECTOR
+   ========================================================== */
+
+/* The rail is now bottom-anchored instead of top-anchored. */
+body:has(.spire-site) .spire-game-rail{
+  position:fixed !important;
+  z-index:11900 !important;
+  right:14px !important;
+  left:auto !important;
+  top:auto !important;
+  bottom:92px !important;
+
+  width:390px !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:calc(100svh - 150px) !important;
+
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:flex-end !important;
+  align-items:stretch !important;
+  gap:10px !important;
+
+  pointer-events:none !important;
+}
+
+/* Kill all leftover free-floating positions inside the rail. */
+body:has(.spire-site) .spire-game-rail .gaming-active-wizard,
+body:has(.spire-site) .spire-game-rail .realm-wire,
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="normal"],
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="collapsed"],
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="expanded"]{
+  position:relative !important;
+  inset:auto !important;
+  top:auto !important;
+  right:auto !important;
+  bottom:auto !important;
+  left:auto !important;
+
+  width:100% !important;
+  margin:0 !important;
+  transform:none !important;
+}
+
+/* Wizard is always directly above the Wire. */
+body:has(.spire-site) .spire-game-rail .gaming-active-wizard{
+  order:1 !important;
+  flex:0 0 auto !important;
+  display:block !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+}
+
+/* NORMAL WIRE: useful full-height dock, bottom anchored. */
+body:has(.spire-site) .spire-game-rail .realm-wire.is-normal,
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="normal"]{
+  order:2 !important;
+  flex:0 0 430px !important;
+  height:430px !important;
+  min-height:300px !important;
+  max-height:430px !important;
+  pointer-events:auto !important;
+}
+
+/* COLLAPSED WIRE: entire stack drops toward the Member button. */
+body:has(.spire-site) .spire-game-rail .realm-wire.is-collapsed,
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="collapsed"]{
+  order:2 !important;
+  flex:0 0 38px !important;
+  height:38px !important;
+  min-height:38px !important;
+  max-height:38px !important;
+  pointer-events:auto !important;
+}
+
+/* EXPANDED WIRE:
+   give it the rail and grow leftward; wizard hides only in this state. */
+body:has(.spire-site) .spire-game-rail:has(.realm-wire.is-expanded) .gaming-active-wizard,
+body:has(.spire-site) .spire-game-rail:has(.realm-wire[data-wire-state="expanded"]) .gaming-active-wizard{
+  display:none !important;
+}
+
+body:has(.spire-site) .spire-game-rail .realm-wire.is-expanded,
+body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="expanded"]{
+  position:absolute !important;
+  right:0 !important;
+  left:auto !important;
+  bottom:0 !important;
+  top:auto !important;
+
+  width:min(760px, calc(100vw - 48px)) !important;
+  height:min(720px, calc(100svh - 150px)) !important;
+  min-height:420px !important;
+  max-height:calc(100svh - 150px) !important;
+
+  pointer-events:auto !important;
+  z-index:30 !important;
+}
+
+/* The persistent Member/Director control remains below this rail. */
+body:has(.spire-site) .spire-game-rail button,
+body:has(.spire-site) .spire-game-rail input,
+body:has(.spire-site) .spire-game-rail a{
+  pointer-events:auto !important;
+}
+
+/* Keep the realm-status pill separate in the upper-right corner. */
+body:has(.spire-site) .gaming-realm-status{
+  position:fixed !important;
+  top:90px !important;
+  right:14px !important;
+  bottom:auto !important;
+}
+
+/* Smaller desktop widths */
+@media (max-width:1280px){
+  body:has(.spire-site) .spire-game-rail{
+    right:10px !important;
+    width:340px !important;
+    bottom:88px !important;
+  }
+
+  body:has(.spire-site) .spire-game-rail .realm-wire.is-normal,
+  body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="normal"]{
+    flex-basis:390px !important;
+    height:390px !important;
+    max-height:390px !important;
+  }
+}
+
+/* Mobile/tablet stays overlay-oriented. */
+@media (max-width:980px){
+  body:has(.spire-site) .spire-game-rail{
+    left:9px !important;
+    right:9px !important;
+    bottom:82px !important;
+    width:auto !important;
+  }
+
+  body:has(.spire-site) .spire-game-rail .gaming-active-wizard{
+    display:none !important;
+  }
+
+  body:has(.spire-site) .spire-game-rail .realm-wire.is-normal,
+  body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="normal"]{
+    flex-basis:390px !important;
+    height:390px !important;
+  }
+}
+
+
+/* ==========================================================
+   PASS 40P — DYNAMIC NINTH SPIRE UTILITY STACK
+   Deterministic fixed positioning.
+   Realm Wire anchors above Member Dock.
+   Active Wizard anchors exactly above Realm Wire.
+   ========================================================== */
+
+@media (min-width:981px){
+
+  body:has(.spire-site) .spire-game-rail{
+    position:static !important;
+    width:0 !important;
+    height:0 !important;
+    display:block !important;
+    pointer-events:none !important;
+  }
+
+  body:has(.spire-site) .spire-game-rail .realm-wire{
+    position:fixed !important;
+    z-index:12000 !important;
+    right:14px !important;
+    top:auto !important;
+    left:auto !important;
+    width:390px !important;
+    pointer-events:auto !important;
+    margin:0 !important;
+    transform:none !important;
+  }
+
+  body:has(.spire-site) .spire-game-rail .realm-wire.is-normal,
+  body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="normal"]{
+    height:430px !important;
+    min-height:300px !important;
+    max-height:430px !important;
+  }
+
+  body:has(.spire-site) .spire-game-rail .realm-wire.is-collapsed,
+  body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="collapsed"]{
+    height:38px !important;
+    min-height:38px !important;
+    max-height:38px !important;
+  }
+
+  body:has(.spire-site) .spire-game-rail .realm-wire.is-expanded,
+  body:has(.spire-site) .spire-game-rail .realm-wire[data-wire-state="expanded"]{
+    width:min(760px,calc(100vw - 48px)) !important;
+    height:min(720px,calc(100svh - 150px)) !important;
+    max-height:calc(100svh - 150px) !important;
+    bottom:92px !important;
+  }
+
+  body:has(.spire-site) .spire-game-rail .gaming-active-wizard{
+    position:fixed !important;
+    z-index:12100 !important;
+    right:14px !important;
+    top:auto !important;
+    left:auto !important;
+    width:390px !important;
+    height:auto !important;
+    min-height:0 !important;
+    margin:0 !important;
+    pointer-events:auto !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:none !important;
+    transition:bottom .18s ease,height .18s ease !important;
+  }
+
+  /* Opening the wizard grows UP because JS keeps its bottom anchored. */
+  body:has(.spire-site) .spire-game-rail .gaming-active-wizard.is-open{
+    height:auto !important;
+  }
+
+  body:has(.spire-site) .spire-game-rail .gaming-active-wizard.is-open .gaming-active-wizard__detail{
+    display:flex !important;
+  }
+}
+
+
+/* ==========================================================
+   PASS 40Q — NINTH SPIRE LAYOUT RECOVERY
+   Fixes the giant blank gap introduced in 40P.
+   Root cause: .spire-game-rail was changed to position:static,
+   so it re-entered the .spire-site CSS grid before the header
+   and consumed layout space.
+   ========================================================== */
+
+@media (min-width:981px){
+
+  /* The rail must NEVER participate in the Ninth Spire page grid. */
+  body:has(.spire-site) .spire-game-rail{
+    position:fixed !important;
+    z-index:11900 !important;
+    right:14px !important;
+    left:auto !important;
+    top:0 !important;
+    bottom:0 !important;
+
+    width:0 !important;
+    height:0 !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    max-width:none !important;
+    max-height:none !important;
+
+    display:block !important;
+    margin:0 !important;
+    padding:0 !important;
+    border:0 !important;
+    overflow:visible !important;
+    pointer-events:none !important;
+  }
+
+  /* Restore the actual Ninth Spire page to normal top-to-bottom flow. */
+  body:has(.spire-site) .spire-site{
+    align-self:stretch !important;
+    grid-template-rows:auto minmax(0,1fr) auto !important;
+  }
+
+  body:has(.spire-site) .spire-site__bar{
+    grid-row:auto !important;
+    margin-top:0 !important;
+    transform:none !important;
+  }
+
+  body:has(.spire-site) .spire-site__stage{
+    grid-row:auto !important;
+    margin-top:0 !important;
+    transform:none !important;
+  }
+
+  body:has(.spire-site) .spire-site__footer{
+    grid-row:auto !important;
+    margin-top:0 !important;
+  }
+
+  /* Rail children remain fixed utilities and therefore cannot push the game. */
+  body:has(.spire-site) .spire-game-rail .realm-wire,
+  body:has(.spire-site) .spire-game-rail .gaming-active-wizard{
+    position:fixed !important;
+  }
+}
+
+/* PASS 41A — FIRST HOLD LOUNGE CARD */
+.gaming-realm-card--first-hold{margin-top:12px;border-color:#3d3027;background:radial-gradient(circle at 18% 50%,rgba(96,80,45,.08),transparent 28%),linear-gradient(145deg,#0e0b0a,#080809)}
+.gaming-realm-art--hold{background:radial-gradient(circle at 50% 48%,rgba(128,101,52,.18),transparent 26%),linear-gradient(145deg,#19160f,#0a0908)!important}
+.gaming-realm-art--hold b{color:#b8995e!important}
+
+/* WEBSITE PASS 02 — live Arcade Battle card art */
+.gaming-realm-art--arcade{background:#080708!important}
+.gaming-realm-art--arcade:after{display:none!important}
+.gaming-realm-art--arcade img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:.78;filter:saturate(.82) brightness(.72)}
+.gaming-realm-art--arcade:before{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(90deg,rgba(5,4,5,.16),rgba(5,4,5,.02)),linear-gradient(0deg,rgba(5,4,5,.70),transparent 46%)}
+.gaming-realm-art--arcade span{z-index:2;color:#d8bd85!important;text-shadow:0 2px 8px #000}
+
+
+/* =========================================================
+   PASS 17 — DRAGON GAMING / ACTION MAGAZINE ROOM
+   Front-page structure + Books polish, without losing game logic.
+   ========================================================= */
+
+.gaming-lounge{
+  --gg-ink:#070907;
+  --gg-panel:#0b0e0b;
+  --gg-paper:#ddd2b8;
+  --gg-muted:#8b8278;
+  --gg-red:#7b1f2b;
+  --gg-red-dark:#3f1017;
+  --gg-green:#789176;
+  --gg-green-hi:#d5e2d1;
+  --gg-green-dark:#2d4434;
+  --gg-gold:#c8a74e;
+  background:
+    radial-gradient(circle at 12% 10%,rgba(122,28,42,.15),transparent 27%),
+    radial-gradient(circle at 87% 30%,rgba(71,90,71,.08),transparent 30%),
+    linear-gradient(180deg,#070808,#050606 82%) !important;
+  color:var(--gg-paper) !important;
+  padding-bottom:72px;
+}
+
+/* Put the command bar inside the same visual machine as the rest. */
+.gaming-command{
+  width:min(1240px,calc(100% - 28px)) !important;
+  margin:22px auto 0 !important;
+  padding:0 14px !important;
+  min-height:44px !important;
+  border:8px solid var(--gg-green-dark) !important;
+  border-bottom-width:0 !important;
+  background:#080a08 !important;
+  box-shadow:
+    0 0 0 1px var(--gg-green-hi),
+    0 0 0 4px #08100a !important;
+}
+.gaming-command a{
+  min-height:42px !important;
+  display:flex !important;
+  align-items:center !important;
+  color:#747e73 !important;
+}
+.gaming-command a.is-active{
+  color:#d8e0d4 !important;
+  box-shadow:inset 0 -2px var(--gg-red) !important;
+}
+.gaming-command__state{margin-left:auto !important}
+
+/* Main hero = action editorial spread, not purple game dashboard. */
+.gaming-lobby-hero{
+  width:min(1240px,calc(100% - 28px)) !important;
+  margin:0 auto !important;
+  min-height:450px !important;
+  grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr) !important;
+  gap:34px !important;
+  padding:54px 54px 50px !important;
+  overflow:hidden !important;
+  border:8px solid var(--gg-green-dark) !important;
+  border-top-width:0 !important;
+  background:
+    radial-gradient(circle at 18% 15%,rgba(113,28,42,.22),transparent 30%),
+    linear-gradient(120deg,#0f0a0c 0,#0a0d0a 48%,#070807 100%) !important;
+  box-shadow:
+    0 0 0 1px var(--gg-green-hi),
+    0 0 0 4px #08100a,
+    0 24px 44px rgba(0,0,0,.58) !important;
+}
+
+.gaming-lobby-hero__copy{
+  align-self:center;
+  max-width:780px;
+}
+.gaming-lobby-hero h1{
+  margin:11px 0 20px !important;
+  color:#e7ddc7 !important;
+  font:500 clamp(54px,6vw,88px)/.82 Georgia,serif !important;
+  letter-spacing:-.055em !important;
+}
+.gaming-lobby-hero h1 em{
+  color:#a66d6f !important;
+  font-weight:400 !important;
+}
+.gaming-lobby-hero__copy>p{
+  max-width:700px !important;
+  color:#9a9083 !important;
+  font:400 15px/1.68 Georgia,serif !important;
+}
+.gaming-kicker{
+  color:#a95760 !important;
+  font:900 7px/1 system-ui,sans-serif !important;
+  letter-spacing:.14em !important;
+}
+
+.gaming-lobby-actions{
+  display:flex !important;
+  gap:8px !important;
+  flex-wrap:wrap !important;
+  margin-top:28px !important;
+}
+.gaming-btn{
+  padding:11px 13px !important;
+  border:1px solid #4f5e50 !important;
+  background:#0a0e0a !important;
+  color:#bac6b7 !important;
+  text-decoration:none !important;
+}
+.gaming-btn--primary{
+  border-color:#73303a !important;
+  background:#3b151d !important;
+  color:#e0d0be !important;
+}
+.gaming-btn--quiet{
+  border-color:#2e3a31 !important;
+  color:#879486 !important;
+}
+
+/* Active character is a physical side panel, not sci-fi purple slab. */
+.gaming-character-slab{
+  align-self:center !important;
+  min-height:310px !important;
+  padding:24px !important;
+  border:1px solid #405342 !important;
+  background:
+    linear-gradient(145deg,rgba(109,136,105,.06),transparent 44%),
+    #080b08 !important;
+  box-shadow:
+    inset 0 0 0 4px #050705,
+    inset 0 0 0 5px rgba(206,224,201,.08),
+    0 15px 24px rgba(0,0,0,.36) !important;
+}
+.gaming-character-slab__sigil{
+  color:#8a3d53 !important;
+  text-shadow:none !important;
+}
+.gaming-character-slab h2{
+  color:#d8ccb6 !important;
+  font-family:Georgia,serif !important;
+}
+.gaming-character-slab p{color:#80796e !important}
+.gaming-affinity{color:#9faf9b !important}
+
+/* Current activity strip = front-page quick wire. */
+.gaming-now-strip{
+  width:min(1240px,calc(100% - 28px));
+  margin:14px auto 0;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-left:8px solid var(--gg-green-dark);
+  border-right:8px solid var(--gg-green-dark);
+  background:#334f3a;
+  gap:1px;
+}
+.gaming-now-strip a{
+  min-height:105px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  color:inherit;
+  text-decoration:none;
+  background:
+    linear-gradient(145deg,rgba(104,128,100,.04),transparent 50%),
+    #090c09;
+}
+.gaming-now-strip a:hover{background:#101510}
+.gaming-now-strip span{
+  color:#a1535d;
+  font:900 6px/1 system-ui,sans-serif;
+  letter-spacing:.13em;
+}
+.gaming-now-strip strong{
+  margin-top:8px;
+  color:#d8ceb5 !important;
+  font:500 19px/1 Georgia,serif !important;
+}
+.gaming-now-strip small{
+  margin-top:6px;
+  color:#667165 !important;
+  font:900 6px/1.2 system-ui,sans-serif !important;
+  letter-spacing:.08em;
+}
+
+/* Main dashboard becomes one framed publication field. */
+.gaming-dashboard{
+  width:min(1240px,calc(100% - 28px)) !important;
+  margin:0 auto !important;
+  padding:0 8px 8px !important;
+  grid-template-columns:minmax(0,1fr) 320px !important;
+  gap:10px !important;
+  border:8px solid var(--gg-green-dark) !important;
+  border-top-width:0 !important;
+  background:#334f3a !important;
+  box-shadow:
+    0 0 0 1px var(--gg-green-hi),
+    0 0 0 4px #08100a,
+    0 24px 44px rgba(0,0,0,.54) !important;
+}
+
+.gaming-dashboard__main{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:10px !important;
+}
+
+/* Realm cards become large magazine features. */
+.gaming-realm-card{
+  border:1px solid #324136 !important;
+  background:#090c09 !important;
+  box-shadow:0 9px 15px rgba(0,0,0,.28) !important;
+}
+.gaming-realm-card>header{
+  min-height:54px !important;
+  padding:12px 15px !important;
+  border-bottom:1px solid #4e1720 !important;
+  background:
+    linear-gradient(90deg,#3f1018,#651923 50%,#321015) !important;
+}
+.gaming-realm-card>header h2{
+  margin:4px 0 0 !important;
+  color:#e0d5bc !important;
+  font:500 30px/.95 Georgia,serif !important;
+}
+.gaming-live-pill{
+  border-color:#4b644d !important;
+  background:#0b100c !important;
+  color:#93a691 !important;
+}
+
+.gaming-realm-card__body{
+  grid-template-columns:minmax(270px,.74fr) minmax(0,1.26fr) !important;
+  min-height:275px !important;
+}
+.gaming-realm-art{
+  border-right:1px solid #28342b !important;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(112,40,59,.34),transparent 28%),
+    linear-gradient(145deg,#170b10,#080a08 68%) !important;
+}
+.gaming-realm-art b{
+  color:#713348 !important;
+  font-size:104px !important;
+}
+.gaming-realm-art:after{
+  border-color:rgba(213,222,198,.10) !important;
+}
+.gaming-realm-copy{
+  padding:28px 30px !important;
+}
+.gaming-realm-copy>p{
+  color:#989084 !important;
+  font:400 13px/1.64 Georgia,serif !important;
+}
+.gaming-mini-grid{
+  gap:6px !important;
+  margin:18px 0 !important;
+}
+.gaming-mini-grid span{
+  min-height:52px !important;
+  border-color:#26342a !important;
+  background:#080a08 !important;
+}
+.gaming-mini-grid b{
+  color:#c9c1a9 !important;
+}
+
+/* Mid-page magazine cards make Gaming feel populated even between releases. */
+.gaming-magazine-row{
+  display:grid;
+  grid-template-columns:1.15fr .925fr .925fr;
+  gap:8px;
+}
+.gaming-magazine-card{
+  min-height:185px;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  border:1px solid #304035;
+  background:#090c09;
+  color:inherit;
+  text-decoration:none;
+  overflow:hidden;
+  position:relative;
+}
+.gaming-magazine-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(145deg,rgba(255,255,255,.018),transparent 45%);
+}
+.gaming-magazine-card--tv{
+  background:
+    radial-gradient(circle at 80% 18%,rgba(95,34,48,.28),transparent 28%),
+    linear-gradient(145deg,#1d0c12,#090b09 68%);
+}
+.gaming-magazine-card--desk{
+  background:
+    radial-gradient(circle at 78% 16%,rgba(100,123,94,.14),transparent 28%),
+    #0a0d0a;
+}
+.gaming-magazine-card--retro{
+  background:
+    radial-gradient(circle at 82% 15%,rgba(151,117,55,.12),transparent 30%),
+    #0a0c0a;
+}
+.gaming-magazine-card>span{
+  color:#a5555e;
+  font:900 6px/1 system-ui,sans-serif;
+  letter-spacing:.14em;
+}
+.gaming-magazine-card>strong{
+  display:block;
+  margin:8px 0 7px;
+  color:#d8ceb5 !important;
+  font:500 25px/.95 Georgia,serif !important;
+}
+.gaming-magazine-card>p{
+  margin:0 !important;
+  max-width:500px;
+  color:#80796d !important;
+  font:400 12px/1.55 Georgia,serif !important;
+}
+.gaming-magazine-card>b{
+  margin-top:16px;
+  color:#94a492 !important;
+  font:900 7px/1 system-ui,sans-serif !important;
+  letter-spacing:.08em;
+}
+
+/* Events, records, collections — sharpen but stop shouting. */
+.gaming-events,
+.gaming-records,
+.gaming-collections{
+  border:1px solid #304035 !important;
+  background:#090c09 !important;
+}
+.gaming-events>header,
+.gaming-records>header,
+.gaming-collections>header{
+  padding:20px 18px 12px !important;
+}
+.gaming-events h2,
+.gaming-records h2,
+.gaming-collections h2{
+  color:#d8ceb5 !important;
+  font:500 31px/.95 Georgia,serif !important;
+}
+.gaming-event,
+.gaming-record-grid article,
+.gaming-collection-grid article{
+  border-color:#28342b !important;
+  background:#080b08 !important;
+}
+
+/* Realm wire matches the publication rather than feeling like a separate purple app. */
+.realm-wire,
+.gaming-wire{
+  border-color:#344639 !important;
+  background:
+    radial-gradient(circle at 90% 0,rgba(96,122,91,.08),transparent 28%),
+    linear-gradient(160deg,#0b0e0b,#070907 68%) !important;
+}
+.realm-wire__head,
+.gaming-wire>header{
+  border-bottom-color:#28362c !important;
+  background:#080b08 !important;
+}
+.realm-wire__brand strong,
+.gaming-wire h2{
+  color:#d4c9b3 !important;
+}
+.realm-wire__brand span,
+.gaming-wire>header span:first-child{
+  color:#71816f !important;
+}
+.realm-wire__filters,
+.realm-wire__ticker{
+  border-color:#253129 !important;
+}
+.realm-wire__composer{
+  border-color:#2d3b30 !important;
+  background:#080b08 !important;
+}
+.realm-wire__composer input{
+  border-color:#314137 !important;
+  background:#050705 !important;
+}
+.realm-wire__composer button{
+  border-color:#465a48 !important;
+  background:#0d130e !important;
+  color:#a5b4a2 !important;
+}
+
+/* Keep the boss strip dramatic, but harmonize it with the new room. */
+.dragon-world-boss{
+  width:min(1240px,calc(100% - 28px)) !important;
+  margin:0 auto !important;
+  border-left:8px solid var(--gg-green-dark) !important;
+  border-right:8px solid var(--gg-green-dark) !important;
+  background:
+    radial-gradient(circle at 58% 0,rgba(126,23,32,.22),transparent 36%),
+    linear-gradient(90deg,#16090c,#090b09 72%) !important;
+}
+
+@media(max-width:1050px){
+  .gaming-dashboard{grid-template-columns:minmax(0,1fr) 280px !important}
+  .gaming-magazine-row{grid-template-columns:1fr 1fr}
+  .gaming-magazine-card--tv{grid-column:1/-1}
+}
+@media(max-width:800px){
+  .gaming-lobby-hero{grid-template-columns:1fr !important;padding:38px 24px !important}
+  .gaming-now-strip{grid-template-columns:1fr 1fr}
+  .gaming-dashboard{grid-template-columns:1fr !important}
+  .gaming-realm-card__body{grid-template-columns:1fr !important}
+  .gaming-magazine-row{grid-template-columns:1fr}
+  .gaming-magazine-card--tv{grid-column:auto}
+}
+@media(max-width:560px){
+  .gaming-command,
+  .gaming-lobby-hero,
+  .gaming-now-strip,
+  .gaming-dashboard,
+  .dragon-world-boss{width:calc(100% - 12px) !important}
+  .gaming-command,
+  .gaming-lobby-hero,
+  .gaming-dashboard,
+  .dragon-world-boss{border-left-width:5px !important;border-right-width:5px !important}
+  .gaming-now-strip{border-left-width:5px;border-right-width:5px}
+  .gaming-now-strip{grid-template-columns:1fr}
+  .gaming-lobby-hero h1{font-size:52px !important}
+}

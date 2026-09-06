@@ -1,0 +1,711 @@
+
+.books{
+  --ink:#070907;
+  --well:#0a0d0a;
+  --well2:#10120f;
+  --paper:#ddd2b7;
+  --cream:#eee4cd;
+  --muted:#8e8878;
+  --red:#7b1e2a;
+  --red2:#4d1019;
+  --green:#6e896d;
+  --green-hi:#d2e0ce;
+  --green-mid:#9fb59b;
+  --green-dark:#2c4333;
+  --gold:#d4b94f;
+  --blue:#233ba4;
+  background:
+    radial-gradient(circle at 16% 8%,rgba(123,30,42,.16),transparent 26%),
+    linear-gradient(180deg,#08090a,#050606 72%);
+  color:var(--paper);
+  min-height:100vh;
+  padding-bottom:80px;
+}
+
+.books a{transition:filter .18s ease,border-color .18s ease,background .18s ease,transform .18s ease}
+
+.books-hero{
+  width:min(1240px,calc(100% - 28px));
+  min-height:500px;
+  margin:28px auto 0;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 310px;
+  align-items:center;
+  gap:52px;
+  padding:58px 62px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(107,25,36,.20),transparent 38%),
+    radial-gradient(circle at 70% 15%,rgba(89,112,86,.06),transparent 34%),
+    linear-gradient(145deg,#0d0d0d,#080908 62%,#050605);
+  border:12px solid var(--green-dark);
+  box-shadow:
+    0 0 0 2px var(--green-hi),
+    0 0 0 5px #08100a,
+    0 24px 42px rgba(0,0,0,.62);
+}
+
+.books-hero:after{
+  content:"DRAGON BOOKS // READING ROOM // ORIGINAL FICTION // CLUB // SHELVES";
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:12px;
+  padding-top:8px;
+  border-top:1px solid rgba(151,175,146,.18);
+  color:#586657;
+  font:900 6px/1 system-ui,sans-serif;
+  letter-spacing:.14em;
+}
+
+.books-hero__copy{max-width:820px;position:relative;z-index:2}
+
+.books-kicker,
+.books-section-head span,
+.eyebrow,
+.indie-callout>span,
+.market-grid article>span,
+.forum-copy>span{
+  font:900 8px/1 system-ui,sans-serif;
+  letter-spacing:.15em;
+  color:#a3545d;
+}
+
+.books-hero h1{
+  margin:13px 0 20px;
+  color:var(--cream);
+  font:500 clamp(66px,7.3vw,108px)/.81 Georgia,serif;
+  letter-spacing:-.06em;
+}
+.books-hero h1 em{
+  display:inline-block;
+  font-weight:400;
+  color:#a86d6e;
+}
+
+.books-hero p{
+  max-width:735px;
+  margin:0;
+  color:#9a9181;
+  font:400 16px/1.72 Georgia,serif;
+}
+
+.books-hero__actions{display:flex;gap:9px;margin-top:30px}
+.books-hero__actions a,
+.books-button{
+  padding:12px 16px;
+  border:1px solid #65404a;
+  background:#35151b;
+  color:#dfd4bb;
+  text-decoration:none;
+  font:900 7px/1 system-ui,sans-serif;
+  letter-spacing:.11em;
+}
+.books-hero__actions a:hover,.books-button:hover{filter:brightness(1.18)}
+.books-hero__actions .quiet{background:#0a0d0a;border-color:#344337;color:#aeb9a9}
+
+.books-hero__cabinet{
+  position:relative;
+  min-height:290px;
+  display:grid;
+  grid-template-rows:1fr auto;
+  gap:12px;
+  padding:18px;
+  border:1px solid #334437;
+  background:
+    linear-gradient(145deg,rgba(128,151,124,.05),transparent 45%),
+    #070907;
+  box-shadow:
+    inset 0 0 0 4px #050705,
+    inset 0 0 0 5px rgba(179,204,174,.08),
+    0 14px 24px rgba(0,0,0,.38);
+}
+.books-cabinet__seal{
+  margin:auto;
+  width:174px;height:174px;
+  border:1px solid rgba(214,185,79,.33);
+  border-radius:50%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  transform:rotate(-5deg);
+  color:#a58b44;
+  box-shadow:inset 0 0 0 7px #070907,inset 0 0 0 8px rgba(214,185,79,.12);
+}
+.books-cabinet__seal strong{font:500 54px/.85 Georgia,serif}
+.books-cabinet__seal span{margin-top:10px;font:900 7px/1 system-ui,sans-serif;letter-spacing:.15em}
+.books-cabinet__cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+}
+.books-cabinet__cards span{
+  padding:7px 8px;
+  border:1px solid #273329;
+  color:#657164;
+  background:#0a0d0a;
+  font:900 6px/1 system-ui,sans-serif;
+  letter-spacing:.09em;
+}
+
+.books-subnav{
+  position:sticky;
+  top:0;
+  z-index:20;
+  width:min(1240px,calc(100% - 28px));
+  margin:0 auto;
+  display:flex;
+  justify-content:center;
+  gap:28px;
+  overflow:auto;
+  padding:14px 18px;
+  border-left:12px solid var(--green-dark);
+  border-right:12px solid var(--green-dark);
+  border-bottom:1px solid #26342b;
+  background:rgba(7,9,7,.96);
+  backdrop-filter:blur(12px);
+}
+.books-subnav a{
+  white-space:nowrap;
+  color:#7f887c;
+  text-decoration:none;
+  font:900 7px/1 system-ui,sans-serif;
+  letter-spacing:.12em;
+}
+.books-subnav a:hover{color:#c8d4c4}
+
+.books>section:not(.books-hero){
+  width:min(1240px,calc(100% - 28px));
+  margin:0 auto;
+}
+
+.books-grim,
+.books-club,
+.books-shelf,
+.books-market,
+.books-forum{
+  position:relative;
+  padding:60px 54px;
+  border-left:12px solid var(--green-dark);
+  border-right:12px solid var(--green-dark);
+  border-bottom:12px solid var(--green-dark);
+  background:
+    radial-gradient(circle at 25% 0%,rgba(104,130,100,.035),transparent 30%),
+    #090c09;
+  box-shadow:
+    inset 1px 0 rgba(211,226,207,.20),
+    inset -1px 0 rgba(211,226,207,.11);
+}
+
+.books-grim{padding-top:52px;background:linear-gradient(180deg,#0b0e0b,#080a08)}
+.books-club{background:linear-gradient(120deg,#0c0f0c,#090b09)}
+.books-shelf{background:#090b09}
+.books-shelf--indie{background:linear-gradient(180deg,#0a0c0a,#100b0d)}
+.books-market{background:linear-gradient(180deg,#090b09,#070907)}
+.books-forum{background:linear-gradient(120deg,#0b0e0b,#0a090a)}
+
+.books-section-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(300px,480px);
+  gap:40px;
+  align-items:end;
+  margin-bottom:30px;
+  padding-bottom:20px;
+  border-bottom:1px solid #273329;
+}
+.books-section-head h2{
+  margin:7px 0 0;
+  color:#ddd3b8;
+  font:500 clamp(38px,4.3vw,58px)/.95 Georgia,serif;
+  letter-spacing:-.035em;
+}
+.books-section-head p{
+  margin:0;
+  color:#817c6d;
+  font:400 13px/1.62 Georgia,serif;
+}
+
+/* Grim Sagas becomes the high-impact fiction chamber. */
+.books-grim__gate{
+  display:grid;
+  grid-template-columns:92px minmax(0,1fr) 180px;
+  gap:22px;
+  align-items:center;
+  min-height:170px;
+  padding:20px 22px;
+  overflow:hidden;
+  text-decoration:none;
+  color:#fff;
+  border:1px solid #52654f;
+  background:
+    radial-gradient(circle at 82% 8%,rgba(108,127,255,.20),transparent 30%),
+    repeating-linear-gradient(112deg,transparent 0 24px,rgba(255,255,255,.018) 24px 25px),
+    linear-gradient(105deg,#141a45 0%,#223797 55%,#2a43b6 100%);
+  box-shadow:
+    inset 0 0 0 4px rgba(5,8,23,.70),
+    0 12px 20px rgba(0,0,0,.36);
+}
+.books-grim__gate:hover{filter:brightness(1.08)}
+.books-grim__stamp{
+  width:70px;height:92px;
+  display:grid;place-items:center;
+  border:1px solid rgba(235,239,255,.26);
+  background:#090c1e;
+  color:#fff04a;
+  font:900 27px/1 Georgia,serif;
+  box-shadow:inset 0 0 0 4px rgba(255,255,255,.025);
+}
+.books-grim__gate>div:nth-child(2)>span{
+  display:block;
+  color:#b7c1e8;
+  font:900 7px/1 system-ui,sans-serif;
+  letter-spacing:.14em;
+}
+.books-grim__gate strong{
+  display:block;
+  margin-top:6px;
+  color:#fff04a;
+  font:900 clamp(28px,3.4vw,46px)/.92 Georgia,serif;
+  letter-spacing:-.035em;
+}
+.books-grim__gate p{
+  max-width:680px;
+  margin:9px 0 0;
+  color:#e3e3d8;
+  font:700 12px/1.52 Georgia,serif;
+}
+.books-grim__gate>b{
+  padding:18px;
+  border-left:1px solid rgba(235,239,255,.17);
+  color:#fff6bd;
+  font:900 10px/1.2 Georgia,serif;
+  text-align:right;
+}
+
+/* Book club */
+.club-feature{
+  display:grid;
+  grid-template-columns:270px minmax(0,1fr);
+  gap:46px;
+  align-items:center;
+  max-width:1080px;
+}
+.book-cover{
+  position:relative;
+  width:190px;
+  aspect-ratio:.66;
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  border:1px solid rgba(255,255,255,.11);
+  box-shadow:0 24px 50px rgba(0,0,0,.4),inset -12px 0 24px rgba(0,0,0,.2);
+  overflow:hidden;
+}
+.book-cover:before{
+  content:"";
+  position:absolute;
+  inset:7px;
+  border:1px solid rgba(230,214,191,.18);
+  pointer-events:none;
+}
+.book-cover span,.book-cover small{position:relative;z-index:1;font:900 7px/1.3 system-ui,sans-serif;letter-spacing:.12em}
+.book-cover strong{position:relative;z-index:1;font:500 24px/.95 Georgia,serif}
+.book-cover--hero{width:230px}
+.forest{background:linear-gradient(145deg,#273329,#111714);color:#ddd0b8}
+.sea{background:linear-gradient(145deg,#263a42,#111a1e);color:#d4d5c8}
+.violet{background:linear-gradient(145deg,#392b3e,#171219);color:#dfd0d6}
+.ivory{background:linear-gradient(145deg,#d4c7aa,#887d68);color:#211d19}
+.ash{background:linear-gradient(145deg,#343536,#151617);color:#d7d0c7}
+.rust{background:linear-gradient(145deg,#713e34,#241614);color:#e2c6ae}
+.ink{background:linear-gradient(145deg,#1e2633,#090c12);color:#ccd4dd}
+.gold{background:linear-gradient(145deg,#806b36,#2b2514);color:#eee1b7}
+.moss{background:linear-gradient(145deg,#3f4a30,#171c12);color:#d5d9bc}
+
+.club-feature__body{max-width:680px}
+.club-feature__body h3{
+  margin:9px 0 13px;
+  font:500 46px/1 Georgia,serif;
+  color:#e1d4ca;
+}
+.club-feature__body p{
+  color:#8b8374;
+  font:400 14px/1.68 Georgia,serif;
+}
+.club-stats{display:flex;gap:24px;margin:24px 0}
+.club-stats span{
+  display:grid;gap:4px;
+  color:#716d62;
+  font:900 7px/1 system-ui,sans-serif;
+  letter-spacing:.09em;
+}
+.club-stats b{color:#c9b9ae;font:500 18px Georgia,serif}
+
+/* Shelves */
+.book-carousel{
+  display:flex;
+  gap:24px;
+  overflow-x:auto;
+  padding:10px 4px 28px;
+  scroll-snap-type:x proximity;
+  scrollbar-color:#5d4545 #0b0c0d;
+}
+.book-card{flex:0 0 190px;scroll-snap-align:start}
+.book-card .book-cover{transition:transform .22s ease}
+.book-card:hover .book-cover{transform:translateY(-7px) rotate(-.5deg)}
+.book-card__meta{display:grid;gap:4px;margin-top:12px}
+.book-card__meta b{color:#cfc0b7;font:500 13px/1.2 Georgia,serif}
+.book-card__meta span{color:#766e69;font:10px/1.3 Georgia,serif}
+.book-card__meta small{margin-top:4px;color:#8f595b;font:900 7px/1 system-ui,sans-serif;letter-spacing:.08em}
+
+.indie-callout{
+  margin-top:30px;
+  padding:24px;
+  border:1px solid #3a2b2f;
+  display:grid;
+  grid-template-columns:170px 1fr 1.3fr;
+  gap:25px;
+  align-items:center;
+  background:#0b0c0b;
+}
+.indie-callout strong{font:500 22px Georgia,serif;color:#d9cbc2}
+.indie-callout p{margin:0;color:#7e766a;font:400 12px/1.6 Georgia,serif}
+
+/* Used books */
+.market-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.market-grid article{
+  min-height:235px;
+  padding:24px;
+  border:1px solid #273329;
+  background:
+    linear-gradient(145deg,rgba(106,129,102,.04),transparent 45%),
+    #0b0d0b;
+}
+.market-grid h3{margin:10px 0;font:500 27px/1.03 Georgia,serif;color:#d5c7bd}
+.market-grid p{color:#7d776b;font:400 12px/1.62 Georgia,serif}
+.market-grid button{
+  margin-top:25px;padding:10px 12px;
+  border:1px solid #273329;background:transparent;
+  color:#656b62;font:900 7px/1 system-ui,sans-serif;letter-spacing:.08em;
+}
+
+/* Forum */
+.books-forum{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px}
+.forum-copy h2{margin:8px 0 14px;color:#dfd1c7;font:500 46px/1 Georgia,serif}
+.forum-copy p,.forum-note{color:#7d766a;font:400 12px/1.7 Georgia,serif}
+.forum-board{border-top:1px solid #273329}
+.forum-board div{
+  display:grid;grid-template-columns:100px 1fr auto;gap:15px;align-items:center;
+  padding:18px 0;border-bottom:1px solid #202b23;
+}
+.forum-board span,.forum-board small{color:#76575a;font:900 7px/1 system-ui,sans-serif;letter-spacing:.09em}
+.forum-board strong{font:500 17px Georgia,serif;color:#cdbfb6}
+.forum-note{grid-column:2}
+
+@media(max-width:900px){
+  .books-hero{grid-template-columns:1fr;min-height:auto;padding:46px 34px}
+  .books-hero__cabinet{display:none}
+  .books-section-head,.club-feature,.books-forum{grid-template-columns:1fr}
+  .club-feature{gap:25px}
+  .market-grid{grid-template-columns:1fr}
+  .indie-callout{grid-template-columns:1fr}
+  .forum-note{grid-column:auto}
+  .books-subnav{justify-content:flex-start}
+  .books-grim__gate{grid-template-columns:70px 1fr}
+  .books-grim__gate>b{grid-column:2;border-left:0;padding:5px 0;text-align:left}
+}
+
+@media(max-width:560px){
+  .books-hero,
+  .books>section:not(.books-hero),
+  .books-subnav{width:calc(100% - 12px)}
+  .books-hero{border-width:6px;padding:38px 20px}
+  .books-hero h1{font-size:58px}
+  .books-grim,.books-club,.books-shelf,.books-market,.books-forum{
+    border-left-width:6px;border-right-width:6px;border-bottom-width:6px;
+    padding:44px 20px;
+  }
+  .books-section-head{display:block}
+  .books-section-head p{margin-top:14px}
+  .books-grim__gate{grid-template-columns:1fr;padding:18px}
+  .books-grim__stamp{width:58px;height:72px}
+  .books-grim__gate>b{grid-column:1}
+  .book-card{flex-basis:160px}
+  .book-card .book-cover{width:160px}
+  .club-feature__book .book-cover{width:220px}
+  .club-stats{gap:13px;flex-wrap:wrap}
+  .forum-board div{grid-template-columns:1fr;gap:6px}
+}
+
+
+/* =========================================================
+   PASS 17 — DRAGON BOOKS / LIVED-IN READING ROOM
+   Less repeated slab. More editorial rhythm, objects, shelves.
+   ========================================================= */
+
+.books{
+  background:
+    radial-gradient(circle at 10% 7%,rgba(107,25,35,.17),transparent 24%),
+    radial-gradient(circle at 86% 23%,rgba(57,79,62,.08),transparent 26%),
+    linear-gradient(180deg,#070808 0,#050606 100%) !important;
+}
+
+.books-hero{
+  min-height:440px !important;
+  grid-template-columns:minmax(0,1fr) 360px !important;
+  gap:34px !important;
+  padding:48px 52px 54px !important;
+  border-width:8px !important;
+  border-color:#334f3a !important;
+  box-shadow:
+    0 0 0 1px #c9d8c4,
+    0 0 0 4px #0b110d,
+    0 22px 42px rgba(0,0,0,.62) !important;
+}
+
+.books-hero h1{
+  font-size:clamp(60px,6.4vw,94px) !important;
+  line-height:.83 !important;
+}
+
+.books-hero p{
+  max-width:690px !important;
+  font-size:15px !important;
+}
+
+.books-hero__objects{
+  position:relative;
+  min-height:300px;
+  align-self:center;
+  perspective:900px;
+}
+
+.books-object{
+  position:absolute;
+  width:138px;
+  height:196px;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  border:1px solid rgba(238,231,205,.22);
+  box-shadow:
+    inset 0 0 0 5px rgba(0,0,0,.20),
+    0 18px 28px rgba(0,0,0,.48);
+}
+.books-object:after{
+  content:"";
+  position:absolute;
+  inset:7px;
+  border:1px solid rgba(237,230,205,.12);
+}
+.books-object span,
+.books-object strong{
+  position:relative;
+  z-index:1;
+}
+.books-object span{
+  font:900 7px/1.2 system-ui,sans-serif;
+  letter-spacing:.12em;
+}
+.books-object strong{
+  font:500 19px/.92 Georgia,serif;
+}
+.books-object--red{left:8px;top:48px;transform:rotate(-8deg);background:linear-gradient(145deg,#70343a,#211012);color:#e7c7b7}
+.books-object--green{left:92px;top:20px;transform:rotate(3deg);background:linear-gradient(145deg,#314537,#101713);color:#d8d4b7}
+.books-object--blue{right:26px;top:52px;transform:rotate(8deg);background:linear-gradient(145deg,#253a66,#0d1321);color:#e7dc9c}
+.books-object--paper{right:94px;top:104px;transform:rotate(-3deg);background:linear-gradient(145deg,#c6b896,#756c59);color:#211d19}
+.books-object-seal{
+  position:absolute;
+  right:4px;
+  bottom:0;
+  width:94px;height:94px;
+  border:1px solid rgba(213,184,78,.38);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  align-content:center;
+  gap:4px;
+  transform:rotate(8deg);
+  background:#090a09;
+  box-shadow:inset 0 0 0 5px #090a09,inset 0 0 0 6px rgba(213,184,78,.11),0 10px 18px rgba(0,0,0,.4);
+}
+.books-object-seal b{color:#bca252;font:500 32px/.9 Georgia,serif}
+.books-object-seal span{color:#77683d;font:900 5px/1 system-ui,sans-serif;letter-spacing:.11em}
+
+/* One structural spine instead of every section looking like a framed box. */
+.books-subnav{
+  border-left:8px solid #334f3a !important;
+  border-right:8px solid #334f3a !important;
+}
+
+.books-grim,
+.books-club,
+.books-shelf,
+.books-market,
+.books-forum{
+  padding:48px 46px !important;
+  border-left:8px solid #334f3a !important;
+  border-right:8px solid #334f3a !important;
+  border-bottom:0 !important;
+  box-shadow:
+    inset 1px 0 rgba(211,226,207,.11),
+    inset -1px 0 rgba(211,226,207,.07) !important;
+}
+
+.books-grim:after,
+.books-club:after,
+.books-shelf:after,
+.books-market:after{
+  content:"";
+  display:block;
+  height:8px;
+  margin:48px -46px -48px;
+  background:
+    linear-gradient(180deg,#d7e2d2 0 1px,#9db39a 1px 3px,#536d58 3px 5px,#263a2d 5px 8px);
+  box-shadow:0 5px 8px rgba(0,0,0,.42);
+}
+
+.books-forum{
+  border-bottom:8px solid #334f3a !important;
+}
+
+.books-section-head{
+  grid-template-columns:minmax(0,1fr) minmax(260px,390px) !important;
+  margin-bottom:26px !important;
+  padding-bottom:16px !important;
+}
+
+.books-section-head h2{
+  font-size:clamp(36px,3.8vw,52px) !important;
+}
+
+/* Grim Sagas is now a real magazine ad / portal. */
+.books-grim__gate{
+  grid-template-columns:240px minmax(0,1fr) 170px !important;
+  min-height:220px !important;
+  padding:0 !important;
+  border-color:#445947 !important;
+}
+
+.books-grim__art{
+  position:relative;
+  height:100%;
+  min-height:220px;
+  overflow:hidden;
+  background:#05060b;
+}
+.books-grim__art:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent 54%,rgba(28,43,107,.78));
+}
+.books-grim__art img{
+  width:100%;height:100%;min-height:220px;
+  object-fit:cover;
+  display:block;
+  filter:saturate(.92) contrast(1.05) brightness(.78);
+}
+.books-grim__art span{
+  position:absolute;
+  z-index:2;
+  left:14px;bottom:13px;
+  width:42px;height:52px;
+  display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.25);
+  background:#0c1028;
+  color:#fff04d;
+  font:900 19px/1 Georgia,serif;
+}
+
+.books-grim__copy{padding:26px 24px}
+.books-grim__copy>span{
+  color:#b7c1e8;
+  font:900 7px/1 system-ui,sans-serif;
+  letter-spacing:.14em;
+}
+.books-grim__copy>strong{
+  display:block;
+  margin:6px 0 9px;
+  color:#fff04a;
+  font:900 clamp(34px,4vw,54px)/.88 Georgia,serif;
+  letter-spacing:-.04em;
+}
+.books-grim__copy p{
+  max-width:620px;
+  margin:0;
+  color:#e3e1d6;
+  font:700 12px/1.55 Georgia,serif;
+}
+.books-grim__copy small{
+  display:block;
+  margin-top:13px;
+  color:#aeb5d2;
+  font:900 6px/1.2 system-ui,sans-serif;
+  letter-spacing:.09em;
+}
+
+.books-grim__gate>b{
+  align-self:stretch;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px !important;
+  background:rgba(6,9,25,.27);
+}
+
+/* Club table gets tighter and more editorial. */
+.club-feature{
+  grid-template-columns:230px minmax(0,1fr) !important;
+  gap:34px !important;
+}
+.book-cover--hero{width:205px !important}
+.club-feature__body h3{font-size:40px !important}
+.club-feature__body p{font-size:13px !important}
+.club-stats{margin:18px 0 !important}
+
+/* Shelves feel physical, not like UI cards. */
+.book-carousel{
+  gap:18px !important;
+  padding-bottom:22px !important;
+}
+.book-card{flex-basis:170px !important}
+.book-card .book-cover{
+  width:170px !important;
+  box-shadow:0 16px 24px rgba(0,0,0,.35),inset -10px 0 18px rgba(0,0,0,.18) !important;
+}
+.book-card:nth-child(even){transform:translateY(8px)}
+.book-card:nth-child(3n){transform:translateY(-4px) rotate(.3deg)}
+.book-card__meta b{font-size:12px !important}
+
+.indie-callout{
+  margin-top:22px !important;
+  padding:18px 20px !important;
+}
+
+.market-grid article{
+  min-height:205px !important;
+  background:
+    linear-gradient(145deg,rgba(104,128,100,.05),transparent 46%),
+    #0a0d0a !important;
+}
+
+.books-forum{
+  padding-top:52px !important;
+  padding-bottom:54px !important;
+}
+
+@media(max-width:900px){
+  .books-hero{grid-template-columns:1fr !important}
+  .books-hero__objects{display:none}
+  .books-grim__gate{grid-template-columns:170px minmax(0,1fr) !important}
+  .books-grim__gate>b{grid-column:1/-1;min-height:46px}
+}
+@media(max-width:600px){
+  .books-grim__gate{grid-template-columns:1fr !important}
+  .books-grim__art{min-height:190px}
+  .books-grim__copy{padding:20px}
+}

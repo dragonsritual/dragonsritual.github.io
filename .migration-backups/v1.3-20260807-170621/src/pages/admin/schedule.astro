@@ -1,0 +1,214 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="Schedule — DragonsRitual">
+  <div id="schedule-auth-loading" class="admin-auth-loading">
+    <span>DRAGONSRITUAL CONTROL ROOM</span>
+    <strong>Loading schedule…</strong>
+  </div>
+
+  <div id="schedule-denied" class="admin-login-card" hidden>
+    <span class="admin-auth-kicker">ACCESS DENIED</span>
+    <h1>Owner access required.</h1>
+    <a class="admin-public-link" href="/admin/">← Return to Control Room</a>
+  </div>
+
+  <div id="schedule-app" class="admin-shell" hidden>
+    <aside class="admin-rail">
+      <a class="admin-brand" href="/admin/">
+        <span class="admin-brand__mark">DR</span>
+        <span>
+          <strong>CONTROL ROOM</strong>
+          <small>DRAGONSRITUAL</small>
+        </span>
+      </a>
+
+      <div class="admin-rail__label">ADMIN</div>
+
+      <nav class="admin-nav">
+        <a href="/admin/"><span>01</span><strong>Overview</strong></a>
+        <a href="/admin/games/"><span>02</span><strong>Games</strong><em>LIVE</em></a>
+        <a href="/admin/sessions/"><span>03</span><strong>Sessions</strong><em>LIVE</em></a>
+        <a class="is-active" href="/admin/schedule/"><span>04</span><strong>Schedule</strong><em>LIVE</em></a>
+        <button type="button" disabled><span>05</span><strong>Media</strong><em>LATER</em></button>
+        <button type="button" disabled><span>06</span><strong>Newsroom</strong><em>LATER</em></button>
+      </nav>
+
+      <div class="admin-rail__bottom">
+        <button id="schedule-logout" class="admin-logout" type="button">Sign Out</button>
+        <a href="/">← Public Gaming</a>
+        <small>SCHEDULE v1.2</small>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div>
+          <span>DRAGONSRITUAL / LIVE SCHEDULE</span>
+          <h1>Schedule</h1>
+        </div>
+
+        <a class="admin-primary-button admin-button-link" href="/admin/sessions/">
+          + Create Session
+        </a>
+      </header>
+
+      <section class="admin-warning admin-warning--secure">
+        <strong>PUBLIC FEED ACTIVE</strong>
+        <p>
+          Scheduled session records now feed the public Gaming page automatically.
+          Edit the underlying session in the Session Editor.
+        </p>
+      </section>
+
+      <section class="schedule-admin-grid">
+        <article class="admin-panel">
+          <header class="admin-panel__header">
+            <div>
+              <span>UPCOMING</span>
+              <h2>Scheduled Sessions</h2>
+            </div>
+            <span id="schedule-count" class="admin-readonly">0</span>
+          </header>
+
+          <div id="schedule-list" class="schedule-admin-list">
+            <div class="game-admin-loading">Loading scheduled sessions…</div>
+          </div>
+        </article>
+
+        <article class="admin-panel">
+          <header class="admin-panel__header">
+            <div>
+              <span>STAT SAFETY</span>
+              <h2>Session Aggregation</h2>
+            </div>
+          </header>
+
+          <div class="aggregation-explainer">
+            <p>
+              Existing games keep their current manual totals until you explicitly
+              enable session-driven statistics for that game.
+            </p>
+
+            <p>
+              When enabled, completed sessions become authoritative for:
+              session count, total hours, latest progress, and last-played date.
+            </p>
+
+            <a href="/admin/games/">Manage game settings →</a>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    import { requireAdmin } from "../../services/auth/adminGuard";
+
+    const loading = document.querySelector("#schedule-auth-loading");
+    const denied = document.querySelector("#schedule-denied");
+    const app = document.querySelector("#schedule-app");
+    const list = document.querySelector("#schedule-list");
+    const count = document.querySelector("#schedule-count");
+
+    let supabase;
+
+    function formatDate(value) {
+      if (!value) return "TBD";
+
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "TBD";
+
+      return new Intl.DateTimeFormat("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    async function loadSchedule() {
+      const [{ data: games, error: gameError }, { data: sessions, error: sessionError }] =
+        await Promise.all([
+          supabase.from("games").select("id,title"),
+          supabase
+            .from("sessions")
+            .select("id,game_id,title,status,scheduled_for,result")
+            .in("status", ["scheduled", "live"])
+            .order("scheduled_for", { ascending: true })
+        ]);
+
+      if (gameError) throw gameError;
+      if (sessionError) throw sessionError;
+
+      const gameMap = new Map((games ?? []).map((game) => [game.id, game.title]));
+      const rows = sessions ?? [];
+
+      if (count) count.textContent = String(rows.length);
+      if (!list) return;
+
+      list.innerHTML = "";
+
+      if (rows.length === 0) {
+        list.innerHTML = `<div class="game-admin-loading">No upcoming sessions scheduled.</div>`;
+        return;
+      }
+
+      for (const session of rows) {
+        const item = document.createElement("a");
+        item.className = "schedule-admin-item";
+        item.href = "/admin/sessions/";
+
+        const date = document.createElement("time");
+        date.textContent = formatDate(session.scheduled_for);
+
+        const body = document.createElement("span");
+        const strong = document.createElement("strong");
+        strong.textContent = session.title;
+
+        const small = document.createElement("small");
+        small.textContent =
+          `${gameMap.get(session.game_id) ?? "Unknown Game"} · ${session.result ?? "Scheduled play"}`;
+
+        body.append(strong, small);
+
+        const status = document.createElement("em");
+        status.textContent = session.status.toUpperCase();
+
+        item.append(date, body, status);
+        list.appendChild(item);
+      }
+    }
+
+    async function boot() {
+      const auth = await requireAdmin();
+      supabase = auth.supabase;
+
+      loading?.setAttribute("hidden", "");
+
+      if (!auth.ok) {
+        denied?.removeAttribute("hidden");
+        return;
+      }
+
+      app?.removeAttribute("hidden");
+      await loadSchedule();
+    }
+
+    document
+      .querySelector("#schedule-logout")
+      ?.addEventListener("click", async () => {
+        if (!supabase) return;
+        await supabase.auth.signOut();
+        location.href = "/admin/";
+      });
+
+    boot().catch((error) => {
+      console.error(error);
+      loading?.setAttribute("hidden", "");
+      denied?.removeAttribute("hidden");
+    });
+  </script>
+</AdminLayout>

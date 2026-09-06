@@ -1,0 +1,96 @@
+﻿---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import LaunchHeader from '../components/LaunchHeader.astro';
+import WriterFeature from '../components/WriterFeature.astro';
+import { featuredWriting } from '../data/featuredWriting.js';
+---
+<SiteLayout
+  title="Today â€” DragonsRitual"
+  description="Dragon Radio, fiction, broadcasts and current releases."
+>
+  <LaunchHeader />
+
+  <main class="today-shell">
+    <section class="today-board">
+      <div class="today-broadcast">
+        <div class="dragon-stamp" aria-label="Dragon">DRAGON</div>
+
+        <div class="today-broadcast__status">
+          <span class="launch-live-dot"></span>
+          <span>ON AIR</span>
+        </div>
+
+        <h1>Dragon Radio</h1>
+        <p class="today-deck">Independent music, podcasts and interviews.</p>
+
+        <div class="today-now">
+          <span class="today-now__label">NOW PLAYING</span>
+          <strong id="today-track">LIVE SIGNAL</strong>
+          <span id="today-artist">Independent music</span>
+        </div>
+
+        <a class="primary-action today-tune" href="/radio/">
+          <span class="launch-live-dot"></span>
+          TUNE IN
+        </a>
+      </div>
+
+      <WriterFeature feature={featuredWriting} />
+    </section>
+
+    <section class="today-section today-feed" id="today">
+      <header class="section-head compact-section-head">
+        <div>
+          <p class="launch-eyebrow">TODAY</p>
+          <h2>Current.</h2>
+        </div>
+      </header>
+
+      <div class="today-feed-grid">
+        <a class="today-feed-card" href="/radio/">
+          <div>
+            <span class="today-feed-card__type">RADIO</span>
+            <strong id="feed-track">Dragon Radio</strong>
+            <small id="feed-artist">All Signal</small>
+          </div>
+          <b>LISTEN â†’</b>
+        </a>
+
+        <a class="today-feed-card" href={`/read/${featuredWriting.slug}/`}>
+          <div>
+            <span class="today-feed-card__type">FICTION</span>
+            <strong>{featuredWriting.title}</strong>
+            <small>{featuredWriting.author}</small>
+          </div>
+          <b>READ â†’</b>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="launch-footer">
+    <strong>DRAGONSRITUAL</strong>
+    <span>Â© 2026</span>
+  </footer>
+
+  <script>
+    fetch('/radio/library.json?' + Date.now())
+      .then((response) => response.ok ? response.json() : Promise.reject())
+      .then((data) => {
+        const track = (data.tracks || []).find((item) => item.src);
+        if (!track) return;
+
+        const title = track.title || 'Dragon Radio';
+        const artist = track.artist || 'Independent music';
+
+        document.querySelectorAll('#today-track, #feed-track').forEach((el) => {
+          el.textContent = title;
+        });
+
+        document.querySelectorAll('#today-artist, #feed-artist').forEach((el) => {
+          el.textContent = artist;
+        });
+      })
+      .catch(() => {});
+  </script>
+</SiteLayout>

@@ -1,4 +1,8 @@
 ---
+import ArchiveSearch from "../components/ArchiveSearch.astro";
+import MemberDock from "../components/MemberDock.astro";
+import MemberTracker from "../components/MemberTracker.astro";
+import "../styles/member-system.css";
 import "../styles/core.css";
 import "../styles/gaming.css";
 import "../styles/journal.css";
@@ -24,6 +28,17 @@ const {
   ogType = "website"
 } = Astro.props;
 
+const privateRoutePrefixes = [
+  "/admin",
+  "/creator",
+  "/writer-room",
+  "/contributor-agreement",
+  "/join",
+  "/reset-password"
+];
+const routeIsPrivate = privateRoutePrefixes.some((prefix) => Astro.url.pathname.startsWith(prefix));
+const effectiveNoIndex = noIndex || routeIsPrivate;
+
 const isPublicLaunchRoute = Astro.url.pathname === "/" || Astro.url.pathname.startsWith("/radio");
 ---
 
@@ -31,13 +46,6 @@ const isPublicLaunchRoute = Astro.url.pathname === "/" || Astro.url.pathname.sta
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <script is:inline>
-      (() => {
-        const local = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-        const radio = location.pathname === "/" || location.pathname.startsWith("/radio");
-        if (!local && !radio) location.replace("/");
-      })();
-    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
@@ -53,7 +61,7 @@ const isPublicLaunchRoute = Astro.url.pathname === "/" || Astro.url.pathname.sta
     <link rel="icon" href="/icons/dr-192.png" />
     <link rel="apple-touch-icon" href="/icons/dr-192.png" />
     <link rel="canonical" href={canonical ?? Astro.url} />
-    {noIndex && <meta name="robots" content="noindex,nofollow" />}
+    {effectiveNoIndex && <meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />}
 
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
@@ -66,11 +74,19 @@ const isPublicLaunchRoute = Astro.url.pathname === "/" || Astro.url.pathname.sta
 
     <title>{title}</title>
     <ClientRouter fallback="animate" />
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&display=swap" rel="stylesheet">
   </head>
 
   <body>
-    <div id="dragon-media-dock" class="dragon-media-dock" hidden><button type="button" data-dock-return>RETURN TO MEDIA</button><button type="button" data-dock-close aria-label="Close player">×</button><div data-dock-label>MEDIA CONTINUES HERE</div></div>
+    <div id="dragon-media-dock" class="dragon-media-dock" hidden>
+      <div class="dragon-media-dock__head"><span data-dock-label>DRAGON TV · CONTINUING</span><div><button type="button" data-dock-expand>EXPAND</button><button type="button" data-dock-return>RETURN</button><button type="button" data-dock-close aria-label="Close player">×</button></div></div>
+      <div class="dragon-media-dock__player" data-dock-player><span>VIDEO CONTINUES HERE</span></div>
+    </div>
     <slot />
+    <MemberDock />
+    <MemberTracker />
 
     {!isPublicLaunchRoute && <script is:inline src="/dragon-rail.js"></script>}
     <script is:inline>
@@ -88,5 +104,38 @@ const isPublicLaunchRoute = Astro.url.pathname === "/" || Astro.url.pathname.sta
         }
       })();
     </script>
-  </body>
+    <script is:inline>
+      (() => {
+        const dock=()=>document.getElementById('dragon-media-dock');
+        window.DragonMediaDock={
+          mount({src,title='DRAGON TV'}={}){
+            const d=dock(),host=d?.querySelector('[data-dock-player]'),label=d?.querySelector('[data-dock-label]');
+            if(!d||!host||!src)return;
+            host.innerHTML='';
+            const frame=document.createElement('iframe');
+            frame.src=src; frame.allow='autoplay; fullscreen; picture-in-picture'; frame.allowFullscreen=true; frame.title=title;
+            host.appendChild(frame);
+            if(label)label.textContent=title;
+            sessionStorage.setItem('dr-media-active','1');
+            sessionStorage.setItem('dr-media-src',src);
+            sessionStorage.setItem('dr-media-title',title);
+            d.hidden=false;
+          }
+        };
+        document.addEventListener('click',e=>{
+          if(e.target.closest('[data-dock-expand]'))dock()?.classList.toggle('is-expanded');
+        });
+        document.addEventListener('astro:page-load',()=>{
+          const d=dock(),host=d?.querySelector('[data-dock-player]');
+          const src=sessionStorage.getItem('dr-media-src'),title=sessionStorage.getItem('dr-media-title');
+          if(d&&host&&src&&sessionStorage.getItem('dr-media-active')==='1'&&!host.querySelector('iframe')){
+            window.DragonMediaDock.mount({src,title:title||'DRAGON TV'});
+          }
+        });
+      })();
+    </script>
+    <ArchiveSearch />
+  <script is:inline src="/scripts/dragon-gaming-docks.js"></script>
+</body>
 </html>
+

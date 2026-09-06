@@ -1,0 +1,42 @@
+---
+const {
+  title = "Your Ninth Spire Character",
+  compact = false
+} = Astro.props;
+---
+<section class:list={["ninth-profile-card", {"ninth-profile-card--compact":compact}]} data-ninth-profile-card>
+  <div class="ninth-profile-card__art"><span>THE NINTH SPIRE</span><b data-ninth-card-element>UNBOUND</b></div>
+  <div class="ninth-profile-card__body">
+    <small>{title}</small>
+    <h3 data-ninth-card-name>NO WIZARD YET</h3>
+    <p data-ninth-card-title>Enter The Ninth Spire to build your playable DragonsRitual character.</p>
+    <div>
+      <span>LV <b data-ninth-card-level>—</b></span>
+      <span>FLOOR <b data-ninth-card-floor>—</b></span>
+      <span>LEGACY <b data-ninth-card-legacy>—</b></span>
+    </div>
+    <a href="/gaming/ninth-spire/">BUILD YOUR CHARACTER →</a>
+  </div>
+</section>
+
+<script>
+  const KEY='dragon:ninth-spire:character';
+  const cards=document.querySelectorAll('[data-ninth-profile-card]');
+  function paint(card,c){
+    if(!c)return;
+    card.querySelector('[data-ninth-card-name]').textContent=c.name||'WIZARD';
+    card.querySelector('[data-ninth-card-title]').textContent=c.title||'Wizard of the Ninth Spire';
+    card.querySelector('[data-ninth-card-element]').textContent=(c.element||'UNBOUND').toUpperCase();
+    card.querySelector('[data-ninth-card-level]').textContent=String(c.level||1);
+    card.querySelector('[data-ninth-card-floor]').textContent=String(c.highestFloor||1);
+    card.querySelector('[data-ninth-card-legacy]').textContent=String(c.legacy||0);
+  }
+  function read(){
+    try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch{return null}
+  }
+  cards.forEach(c=>paint(c,read()));
+  window.addEventListener('dragon:ninth-spire:update',e=>cards.forEach(c=>paint(c,e.detail)));
+  window.addEventListener('storage',e=>{
+    if(e.key===KEY) cards.forEach(c=>paint(c,read()));
+  });
+</script>

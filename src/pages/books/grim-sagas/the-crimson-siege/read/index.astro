@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../../../../layouts/SiteLayout.astro";
+import LaunchHeader from "../../../../../components/LaunchHeader.astro";
+import GrimSagaReader from "../../../../../components/GrimSagaReader.astro";
+import { grimSagasFull } from "../../../../../data/grimSagasFull.js";
+import "../../../../../styles/grim-sagas.css";
+
+const saga = grimSagasFull["crimson-siege"];
+---
+
+<SiteLayout
+  title="Read The Crimson Siege — Grim Sagas — DragonsRitual"
+  description={saga.subtitle}
+  ogType="article"
+  ogImage={saga.hero}
+>
+  <LaunchHeader />
+  <main class="gs-story-page">
+    <GrimSagaReader saga={saga} />
+  </main>
+</SiteLayout>

@@ -1,0 +1,4190 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #0c0a1a;
+  color: #f4f0ff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow: hidden;          /* <- remove vertical + horizontal scrollbars */
+}
+
+.hidden {
+  display: none !important;
+}
+
+.frame {
+  position: relative;
+  width: min(680px, calc(100vw - 20px)); /* was 520px */
+  margin: 10px auto;
+  padding: 8px;
+  background: radial-gradient(circle at top, #211b3a, #080512);
+  border: 2px solid #3f325f;
+  border-radius: 8px;
+  box-shadow: 0 0 16px #000;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+
+.game-name {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.top-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.tower-clock {
+  display: flex;
+  align-items: center;
+  opacity: 0.9;
+  font-size: 11px;   /* small HUD text again */
+}
+
+/* first span = ☀️ / 🌙 icon */
+.tower-clock span:first-child {
+  font-size: 15px;  /* icon bigger than text */
+  margin-right: 4px;
+  line-height: 1;
+}
+
+.subtitle {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.version-pill {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.version-pill.full {
+  background: rgba(62, 201, 135, 0.15);
+  border-color: #3ec987;
+}
+
+.version-pill.demo {
+  background: rgba(201, 143, 62, 0.15);
+  border-color: #c98f3e;
+}
+
+.top-center {
+  flex: 1;
+  text-align: center;
+}
+
+.room-label {
+  font-size: 13px;   /* was 11px */
+  font-weight: 600;  /* optional, for a little emphasis */
+  opacity: 0.9;
+}
+
+.main-layout {
+  display: flex;
+  gap: 8px;
+}
+
+#gameCanvas {
+  border-radius: 4px;
+  border: 1px solid #332654;
+  background: #05030b;
+  image-rendering: pixelated;
+}
+
+.side-panel {
+  flex: 1;
+  font-size: 11px;
+}
+
+.main-layout {
+  /* you probably already have display:flex here; keep your existing stuff.
+     If you *don’t* have it yet, make sure this is set: */
+  display: flex;
+  gap: 12px;
+}
+
+/* Viewfinder row: toolbar + viewfinder */
+.viewfinder-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch; /* toolbar matches viewfinder height */
+}
+
+/* Narrow left toolbar */
+/* --- Viewfinder left toolbar tweaks --- */
+
+/* Spell toolbar: evenly distributed from top to bottom */
+.vf-toolbar--spells {
+  width: 40px;                 /* keep your narrow width */
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly; /* <-- key: spreads buttons evenly */
+  gap: 6px;
+
+  /* keep your existing look */
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+
+  /* keep it below notify area if you still want that */
+  margin-top: 30px;
+  max-height: calc(100% - 30px);
+}
+
+/* Spell icon buttons */
+.spell-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 10px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+
+  font-size: 16px;
+  line-height: 1;
+}
+
+.spell-btn:hover {
+  background: rgba(0, 0, 0, 0.55);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.spell-btn:active {
+  transform: translateY(1px);
+}
+
+/* Left column that holds the bar + canvas */
+.game-column {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;     /* was locking it to 320 */
+  width: auto;        /* allow toolbar + viewfinder */
+  position: relative;
+}
+
+/* Tiny status under "Entry Hall" */
+.activity-label {
+  font-size: 10px;
+  line-height: 1.2;
+  opacity: 0.8;
+  margin-top: 2px;
+  text-align: center;
+  color: #e2dafc;
+}
+
+/* Comedy “be back soon” sign over the doorway */
+.away-sign {
+  position: absolute;
+  left: 50%;
+  top: 26%;  /* tweak if you want it higher/lower */
+  transform: translateX(-50%);
+  
+  padding: 6px 18px 10px;
+  background: linear-gradient(#f6e3ba, #d3aa73);
+  border-radius: 6px;
+  border: 2px solid #7b4c28;
+
+  color: #3b2614;
+  font-family: "Cinzel", serif;
+  font-size: 13px;
+  text-align: center;
+  text-transform: lowercase;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+  z-index: 5; /* above the canvas */
+}
+
+/* rope above the sign */
+.away-sign::before {
+  content: "";
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  width: 2px;
+  height: 26px;
+  transform: translateX(-50%);
+  background: linear-gradient(#f4e1c0, #c3935b);
+}
+
+/* nail / hook on the wall */
+.away-sign::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: #201014;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+}
+/* Full-screen overlay inside the game column */
+/* Explore popup anchored to the left viewfinder column */
+#explore-result {
+  position: absolute;
+  left: 0;
+  top: 36px;              /* tweak this to taste */
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  background: transparent; /* no full-screen dim */
+  z-index: 6;
+
+  pointer-events: none;    /* only the card should be clickable */
+}
+
+/* The actual popup card */
+#explore-result .explore-card {
+  pointer-events: auto;
+
+  width: min(300px, 96%);
+  padding: 12px 14px;
+  border-radius: 8px;
+
+  background: rgba(9, 5, 24, 0.96);
+  border: 1px solid rgba(170, 140, 255, 0.5);
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.8);
+
+  font-size: 11px;
+  color: #f4f0ff;
+}
+
+/* Card inside the overlay */
+.explore-card {
+  min-width: 260px;
+  max-width: 320px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: rgba(9, 5, 24, 0.96);
+  border: 1px solid rgba(170, 140, 255, 0.5);
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.8);
+  font-size: 11px;
+  color: #f4f0ff;
+}
+
+.explore-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.explore-body p {
+  margin: 2px 0 4px;
+}
+
+.primary-btn.small {
+  font-size: 11px;
+  padding: 4px 10px;
+  margin-top: 8px;
+  align-self: flex-end;
+}
+
+/* The black notification strip */
+.notify-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+
+  padding: 4px 10px;
+  margin-bottom: 6px;
+
+  width: 100%;                /* fill the 320px column, no more */
+  box-sizing: border-box;
+
+  background: rgba(0, 0, 0, 0.65);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  font-size: 11px;
+  line-height: 1.3;
+  color: #f4f0ff;
+  overflow: hidden;
+}
+
+/* Small label on the left (optional) */
+.notify-label {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+/* Actual message text – now scrolling */
+.notify-text {
+  white-space: nowrap;
+  display: inline-block;
+  animation: tower-marquee 18s linear infinite;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+  padding: 2px 4px;
+  background: rgba(10, 7, 24, 0.8);
+  border-radius: 3px;
+  border: 1px solid rgba(117, 95, 176, 0.3);
+}
+
+.stat-row span:first-child {
+  opacity: 0.7;
+}
+
+.button-group {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.button-group button {
+  font-size: 11px;
+  padding: 4px 6px;
+  border-radius: 3px;
+  border: 1px solid #6141d4;
+  background: linear-gradient(to bottom, #4b3ab3, #2a1e72);
+  color: #f7f4ff;
+  cursor: pointer;
+}
+
+/* Dark / dangerous actions */
+#btn-ritual {
+  background: linear-gradient(to bottom, #6b151a, #3c070b); /* blood red */
+  border-color: #b13b3f;
+}
+
+#btn-ritual:hover {
+  filter: brightness(1.1);
+}
+
+#btn-sacrifice {
+  background: linear-gradient(to bottom, #24551c, #12290d); /* poison green */
+  border-color: #4ad15b;
+}
+
+#btn-sacrifice:hover {
+  filter: brightness(1.1);
+}
+
+.button-group button:disabled {
+  opacity: 0.4;
+  cursor: default;
+  background: #2f2743;
+  border-color: #4b3f65;
+}
+
+.button-group button:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+/* bottom lore menu bar */
+.bottom-menu {
+  margin-top: 4px;
+  margin-bottom: 2px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 6px;
+  font-size: 10px;
+}
+
+.footer-btn {
+  padding: 4px 10px;
+  border-radius: 3px; /* square-ish, like other buttons */
+  border: 1px solid #6141d4;
+  background: linear-gradient(to bottom, #4b3ab3, #2a1e72);
+  color: #f4f0ff;
+  cursor: pointer;
+}
+
+.footer-btn:hover {
+  filter: brightness(1.1);
+}
+
+.log-section {
+  margin-top: 2px; /* slightly tighter so everything fits */
+  font-size: 11px;
+}
+
+.log-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+  opacity: 0.8;
+}
+
+.demo-note {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.log-body {
+  min-height: 44px;
+  max-height: 70px;  /* tightened to make room for lore bar */
+  overflow-y: auto;
+  padding: 4px;
+  border-radius: 3px;
+  background: rgba(5, 4, 15, 0.9);
+  border: 1px solid rgba(117, 95, 176, 0.4);
+}
+
+.log-body div {
+  margin-bottom: 2px;
+}
+
+/* Dark scrollbars for Tower Log */
+.log-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.log-body::-webkit-scrollbar-track {
+  background: rgba(10, 6, 24, 0.9);
+}
+
+.log-body::-webkit-scrollbar-thumb {
+  background: rgba(90, 74, 150, 0.9);
+  border-radius: 4px;
+}
+
+.log-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(130, 112, 190, 0.95);
+}
+
+@keyframes tower-marquee {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* --- Lore overlay (Tower Codex) --------------------------------- */
+
+.lore-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 8px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background: radial-gradient(circle at top, #221b3d, #05020c);
+  border: 1px solid rgba(160, 140, 230, 0.7);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  height: 100%;          /* ← add this line */
+}
+
+/* hidden state overrides the display */
+.lore-overlay.hidden {
+  display: none;
+}
+
+.lore-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.lore-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.lore-subtitle {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 1px;
+}
+
+.lore-close {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  border: 1px solid #6141d4;
+  background: linear-gradient(to bottom, #4b3ab3, #2a1e72);
+  color: #f7f4ff;
+  cursor: pointer;
+}
+
+.lore-close:hover {
+  filter: brightness(1.1);
+}
+
+/* main article title inside codex (like THE CRIMSON SIEGE) */
+.lore-body h1 {
+  font-family: "Cinzel", "Times New Roman", serif;
+  font-size: 17px;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #f7e37c;
+}
+
+/* section headings: INTRODUCTION, FEATURED HIGHLIGHTS, etc. */
+.lore-body h2 {
+  font-size: 14px;
+  margin: 14px 0 4px;
+  color: #ffdf60;
+  text-transform: uppercase;
+}
+
+/* smaller sub-heads if you want them */
+.lore-body h3 {
+  font-size: 13px;
+  margin: 10px 0 4px;
+  color: #f2b26a;
+}
+
+/* normal paragraphs */
+.lore-body p {
+  margin: 4px 0;
+}
+
+/* “lead” / intro paragraph in a different color */
+.lore-body .lead {
+  color: #f2836a;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+/* list styling for feature bullets */
+.lore-body ul,
+.lore-body ol {
+  margin: 6px 0 6px 18px;
+  padding: 0;
+}
+
+.lore-body li {
+  margin-bottom: 3px;
+}
+
+/* optional emphasized text */
+.lore-body .highlight {
+  color: #ffcf4a;
+  font-weight: 600;
+}
+
+/* layout for main codex area: left list + right text */
+.lore-main {
+  margin-top: 6px;
+  flex: 1;
+  display: flex;
+  gap: 6px;
+  min-height: 0;         /* ← add this */
+}
+
+/* left list column */
+.lore-list {
+  width: 90px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 4px;
+  background: rgba(6, 4, 18, 0.95);
+  border: 1px solid rgba(117, 95, 176, 0.6);
+  overflow-y: auto;
+}
+
+/* base style for each box */
+.lore-entry {
+  font-size: 11px;
+  padding: 4px 6px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  background: rgba(6, 4, 18, 0.95);
+  cursor: pointer;
+  text-align: center;
+}
+
+.lore-entry:hover {
+  filter: brightness(1.1);
+}
+
+/* active selection */
+.lore-entry.active {
+  background: linear-gradient(to bottom, #4b3ab3, #2a1e72);
+  border-color: #8f82ff;
+  color: #f7f4ff;
+}
+
+/* SPECIAL: top Wizard entry */
+.lore-entry.wizard-entry {
+  background: radial-gradient(circle at top, #4e3ad1, #1b113a);
+  border-color: #c7b3ff;
+  font-weight: 600;
+}
+
+.lore-entry.wizard-entry.active {
+  background: linear-gradient(to bottom, #6c54ff, #3d2bb8);
+}
+
+/* right reading pane */
+.lore-body {
+  flex: 1;
+  min-height: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 10px;
+  border-radius: 4px;
+  background: rgba(5, 4, 15, 0.95);
+  border: 1px solid rgba(117, 95, 176, 0.6);
+  overflow-y: auto;
+  /* no white-space override */
+}
+
+/* Left list inside the Codex */
+.lore-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* each selectable row */
+.lore-entry {
+  font-size: 11px;
+  padding: 4px 6px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  background: rgba(6, 4, 18, 0.95);
+  cursor: pointer;
+  text-align: center;       /* center the word in the box */
+}
+
+/* hover and active feel */
+.lore-entry:hover {
+  filter: brightness(1.1);
+}
+
+.lore-entry.active {
+  background: linear-gradient(to bottom, #4b3ab3, #2a1e72);
+  border-color: #8f82ff;
+  color: #f7f4ff;
+}
+
+
+
+/* --- Screen / menu / intro helpers --- */
+
+.menu-main {
+  padding: 8px;
+}
+
+.menu-block,
+.intro-block {
+  background: radial-gradient(circle at top, #211b3a, #080512);
+  border-radius: 6px;
+  border: 1px solid rgba(117, 95, 176, 0.6);
+  padding: 10px;
+  font-size: 12px;
+}
+
+.menu-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.menu-subtitle {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+.menu-tip {
+  font-size: 10px;
+  opacity: 0.7;
+  margin-top: 8px;
+}
+
+.primary-btn {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 3px;
+  border: 1px solid #6141d4;
+  background: linear-gradient(to bottom, #4b3ab3, #2a1e72);
+  color: #f7f4ff;
+  cursor: pointer;
+}
+
+.primary-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  background: #2f2743;
+  border-color: #4b3f65;
+}
+
+.primary-btn:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.name-input-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.name-input-row input[type="text"] {
+  flex: 1;
+  padding: 4px 6px;
+  border-radius: 3px;
+  border: 1px solid #6141d4;
+  background: #05030b;
+  color: #f4f0ff;
+  font-size: 12px;
+}
+
+.name-input-row input[type="text"]::placeholder {
+  color: rgba(244, 240, 255, 0.35);
+}
+
+.intro-body {
+  white-space: pre-wrap;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.intro-button {
+  display: block;
+  margin: 0 auto;
+  margin-top: 4px;
+}
+
+/* 2-column layout, but keep old thin button styling */
+#action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;        /* small gap */
+  margin-top: 6px; /* similar spacing as before */
+}
+
+/* Dark scrollbars for Codex content */
+.lore-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lore-body::-webkit-scrollbar-track {
+  background: rgba(10, 6, 24, 0.9);   /* dark track */
+}
+
+.lore-body::-webkit-scrollbar-thumb {
+  background: rgba(90, 74, 150, 0.9); /* muted purple thumb */
+  border-radius: 4px;
+}
+
+.lore-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(130, 112, 190, 0.95);
+}
+
+
+/* ================================
+   VIEWFINDER RPG OVERLAYS (NEW)
+   - Inventory + Character
+   - Matches Explore popup vibes
+================================ */
+
+/* Overlay that lives INSIDE #viewfinder */
+.wf-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 36px; /* aligns with explore feel */
+  background: transparent;
+  z-index: 8;
+}
+
+/* The popup panel */
+.wf-panel {
+  width: min(360px, 96%);
+  max-height: 520px;
+  border-radius: 8px;
+  background: rgba(9, 5, 24, 0.97);
+  border: 1px solid rgba(170, 140, 255, 0.5);
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-size: 11px; /* ✅ small, clean */
+  color: #f4f0ff;
+}
+
+.wf-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px 6px;
+}
+
+.wf-panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.wf-panel-close {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  border: 1px solid #6141d4;
+  background: linear-gradient(to bottom, #4b3ab3, #2a1e72);
+  color: #f7f4ff;
+  cursor: pointer;
+}
+
+.wf-panel-close:hover {
+  filter: brightness(1.1);
+}
+
+.wf-panel-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 0 12px 8px;
+}
+
+.inv-tab {
+  font-size: 10.5px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(170, 140, 255, 0.35);
+  background: rgba(80, 60, 140, 0.18);
+  color: #e9e2ff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.inv-tab.is-active {
+  border-color: rgba(170, 140, 255, 0.9);
+  background: rgba(120, 90, 210, 0.35);
+}
+
+.wf-panel-body {
+  padding: 0 12px 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inv-page {
+  display: none;
+}
+
+.inv-page.is-active {
+  display: block;
+}
+
+.inv-list {
+  border: 1px solid rgba(170, 140, 255, 0.25);
+  border-radius: 6px;
+  padding: 6px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.12);
+  font-size: 11px;
+}
+
+/* Empty text styling */
+.inv-empty {
+  opacity: 0.7;
+}
+
+/* NEW structured row */
+.inv-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding: 6px 6px;
+  border-radius: 4px;
+}
+
+.inv-row:hover {
+  background: rgba(140, 110, 230, 0.16);
+}
+
+.inv-name {
+  font-weight: 600;
+}
+
+.inv-meta {
+  opacity: 0.75;
+  font-size: 10px;
+  margin-top: 1px;
+}
+
+.inv-bonus {
+  opacity: 0.9;
+  font-size: 10px;
+  margin-top: 2px;
+}
+
+.inv-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.inv-equip-btn {
+  font-size: 10px;
+  padding: 3px 7px;
+  border-radius: 3px;
+  border: 1px solid rgba(170, 140, 255, 0.5);
+  background: rgba(90, 70, 170, 0.25);
+  color: #f4f0ff;
+  cursor: pointer;
+}
+
+.inv-equip-btn:hover {
+  filter: brightness(1.1);
+}
+
+.inv-equip-btn.is-equipped {
+  border-color: rgba(120, 240, 180, 0.9);
+  background: rgba(80, 200, 140, 0.2);
+}
+
+/* Character sheet blocks */
+.char-block {
+  border: 1px solid rgba(170, 140, 255, 0.25);
+  border-radius: 6px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.char-section-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  opacity: 0.9;
+}
+
+.char-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 0;
+}
+
+.char-row span:first-child {
+  opacity: 0.75;
+}
+
+/* Make sure hidden still works */
+.hidden {
+  display: none !important;
+}
+
+/* =========================================
+   VIEWFINDER-BOUND OVERLAYS (Inventory etc.)
+   ========================================= */
+
+/* IMPORTANT: your viewfinder container must be positioned */
+#viewfinder,
+.viewfinder,
+.game-view {
+  position: relative;
+}
+
+/* Overlay that only covers the viewfinder */
+.wf-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
+.wf-overlay.hidden {
+  display: none;
+}
+
+/* Panel sized similarly to your Exploration Report window */
+.wf-panel {
+  width: min(96%, 520px);
+  border-radius: 10px;
+  border: 1px solid rgba(140, 120, 220, 0.35);
+  background: linear-gradient(180deg, rgba(22, 16, 48, 0.98), rgba(10, 8, 22, 0.98));
+  box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+  overflow: hidden;
+}
+
+/* Header matches your Report style */
+.wf-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(140, 120, 220, 0.25);
+}
+
+.wf-panel-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.wf-panel-close {
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(140, 120, 220, 0.45);
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Tabs */
+.wf-panel-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 8px 10px 0 10px;
+}
+
+.inv-tab {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid rgba(140, 120, 220, 0.35);
+  border-bottom: none;
+  background: rgba(255,255,255,0.04);
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.inv-tab.is-active {
+  opacity: 1;
+  background: rgba(255,255,255,0.08);
+}
+
+/* Body */
+.wf-panel-body {
+  padding: 10px 12px 12px 12px;
+  border-top: 1px solid rgba(140, 120, 220, 0.15);
+}
+
+.inv-page {
+  display: none;
+}
+
+.inv-page.is-active {
+  display: block;
+}
+
+.inv-list {
+  min-height: 80px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.inv-empty {
+  opacity: 0.8;
+}
+
+/* =========================================
+   EXPLORATION REPORT: STOP GROWING, SCROLL
+   ========================================= */
+
+/* Try to target your report container safely */
+#exploration-report,
+.exploration-report,
+.report-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+/* The text area should scroll instead of expanding */
+#exploration-report-content,
+.exploration-report-content,
+.report-content {
+  max-height: 260px;   /* adjust if you want slightly more/less */
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* If your report block has a wrapper body element */
+#exploration-report .body,
+.exploration-report .body {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+
+
+/* =========================================================
+   FINAL OVERRIDES — INVENTORY FIXED SIZE IN VIEWFINDER
+   Paste at the VERY BOTTOM of styles.css
+   This ensures inventory does NOT grow with content.
+   ========================================================= */
+
+/* Ensure viewfinder anchors absolute overlays */
+#viewfinder {
+  position: relative;
+}
+
+/* Inventory overlay should cover only the viewfinder */
+#inventory-overlay.wf-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px;
+  box-sizing: border-box;
+
+  /* keep your nice dim/blur feel */
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+
+  z-index: 50;
+}
+
+/* Make the inventory window take up MORE of the viewfinder */
+#inventory-window.wf-panel {
+  width: 96%;
+  height: 92%;
+
+  max-width: 96%;
+  max-height: 92%;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Header + tabs should not grow */
+#inventory-window .wf-panel-header,
+#inventory-window .wf-panel-tabs {
+  flex: 0 0 auto;
+}
+
+/* Body owns the remaining fixed space */
+#inventory-window .wf-panel-body {
+  flex: 1 1 auto;
+  min-height: 0;     /* <- critical for scroll layouts */
+  overflow: hidden;  /* <- prevents panel from expanding */
+  padding: 0 12px 12px 12px; /* preserve your spacing */
+  box-sizing: border-box;
+}
+
+/* Pages fill the body height */
+#inventory-window .inv-page {
+  height: 100%;
+}
+
+/* The list area becomes the scroll container */
+#inventory-window .inv-list {
+  height: 100%;
+  max-height: none; /* override your earlier max-height:300px */
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  border: 1px solid rgba(170, 140, 255, 0.25);
+  border-radius: 6px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.12);
+
+  box-sizing: border-box;
+}
+
+/* Keep empty state centered without affecting height */
+#inventory-window .inv-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+
+
+
+/* =========================================
+   CHARACTER OVERLAY - FIXED SIZE + SCROLL
+   Paste at VERY BOTTOM of styles.css
+   ========================================= */
+
+#character-overlay.wf-overlay {
+  /* keep it bound to the viewfinder */
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+}
+
+/* Lock the Character window to a stable size inside the viewfinder */
+#character-overlay .wf-panel {
+  width: 96%;
+  max-width: 320px;          /* matches your viewfinder column feel */
+  max-height: 100%;          /* never exceed the viewfinder area */
+
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 10px;
+  border: 1px solid rgba(140, 120, 220, 0.35);
+  background: linear-gradient(
+    180deg,
+    rgba(22, 16, 48, 0.98),
+    rgba(10, 8, 22, 0.98)
+  );
+  box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+
+  overflow: hidden;
+}
+
+/* Make the BODY scroll instead of the panel growing */
+#character-overlay .wf-panel-body {
+  padding: 10px 12px 12px 12px;
+
+  overflow-y: auto;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Optional: slightly tighter blocks so more fits cleanly */
+#character-overlay .char-block {
+  margin-bottom: 0;
+}
+
+/* Optional: match your dark scrollbar vibe */
+#character-overlay .wf-panel-body::-webkit-scrollbar {
+  width: 6px;
+}
+#character-overlay .wf-panel-body::-webkit-scrollbar-track {
+  background: rgba(10, 6, 24, 0.9);
+}
+#character-overlay .wf-panel-body::-webkit-scrollbar-thumb {
+  background: rgba(90, 74, 150, 0.9);
+  border-radius: 4px;
+}
+#character-overlay .wf-panel-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(130, 112, 190, 0.95);
+}
+
+
+/* =========================================================
+   FINAL FINAL OVERRIDES — MATCH INVENTORY + CHARACTER SIZE
+   Paste at the VERY BOTTOM of styles.css
+   ========================================================= */
+
+#viewfinder { position: relative; }
+
+/* Both overlays behave the same */
+#inventory-overlay.wf-overlay,
+#character-overlay.wf-overlay,
+#shop-overlay.wf-overlay { 
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px;
+  box-sizing: border-box;
+
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+
+  z-index: 50;
+}
+
+/* ✅ FORCE BOTH WINDOWS TO MATCH EXACT DIMENSIONS */
+#inventory-window.wf-panel,
+#character-window.wf-panel,
+#shop-window.wf-panel{
+  width: 96%;
+  height: 92%;
+
+  max-width: 96%;
+  max-height: 92%;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  box-sizing: border-box;
+
+  border-radius: 10px;
+  border: 1px solid rgba(140, 120, 220, 0.35);
+  background: linear-gradient(
+    180deg,
+    rgba(22, 16, 48, 0.98),
+    rgba(10, 8, 22, 0.98)
+  );
+  box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+}
+
+/* Header/tabs never steal layout growth */
+#inventory-window .wf-panel-header,
+#inventory-window .wf-panel-tabs,
+#character-window .wf-panel-header {
+  flex: 0 0 auto;
+}
+
+/* ✅ Body fills remaining space */
+#inventory-window .wf-panel-body,
+#character-window .wf-panel-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 12px 12px 12px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Inventory pages fill height */
+#inventory-window .inv-page {
+  height: 100%;
+}
+
+/* Inventory list is the scroll container */
+#inventory-window .inv-list {
+  height: 100%;
+  max-height: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  border: 1px solid rgba(170, 140, 255, 0.25);
+  border-radius: 6px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.12);
+
+  box-sizing: border-box;
+}
+
+/* Keep empty text centered */
+#inventory-window .inv-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+
+/* ✅ Character body scrolls if content grows */
+#character-window .wf-panel-body {
+  overflow-y: auto;
+}
+
+/* Optional: matching dark scrollbars */
+#inventory-window .inv-list::-webkit-scrollbar,
+#character-window .wf-panel-body::-webkit-scrollbar,
+#shop-window .inv-list::-webkit-scrollbar {
+  width: 6px;
+}
+#inventory-window .inv-list::-webkit-scrollbar-track,
+#character-window .wf-panel-body::-webkit-scrollbar-track {
+  background: rgba(10, 6, 24, 0.9);
+}
+#inventory-window .inv-list::-webkit-scrollbar-thumb,
+#character-window .wf-panel-body::-webkit-scrollbar-thumb {
+  background: rgba(90, 74, 150, 0.9);
+  border-radius: 4px;
+}
+#inventory-window .inv-list::-webkit-scrollbar-thumb:hover,
+#character-window .wf-panel-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(130, 112, 190, 0.95);
+}
+
+/* =========================================================
+   FINAL FINAL FINAL — MATCH EXPLORATION WINDOW SIZE
+   with Inventory + Character (fixed height + scrolling)
+   Paste at the VERY BOTTOM of styles.css
+   ========================================================= */
+
+/* Make Explore behave like a true viewfinder overlay */
+#explore-result {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px;
+  box-sizing: border-box;
+
+  /* keep your vibe consistent with other overlays */
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+
+  z-index: 50;
+
+  /* keep your click logic safe */
+  pointer-events: none;
+}
+
+/* The Exploration panel matches the exact same size rules */
+#explore-result .explore-card {
+  pointer-events: auto;
+
+  width: 96%;
+  height: 92%;
+
+  max-width: 96%;
+  max-height: 92%;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  box-sizing: border-box;
+
+  border-radius: 10px;
+  border: 1px solid rgba(140, 120, 220, 0.35);
+  background: linear-gradient(
+    180deg,
+    rgba(22, 16, 48, 0.98),
+    rgba(10, 8, 22, 0.98)
+  );
+  box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+
+  font-size: 11px;
+  color: #f4f0ff;
+}
+
+/* Title stays fixed */
+#explore-result .explore-title {
+  flex: 0 0 auto;
+  padding: 10px 12px 6px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ✅ The text area scrolls instead of expanding the card */
+#explore-body {
+  flex: 1 1 auto;
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 0 12px 12px;
+
+  box-sizing: border-box;
+}
+
+/* Keep paragraphs neat inside the scroll area */
+#explore-body p {
+  margin: 2px 0 6px;
+}
+
+/* Close button stays at the bottom */
+#btn-explore-close {
+  flex: 0 0 auto;
+  margin: 0 12px 12px auto;
+}
+
+/* Optional: match dark scrollbar style */
+#explore-body::-webkit-scrollbar {
+  width: 6px;
+}
+#explore-body::-webkit-scrollbar-track {
+  background: rgba(10, 6, 24, 0.9);
+}
+#explore-body::-webkit-scrollbar-thumb {
+  background: rgba(90, 74, 150, 0.9);
+  border-radius: 4px;
+}
+#explore-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(130, 112, 190, 0.95);
+}
+
+
+/* =========================================================
+   FINAL UNIFIED OVERLAYS
+   Inventory + Character + Explore Report
+   - same size
+   - fixed height
+   - inner scrolling
+   Paste at VERY BOTTOM of styles.css
+   ========================================================= */
+
+/* Ensure the viewfinder is the anchor */
+#viewfinder {
+  position: relative;
+}
+
+/* Shared sizing tokens for ALL viewfinder windows */
+#viewfinder {
+  --vf-panel-w: 96%;
+  --vf-panel-h: 92%;
+  --vf-radius: 10px;
+  --vf-border: rgba(170, 140, 255, 0.45);
+  --vf-bg-top: rgba(24, 18, 58, 0.98);
+  --vf-bg-bot: rgba(8, 6, 18, 0.98);
+  --vf-shadow: 0 10px 28px rgba(0,0,0,0.65);
+}
+
+/* -----------------------------------------
+   Overlay backdrop (Inventory + Character)
+------------------------------------------ */
+
+/* Force BOTH overlays to the same backdrop behavior */
+#inventory-overlay.wf-overlay,
+#character-overlay.wf-overlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px;
+  box-sizing: border-box;
+
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+
+  z-index: 50;
+}
+
+/* -----------------------------------------
+   Unified panel container size
+------------------------------------------ */
+
+#inventory-window.wf-panel,
+#character-window.wf-panel,
+#explore-result .explore-card {
+  width: var(--vf-panel-w);
+  height: var(--vf-panel-h);
+
+  max-width: var(--vf-panel-w);
+  max-height: var(--vf-panel-h);
+
+  border-radius: var(--vf-radius);
+  border: 1px solid var(--vf-border);
+
+  background: linear-gradient(180deg, var(--vf-bg-top), var(--vf-bg-bot));
+  box-shadow: var(--vf-shadow);
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  position: relative;
+}
+
+/* Subtle top glow accent for all three */
+#inventory-window.wf-panel::before,
+#character-window.wf-panel::before,
+#explore-result .explore-card::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 6px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(190, 160, 255, 0.8),
+    transparent
+  );
+  opacity: 0.9;
+}
+
+/* -----------------------------------------
+   Inventory internal layout (fixed + scroll)
+------------------------------------------ */
+
+/* Header + tabs stay fixed */
+#inventory-window .wf-panel-header,
+#inventory-window .wf-panel-tabs {
+  flex: 0 0 auto;
+}
+
+/* Body fills the remaining fixed height */
+#inventory-window .wf-panel-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 12px 12px 12px;
+  box-sizing: border-box;
+}
+
+/* Page fills body height */
+#inventory-window .inv-page {
+  height: 100%;
+}
+
+/* List becomes the scroll container */
+#inventory-window .inv-list {
+  height: 100%;
+  max-height: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  border: 1px solid rgba(170, 140, 255, 0.25);
+  border-radius: 6px;
+  padding: 10px;
+
+  background: rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+}
+
+/* Center empty state */
+#inventory-window .inv-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+
+/* -----------------------------------------
+   Character internal layout (fixed + scroll)
+------------------------------------------ */
+
+/* Use the same header/body logic as inventory */
+#character-window .wf-panel-header {
+  flex: 0 0 auto;
+}
+
+/* Make the Character body scroll */
+#character-window .wf-panel-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+
+  padding: 10px 12px 12px 12px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* -----------------------------------------
+   Exploration Report (fixed + scroll)
+------------------------------------------ */
+
+/* Make explore overlay act like a centered panel inside viewfinder */
+#explore-result {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px;
+  box-sizing: border-box;
+
+  background: rgba(0, 0, 0, 0.20);
+  backdrop-filter: blur(4px);
+
+  z-index: 40;
+
+  pointer-events: auto; /* only card clickable */
+}
+
+#explore-result .explore-card {
+  pointer-events: auto;
+  padding: 10px 12px 12px;
+  gap: 8px;
+}
+
+/* Nicer title styling */
+#explore-result .explore-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  padding: 6px 8px;
+  border-radius: 6px;
+
+  background: rgba(120, 90, 210, 0.16);
+  border: 1px solid rgba(170, 140, 255, 0.25);
+}
+
+/* The text area scrolls */
+#explore-body.explore-body {
+  flex: 1 1 auto;
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 8px;
+  border-radius: 6px;
+
+  background: rgba(0, 0, 0, 0.10);
+  border: 1px solid rgba(170, 140, 255, 0.18);
+
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+/* Make paragraphs breathe a bit */
+#explore-body.explore-body p {
+  margin: 4px 0 6px;
+}
+
+/* Close button pinned visually to bottom-right */
+#btn-explore-close.primary-btn.small {
+  align-self: flex-end;
+  margin-top: 2px;
+}
+
+/* -----------------------------------------
+   Consistent dark scrollbars (all 3)
+------------------------------------------ */
+
+#inventory-window .inv-list::-webkit-scrollbar,
+#character-window .wf-panel-body::-webkit-scrollbar,
+#explore-body.explore-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+#inventory-window .inv-list::-webkit-scrollbar-track,
+#character-window .wf-panel-body::-webkit-scrollbar-track,
+#explore-body.explore-body::-webkit-scrollbar-track {
+  background: rgba(10, 6, 24, 0.9);
+}
+
+#inventory-window .inv-list::-webkit-scrollbar-thumb,
+#character-window .wf-panel-body::-webkit-scrollbar-thumb,
+#explore-body.explore-body::-webkit-scrollbar-thumb {
+  background: rgba(90, 74, 150, 0.9);
+  border-radius: 4px;
+}
+
+#inventory-window .inv-list::-webkit-scrollbar-thumb:hover,
+#character-window .wf-panel-body::-webkit-scrollbar-thumb:hover,
+#explore-body.explore-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(130, 112, 190, 0.95);
+}
+
+
+/* =========================================
+   EXPLORE REPORT — REMOVE TRANSPARENCY
+   Paste at VERY BOTTOM of styles.css
+   ========================================= */
+
+/* Match the same dim/blur strength as other overlays */
+#explore-result {
+  background: rgba(0, 0, 0, 0.35) !important;
+  backdrop-filter: blur(6px) !important;
+}
+
+/* Force the explore card to use the SAME solid panel background */
+#explore-result .explore-card {
+  background: linear-gradient(
+    180deg,
+    rgba(22, 16, 48, 0.98),
+    rgba(10, 8, 22, 0.98)
+  ) !important;
+
+  border: 1px solid rgba(170, 140, 255, 0.45) !important;
+  opacity: 1 !important;
+}
+
+
+/* =========================================
+   LORE LIBRARY NAV — MATCH CODEX BUTTONS
+   Paste at VERY BOTTOM of styles.css
+   ========================================= */
+
+/* Remove bullets + spacing for any lore left-nav lists */
+.lore-list ul,
+.lore-menu-list,
+.lore-menu-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Make <li> items look exactly like .lore-entry blocks */
+.lore-list li,
+.lore-menu-list li {
+  font-size: 11px;
+  padding: 4px 6px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  background: rgba(6, 4, 18, 0.95);
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Hover + active state parity */
+.lore-list li:hover,
+.lore-menu-list li:hover {
+  filter: brightness(1.1);
+}
+
+.lore-list li.active,
+.lore-menu-list li.active {
+  background: linear-gradient(to bottom, #4b3ab3, #2a1e72);
+  border-color: #8f82ff;
+  color: #f7f4ff;
+}
+
+/* =========================================================
+   LORE LIBRARY LEFT NAV — FORCE MATCH TOWER CODEX BUTTONS
+   Paste at the VERY BOTTOM of styles.css
+   ========================================================= */
+
+/* Treat the Lore Library's left list like the Codex .lore-list */
+#screen-lore-library .lore-list,
+#screen-lore-library .lore-menu-list,
+#screen-lore-library .lore-library-nav,
+#screen-lore-library ul {
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+
+  width: 90px;
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  border-radius: 4px;
+  background: rgba(6, 4, 18, 0.95);
+  border: 1px solid rgba(117, 95, 176, 0.6);
+
+  overflow-y: auto;
+}
+
+/* Make each LI look like a .lore-entry button */
+#screen-lore-library .lore-library-nav li,
+#screen-lore-library ul li {
+  list-style: none;
+
+  font-size: 11px;
+  padding: 4px 6px;
+  border-radius: 3px;
+
+  border: 1px solid transparent;
+  background: rgba(6, 4, 18, 0.95);
+
+  cursor: pointer;
+  text-align: center;
+  color: #f4f0ff;
+}
+
+/* If items are links or buttons inside LI, make them fill the "button" */
+#screen-lore-library ul li > a,
+#screen-lore-library ul li > button,
+#screen-lore-library .lore-library-nav li > a,
+#screen-lore-library .lore-library-nav li > button {
+  display: block;
+  width: 100%;
+  text-align: center;
+
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  cursor: pointer;
+}
+
+/* Hover matches Codex feel */
+#screen-lore-library .lore-library-nav li:hover,
+#screen-lore-library ul li:hover {
+  filter: brightness(1.1);
+}
+
+/* Active/selected states — support multiple possible class names */
+#screen-lore-library li.active,
+#screen-lore-library li.selected,
+#screen-lore-library li.is-active,
+#screen-lore-library li[aria-current="true"] {
+  background: linear-gradient(to bottom, #4b3ab3, #2a1e72);
+  border-color: #8f82ff;
+  color: #f7f4ff;
+}
+
+/* Menu Lore Library list should look like Codex buttons */
+#menu-lore-overlay .lore-list {
+  width: 90px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 4px;
+  background: rgba(6, 4, 18, 0.95);
+  border: 1px solid rgba(117, 95, 176, 0.6);
+  overflow-y: auto;
+}
+
+/* If any <li> still sneak in, kill bullets */
+#menu-lore-overlay .lore-list li {
+  list-style: none;
+  display: block;
+}
+
+/* Overlay that is strictly confined to the viewfinder */
+.vf-overlay {
+  position: absolute;
+  inset: 8px;               /* creates the little gap you like */
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  background: rgba(5, 3, 15, 0.35);
+  z-index: 50;
+}
+
+/* The modal fills the overlay area */
+.vf-modal {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  background: radial-gradient(circle at top, #211b3a, #080512);
+  border: 1px solid #3f325f;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Title area similar to your UI pill style */
+.vf-modal__header {
+  flex: 0 0 auto;
+  margin-bottom: 8px;
+}
+
+.vf-modal__title {
+  padding: 10px 12px;
+  border: 1px solid #3f325f;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.03);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* This is the key: scroll lives here */
+.vf-modal__body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  background: rgba(0,0,0,0.12);
+}
+
+/* Close button area pinned at bottom */
+.vf-modal__footer {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* Hidden helper */
+.hidden {
+  display: none !important;
+}
+
+
+/* =========================================
+   EXPLORE OVERLAY (VIEWFINDER-BOUND)
+   Paste at VERY BOTTOM of styles.css
+   ========================================= */
+
+#viewfinder {
+  position: relative;
+  overflow: hidden; /* prevents any spill */
+}
+
+/* New explore overlay only */
+#explore-overlay.vf-overlay {
+  position: absolute;
+  inset: 8px; /* your nice inner gap */
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+
+  z-index: 50;
+}
+
+#explore-overlay.hidden {
+  display: none !important;
+}
+
+#explore-overlay .vf-modal {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  background: radial-gradient(circle at top, #211b3a, #080512);
+  border: 1px solid #3f325f;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+#explore-overlay .vf-modal__header {
+  flex: 0 0 auto;
+  margin-bottom: 8px;
+}
+
+#explore-overlay .vf-modal__title {
+  padding: 10px 12px;
+  border: 1px solid #3f325f;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.03);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-size: 13px;
+}
+
+#explore-overlay .vf-modal__body {
+  flex: 1 1 auto;
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  background: rgba(0,0,0,0.12);
+
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+#explore-overlay .vf-modal__footer {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* Optional: match your dark scrollbar style */
+#explore-overlay .vf-modal__body::-webkit-scrollbar {
+  width: 6px;
+}
+#explore-overlay .vf-modal__body::-webkit-scrollbar-track {
+  background: rgba(10, 6, 24, 0.9);
+}
+#explore-overlay .vf-modal__body::-webkit-scrollbar-thumb {
+  background: rgba(90, 74, 150, 0.9);
+  border-radius: 4px;
+}
+#explore-overlay .vf-modal__body::-webkit-scrollbar-thumb:hover {
+  background: rgba(130, 112, 190, 0.95);
+}
+
+
+/* =========================================================
+   TOWER SHOP — FANCY + IMMERSIVE (TALL + SCROLLING)
+   Paste at VERY BOTTOM of styles.css
+   ========================================================= */
+
+/* Backdrop (matches your other overlays) */
+#shop-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px;
+  box-sizing: border-box;
+
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
+#shop-overlay.hidden { display: none !important; }
+
+/* Make the shop window TALL like Inventory/Character */
+#shop-window {
+  width: 96%;
+  height: 92%;
+  max-width: 96%;
+  max-height: 92%;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  border-radius: 10px;
+  border: 1px solid rgba(170, 140, 255, 0.45);
+  background: linear-gradient(
+    180deg,
+    rgba(24, 18, 58, 0.98),
+    rgba(8, 6, 18, 0.98)
+  );
+  box-shadow: 0 10px 28px rgba(0,0,0,0.65);
+
+  position: relative;
+}
+
+/* Subtle “arcane trim” glow line */
+#shop-window::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 8px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(220, 190, 255, 0.85),
+    transparent
+  );
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* Header polish (works whether you used a custom header or wf header) */
+#shop-window .shop-header,
+#shop-window .wf-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 12px 10px;
+  border-bottom: 1px solid rgba(170, 140, 255, 0.18);
+  background: rgba(0,0,0,0.12);
+}
+
+/* Title styling */
+#shop-window .shop-title,
+#shop-window h2,
+#shop-window .wf-panel-title {
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Optional subtitle if you add it */
+#shop-window .shop-subtitle {
+  font-size: 10px;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+/* Gold pill */
+#shop-window .shop-gold,
+#shop-window .shop-gold-pill {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 215, 130, 0.35);
+  background: rgba(255, 215, 130, 0.10);
+  color: #ffe7b3;
+  box-shadow: 0 0 14px rgba(255, 215, 130, 0.10);
+  white-space: nowrap;
+}
+
+/* Close button */
+#btn-shop-close {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(170, 140, 255, 0.45);
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  cursor: pointer;
+}
+#btn-shop-close:hover { filter: brightness(1.1); }
+
+/* Body becomes a fixed region with a scrolling list */
+#shop-window .shop-body,
+#shop-body {
+  flex: 1 1 auto;
+  min-height: 0;            /* critical: enables scroll instead of grow */
+  overflow-y: auto;
+
+  padding: 10px;
+  box-sizing: border-box;
+
+  background: rgba(0,0,0,0.08);
+}
+
+/* Scrollbar matches your vibe */
+#shop-body::-webkit-scrollbar { width: 6px; }
+#shop-body::-webkit-scrollbar-track { background: rgba(10, 6, 24, 0.9); }
+#shop-body::-webkit-scrollbar-thumb {
+  background: rgba(90, 74, 150, 0.9);
+  border-radius: 4px;
+}
+#shop-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(130, 112, 190, 0.95);
+}
+
+/* Item cards (supports your new markup below; also styles a simple “div row” fallback) */
+#shop-body .shop-item,
+#shop-body > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+
+  padding: 10px 10px;
+  margin-bottom: 8px;
+
+  border-radius: 10px;
+  border: 1px solid rgba(170, 140, 255, 0.18);
+  background: linear-gradient(
+    180deg,
+    rgba(10, 7, 24, 0.55),
+    rgba(0, 0, 0, 0.18)
+  );
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left “potion glow” accent bar */
+#shop-body .shop-item::before,
+#shop-body > div::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 999px;
+  background: rgba(170, 140, 255, 0.45);
+  opacity: 0.9;
+}
+
+/* Tier accents (only if you add data-tier in renderer.js) */
+#shop-body .shop-item[data-tier="lite"]::before { background: rgba(130, 200, 255, 0.75); }
+#shop-body .shop-item[data-tier="normal"]::before { background: rgba(170, 140, 255, 0.75); }
+#shop-body .shop-item[data-tier="strong"]::before { background: rgba(255, 210, 130, 0.75); }
+
+/* Item text (smaller + tighter like you requested) */
+#shop-body .shop-name {
+  font-size: 12px;     /* smaller than your current bold title */
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  margin-bottom: 2px;
+}
+#shop-body .shop-desc {
+  font-size: 10px;
+  opacity: 0.78;
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+#shop-body .shop-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 10px;
+  opacity: 0.85;
+}
+#shop-body .shop-cost {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(170, 140, 255, 0.20);
+  background: rgba(120, 90, 210, 0.10);
+}
+
+/* Buy button: more “merchant seal” */
+#shop-body .shop-buy,
+#shop-body button {
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 10px;
+
+  border: 1px solid rgba(170, 140, 255, 0.45);
+  background: linear-gradient(to bottom, rgba(95, 70, 210, 0.65), rgba(30, 20, 90, 0.85));
+  color: #f7f4ff;
+
+  cursor: pointer;
+  box-shadow: 0 0 18px rgba(140, 110, 230, 0.12);
+}
+
+#shop-body .shop-buy:hover { filter: brightness(1.12); }
+
+#shop-body .shop-buy:disabled {
+  opacity: 0.45;
+  cursor: default;
+  background: rgba(40, 34, 60, 0.9);
+  border-color: rgba(170, 140, 255, 0.18);
+  box-shadow: none;
+}
+
+
+/* Color-only overrides (keeps your original button sizing) */
+#btn-lore, #btn-inventory, #btn-character, #btn-shop {
+  /* don’t touch padding / font-size / radius */
+  color: #f7f2ff;
+}
+
+/* individual colors (MATCH ORBS) */
+#btn-lore {
+  /* Lore orb: #caa9ff */
+  background: rgba(202, 169, 255, 0.18);
+  border-color: rgba(202, 169, 255, 0.55);
+}
+
+#btn-inventory {
+  /* Loot orb: #7ed957 */
+  background: rgba(126, 217, 87, 0.18);
+  border-color: rgba(126, 217, 87, 0.55);
+}
+
+#btn-character {
+  /* Journal orb: #8ab4ff */
+  background: rgba(138, 180, 255, 0.18);
+  border-color: rgba(138, 180, 255, 0.55);
+}
+
+#btn-shop {
+  /* Notice orb: #f4d067 (fits “shop/gold” nicely) */
+  background: rgba(244, 208, 103, 0.18);
+  border-color: rgba(244, 208, 103, 0.55);
+}
+
+/* optional: subtle hover that also doesn't resize anything */
+#btn-lore:hover, #btn-inventory:hover, #btn-character:hover, #btn-shop:hover {
+  filter: brightness(1.08);
+}
+
+
+/* Exploration report text sizing */
+#explore-overlay, #modal-explore, #explore-report, .explore-report {
+  /* container only (no font changes here unless you want) */
+}
+
+#explore-overlay .modal-body,
+#modal-explore .modal-body,
+#explore-report,
+.explore-report {
+  font-size: 13px;      /* was effectively ~15-16 in your screenshot */
+  line-height: 1.35;
+}
+
+#explore-overlay .modal-title,
+#modal-explore .modal-title,
+.explore-report h2,
+.explore-report .title {
+  font-size: 16px;      /* keep header readable */
+}
+
+
+
+/* =========================================================
+   SHOP SPECIAL (LIMITED STOCK) — make it OBVIOUS but simple
+   ========================================================= */
+#shop-body .shop-item--special {
+  /* defaults = Epic/Purple */
+  --sp-line: rgba(202, 169, 255, 0.95);
+  --sp-text: rgba(245, 240, 255, 0.98);
+  --sp-bg1: rgba(38, 24, 84, 0.42);
+  --sp-bg2: rgba(0, 0, 0, 0.18);
+
+  border-color: rgba(202, 169, 255, 0.38);
+  background: linear-gradient(180deg, var(--sp-bg1), var(--sp-bg2));
+  box-shadow: 0 0 0 1px rgba(202, 169, 255, 0.08), 0 12px 28px rgba(0,0,0,0.35);
+}
+
+#shop-body .shop-item--special::before {
+  width: 6px;
+  top: 6px;
+  bottom: 6px;
+  background: var(--sp-line);
+  opacity: 1;
+  box-shadow: 0 0 18px var(--sp-line);
+  animation: wfSpecialPulse 1.15s infinite;
+}
+
+#shop-body .shop-item--special .shop-name { color: var(--sp-text); letter-spacing: 0.03em; }
+#shop-body .shop-item--special .shop-cost.shop-rarity,
+#shop-body .shop-item--special .shop-cost.shop-timer {
+  border-color: rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.18);
+}
+
+#shop-body .shop-item--special .shop-cost.shop-rarity {
+  border-color: var(--sp-line);
+  color: var(--sp-text);
+}
+
+#shop-body .shop-item--special .shop-cost.shop-timer {
+  border-color: rgba(255,255,255,0.16);
+  color: rgba(255,255,255,0.92);
+  font-weight: 800;
+}
+
+/* Urgency when about to expire */
+#shop-body .shop-item--special.is-expiring::before {
+  animation: wfSpecialUrgentBar 0.7s infinite;
+}
+#shop-body .shop-item--special.is-expiring .shop-cost.shop-timer {
+  animation: wfSpecialUrgentText 0.7s infinite;
+}
+
+@keyframes wfSpecialPulse {
+  0%, 100% { opacity: 0.85; filter: brightness(1); }
+  50% { opacity: 1; filter: brightness(1.25); }
+}
+@keyframes wfSpecialUrgentBar {
+  0%, 100% { opacity: 0.75; box-shadow: 0 0 10px var(--sp-line); }
+  50% { opacity: 1; box-shadow: 0 0 22px var(--sp-line); }
+}
+@keyframes wfSpecialUrgentText {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.35); }
+}
+
+/* Rarity color mapping (requested) */
+#shop-body .shop-item--special[data-rarity="common"] {
+  --sp-line: rgba(200, 200, 200, 0.70);
+  --sp-bg1: rgba(40, 40, 55, 0.30);
+}
+#shop-body .shop-item--special[data-rarity="uncommon"] {
+  --sp-line: rgba(126, 217, 87, 0.92);
+  --sp-bg1: rgba(30, 70, 35, 0.30);
+}
+#shop-body .shop-item--special[data-rarity="rare"] {
+  /* Rare = yellow/gold */
+  --sp-line: rgba(244, 208, 103, 0.95);
+  --sp-bg1: rgba(90, 70, 20, 0.32);
+}
+#shop-body .shop-item--special[data-rarity="epic"] {
+  /* Epic = purple */
+  --sp-line: rgba(202, 169, 255, 0.95);
+  --sp-bg1: rgba(38, 24, 84, 0.42);
+}
+#shop-body .shop-item--special[data-rarity="legendary"] {
+  /* Legendary = brown/bronze */
+  --sp-line: rgba(196, 140, 86, 0.95);
+  --sp-bg1: rgba(80, 45, 18, 0.34);
+}
+#shop-body .shop-item--special[data-rarity="mythic"] {
+  /* Mythic = red */
+  --sp-line: rgba(255, 90, 90, 0.95);
+  --sp-bg1: rgba(90, 15, 18, 0.34);
+}
+
+/* If your catalog uses "purple" as a label, treat it like epic */
+#shop-body .shop-item--special[data-rarity="purple"] { --sp-line: rgba(202, 169, 255, 0.95); }
+
+
+
+
+/* =========================================================
+   EXPLORATION REPORT — bigger, cleaner text
+   ========================================================= */
+#explore-result .vf-modal__title {
+  font-size: 16px;
+}
+
+#explore-result .vf-modal__body {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+
+
+/* Keep one source of truth for the left strip width */
+:root{
+  --vf-toolbar-w: 40px; /* match your .vf-toolbar width */
+  --vf-gap: 8px;        /* match your .viewfinder-row gap */
+}
+
+/* Shift the bottom buttons + log right so they align under the viewfinder */
+.bottom-menu,
+.log-section {
+  margin-left: calc(var(--vf-toolbar-w) + var(--vf-gap));
+}
+
+/* Optional: make them fill the remaining width cleanly */
+.bottom-menu,
+.log-section {
+  width: calc(100% - (var(--vf-toolbar-w) + var(--vf-gap)));
+}
+
+
+/* Prevent mid-game horizontal shifts from notify text */
+#viewfinder{
+  width: 320px;
+  flex: 0 0 320px;
+  overflow: hidden;        /* key */
+}
+
+#notify-bar{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#notify-text{
+  display: block;
+  white-space: nowrap;     /* key */
+  overflow: hidden;        /* key */
+  text-overflow: ellipsis; /* key */
+}
+
+/* Flexbox gotcha: allow flex items to shrink instead of expanding for content */
+.viewfinder-row,
+.game-column,
+.side-panel{
+  min-width: 0;            /* key */
+}
+
+/* --- Make Tower Log always a consistent height --- */
+.log-section{
+  height: 150px;            /* tweak: 130-180 usually feels good */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Title stays fixed, body takes the remaining height */
+.log-section .log-title{
+  flex: 0 0 auto;
+}
+
+/* Body scrolls instead of making the panel grow */
+#log.log-body,
+.log-body{
+  flex: 1 1 auto;
+  min-height: 0;            /* IMPORTANT in flex layouts */
+  overflow-y: auto;
+}
+
+
+/* ===============================
+   Viewfinder Element Pages
+   =============================== */
+
+.vf-element {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, #2a1408, #120803 70%);
+  color: #f3e6d6;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 25;
+}
+
+.vf-element__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  padding-bottom: 6px;
+}
+
+.vf-element__title {
+  font-family: Cinzel, serif;
+  font-size: 16px;
+  letter-spacing: 0.6px;
+}
+
+.vf-close {
+  background: none;
+  border: none;
+  color: #f3e6d6;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.vf-element__section {
+  font-size: 12px;
+}
+
+.vf-label {
+  text-transform: uppercase;
+  font-size: 10px;
+  opacity: 0.7;
+  margin-bottom: 2px;
+}
+
+.vf-value {
+  font-weight: bold;
+}
+
+.vf-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vf-list li {
+  padding: 3px 0;
+}
+
+.vf-list li.locked {
+  opacity: 0.4;
+}
+
+.vf-list .meta {
+  display: block;
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+.vf-element__lore {
+  margin-top: auto;
+  font-style: italic;
+  font-size: 11px;
+  opacity: 0.7;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 6px;
+}
+
+
+/* Make the element window pop (border + glow) */
+.vf-element{
+  border: 1px solid rgba(255, 200, 120, 0.28);
+  border-radius: 10px;
+
+  /* subtle lift */
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(255, 180, 80, 0.10),
+    0 0 18px rgba(255, 120, 40, 0.10);
+
+  /* keep it off the edges a hair */
+  margin: 10px;
+}
+
+
+/* Element overlay window */
+.element-overlay .vf-element {
+  max-height: 320px;          /* adjust if you want taller */
+  width: 260px;               /* matches your screenshot vibe */
+  border: 1px solid rgba(255,255,255,0.18);   /* thin border */
+  box-shadow: 0 10px 22px rgba(0,0,0,0.55);
+  overflow: hidden;           /* keeps rounded edges clean */
+}
+
+/* Header stays fixed, body scrolls */
+.vf-element__scroll {
+  max-height: 270px;          /* header is above this */
+  overflow-y: auto;
+  padding-right: 6px;         /* room for scrollbar */
+}
+
+/* Optional: keep long text from forcing width */
+.vf-element, .vf-element * {
+  overflow-wrap: anywhere;
+}
+
+
+/* ===== Element window scrollbar theme (matches thin lines / font) ===== */
+.vf-element__scroll {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(255,255,255,0.22) rgba(0,0,0,0.18); /* thumb track */
+}
+
+/* Chrome / Edge / Safari */
+.vf-element__scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.vf-element__scroll::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.18);
+  border-left: 1px solid rgba(255,255,255,0.12); /* matches your dividers */
+}
+
+.vf-element__scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.22);            /* matches thin lines */
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 10px;
+}
+
+.vf-element__scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.30);
+}
+
+.vf-element__scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+
+/* ==============================================================
+   Next Goal + Equipped mini HUD
+   ============================================================== */
+.wf-mini-panel{
+  margin: 6px 0;
+  padding: 6px 8px;
+  background: rgba(10, 7, 24, 0.65);
+  border: 1px solid rgba(117, 95, 176, 0.35);
+  border-radius: 6px;
+}
+.wf-mini-title{
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  opacity: 0.9;
+  margin-bottom: 3px;
+}
+.wf-mini-line{
+  font-size: 11px;
+  line-height: 1.2;
+}
+.wf-mini-line-muted{
+  opacity: 0.75;
+  margin-top: 2px;
+}
+.wf-mini-panel.wf-mini-warn{
+  border-color: rgba(244, 208, 103, 0.60);
+  box-shadow: 0 0 10px rgba(244, 208, 103, 0.15);
+}
+.wf-mini-panel.wf-mini-danger{
+  border-color: rgba(255, 90, 90, 0.65);
+  box-shadow: 0 0 12px rgba(255, 90, 90, 0.15);
+}
+.wf-equipment-strip{
+  margin: 4px 0 8px;
+  padding: 4px 6px;
+  font-size: 10px;
+  opacity: 0.9;
+  background: rgba(8, 6, 18, 0.45);
+  border: 1px solid rgba(117, 95, 176, 0.25);
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stat-row.wf-evolve-pulse{
+  border-color: rgba(216, 140, 255, 0.75);
+  box-shadow: 0 0 12px rgba(216, 140, 255, 0.22);
+  animation: wfEvolvePulse 0.9s ease-in-out;
+}
+@keyframes wfEvolvePulse{
+  0%{ filter: brightness(1); }
+  40%{ filter: brightness(1.25); }
+  100%{ filter: brightness(1); }
+}
+
+
+/* Top-right layout: Next Goal (fixed) + Stats (flex) */
+#wf-top-right,
+.wf-top-right {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+/* Next Goal card */
+#wf-next-goal,
+.wf-next-goal {
+  flex: 0 0 120px;
+  width: 120px;
+}
+
+/* Stats block must not get crushed */
+#wf-stats,
+.wf-stats,
+#stats-panel,
+.stats-panel {
+  flex: 1 1 auto;
+  min-width: 260px;
+}
+
+
+/* Ensure stat rows always split label/value cleanly */
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.stat-row .label,
+.stat-row .stat-label {
+  flex: 0 0 120px;
+  white-space: nowrap;
+}
+
+.stat-row .value,
+.stat-row .stat-value {
+  flex: 1 1 auto;
+  text-align: right;
+  white-space: nowrap;
+}
+/* ============================================================
+   WF Top-right (Next Goal + Stats) — FIXED + flush action buttons
+   Paste at BOTTOM of styles.css (replaces the previous block)
+   ============================================================ */
+
+.side-panel.wf-hud-upgrades{
+  /* Make this column match the viewfinder column height */
+  display: flex !important;
+  flex-direction: column !important;
+  align-self: stretch !important;
+  min-height: 0 !important;
+}
+
+/* Top row: Next Goal (fixed width) + Stats (flex) */
+.side-panel.wf-hud-upgrades .side-top{
+  display: flex !important;
+  gap: 10px !important;
+  align-items: flex-start !important;
+  margin-bottom: 0 !important; /* IMPORTANT: no extra vertical push */
+}
+
+/* Next Goal width: about one button-column wide (NOT huge) */
+.side-panel.wf-hud-upgrades .side-hints{
+  flex: 0 0 150px !important;   /* tweak 140–160 if you want */
+  max-width: 150px !important;
+  min-width: 150px !important;
+}
+
+/* Stats take the remaining width */
+.side-panel.wf-hud-upgrades .side-stats{
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+/* If any old wrapper exists, neutralize it */
+.side-panel.wf-hud-upgrades .stats-panel{
+  min-width: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Next Goal card: solid, readable */
+.side-panel.wf-hud-upgrades #next-goal{
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 10px 10px 9px !important;
+  border-radius: 8px !important;
+  background: rgba(0,0,0,0.28) !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35) !important;
+}
+
+.side-panel.wf-hud-upgrades #next-goal .next-goal-title{
+  font-size: 12px !important;
+  letter-spacing: 0.6px !important;
+  text-transform: uppercase !important;
+  opacity: 0.92 !important;
+  margin-bottom: 8px !important;
+}
+
+.side-panel.wf-hud-upgrades #next-goal .next-goal-line{
+  font-size: 12px !important;
+  line-height: 1.25 !important;
+  opacity: 0.95 !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+.side-panel.wf-hud-upgrades #next-goal .next-goal-line + .next-goal-line{
+  margin-top: 8px !important;
+  opacity: 0.85 !important;
+}
+
+/* Stats: tighten height (so the column isn't too tall) */
+.side-panel.wf-hud-upgrades .stat-row{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+
+  padding: 2px 7px !important;      /* tighter */
+  border-radius: 6px !important;
+  background: rgba(0,0,0,0.16) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+
+  margin-bottom: 2px !important;     /* tighter */
+}
+
+.side-panel.wf-hud-upgrades .stat-row span:first-child{
+  font-size: 10px !important;        /* smaller label */
+  letter-spacing: 0.25px !important;
+  opacity: 0.85 !important;
+  white-space: nowrap !important;
+}
+
+.side-panel.wf-hud-upgrades .stat-row span:last-child{
+  font-size: 11px !important;        /* smaller value */
+  font-variant-numeric: tabular-nums !important;
+  white-space: nowrap !important;
+  text-align: right !important;
+}
+
+/* ✅ Key fix: keep buttons FLUSH with viewfinder bottom */
+.side-panel.wf-hud-upgrades #action-grid{
+  margin-top: auto !important;  /* pushes grid to bottom of the side-panel */
+  margin-bottom: 0 !important;
+}
+
+
+
+/* ============================================================
+   SPAWN COMIC VIBE (EXPERIMENT) — glow + richer contrast
+   Paste at bottom of styles.css
+   ============================================================ */
+
+:root{
+  --wf-ink: rgba(8, 6, 18, 0.78);
+  --wf-ink2: rgba(0, 0, 0, 0.42);
+  --wf-rim: rgba(170, 120, 255, 0.28);
+  --wf-rim2: rgba(80, 170, 255, 0.14);
+  --wf-glow: rgba(165, 120, 255, 0.40);
+  --wf-glow2: rgba(70, 180, 255, 0.18);
+  --wf-line: rgba(255,255,255,0.10);
+  --wf-line2: rgba(255,255,255,0.06);
+}
+
+/* overall panel mood */
+.app{
+  /* subtle darkening + vignette */
+  background:
+    radial-gradient(1200px 700px at 55% 35%, rgba(140,90,255,0.10), transparent 55%),
+    radial-gradient(900px 650px at 35% 70%, rgba(70,180,255,0.06), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.28));
+}
+
+/* right side panel: ink + rimlight */
+.side-panel{
+  background:
+    radial-gradient(500px 420px at 20% 10%, rgba(170,120,255,0.12), transparent 55%),
+    radial-gradient(650px 520px at 80% 35%, rgba(70,180,255,0.06), transparent 58%),
+    linear-gradient(180deg, rgba(6,5,16,0.55), rgba(6,5,16,0.78)) !important;
+  border-left: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Next Goal card: “comic panel” */
+.side-panel.wf-hud-upgrades #next-goal{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.05), transparent 40%),
+    radial-gradient(200px 160px at 20% 20%, rgba(170,120,255,0.18), transparent 60%),
+    radial-gradient(260px 200px at 90% 70%, rgba(70,180,255,0.10), transparent 62%),
+    var(--wf-ink) !important;
+
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.48),
+    0 0 0 1px rgba(0,0,0,0.35) inset,
+    0 0 18px var(--wf-glow2) !important;
+}
+
+/* title gets a faint glow, feels like “inked” */
+.side-panel.wf-hud-upgrades #next-goal .next-goal-title{
+  text-shadow:
+    0 0 10px rgba(165,120,255,0.30),
+    0 0 18px rgba(70,180,255,0.18);
+}
+
+/* stats pills: glossy + rim glow */
+.side-panel.wf-hud-upgrades .stat-row{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.05), transparent 40%),
+    var(--wf-ink2) !important;
+
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow:
+    0 6px 14px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(0,0,0,0.26) inset;
+}
+
+.side-panel.wf-hud-upgrades .stat-row:hover{
+  border-color: rgba(255,255,255,0.14) !important;
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.42),
+    0 0 14px rgba(165,120,255,0.22),
+    0 0 22px rgba(70,180,255,0.12);
+}
+
+/* make values pop a bit */
+.side-panel.wf-hud-upgrades .stat-row span:last-child{
+  text-shadow: 0 0 10px rgba(0,0,0,0.35);
+}
+
+/* Action buttons: “rune glow” on hover */
+#action-grid button{
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    0 8px 18px rgba(0,0,0,0.40),
+    0 0 0 1px rgba(0,0,0,0.30) inset;
+}
+
+#action-grid button:hover{
+  box-shadow:
+    0 10px 24px rgba(0,0,0,0.46),
+    0 0 16px rgba(165,120,255,0.25),
+    0 0 26px rgba(70,180,255,0.14);
+  border-color: rgba(255,255,255,0.16);
+  transform: translateY(-1px);
+}
+
+/* tiny “electric” outline for the currently hovered left icon column too */
+.left-menu button:hover{
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.14),
+    0 0 18px rgba(165,120,255,0.25),
+    0 0 26px rgba(70,180,255,0.14);
+}
+
+
+
+/* If you later set a class on the corruption row, it can glow red.
+   For now this just provides the style hook: */
+.side-panel.wf-hud-upgrades .stat-row.is-corruption{
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.42),
+    0 0 18px rgba(255,70,70,0.20),
+    0 0 28px rgba(255,70,70,0.10) !important;
+  border-color: rgba(255,120,120,0.18) !important;
+}
+
+
+/* ============================================================
+   WF Comic Panel Treatment (CSS-only, subtle)
+   - Diagonal ink hatching texture
+   - Sharper black outline
+   - Corruption highlight hook: .is-corruption / .has-corruption
+   ============================================================ */
+
+.side-panel.wf-hud-upgrades #next-goal,
+.side-panel.wf-hud-upgrades .stat-row,
+#action-grid button{
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid rgba(0,0,0,0.55);
+  outline-offset: -1px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 10px 26px rgba(0,0,0,0.35);
+}
+
+/* Ink-hatching overlay */
+.side-panel.wf-hud-upgrades #next-goal::before,
+.side-panel.wf-hud-upgrades .stat-row::before,
+#action-grid button::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.20;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255,255,255,0.06) 0px,
+      rgba(255,255,255,0.06) 2px,
+      rgba(0,0,0,0.00) 2px,
+      rgba(0,0,0,0.00) 7px
+    );
+  mix-blend-mode: overlay;
+}
+
+/* Slightly tighter / smaller type only for RIGHT stats column */
+.side-panel.wf-hud-upgrades .stats-panel .stat-row span:first-child{
+  font-size: 10px;
+  letter-spacing: 0.25px;
+}
+.side-panel.wf-hud-upgrades .stats-panel .stat-row span:last-child{
+  font-size: 11px;
+}
+
+/* Corruption row styling (hooked by JS) */
+.side-panel.wf-hud-upgrades .stat-row.is-corruption{
+  border-color: rgba(180, 70, 255, 0.28) !important;
+}
+.side-panel.wf-hud-upgrades .stat-row.is-corruption.has-corruption{
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 10px 26px rgba(0,0,0,0.35),
+    0 0 18px rgba(180, 70, 255, 0.22);
+}
+
+
+/* ===== Quick panel under Next Goal ===== */
+.side-panel.wf-hud-upgrades #quick-panel{
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 8px;
+  padding: 9px 10px 9px;
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.05), transparent 40%),
+    radial-gradient(210px 160px at 20% 25%, rgba(170,120,255,0.12), transparent 60%),
+    rgba(0,0,0,0.24);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.40),
+    0 0 0 1px rgba(0,0,0,0.28) inset;
+  position: relative;
+  overflow: hidden;
+}
+
+.side-panel.wf-hud-upgrades #quick-panel::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:0.18;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255,255,255,0.06) 0px,
+      rgba(255,255,255,0.06) 2px,
+      rgba(0,0,0,0.00) 2px,
+      rgba(0,0,0,0.00) 7px
+    );
+  mix-blend-mode: overlay;
+}
+
+.side-panel.wf-hud-upgrades #quick-panel .quick-title{
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin-bottom: 6px;
+  text-shadow: 0 0 10px rgba(165,120,255,0.25);
+}
+
+.side-panel.wf-hud-upgrades #quick-panel .quick-line{
+  font-size: 11px;
+  line-height: 1.25;
+  opacity: 0.92;
+}
+
+.side-panel.wf-hud-upgrades #quick-panel .quick-line + .quick-line{
+  margin-top: 6px;
+  opacity: 0.82;
+}
+
+
+/* ===== Extra comic punch: halftone + rimlight + sharper panel edges ===== */
+
+/* Halftone dots overlay (subtle) on Next Goal + Quick */
+.side-panel.wf-hud-upgrades #next-goal::after,
+.side-panel.wf-hud-upgrades #quick-panel::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:0.10;
+  background-image: radial-gradient(rgba(255,255,255,0.35) 1px, transparent 1px);
+  background-size: 6px 6px;
+  mix-blend-mode: overlay;
+}
+
+/* Stronger ink outline */
+.side-panel.wf-hud-upgrades #next-goal,
+.side-panel.wf-hud-upgrades #quick-panel,
+.side-panel.wf-hud-upgrades .stat-row,
+#action-grid button{
+  outline: 2px solid rgba(0,0,0,0.65);
+  outline-offset: -1px;
+}
+
+/* Rim light on hover */
+.side-panel.wf-hud-upgrades #next-goal:hover,
+.side-panel.wf-hud-upgrades #quick-panel:hover{
+  box-shadow:
+    0 14px 30px rgba(0,0,0,0.48),
+    0 0 18px rgba(165,120,255,0.22),
+    0 0 26px rgba(70,180,255,0.12);
+}
+
+/* Slight neon edge to action buttons on hover */
+#action-grid button:hover{
+  box-shadow:
+    0 12px 28px rgba(0,0,0,0.50),
+    0 0 18px rgba(165,120,255,0.22),
+    0 0 28px rgba(70,180,255,0.12);
+}
+
+
+/* ========= Inventory Item Card (click an item row) ========= */
+#inventory-window{ position: relative; }
+
+.inv-detail-overlay{
+  position:absolute;
+  inset: 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(0,0,0,0.55);
+  border-radius: 14px;
+  z-index: 60;
+}
+
+.inv-detail-overlay.hidden{ display:none; }
+
+.inv-card{
+  width: min(560px, 96%);
+  background: rgba(22, 16, 10, 0.96);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 18px 42px rgba(0,0,0,0.45);
+}
+
+.inv-card-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  margin-bottom: 10px;
+}
+
+.inv-card-title{
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.inv-card-meta{
+  opacity: 0.75;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.inv-card-bonuses{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+  padding: 6px 0 10px;
+}
+
+.inv-bonus-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 6px 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  background: rgba(0,0,0,0.18);
+}
+
+.inv-bonus-key{
+  text-transform: capitalize;
+  opacity: 0.9;
+}
+
+.inv-bonus-val{
+  font-variant-numeric: tabular-nums;
+  opacity: 0.95;
+}
+
+.inv-card-actions{
+  display:flex;
+  justify-content:flex-end;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.10);
+}
+
+/* ==========================================================
+   PASS 41 — THE NINTH SPIRE WORLD / MODULAR GAME UI
+   ========================================================== */
+.ns-world-btn{border-color:#6f55a3!important;color:#c9afe9!important}
+.ns-world-overlay{position:absolute;inset:0;z-index:180;background:rgba(5,4,8,.96);display:grid;place-items:center;padding:10px}
+.ns-world-overlay.hidden{display:none}
+.ns-world-window{width:min(920px,96vw);height:min(650px,90vh);display:grid;grid-template-rows:auto auto 1fr;border:1px solid #4a356c;background:radial-gradient(circle at 70% 0,#1b1026 0,transparent 30%),#09070d;color:#d9cfe1;box-shadow:0 30px 90px #000}
+.ns-world-window>header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #281f33}
+.ns-world-window>header small,.ns-card small{font-size:8px;letter-spacing:.14em;color:#9e75d0;font-weight:800}
+.ns-world-window h2,.ns-card h3{font-family:Georgia,serif;margin:2px 0;color:#efe7f4}
+.ns-world-window>header button,.ns-world-window nav button,.ns-actions button,.ns-floor-row button{background:#151020;color:#cdbbe0;border:1px solid #3b2c50;padding:8px 11px}
+.ns-world-window nav{display:flex;gap:4px;padding:7px 10px;border-bottom:1px solid #211927;overflow:auto}
+.ns-world-window nav button.active{border-color:#8a63c4;color:#fff;background:#241635}
+.ns-world-window main{overflow:auto;padding:12px}
+.ns-card{border:1px solid #2e243b;background:linear-gradient(145deg,#110c18,#0a080e);padding:14px;margin-bottom:10px}
+.ns-hero{background:radial-gradient(circle at 85% 30%,rgba(118,71,168,.2),transparent 30%),#0d0912}
+.ns-hero h3{font-size:28px}.ns-stats{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.ns-stats>*{border:1px solid #332641;padding:6px 8px;font-size:9px}
+.ns-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.ns-grid .ns-card strong{font:28px Georgia,serif}.ns-grid h4{font-size:11px;margin:5px 0;color:#9c8fa4}
+.ns-combat{display:grid;grid-template-columns:1fr 48px 1fr;gap:8px;align-items:center}.ns-vs{text-align:center;font-weight:900;color:#7b5b9f}
+.ns-hp{height:8px;background:#251522;border:1px solid #3d263a}.ns-hp i{display:block;height:100%;background:linear-gradient(90deg,#622b47,#b84e68)}.ns-hp.enemy i{background:linear-gradient(90deg,#593331,#bb5d46)}
+.ns-actions{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:10px}.ns-actions button:hover,.ns-floor-row button:hover{border-color:#8a63c4}
+.ns-battlelog{max-height:160px;overflow:auto}.ns-battlelog p,.ns-wire p{margin:4px 0;font-size:10px;color:#b6a9be}
+.ns-floor-row{display:flex;align-items:center;gap:7px}.ns-floor-row b{min-width:40px;text-align:center;font:24px Georgia,serif}
+.ns-table{border:1px solid #2e243b}.ns-table>div{display:grid;grid-template-columns:40px 1.4fr repeat(4,.65fr);gap:6px;padding:8px;border-bottom:1px solid #201925;font-size:9px}.ns-table>div:first-child{color:#7f7189}
+.ns-offline-note{font-size:8px;color:#75697b}.ns-wire article{display:grid;grid-template-columns:150px 1fr;gap:10px;border-bottom:1px solid #201925;padding:7px}.ns-wire time{font-size:8px;color:#6f6474}
+.ns-collection{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.ns-collection article{display:grid;gap:3px;padding:8px;border:1px solid #2c2434;background:#0b090e}.ns-collection article span{font-size:7px;color:#776d7d}.ns-collection .rarity-rare{border-color:#5f588c}.ns-collection .rarity-epic{border-color:#7553a4}.ns-collection .rarity-legendary{border-color:#a77c38;box-shadow:inset 0 0 18px rgba(184,130,49,.06)}
+@media(max-width:700px){.ns-world-window{height:94vh}.ns-grid{grid-template-columns:1fr 1fr}.ns-combat{grid-template-columns:1fr}.ns-vs{display:none}.ns-actions{grid-template-columns:1fr 1fr}.ns-table>div{grid-template-columns:30px 1.4fr repeat(2,.6fr)}.ns-table>div>*:nth-child(5),.ns-table>div>*:nth-child(6){display:none}.ns-collection{grid-template-columns:1fr}.ns-wire article{grid-template-columns:1fr}}
+
+/* PASS 42 — MASTER WIZARD REALM */
+.ns-master-hud{margin-top:8px;padding:7px 8px;border:1px solid #403452;background:#100d19;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;font-size:9px;color:#9f96ad}.ns-master-hud span{padding:4px 2px;text-align:center;background:#181321;border:1px solid #2b2338}.ns-master-hud b{display:block;color:#e5d9f4;font-size:11px;margin-top:2px}.ns-master-title{background:linear-gradient(135deg,#181124,#100c17)!important;border-color:#55426c!important}.ns-master-title h3{font-family:Georgia,serif;letter-spacing:.04em}.ns-muted{opacity:.68}.ns-exp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}.ns-destination,.ns-doctrines button,.ns-sanctum-grid button{background:#15101d;border:1px solid #433550;color:#ddd4e6;padding:12px;text-align:left;min-height:95px}.ns-destination:hover,.ns-doctrines button:hover,.ns-sanctum-grid button:hover{border-color:#8e72b2;background:#1c1528}.ns-destination small,.ns-doctrines small{display:block;color:#a68bc8;font-size:9px;letter-spacing:.08em}.ns-destination b,.ns-doctrines b,.ns-sanctum-grid b{display:block;margin:5px 0;color:#f0e6fa}.ns-destination span,.ns-doctrines span,.ns-sanctum-grid span{display:block;font-size:11px;line-height:1.4;color:#a9a0b2}.ns-destination.locked{opacity:.28}.ns-doctrines{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.ns-doctrines button{min-height:88px}.ns-doctrines button.active{outline:1px solid #b99ae1;background:#241a32}.ns-progress{height:8px;background:#09070d;border:1px solid #352b41;margin-top:10px}.ns-progress i{display:block;height:100%;background:linear-gradient(90deg,#50346e,#a27ac9)}.ns-exp-scene{min-height:150px;margin:10px 0;padding:18px;border:1px solid #4b3b5c;background:radial-gradient(circle at 50% 0,#261b31,#0e0b13 70%);text-align:center}.ns-exp-scene small{color:#9b83b8;letter-spacing:.12em}.ns-exp-scene h3{font-family:Georgia,serif;font-size:20px}.ns-spell-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.ns-spell-grid .unknown{opacity:.58}.ns-sanctum-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}@media(max-width:760px){.ns-exp-grid{grid-template-columns:1fr}.ns-doctrines{grid-template-columns:1fr 1fr}.ns-spell-grid,.ns-sanctum-grid{grid-template-columns:1fr}}
+
+/* ============================================================
+   PASS 43 — BROWSER-FIRST MASTER LAYOUT / PROLOGUE / LOG FIX
+   ============================================================ */
+:root{
+  --ns-shell-max: 1120px;
+  --ns-gold: #c59a49;
+  --ns-violet: #7e62b5;
+  --ns-ink: #08060d;
+  --ns-paper: #e8dfd1;
+}
+
+html, body{
+  min-width: 0;
+  min-height: 100%;
+  overflow: auto !important;
+  background:
+    radial-gradient(900px 540px at 50% -10%, rgba(95,61,134,.16), transparent 62%),
+    #07050d;
+}
+
+.frame{
+  box-sizing: border-box;
+  width: min(var(--ns-shell-max), calc(100vw - 24px)) !important;
+  max-width: var(--ns-shell-max);
+  margin: 12px auto !important;
+  padding: 12px !important;
+}
+
+#screen-game{
+  min-height: min(720px, calc(100vh - 24px));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#screen-game.hidden{display:none!important}
+
+#screen-game .main-layout{
+  display: grid !important;
+  grid-template-columns: 376px minmax(0, 1fr) !important;
+  gap: 14px !important;
+  align-items: stretch;
+}
+
+#screen-game .game-column,
+#screen-game .side-panel{
+  width: auto !important;
+  min-width: 0 !important;
+}
+
+#screen-game .side-panel.wf-hud-upgrades{
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  border: 1px solid rgba(117,95,176,.18);
+  background:
+    radial-gradient(520px 300px at 10% 0%, rgba(113,77,162,.15), transparent 58%),
+    linear-gradient(180deg, rgba(10,7,17,.88), rgba(6,5,10,.82)) !important;
+}
+
+#screen-game .side-panel.wf-hud-upgrades .side-top{
+  display: grid !important;
+  grid-template-columns: minmax(210px, .9fr) minmax(260px, 1.1fr) !important;
+  gap: 10px !important;
+  align-items: start !important;
+  padding: 10px 10px 6px;
+}
+
+#screen-game .side-panel.wf-hud-upgrades .side-hints{
+  min-width: 0 !important;
+  max-width: none !important;
+  width: auto !important;
+  flex: unset !important;
+}
+
+#screen-game .side-panel.wf-hud-upgrades .side-stats,
+#screen-game .side-panel.wf-hud-upgrades .stats-panel{
+  min-width: 0 !important;
+  width: auto !important;
+  flex: unset !important;
+}
+
+#screen-game .side-panel.wf-hud-upgrades .stat-row{
+  min-height: 22px;
+  box-sizing: border-box;
+  padding: 3px 8px !important;
+}
+
+#screen-game .side-panel.wf-hud-upgrades .stat-row span:first-child{
+  flex: 0 0 auto !important;
+  min-width: 42px;
+}
+#screen-game .side-panel.wf-hud-upgrades .stat-row span:last-child{
+  flex: 1 1 auto !important;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#screen-game .side-panel.wf-hud-upgrades #action-grid{
+  margin: auto 10px 10px !important;
+  grid-template-columns: repeat(4, minmax(0,1fr)) !important;
+  gap: 6px !important;
+}
+#screen-game #action-grid button{
+  min-height: 44px;
+  padding: 7px 6px;
+  font-size: 11px;
+  line-height: 1.15;
+}
+
+#screen-game .bottom-menu{
+  margin-top: 9px;
+}
+
+#screen-game .log-section{
+  height: 128px !important;
+  min-height: 128px;
+  margin-top: 7px;
+  overflow: hidden;
+}
+#screen-game .log-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+#screen-game .log-network-note{
+  font-size: 8px;
+  letter-spacing: .12em;
+  color: #776889;
+  font-weight: 700;
+}
+#screen-game .log-body{
+  overflow-y:auto !important;
+  overscroll-behavior:contain;
+  padding-right:6px;
+}
+
+/* Intro — a real prologue rather than a paragraph screen. */
+#screen-intro{
+  padding: 0 !important;
+  overflow: hidden;
+  background:#05040a;
+}
+#screen-intro .top-bar{display:none}
+#screen-intro .menu-main.intro-stage{padding:0}
+.intro-scene{
+  position:relative;
+  min-height:min(700px, calc(100vh - 28px));
+  display:grid;
+  align-items:end;
+  overflow:hidden;
+  background:#05040a;
+}
+.intro-scene__art{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, rgba(5,4,10,.92) 0%, rgba(5,4,10,.64) 45%, rgba(5,4,10,.32) 100%),
+    url('tower_room.jpg') center/cover no-repeat;
+  filter:saturate(.66) contrast(1.16) brightness(.62);
+  transform:scale(1.02);
+}
+.intro-scene__veil{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(600px 420px at 75% 42%, rgba(113,67,150,.12), transparent 65%),
+    linear-gradient(180deg, rgba(0,0,0,.14), rgba(0,0,0,.86) 92%);
+}
+.intro-scene__content{
+  position:relative;
+  z-index:2;
+  width:min(670px, 88%);
+  padding:clamp(28px, 5vw, 64px);
+  color:var(--ns-paper);
+}
+.intro-kicker{
+  color:var(--ns-gold);
+  font:800 10px/1.2 system-ui,sans-serif;
+  letter-spacing:.22em;
+  margin-bottom:12px;
+}
+.intro-scene h1{
+  margin:0 0 16px;
+  max-width:650px;
+  font:700 clamp(32px, 5vw, 62px)/.98 Georgia,serif;
+  letter-spacing:-.025em;
+  text-shadow:0 5px 24px #000;
+}
+.intro-lede{
+  max-width:620px;
+  margin:0 0 20px;
+  font:18px/1.45 Georgia,serif;
+  color:#cfc4d5;
+}
+.intro-lede span{color:#fff}
+.intro-chronicle{
+  max-width:610px;
+  margin:0 0 22px;
+  padding:14px 16px;
+  border-left:2px solid #76559e;
+  background:linear-gradient(90deg,rgba(19,13,27,.82),rgba(10,8,14,.26));
+  font:13px/1.55 system-ui,sans-serif;
+  color:#b7adbc;
+}
+.intro-vow{
+  display:grid;
+  gap:5px;
+  max-width:610px;
+  padding:13px 0;
+  border-top:1px solid rgba(197,154,73,.28);
+  border-bottom:1px solid rgba(197,154,73,.18);
+}
+.intro-vow span{
+  color:var(--ns-gold);
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.18em;
+}
+.intro-vow strong{
+  font:15px/1.4 Georgia,serif;
+  font-weight:400;
+}
+.intro-enter{
+  margin:22px 0 0 !important;
+  min-width:190px;
+  padding:11px 18px;
+  border-color:#8a6d35;
+  background:linear-gradient(#2c2334,#16101f);
+  font:800 10px/1 system-ui,sans-serif;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.intro-foot{margin-top:9px;font-size:9px;letter-spacing:.08em;color:#6f6574}
+
+/* Browser embed behavior: preserve game proportions without crushing panels. */
+@media (max-width: 980px){
+  .frame{width:min(760px, calc(100vw - 12px)) !important;margin:6px auto!important}
+  #screen-game{overflow:visible}
+  #screen-game .main-layout{grid-template-columns:1fr!important}
+  #screen-game .game-column{justify-self:center}
+  #screen-game .side-panel.wf-hud-upgrades .side-top{grid-template-columns:1fr 1fr!important}
+  #screen-game .side-panel.wf-hud-upgrades #action-grid{grid-template-columns:repeat(4,1fr)!important}
+}
+@media (max-width: 620px){
+  .frame{width:100%!important;margin:0!important;border-radius:0!important;border-left:0;border-right:0}
+  #screen-game .side-panel.wf-hud-upgrades .side-top{grid-template-columns:1fr!important}
+  #screen-game .side-panel.wf-hud-upgrades #action-grid{grid-template-columns:repeat(2,1fr)!important}
+  #screen-game .viewfinder-row{transform-origin:top center}
+  #screen-game .log-section{height:150px!important}
+  .intro-scene__content{width:auto;padding:24px 20px}
+  .intro-scene h1{font-size:38px}
+  .intro-lede{font-size:16px}
+  #screen-game .log-network-note{display:none}
+}
+
+/* ============================================================
+   PASS 44 — THE ILLUMINATED GRIMOIRE UI
+   Late-70s through 90s painted-fantasy mood without copying any
+   one artist: paperback dark fantasy, old RPG manuals, brass,
+   vellum, jewel tones, hand-inked borders, restrained arcane glow.
+   ============================================================ */
+:root{
+  --g-bg:#08070b;
+  --g-night:#0f1018;
+  --g-panel:#121018;
+  --g-panel-hi:#1c1723;
+  --g-ink:#070609;
+  --g-ivory:#eee4cf;
+  --g-parchment:#cdbf9d;
+  --g-muted:#8f8679;
+  --g-brass:#a8792d;
+  --g-gold:#d7ad4b;
+  --g-gold-hi:#f2d887;
+  --g-blood:#7d2631;
+  --g-garnet:#a13b47;
+  --g-violet:#6f5599;
+  --g-violet-hi:#a285d1;
+  --g-emerald:#4c8d6e;
+  --g-blue:#4f7292;
+  --g-line:rgba(202,160,69,.28);
+  --g-shadow:0 18px 60px rgba(0,0,0,.62);
+}
+
+html,body{
+  background:
+    radial-gradient(1000px 620px at 50% -16%, rgba(126,80,148,.11), transparent 67%),
+    radial-gradient(750px 500px at 11% 112%, rgba(114,39,46,.12), transparent 72%),
+    linear-gradient(180deg,#09080d,#050509 70%,#08060a);
+  color:var(--g-ivory);
+  font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.22;
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 1px,transparent 1px 3px),
+    radial-gradient(circle at 50% 20%,transparent 0 42%,rgba(0,0,0,.28) 100%);
+  mix-blend-mode:soft-light;
+}
+
+.frame{
+  border:1px solid rgba(206,162,69,.42)!important;
+  border-radius:3px!important;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.025),transparent 14%),
+    radial-gradient(650px 360px at 80% -5%,rgba(84,53,111,.18),transparent 70%),
+    linear-gradient(180deg,#15111a 0,#0a090e 18%,#08070b 100%)!important;
+  box-shadow:
+    0 0 0 1px #050407,
+    inset 0 0 0 1px rgba(247,213,132,.055),
+    inset 0 0 55px rgba(0,0,0,.38),
+    var(--g-shadow)!important;
+}
+.frame::before,.frame::after{
+  content:"";position:absolute;width:26px;height:26px;pointer-events:none;opacity:.7;
+}
+.frame::before{left:5px;top:5px;border-left:1px solid var(--g-gold);border-top:1px solid var(--g-gold)}
+.frame::after{right:5px;bottom:5px;border-right:1px solid var(--g-gold);border-bottom:1px solid var(--g-gold)}
+
+.top-bar{
+  position:relative;
+  min-height:50px;
+  margin:-3px -3px 10px!important;
+  padding:7px 12px 10px;
+  border-bottom:1px solid rgba(202,160,69,.34);
+  background:
+    linear-gradient(90deg,rgba(125,38,49,.1),transparent 22%,transparent 75%,rgba(94,64,123,.1)),
+    linear-gradient(180deg,rgba(255,255,255,.025),rgba(0,0,0,.1));
+}
+.top-bar::after{
+  content:"◆";position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);
+  padding:0 8px;background:#0a090e;color:#9f7934;font-size:9px;line-height:12px;
+}
+.game-name{
+  font-family:"IM Fell English SC","Cinzel",serif!important;
+  font-size:24px!important;font-weight:400!important;letter-spacing:.025em;
+  color:#f1e5cb;text-shadow:0 1px 0 #000,0 0 18px rgba(210,169,85,.09);
+}
+.subtitle,.activity-label,.tower-clock{font-family:"Cormorant Garamond",Georgia,serif!important}
+.subtitle{font-size:12px!important;color:#a79888!important;opacity:1!important;font-style:italic;letter-spacing:.025em}
+.room-label{font-family:"Cinzel",serif!important;color:#d5c6ae;font-size:12px!important;letter-spacing:.08em;text-transform:uppercase}
+.activity-label{color:#8c7d91!important;font-style:italic;font-size:11px!important}
+.tower-clock{font-size:12px!important;color:#cdbf9d!important;letter-spacing:.035em}
+
+/* Viewfinder becomes an old illuminated cabinet / scrying window. */
+#viewfinder{
+  position:relative;
+  border:1px solid rgba(196,145,55,.55)!important;
+  border-radius:2px!important;
+  background:#030306!important;
+  box-shadow:
+    0 0 0 4px #0a080c,
+    0 0 0 5px rgba(188,139,55,.24),
+    inset 0 0 42px rgba(0,0,0,.75),
+    0 14px 35px rgba(0,0,0,.45);
+}
+#viewfinder::before{
+  content:"SCRYING CHAMBER";position:absolute;z-index:20;right:7px;top:34px;
+  color:rgba(224,188,104,.55);font:600 7px/1 "Cinzel",serif;letter-spacing:.15em;
+  pointer-events:none;text-shadow:0 1px #000;
+}
+#gameCanvas{border:0!important;border-radius:0!important;filter:saturate(.88) contrast(1.06) brightness(.94)}
+.notify-bar{
+  height:28px;box-sizing:border-box;margin:0!important;border-radius:0!important;
+  border-bottom:1px solid rgba(181,131,57,.28)!important;
+  background:linear-gradient(180deg,rgba(15,12,17,.96),rgba(5,4,7,.95))!important;
+  color:#cfbea3;font-family:"Cormorant Garamond",Georgia,serif;font-size:12px;font-style:italic;
+}
+.notify-text::before{content:"✦";color:#9b7435;margin-right:7px;font-style:normal}
+
+.vf-toolbar--spells{
+  width:44px!important;padding:7px 3px!important;margin-top:28px!important;
+  border-radius:2px!important;border:1px solid rgba(178,133,53,.35)!important;
+  background:linear-gradient(180deg,#100d12,#070609)!important;
+  box-shadow:inset 0 0 22px #000,0 9px 25px rgba(0,0,0,.35);
+}
+.spell-btn{
+  position:relative;width:34px!important;height:34px!important;border-radius:50%!important;
+  border:1px solid rgba(208,173,91,.24)!important;
+  background:radial-gradient(circle at 38% 28%,rgba(255,255,255,.08),rgba(12,9,13,.9) 58%,#050406)!important;
+  box-shadow:inset 0 0 0 2px rgba(0,0,0,.55),0 2px 8px #000!important;
+  filter:saturate(.8);
+}
+.spell-btn:hover{transform:translateY(-1px);border-color:rgba(241,208,122,.68)!important;box-shadow:0 0 12px rgba(218,177,81,.17),inset 0 0 0 2px #08060a!important}
+.spell-btn:nth-child(1){text-shadow:0 0 8px #d95132}.spell-btn:nth-child(2){text-shadow:0 0 8px #78c5e8}.spell-btn:nth-child(3){text-shadow:0 0 8px #88ab4a}.spell-btn:nth-child(4){text-shadow:0 0 8px #4b8dc0}.spell-btn:nth-child(5){text-shadow:0 0 8px #ddbf63}.spell-btn:nth-child(6){text-shadow:0 0 8px #ae8e6c}
+
+/* Right-hand grimoire panel */
+#screen-game .side-panel.wf-hud-upgrades{
+  border:1px solid rgba(183,135,54,.33)!important;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.018),transparent 6%),
+    radial-gradient(420px 250px at 12% 0%,rgba(108,60,124,.16),transparent 72%),
+    linear-gradient(180deg,#131018,#09080c)!important;
+  box-shadow:inset 0 0 40px rgba(0,0,0,.35),0 10px 28px rgba(0,0,0,.28);
+}
+.panel-heading{
+  display:flex;align-items:center;gap:9px;color:#ad8845;
+  font:700 8px/1 "Cinzel",serif;letter-spacing:.16em;text-transform:uppercase;
+  margin:0 0 6px;padding:1px 0 5px;
+}
+.panel-heading i{height:1px;flex:1;background:linear-gradient(90deg,rgba(183,137,57,.5),transparent)}
+.side-stats>.panel-heading{grid-column:1/-1}
+.action-heading{margin:3px 10px -1px!important}.lower-heading{margin:8px 2px 0!important}
+
+#screen-game .side-panel.wf-hud-upgrades #next-goal,
+#screen-game .side-panel.wf-hud-upgrades #quick-panel{
+  border:1px solid rgba(129,91,151,.42)!important;border-radius:2px!important;
+  background:
+    linear-gradient(135deg,rgba(123,73,140,.12),transparent 38%),
+    linear-gradient(180deg,#17121c,#0d0b11)!important;
+  box-shadow:inset 0 0 20px rgba(0,0,0,.35),0 7px 16px rgba(0,0,0,.2)!important;
+}
+#next-goal .next-goal-title,#quick-panel .quick-title{
+  font-family:"Cinzel",serif!important;letter-spacing:.13em!important;color:#c8a85d!important;font-size:9px!important;
+}
+#next-goal .next-goal-line,#quick-panel .quick-line{font-family:"Cormorant Garamond",Georgia,serif!important;font-size:12px!important;line-height:1.3!important;color:#c9bdc9!important}
+
+#screen-game .side-panel.wf-hud-upgrades .side-stats{display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important}
+#screen-game .side-panel.wf-hud-upgrades .stat-row{
+  min-height:27px!important;border:1px solid rgba(166,127,62,.18)!important;border-radius:1px!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.018),rgba(0,0,0,.12))!important;
+  box-shadow:inset 3px 0 0 rgba(99,77,118,.18)!important;
+  font-family:"Cormorant Garamond",Georgia,serif!important;
+}
+#screen-game .side-panel.wf-hud-upgrades .stat-row span:first-child{
+  min-width:auto!important;color:#897d73!important;font:600 9px/1 "Cinzel",serif!important;letter-spacing:.045em;text-transform:uppercase;
+}
+#screen-game .side-panel.wf-hud-upgrades .stat-row span:last-child{
+  color:#e3d6c3!important;font-size:13px!important;font-weight:700!important;text-align:right;
+}
+.stat-power{box-shadow:inset 3px 0 0 rgba(153,62,58,.6)!important}.stat-insight{box-shadow:inset 3px 0 0 rgba(81,111,150,.62)!important}.stat-vitality{box-shadow:inset 3px 0 0 rgba(67,126,89,.62)!important}.stat-corruption{box-shadow:inset 3px 0 0 rgba(121,65,140,.72)!important}.stat-health{box-shadow:inset 3px 0 0 rgba(143,45,54,.75)!important}.stat-energy{box-shadow:inset 3px 0 0 rgba(190,151,57,.68)!important}.stat-knowledge{box-shadow:inset 3px 0 0 rgba(109,83,148,.68)!important}
+
+/* Main verbs: old engraved command plaques, not generic web buttons. */
+#screen-game #action-grid button,.small-btn,.primary-btn,.lore-close,.wf-panel-close{
+  border-radius:1px!important;
+  border:1px solid rgba(178,130,52,.47)!important;
+  color:#e9dcc7!important;
+  font:700 9px/1.1 "Cinzel",serif!important;
+  letter-spacing:.04em;
+  text-shadow:0 1px #000;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.045),transparent 34%),
+    linear-gradient(180deg,#251d27,#120f15 58%,#0a090c)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.025),inset 0 -7px 13px rgba(0,0,0,.25),0 3px 8px rgba(0,0,0,.28)!important;
+  transition:transform .12s ease,border-color .12s ease,filter .12s ease;
+}
+#screen-game #action-grid button:hover,.small-btn:hover,.primary-btn:hover:not(:disabled){
+  transform:translateY(-1px);border-color:rgba(235,197,107,.78)!important;filter:brightness(1.12);
+}
+#btn-ritual,#btn-sacrifice{border-color:rgba(135,45,58,.65)!important;background:linear-gradient(180deg,#3a1720,#190b10 62%,#0d080a)!important;color:#f0cfd1!important}
+#btn-meditate,#btn-study{border-color:rgba(102,79,145,.6)!important}
+#btn-rest{border-color:rgba(67,103,137,.55)!important}
+#btn-feed{border-color:rgba(154,123,59,.58)!important}
+#btn-explore{border-color:rgba(94,117,71,.62)!important}
+
+.bottom-menu{padding:5px!important;border-top:1px solid rgba(176,131,56,.24)!important;border-bottom:1px solid rgba(176,131,56,.18)!important;background:linear-gradient(90deg,rgba(112,38,48,.07),transparent 20%,transparent 75%,rgba(85,58,115,.07))}
+.bottom-menu-left{display:flex;gap:5px;flex-wrap:wrap}
+.small-btn{min-height:29px!important;padding:5px 10px!important}
+#btn-world{color:#c5b4dc!important;border-color:rgba(125,91,168,.65)!important}
+
+.log-section{
+  border:1px solid rgba(177,132,57,.28)!important;border-radius:1px!important;
+  background:linear-gradient(180deg,rgba(15,12,16,.96),rgba(7,6,9,.96))!important;
+  box-shadow:inset 0 0 28px rgba(0,0,0,.35)!important;
+}
+.log-title{
+  padding:6px 9px!important;border-bottom:1px solid rgba(176,130,56,.2)!important;
+  font:700 9px/1 "Cinzel",serif!important;letter-spacing:.12em;color:#b18b49!important;text-transform:uppercase;
+}
+.log-network-note{font-family:"Cinzel",serif!important;color:#655a6e!important}
+.log-body{font-family:"Cormorant Garamond",Georgia,serif!important;font-size:12px!important;line-height:1.35!important;color:#c8bdaf!important;background:transparent!important}
+.log-body>div,.log-line{border-bottom:1px solid rgba(255,255,255,.035)}
+
+/* Menu / naming: cover-of-a-lost-fantasy-paperback feeling. */
+#screen-menu,#screen-name{
+  min-height:min(720px,calc(100vh - 24px));
+  background:
+    linear-gradient(90deg,rgba(6,5,8,.9),rgba(6,5,8,.55) 48%,rgba(6,5,8,.75)),
+    url('tower_room.jpg') center/cover no-repeat!important;
+}
+#screen-menu .top-bar,#screen-name .top-bar{background:linear-gradient(180deg,rgba(7,6,9,.92),rgba(8,7,11,.72))}
+.menu-main{min-height:540px!important;display:grid!important;align-items:center!important}
+.menu-block{
+  width:min(540px,86%);margin-left:clamp(18px,7vw,82px)!important;
+  padding:28px 30px!important;border:1px solid rgba(198,151,62,.38)!important;border-radius:2px!important;
+  background:
+    linear-gradient(135deg,rgba(123,39,50,.12),transparent 32%),
+    linear-gradient(180deg,rgba(13,10,15,.94),rgba(7,6,9,.88))!important;
+  box-shadow:0 20px 65px #000,inset 0 0 35px rgba(0,0,0,.33)!important;
+}
+.menu-block::before{content:"THE NINTH SPIRE";display:block;margin-bottom:10px;color:#a77b32;font:700 8px/1 "Cinzel",serif;letter-spacing:.22em}
+.menu-title{font:600 38px/.95 "Cormorant Garamond",Georgia,serif!important;color:#f0e2c7!important;text-shadow:0 2px 16px #000}
+.menu-subtitle{font:italic 17px/1.35 "Cormorant Garamond",Georgia,serif!important;color:#b5a79d!important;margin:10px 0 22px!important}
+.menu-tip{font:600 9px/1.4 "Cinzel",serif!important;letter-spacing:.09em;color:#766c64!important;text-transform:uppercase}
+.name-input-row input{
+  border-radius:1px!important;border:1px solid rgba(184,137,56,.5)!important;background:#08070a!important;color:#f0e4cf!important;
+  font:600 18px/1 "Cormorant Garamond",Georgia,serif!important;box-shadow:inset 0 0 18px #000;
+}
+
+/* Prologue: more illustrated-book, less modern landing page. */
+.intro-scene__art{filter:saturate(.58) sepia(.08) contrast(1.2) brightness(.55)!important}
+.intro-scene__veil{background:radial-gradient(560px 420px at 70% 43%,rgba(111,63,125,.1),transparent 65%),linear-gradient(90deg,rgba(7,5,8,.92),rgba(7,5,8,.56) 56%,rgba(7,5,8,.26)),linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.9) 94%)!important}
+.intro-kicker{font-family:"Cinzel",serif!important;color:#c49a42!important}
+.intro-scene h1{font-family:"Cormorant Garamond",Georgia,serif!important;font-weight:600!important;color:#f1e4cc!important;letter-spacing:-.015em!important}
+.intro-lede,.intro-vow strong{font-family:"Cormorant Garamond",Georgia,serif!important}
+.intro-chronicle{border-left:1px solid #9c7736!important;border-top:1px solid rgba(156,119,54,.18);background:linear-gradient(90deg,rgba(31,18,26,.78),rgba(11,8,12,.18))!important;font-family:"Cormorant Garamond",Georgia,serif!important;font-size:14px!important}
+.intro-vow span{font-family:"Cinzel",serif!important;color:#c59a49!important}
+
+/* Inventory/codex overlays inherit the same artifact language. */
+.wf-panel,.lore-overlay,.ns-world-window{
+  border-color:rgba(190,143,57,.4)!important;
+  background:radial-gradient(600px 350px at 80% -10%,rgba(91,56,116,.12),transparent 68%),linear-gradient(180deg,#141018,#08070a)!important;
+  box-shadow:0 25px 80px rgba(0,0,0,.72),inset 0 0 50px rgba(0,0,0,.24)!important;
+}
+.wf-panel-title,.lore-title,.ns-world-window h2,.ns-card h3{font-family:"Cormorant Garamond",Georgia,serif!important;color:#efe0c4!important}
+.wf-panel-header,.lore-header,.ns-world-window>header{border-color:rgba(188,141,57,.26)!important}
+.wf-panel-tabs button,.ns-world-window nav button{font-family:"Cinzel",serif!important;letter-spacing:.05em!important}
+.ns-world-window nav button.active{border-color:#9d7938!important;background:linear-gradient(180deg,#28202b,#151019)!important;color:#f0dfbd!important}
+.ns-card{border-color:rgba(177,132,57,.23)!important;background:linear-gradient(145deg,#151019,#09080c)!important}
+.ns-card small{color:#a67e3a!important;font-family:"Cinzel",serif!important}
+
+/* Tall browser embeds remain elegant instead of tiny. */
+@media(min-width:981px){
+  #screen-game .main-layout{grid-template-columns:390px minmax(0,1fr)!important}
+  #screen-game .side-panel.wf-hud-upgrades .side-top{grid-template-columns:minmax(230px,.9fr) minmax(330px,1.1fr)!important}
+}
+@media(max-width:980px){
+  #screen-game .side-panel.wf-hud-upgrades .side-stats{grid-template-columns:repeat(3,1fr)!important}
+  .menu-block{margin:0 auto!important}
+}
+@media(max-width:620px){
+  #screen-game .side-panel.wf-hud-upgrades .side-stats{grid-template-columns:1fr 1fr!important}
+  .game-name{font-size:20px!important}.menu-title{font-size:31px!important}
+  .menu-block{width:auto!important;margin:18px!important;padding:22px!important}
+}
+
+/* PASS 45 — LIVING CHRONICLE: literary fantasy reading experience */
+.wizard-chronicle{max-width:760px;margin:0 auto;padding:18px 22px 28px;color:#eadfc5;font-family:Georgia,"Times New Roman",serif;background:radial-gradient(circle at 50% 0,rgba(126,88,38,.12),transparent 34%),linear-gradient(180deg,rgba(26,17,18,.96),rgba(8,7,12,.98));box-shadow:inset 0 0 70px rgba(0,0,0,.55);border:1px solid rgba(181,137,70,.34)}
+.chronicle-masthead{text-align:center}.chronicle-kicker{font-size:9px;letter-spacing:.24em;color:#b99153}.wizard-chronicle .chronicle-masthead h1{font-size:24px;line-height:1.12;margin:7px 0;color:#f0d992;text-shadow:0 2px 8px #000;text-transform:none}.chronicle-deck{font-style:italic;color:#bfb09a;font-size:12px}.chronicle-rule{display:flex;align-items:center;gap:9px;margin:13px 8%}.chronicle-rule i{height:1px;flex:1;background:linear-gradient(90deg,transparent,#8f6a38,transparent)}.chronicle-rule span{color:#d4aa61}
+.chronicle-voice{position:relative;margin:16px 0;padding:14px 16px 12px;border-left:2px solid #866536;background:linear-gradient(90deg,rgba(133,94,43,.12),transparent)}.wizard-chronicle .chronicle-voice h2,.wizard-chronicle .chronicle-deeds h2{font-size:10px;letter-spacing:.18em;color:#c9a665;margin:0 0 8px}.chronicle-lead:first-letter{float:left;font-size:38px;line-height:.82;padding:5px 7px 0 0;color:#e0bc6c;font-family:"Cinzel",Georgia,serif}.chronicle-voice small{display:block;color:#887b6d;font-style:italic;margin-top:8px}.chronicle-voice.scribe{border-left-color:#71826c}.chronicle-voice.rumor{border-left-color:#7f5262}.chronicle-voice.margin{transform:rotate(-.15deg);font-style:italic}
+.chronicle-omen{margin:18px 7%;padding:12px 15px;text-align:center;border-top:1px solid #5f482d;border-bottom:1px solid #5f482d;background:rgba(0,0,0,.2)}.chronicle-omen span{font-size:8px;letter-spacing:.2em;color:#9e8052}.chronicle-omen p{font-size:14px!important;color:#e2cfa9;font-style:italic;margin:5px 0!important}
+.chronicle-quote{margin:20px 5%;padding:4px 18px;font-size:17px;line-height:1.45;color:#f1e3c5;text-align:center;font-style:italic}.chronicle-quote cite{display:block;margin-top:7px;font-size:9px;letter-spacing:.08em;color:#8d806f;font-style:normal}
+.chronicle-relic{margin:14px 0;padding:12px;border:1px solid rgba(154,119,63,.38);background:linear-gradient(135deg,rgba(97,65,28,.14),rgba(13,10,14,.7))}.chronicle-relic span{display:block;font-size:8px;letter-spacing:.2em;color:#9f7e4c}.chronicle-relic strong{display:block;color:#e6c679;margin:4px 0}.chronicle-relic small{color:#958979;font-style:italic}.chronicle-deeds{margin:16px 0}.chronicle-deeds ul{columns:2;column-gap:26px;list-style:'✦  ';color:#cbbda3}.chronicle-numbers{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:18px 0}.chronicle-numbers div{text-align:center;padding:9px 3px;border-top:1px solid #5c462c;border-bottom:1px solid #342719}.chronicle-numbers b{display:block;font-size:18px;color:#e0bd73}.chronicle-numbers span{font-size:7px;letter-spacing:.15em;color:#8d7a5e}
+.chronicle-verse{margin:15px auto;width:70%;text-align:center;font-style:italic;line-height:1.65;color:#d6c49e}.chronicle-seal{margin:13px 0;padding:7px;text-align:center;border:1px double #775a35;color:#a98a59;font-size:9px;letter-spacing:.12em}.chronicle-seal b{color:#d6b66f}.chronicle-erasure{margin:13px 8%;padding:8px;background:repeating-linear-gradient(-8deg,rgba(0,0,0,.65) 0 3px,transparent 3px 7px);color:#847868;font-style:italic;text-align:center}.chronicle-dropcap{position:absolute;opacity:.025;font:180px/1 Georgia;pointer-events:none;color:#fff}
+.chronicle-footer{text-align:center;border-top:1px solid #493720;margin-top:18px;padding-top:12px}.chronicle-footer p{font-size:9px!important;letter-spacing:.08em;color:#786d60}.chronicle-reread{margin:8px auto;display:block;padding:8px 14px;border:1px solid #9a7541;border-radius:2px;background:linear-gradient(#4b3823,#21180f);color:#ead6a8;font-family:Georgia,serif;font-style:italic;cursor:pointer;box-shadow:inset 0 1px rgba(255,255,255,.08),0 2px 8px #000}.chronicle-reread:hover{filter:brightness(1.16)}.chronicle-footer small{color:#665d52;font-style:italic}
+@media(max-width:720px){.wizard-chronicle{padding:14px 13px}.wizard-chronicle .chronicle-masthead h1{font-size:20px}.chronicle-deeds ul{columns:1}.chronicle-numbers{grid-template-columns:repeat(2,1fr)}}
+
+
+/* ==========================================================
+   PASS 46 — GLOBAL REALM FRONT PAGE
+   Mobile-game-style world bulletin without fake live users.
+   ========================================================== */
+.realm-front{
+  background:
+    radial-gradient(circle at 72% 20%,rgba(84,54,122,.16),transparent 30%),
+    radial-gradient(circle at 18% 76%,rgba(93,49,34,.13),transparent 34%),
+    #07070a;
+}
+.realm-front__bar{min-height:64px}
+.realm-status-pill{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 10px;border:1px solid #40384a;
+  background:rgba(10,9,13,.78);
+  color:#958a9d;font:800 7px Arial;letter-spacing:.1em
+}
+.realm-status-pill i{width:6px;height:6px;border-radius:50%;background:#706978}
+.realm-status-pill.is-live{border-color:#416047;color:#9fc39e}
+.realm-status-pill.is-live i{background:#71d27c;box-shadow:0 0 10px #71d27c}
+
+.realm-front__main{
+  min-height:calc(100vh - 64px);
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);
+  gap:1px;
+  background:#242027;
+}
+.realm-gate{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  background:#09090c;
+}
+.realm-gate__art{
+  position:relative;min-height:420px;flex:1;overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(4,4,7,.9),rgba(4,4,7,.2) 58%,rgba(4,4,7,.62)),
+    linear-gradient(0deg,rgba(4,4,7,.93),rgba(4,4,7,.08) 58%),
+    url('assets/backgrounds/tower_room.png') center/cover no-repeat,
+    #0b0910;
+}
+.realm-gate__veil{position:absolute;inset:0;background:radial-gradient(circle at 64% 32%,rgba(133,88,179,.13),transparent 28%);pointer-events:none}
+.realm-gate__copy{position:absolute;left:6%;bottom:8%;max-width:690px;padding-right:24px}
+.realm-kicker{color:#b083de;font:800 8px Arial;letter-spacing:.16em}
+.realm-gate__copy h1{
+  margin:9px 0 14px;color:#eee5dc;
+  font:500 clamp(54px,6vw,90px)/.83 Georgia,serif;letter-spacing:-.05em;
+  text-shadow:0 5px 22px #000
+}
+.realm-gate__copy p{max-width:620px;color:#a99da5;font:11px/1.65 Arial}
+.realm-gate__actions{display:grid;grid-template-columns:1.25fr .75fr;gap:8px;padding:12px;background:#08090a;border-top:1px solid #201b23}
+.realm-enter-btn,.realm-secondary-btn{min-height:66px!important;display:flex!important;flex-direction:column;align-items:flex-start!important;justify-content:center!important;padding:0 18px!important}
+.realm-enter-btn span,.realm-secondary-btn span{font:800 10px Arial;letter-spacing:.1em}
+.realm-enter-btn small,.realm-secondary-btn small{margin-top:5px;color:#7a6e80;font:6px Arial;letter-spacing:.08em}
+.realm-season-strip{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #211c23;background:#0b0b0e}
+.realm-season-strip>div{padding:9px 12px;border-right:1px solid #211c23}
+.realm-season-strip>div:last-child{border-right:0}
+.realm-season-strip small,.realm-season-strip strong{display:block}
+.realm-season-strip small{color:#625b66;font:700 5.5px Arial;letter-spacing:.1em}
+.realm-season-strip strong{margin-top:3px;color:#a99eac;font:500 9px Georgia,serif}
+
+.realm-bulletin{
+  min-width:0;display:flex;flex-direction:column;
+  max-height:calc(100vh - 64px);overflow:auto;
+  background:linear-gradient(180deg,#0b0a0f,#08090a);
+}
+.realm-bulletin__head{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid #211b27}
+.realm-bulletin__head span{color:#9e75d0;font:800 6px Arial;letter-spacing:.12em}
+.realm-bulletin__head h2{margin:4px 0 0;color:#ded4e3;font:500 25px Georgia,serif}
+.realm-bulletin__head button{width:32px;height:32px;border:1px solid #352940;background:#0d0b12;color:#9f8aae;cursor:pointer}
+.realm-feature{padding:17px 16px;border-bottom:1px solid #211b27;background:radial-gradient(circle at 90% 15%,rgba(118,74,156,.15),transparent 35%)}
+.realm-feature span,.realm-wire-preview header span,.realm-chat-preview header span,.realm-social-card>span{color:#9d74d1;font:800 6px Arial;letter-spacing:.11em}
+.realm-feature h3{margin:5px 0 6px;color:#e0d5e5;font:500 18px Georgia,serif}
+.realm-feature p{margin:0;color:#887d8e;font:9px/1.55 Arial}
+.realm-wire-preview,.realm-chat-preview{padding:14px 16px;border-bottom:1px solid #211b27}
+.realm-wire-preview header,.realm-chat-preview header{display:flex;justify-content:space-between;gap:12px;margin-bottom:8px}
+.realm-wire-preview header small,.realm-chat-preview header small{color:#5e5963;font:700 5.5px Arial;letter-spacing:.08em}
+.realm-wire-list article{display:grid;grid-template-columns:48px 1fr;gap:8px;padding:7px 0;border-top:1px solid #1d1821}
+.realm-wire-list time{color:#625a68;font:6px Arial}
+.realm-wire-list p{margin:0;color:#afa3b3;font:8.5px/1.45 Arial}
+.realm-social-grid{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #211b27}
+.realm-social-card{padding:14px 16px;border-right:1px solid #211b27}
+.realm-social-card:last-child{border-right:0}
+.realm-social-card strong{display:block;margin-top:5px;color:#e4d9e8;font:500 25px Georgia,serif}
+.realm-social-card small{display:block;margin-top:3px;color:#665e6b;font:6px Arial;letter-spacing:.06em}
+.realm-chat-list article{padding:6px 0;border-top:1px solid #1d1821}
+.realm-chat-list b{display:block;color:#a989c5;font:500 9px Georgia,serif}
+.realm-chat-list p{margin:2px 0 0;color:#9c909f;font:8px/1.4 Arial}
+.realm-muted{color:#655e68!important;font:8px/1.5 Arial!important}
+.realm-bulletin__foot{margin-top:auto;padding:11px 16px;background:#0a090d;border-top:1px solid #211b27}
+.realm-bulletin__foot span,.realm-bulletin__foot small{display:block}
+.realm-bulletin__foot span{color:#846c99;font:800 6px Arial;letter-spacing:.09em}
+.realm-bulletin__foot small{margin-top:3px;color:#5d575f;font:6px Arial}
+
+@media(max-width:850px){
+  .realm-front__main{grid-template-columns:1fr}
+  .realm-gate__art{min-height:58vh}
+  .realm-bulletin{max-height:none}
+  .realm-gate__actions{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .realm-front__bar{min-height:52px}
+  .realm-status-pill{padding:6px 8px}
+  .realm-front__main{min-height:calc(100vh - 52px)}
+  .realm-gate__art{min-height:58vh}
+  .realm-gate__copy{left:18px;right:18px;bottom:22px;padding:0}
+  .realm-gate__copy h1{font-size:52px}
+  .realm-gate__copy p{font-size:10px}
+  .realm-gate__actions{grid-template-columns:1fr;padding:8px}
+  .realm-season-strip{overflow-x:auto;grid-template-columns:repeat(3,minmax(145px,1fr))}
+  .realm-bulletin__head,.realm-feature,.realm-wire-preview,.realm-chat-preview{padding-left:14px;padding-right:14px}
+}
+
+/* PASS 48 — preserve Pass 46 + Dragon Underground integration + viewport polish */
+.realm-front{height:calc(100vh - 24px);min-height:640px;overflow:hidden}
+.realm-front__main{height:calc(100% - 64px);min-height:0}
+.realm-gate{min-height:0}
+.realm-gate__art{min-height:0}
+.realm-bulletin{max-height:none;height:100%;min-height:0}
+.realm-bulletin__actions{display:flex;align-items:center;gap:6px}
+.realm-bulletin__actions button{height:32px;border:1px solid #352940;background:#0d0b12;color:#9f8aae;padding:0 9px;font:800 6px Arial;letter-spacing:.08em;cursor:pointer}
+.realm-bulletin__actions button:hover{border-color:#79539a;color:#d2b8e7}
+
+/* Dragon Underground member identity control (merged safely from Pass 47) */
+#du-hud{position:fixed;right:14px;top:72px;z-index:9998;font-family:Arial,sans-serif}
+.du-sigil{width:38px;height:38px;border:1px solid #8160a1;background:#0b0810;color:#d8b7ef;font-size:22px;box-shadow:0 0 20px #6c3a8733;cursor:pointer}
+.du-card{display:none;width:310px;margin-top:7px;background:linear-gradient(160deg,#100b14,#07070a);border:1px solid #4a3556;box-shadow:0 22px 60px #000c;color:#c8bdcb}
+#du-hud.open .du-card{display:block}.du-card header{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;border-bottom:1px solid #302338}.du-card header small,.du-kicker{display:block;color:#8d65ad;font-size:7px;font-weight:800;letter-spacing:.13em}.du-card header strong{display:block;margin-top:3px;color:#eee3f2;font:18px Georgia,serif}.du-card header b{font-size:7px;color:#7d7181}.du-card nav{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #302338}.du-card nav button{padding:9px 3px;background:#0b0910;border:0;border-right:1px solid #251b2b;color:#85798a;font-size:6px;font-weight:800;cursor:pointer}.du-card section{padding:15px}.du-card h3{margin:5px 0 13px;color:#e4d6e8;font:17px Georgia,serif}.du-stat{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid #251d29;font-size:8px}.du-stat span{color:#746a78}.du-stat b{color:#c8b2d1}.du-note{margin:12px 0 0;color:#706675;font-size:8px;line-height:1.55}.du-badge{display:inline-block;margin:3px;padding:5px 7px;border:1px solid #604875;background:#17101d;color:#c8a8d8;font-size:7px;font-weight:800;letter-spacing:.07em}
+
+/* Full Hall of Wizards / leaderboard experience */
+.realm-leaderboard{position:fixed;inset:0;z-index:10050;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(2,2,4,.88);backdrop-filter:blur(7px)}
+.realm-leaderboard.open{display:flex}
+.realm-leaderboard__shell{width:min(1320px,calc(100vw - 36px));height:min(820px,calc(100vh - 36px));display:flex;flex-direction:column;overflow:hidden;background:radial-gradient(circle at 70% 0,rgba(93,59,129,.14),transparent 35%),linear-gradient(180deg,#0c0910,#060608);border:1px solid #604573;box-shadow:0 32px 100px #000; color:#b7aebb}
+.realm-leaderboard__top{display:flex;justify-content:space-between;align-items:flex-start;padding:22px 25px 17px;border-bottom:1px solid #2a202e}.realm-leaderboard__top small{color:#9c6dc3;font:800 7px Arial;letter-spacing:.15em}.realm-leaderboard__top h2{margin:4px 0 4px;color:#eee4dc;font:500 38px Georgia,serif}.realm-leaderboard__top p{margin:0;color:#807783;font:9px Arial}.realm-leaderboard__top button{border:1px solid #46334e;background:#0d0a10;color:#9d8fa3;padding:10px 13px;font:800 7px Arial;letter-spacing:.1em;cursor:pointer}
+.realm-leaderboard__tabs{display:flex;overflow-x:auto;border-bottom:1px solid #2a202e;background:#09070b}.realm-leaderboard__tabs button{min-width:max-content;padding:12px 17px;border:0;border-right:1px solid #231a27;background:transparent;color:#756b79;font:800 7px Arial;letter-spacing:.08em;cursor:pointer}.realm-leaderboard__tabs button.active{color:#d9c5e4;background:#17101d;box-shadow:inset 0 -2px #9b6fc0}
+.realm-leaderboard__body{display:grid;grid-template-columns:270px minmax(0,1fr);min-height:0;flex:1}.realm-leaderboard__season{padding:22px;border-right:1px solid #2a202e;background:linear-gradient(180deg,#0d0911,#08070a)}.realm-leaderboard__season>span{color:#a16fc7;font:800 7px Arial;letter-spacing:.13em}.realm-leaderboard__season>strong{display:block;margin:6px 0;color:#e6d9e8;font:500 25px Georgia,serif}.realm-leaderboard__season>p{color:#776e7a;font:8px/1.55 Arial}.realm-leaderboard__season>div{padding:11px 0;border-top:1px solid #241c28}.realm-leaderboard__season small,.realm-leaderboard__season b{display:block}.realm-leaderboard__season small{color:#5f5862;font:700 6px Arial;letter-spacing:.08em}.realm-leaderboard__season b{margin-top:4px;color:#bbb0bf;font:500 11px Georgia,serif}.realm-leaderboard__note{margin-top:18px!important;color:#5f5863!important}
+.realm-leaderboard__tablewrap{min-width:0;display:flex;flex-direction:column}.realm-leaderboard__filters{display:flex;align-items:center;gap:5px;padding:10px 13px;border-bottom:1px solid #241c28}.realm-leaderboard__filters button{padding:7px 10px;border:1px solid #2e2434;background:#0c0910;color:#6f6673;font:800 6px Arial;cursor:pointer}.realm-leaderboard__filters button.active{border-color:#614773;color:#bca3ca}.realm-leaderboard__filters span{margin-left:auto;color:#5c5660;font:700 6px Arial;letter-spacing:.08em}.realm-leaderboard__table{padding:0 13px 13px;overflow:auto}.realm-leaderboard__row{display:grid;grid-template-columns:70px 1.2fr 1.1fr 90px 130px;align-items:center;min-width:680px;border-bottom:1px solid #211923}.realm-leaderboard__row.head{position:sticky;top:0;background:#0a080c;color:#6f6673;font:800 6px Arial;letter-spacing:.08em}.realm-leaderboard__row span{padding:10px 8px}.realm-leaderboard__empty{padding:60px 25px;text-align:center;color:#665f69}.realm-leaderboard__empty strong{display:block;color:#b3a7b7;font:500 20px Georgia,serif}.realm-leaderboard__empty p{max-width:550px;margin:9px auto;color:#716977;font:9px/1.55 Arial}.realm-leaderboard__foot{display:flex;justify-content:space-between;padding:9px 18px;border-top:1px solid #2a202e;background:#080609}.realm-leaderboard__foot span{color:#8c669e;font:800 6px Arial;letter-spacing:.1em}.realm-leaderboard__foot small{color:#514c54;font:6px Arial}
+@media(max-width:900px){.realm-front{height:auto;min-height:calc(100vh - 12px);overflow:visible}.realm-front__main{height:auto}.realm-bulletin{height:auto}.realm-leaderboard__body{grid-template-columns:1fr}.realm-leaderboard__season{display:none}.realm-leaderboard__shell{width:calc(100vw - 14px);height:calc(100vh - 14px)}.realm-leaderboard{padding:7px}}
+@media(max-width:600px){#du-hud{right:8px;top:58px}.du-card{width:min(310px,calc(100vw - 16px))}.realm-leaderboard__top{padding:15px}.realm-leaderboard__top h2{font-size:30px}}
+
+
+/* PASS 49 — REALM GATE / MMO PRESENTATION POLISH
+   The diamond icon is intentionally NOT used here. It is reserved for
+   DragonsRitual mobile WEBSITE navigation. */
+
+.realm-front {
+  min-height: 100vh;
+}
+
+.realm-front__bar {
+  min-height: 74px;
+}
+
+.realm-front__main {
+  min-height: 0;
+}
+
+.realm-gate__copy h1 {
+  max-width: 760px;
+  font-size: clamp(52px, 6.2vw, 100px);
+  line-height: .88;
+  margin-bottom: 16px;
+}
+
+.realm-gate__copy p {
+  max-width: 760px;
+  font-size: clamp(13px, 1.05vw, 17px);
+  line-height: 1.55;
+}
+
+.realm-login-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 14px 0 2px;
+  color: rgba(220,205,183,.72);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.realm-login-line span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.realm-login-line i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #69ef91;
+  box-shadow: 0 0 14px rgba(105,239,145,.7);
+}
+
+.realm-enter-btn {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(205,159,72,.72) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,220,143,.05),
+    0 0 30px rgba(165,105,29,.10);
+}
+
+.realm-enter-btn::after {
+  content: "";
+  position: absolute;
+  inset: -45% -20%;
+  background: linear-gradient(100deg, transparent 36%, rgba(255,225,155,.075), transparent 64%);
+  transform: translateX(-80%);
+  animation: realmGateSweep 5.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes realmGateSweep {
+  0%, 58% { transform: translateX(-80%); opacity: 0; }
+  68% { opacity: 1; }
+  88%, 100% { transform: translateX(80%); opacity: 0; }
+}
+
+/* Dense-luxury laptop layout: one realm-gate viewport, no pointless page-length feel. */
+@media (min-width: 1000px) and (min-height: 700px) {
+  #screen-menu:not(.hidden) {
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+  }
+
+  #screen-menu:not(.hidden) .realm-front__main {
+    height: calc(100vh - 84px);
+    max-height: calc(100vh - 84px);
+  }
+
+  #screen-menu:not(.hidden) .realm-gate,
+  #screen-menu:not(.hidden) .realm-bulletin {
+    min-height: 0;
+    max-height: 100%;
+  }
+
+  #screen-menu:not(.hidden) .realm-gate__art {
+    min-height: 0;
+  }
+
+  #screen-menu:not(.hidden) .realm-bulletin {
+    overflow: hidden;
+  }
+
+  #screen-menu:not(.hidden) .realm-chat-preview {
+    min-height: 88px;
+  }
+}
+
+@media (max-height: 820px) and (min-width: 1000px) {
+  .realm-front__bar { min-height: 64px; }
+  .realm-gate__copy h1 { font-size: clamp(44px, 5vw, 74px); }
+  .realm-gate__copy p { margin-bottom: 4px; }
+  .realm-gate__actions { min-height: 72px; }
+  .realm-season-strip { min-height: 48px; }
+  .realm-feature { padding-top: 14px !important; padding-bottom: 14px !important; }
+  .realm-wire-preview { padding-top: 10px !important; padding-bottom: 10px !important; }
+  .realm-social-card { padding-top: 10px !important; padding-bottom: 10px !important; }
+}
+
+
+/* PASS 50 — COMPLETE ELEMENTAL GRIMOIRE */
+.vf-element__sigil{font-size:28px;text-align:right;opacity:.18;margin:-5px 0 -18px;filter:drop-shadow(0 0 10px currentColor)}
+.vf-school{font-size:8px;letter-spacing:.12em;text-transform:uppercase;opacity:.45;margin-top:2px}
+.vf-mastery{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px}
+.vf-mastery span{border:1px solid rgba(255,255,255,.09);padding:5px 6px;font-size:8px;letter-spacing:.06em;opacity:.5}
+.element-fire .vf-element{background:linear-gradient(155deg,#281006,#100a0b 65%)}
+.element-frost .vf-element{background:linear-gradient(155deg,#0b1c2b,#0a0b12 65%)}
+.element-poison .vf-element{background:linear-gradient(155deg,#18200b,#0c0a10 65%)}
+.element-water .vf-element{background:linear-gradient(155deg,#08202a,#090b13 65%)}
+.element-storm .vf-element{background:linear-gradient(155deg,#19132c,#090a11 65%)}
+.element-stone .vf-element{background:linear-gradient(155deg,#201b16,#0c0b0b 65%)}

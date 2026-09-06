@@ -1,0 +1,25 @@
+{
+  "pass": "46A",
+  "newly_integrated": [
+    "Minifantasy Wizards Academy",
+    "Minifantasy Towers",
+    "Minifantasy True Heroes III Wizard",
+    "Minifantasy Castles & Strongholds props",
+    "Minifantasy Ancient Forests props"
+  ],
+  "systems": [
+    "expensive watchtowers with tier-scaled attack cadence/range",
+    "wizard academy with autonomous wizard defenders",
+    "arcane projectile system",
+    "sparse prop decoration registry",
+    "procedural capped blood particles + decals",
+    "impact FX",
+    "9-building construction command"
+  ],
+  "performance_caps": {
+    "blood_particles": 120,
+    "blood_decals": 70,
+    "academy_wizards_per_academy": 3
+  },
+  "note": "Source library contains Blood Mage effects but no neutral generic blood-splatter atlas; combat blood in 46A is generated as capped Canvas particles/decals for performance and visual neutrality."
+}

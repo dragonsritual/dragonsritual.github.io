@@ -1,0 +1,50 @@
+{
+  "id": "orders",
+  "label": "Orders",
+  "subject": "orders",
+
+  "kind": "blog",
+  "title": "THE THREE GREAT CURRENTS",
+  "subtitle": "There are three great currents: Radiance that mends, the hungry dark, and the tempered flame. Your pupil will drift toward one whether you intend it or not.",
+
+  "sections": [
+    {
+      "heading": "WHAT THE CURRENTS ARE",
+      "body": [
+        "The tower teaches that magic is not a single river but three great currents, braided and pulling at every soul that steps within its walls.",
+        "Some wizards swear they chose their path. Most honest ones admit the path chose them first."
+      ]
+    },
+    {
+      "heading": "RADIANCE THAT MENDS",
+      "body": [
+        "Radiance is not softness. It is the light that keeps count. Those who follow it learn every crack in a bone, every tremor in a heartbeat, every weakness in a curse.",
+        "Radiant orders mend bodies and oaths alike. They believe that what is broken can be set right, even if it must be broken more cleanly first.",
+        "Your wizard will feel Radiance as a quiet ache whenever someone suffers nearby. If he leans into that ache, he will learn to stitch flesh, spirit, and cause together with the same careful hand."
+      ]
+    },
+    {
+      "heading": "THE HUNGRY DARK",
+      "body": [
+        "The hungry dark is not simply absence of light. It is the part of the void that notices when you stare back.",
+        "Those who give themselves to it learn to unmake: to pull heat from a room, to silence a memory, to erase a footprint from time’s sand.",
+        "Dark orders are not all wicked, but they are all dangerous. They ask questions Radiance refuses to phrase aloud, and they are willing to pay for answers in pieces of themselves."
+      ]
+    },
+    {
+      "heading": "THE TEMPERED FLAME",
+      "body": [
+        "Flame is motion and decision. It is the current followed by battlemages, wardens, and anyone who thinks with their fists before their treatises.",
+        "Tempered flame does not mean gentle flame. It means fire that remembers why it was lit. These wizards learn to burn precisely: a single sigil in a book, a single stubborn root in a cancer, a single oath in a tyrant’s heart.",
+        "Your pupil may feel this current as restlessness. As an itch to act when others debate. Fed with discipline, it becomes courage. Fed with impatience, it becomes ruin."
+      ]
+    },
+    {
+      "heading": "ON DRIFT AND CHOICE",
+      "body": [
+        "Your pupil will drift toward one current whether you intend it or not. The tower watches which lessons he repeats: the healing circle, the void-listening vigil, the practice yard scorched with sigils.",
+        "You cannot keep him from choosing. You can only make sure he understands the cost of where he lets himself be carried."
+      ]
+    }
+  ]
+}

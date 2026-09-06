@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /creator/
+Disallow: /writer-room/
+Disallow: /contributor-agreement/
+Disallow: /join/
+Disallow: /reset-password/
+
+Allow: /
